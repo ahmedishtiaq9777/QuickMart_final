@@ -1,0 +1,59 @@
+<resources>
+
+
+
+    <string-array name="Accounttypes">
+
+
+        <item>As a Buyer</item>
+        <item>As a Seller</item>
+
+
+    </string-array>
+
+
+    <string name="app_name">QuickMart</string>
+    <string name="btn_edit_profile">EDIT</string>]
+
+    <string name="txt_profile_history">Order History</string>
+    <string name="txt_profile_rate">Rate Us</string>
+    <string name="txt_profile_share">Share</string>
+
+
+
+    <!--profile preferences-->
+    <string name="pref_group_profile">PROFILE</string>
+    <string name="pref_title_name">Name</string>
+    <string name="pref_title_email">Email</string>
+    <string name="pref_title_phone">Phone Number</string>
+    <string name="pref_title_address">Address</string>
+    <string name="default_your_name">Your Name</string>
+    <string name="default_your_email">your.email@gmail.com</string>
+    <string name="default_your_phone">+628123456789</string>
+    <string name="default_your_address">Your Address</string>
+    <string name="pref_msg_invalid_name">Invalid Name Input</string>
+    <string name="pref_msg_invalid_email">Invalid Email Input</string>
+    <string name="pref_msg_invalid_phone">Invalid Phone Input</string>
+    <string name="pref_msg_invalid_address">Invalid Address Input</string>
+    <string name="txt_profile_privacy">Privacy Policy</string>
+
+
+
+    <string name="signin"><u><b>Sign in</b></u></string>
+    <string name="tandc"><u>terms &amp; conditions</u></string>
+
+
+
+
+    <string name="share_app">I Would like to share this E-Commerce Android App with you. Here You Can Download This Application from PlayStore</string>
+
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam efficitur ipsum in placerat molestie.  Fusce quis mauris a enim sollicitudin
+        \n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam efficitur ipsum in placerat molestie.  Fusce quis mauris a enim sollicitudin
+    </string>
+
+
+
+
+
+</resources>
