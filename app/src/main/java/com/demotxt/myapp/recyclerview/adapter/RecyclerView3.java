@@ -55,6 +55,7 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
                 intent.putExtra("Title",Data2.get(position).getTitle());
                 intent.putExtra("Description",Data2.get(position).getDescription());
                 intent.putExtra("Thumbnail",Data2.get(position).getThumbnail());
+                intent.putExtra("price",Data2.get(position).getPrice());
                 // start the activity
                 mContext.startActivity(intent);
 

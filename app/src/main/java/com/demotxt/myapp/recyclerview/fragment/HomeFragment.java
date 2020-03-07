@@ -194,17 +194,18 @@ return  view;
                                     JSONObject product = array.getJSONObject(i);
                                     String img=product.getString("productImage");
                                     String title=product.getString("title");
-                                    String description=product.getString("description") ;
+                                    String description=product.getString("description");
                                     String category=product.getString("category");
+                                    double price= product.getDouble("price");
                                     img="http://ahmedishtiaqbutt-001-site1.atempurl.com"+img;
                                     if(img!=null) {
                                         if(val==1) {
-                                            lstBook2.add(new Book(title, category, description, img));
+                                            lstBook2.add(new Book(title, category, description, img,price));
                                         }else if(val==2)
                                         {
-                                            Book22.add(new Prod(title, category, description, img));
+                                            Book22.add(new Prod(title, category, description, img,price));
                                         }else if(val==3){
-                                            mTrends.add(new r3(title, category, description, img));
+                                            mTrends.add(new r3(title, category, description, img,price));
                                         }
                                     }
 

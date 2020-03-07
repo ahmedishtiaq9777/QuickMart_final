@@ -11,7 +11,7 @@ import com.squareup.picasso.Picasso;
 
 public class Book_Activity extends AppCompatActivity {
 
-    private TextView tvtitle,tvdescription,tvcategory;
+    private TextView tvtitle,tvdescription,tvcategory,Price;
     private ImageView img;
 
     @Override
@@ -19,21 +19,26 @@ public class Book_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_);
 
-        tvtitle = (TextView) findViewById(R.id.txttitle);
-        tvdescription = (TextView) findViewById(R.id.txtDesc);
-        tvcategory = (TextView) findViewById(R.id.txtCat);
+        tvtitle = (TextView) findViewById(R.id.booktitle);
+        tvdescription = (TextView) findViewById(R.id.bookDesc);
+       // tvcategory = (TextView) findViewById(R.id.txtCat);
         img = (ImageView) findViewById(R.id.bookthumbnail);
+        Price=(TextView)findViewById(R.id.bookPrice);
+
 
         // Recieve data
         Intent intent = getIntent();
         String Title = intent.getExtras().getString("Title");
         String Description = intent.getExtras().getString("Description");
-        String image = intent.getExtras().getString("Thumbnail") ;
+        String image = intent.getExtras().getString("Thumbnail");
+        float pRise=intent.getExtras().getFloat("price");
+        String p=String.valueOf(pRise);
 
         // Setting values
 
         tvtitle.setText(Title);
         tvdescription.setText(Description);
+        Price.setText(p);
         //img.setImageResource(image);
         Picasso.get().load(image).into(img);
 

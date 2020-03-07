@@ -6,15 +6,17 @@ public class Prod {
     private String Category;
     private String Description;
     private String Thumbnail;
+    private float Price;
 
     public Prod() {
     }
 
-    public Prod(String title, String category, String description, String thumbnail) {
+    public Prod(String title, String category, String description, String thumbnail,double price) {
         Title = title;
         Category = category;
         Description = description;
         Thumbnail = thumbnail;
+        Price=(float)price;
     }
 
 
@@ -33,6 +35,7 @@ public class Prod {
     public String getThumbnail() {
         return Thumbnail;
     }
+    public float getPrice(){return  Price;}
 
 
     public void setTitle(String title) {
@@ -50,4 +53,5 @@ public class Prod {
     public void setThumbnail(String thumbnail) {
         Thumbnail = thumbnail;
     }
+    public  void setPrice(float price){Price=Price;}
 }

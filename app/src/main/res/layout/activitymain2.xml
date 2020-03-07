@@ -12,6 +12,7 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/gradient2"
 
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -22,6 +23,7 @@
         android:id="@+id/fragmentcontainer"
         android:layout_width="match_parent"
         android:layout_height="690dp"
-        android:layout_above="@id/nav_view"/>
+        android:layout_above="@id/nav_view"
+        />
 
 </RelativeLayout>

@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso;
 
 public class r3_Activity extends AppCompatActivity {
 
-    private TextView tvtitle,tvdescription,tvcategory;
+    private TextView tvtitle,tvdescription,tvcategory,price;
     private ImageView img;
 
     @Override
@@ -20,21 +20,25 @@ public class r3_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_r3);
 
-        tvtitle = (TextView) findViewById(R.id.txttitle);
-        tvdescription = (TextView) findViewById(R.id.txtDesc);
-        tvcategory = (TextView) findViewById(R.id.txtCat);
-        img = (ImageView) findViewById(R.id.bookthumbnail);
+        tvtitle = (TextView) findViewById(R.id.r3title);
+        tvdescription = (TextView) findViewById(R.id.r3Desc);
+        //tvcategory = (TextView) findViewById(R.id.txtCat);
+        img = (ImageView) findViewById(R.id.r3thumbnail);
+        price=(TextView) findViewById(R.id.r3Price);
 
         // Recieve data
         Intent intent = getIntent();
         String Title = intent.getExtras().getString("Title");
         String Description = intent.getExtras().getString("Description");
-        String image = intent.getExtras().getString("Thumbnail") ;
+        String image = intent.getExtras().getString("Thumbnail");
+        float pRise=intent.getExtras().getFloat("price");
+        String strprise=String.valueOf(pRise);
 
         // Setting values
 
         tvtitle.setText(Title);
         tvdescription.setText(Description);
+        price.setText(strprise);
         //img.setImageResource(image);
         Picasso.get().load(image).into(img);
 
