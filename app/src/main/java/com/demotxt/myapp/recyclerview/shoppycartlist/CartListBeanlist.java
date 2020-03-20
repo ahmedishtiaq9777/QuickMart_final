@@ -5,22 +5,22 @@ package com.demotxt.myapp.recyclerview.shoppycartlist;
  */
 public class CartListBeanlist {
 
-    private int image;
+    private String image;
     private String title;
 
-    private String price;
+    private double price;
 
-    public CartListBeanlist(int image, String title, String price) {
+    public CartListBeanlist(String image, String title, double price) {
         this.image = image;
         this.title = title;
         this.price = price;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -34,11 +34,11 @@ public class CartListBeanlist {
 
 
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 }

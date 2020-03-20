@@ -197,15 +197,16 @@ return  view;
                                     String description=product.getString("description");
                                     String category=product.getString("category");
                                     double price= product.getDouble("price");
+                                    int id=product.getInt("productId");
                                     img="http://ahmedishtiaqbutt-001-site1.atempurl.com"+img;
                                     if(img!=null) {
                                         if(val==1) {
-                                            lstBook2.add(new Book(title, category, description, img,price));
+                                            lstBook2.add(new Book(title, category, description, img,price,id));
                                         }else if(val==2)
                                         {
-                                            Book22.add(new Prod(title, category, description, img,price));
+                                            Book22.add(new Prod(title, category, description, img,price,id));
                                         }else if(val==3){
-                                            mTrends.add(new r3(title, category, description, img,price));
+                                            mTrends.add(new r3(title, category, description, img,price,id));
                                         }
                                     }
 

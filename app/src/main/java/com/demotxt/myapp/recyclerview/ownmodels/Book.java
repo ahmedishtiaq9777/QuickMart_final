@@ -7,22 +7,26 @@ public class Book {
     private String Description;
     private String Thumbnail;
     private float Price;
+    private  int Id;
 
     public Book() {
     }
 
-    public Book(String title, String category, String description, String thumbnail,double price) {
+    public Book(String title, String category, String description, String thumbnail,double price,int id) {
         Title = title;
         Category = category;
         Description = description;
         Thumbnail = thumbnail;
         Price=(float)price;
+        Id=id;
+
     }
 
 
     public String getTitle() {
         return Title;
     }
+    public int getId(){return  Id;}
 
     public String getCategory() {
         return Category;
@@ -41,6 +45,7 @@ public class Book {
     public void setTitle(String title) {
         Title = title;
     }
+    public  void setId(int id){Id=id;}
 
     public void setCategory(String category) {
         Category = category;
@@ -53,4 +58,5 @@ public class Book {
     public void setThumbnail(String thumbnail) {
         Thumbnail = thumbnail;
     }
+
 }

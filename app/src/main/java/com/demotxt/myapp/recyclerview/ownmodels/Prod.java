@@ -7,22 +7,25 @@ public class Prod {
     private String Description;
     private String Thumbnail;
     private float Price;
+    private int Id;
 
     public Prod() {
     }
 
-    public Prod(String title, String category, String description, String thumbnail,double price) {
+    public Prod(String title, String category, String description, String thumbnail,double price,int id) {
         Title = title;
         Category = category;
         Description = description;
         Thumbnail = thumbnail;
         Price=(float)price;
+         Id=id;
     }
 
 
     public String getTitle() {
         return Title;
     }
+    public int getId(){return Id;}
 
     public String getCategory() {
         return Category;

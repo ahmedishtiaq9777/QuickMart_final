@@ -55,6 +55,7 @@ TextView signup,signin;
 
         loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
 
+
         loginPrefsEditor = loginPreferences.edit();
 
         saveLogin = loginPreferences.getBoolean("saveLogin", false);

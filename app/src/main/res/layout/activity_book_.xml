@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient"
-    tools:context="com.demotxt.myapp.recyclerview.Prod_Activity">
+    tools:context="com.demotxt.myapp.recyclerview.activity.Book_Activity">
 
 
     <RelativeLayout

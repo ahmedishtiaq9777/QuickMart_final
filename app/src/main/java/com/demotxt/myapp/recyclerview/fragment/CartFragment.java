@@ -47,7 +47,7 @@ public class CartFragment extends Fragment  {
 
         Bean = new ArrayList<CartListBeanlist>();
 
-        for (int i = 0; i < TITLE.length; i++) {
+       /* for (int i = 0; i < TITLE.length; i++) {
 
             CartListBeanlist bean = new CartListBeanlist(IMAGE[i], TITLE[i], PRICE[i]);
             Bean.add(bean);
@@ -59,7 +59,7 @@ public class CartFragment extends Fragment  {
         };
 
         listview.setAdapter(baseAdapter);
-
+*/
 
         // Inflate the layout for this fragment
         return view;

@@ -24,7 +24,7 @@ public class Prod_Activity extends AppCompatActivity {
         tvdescription = (TextView) findViewById(R.id.txtDesc);
        // tvcategory = (TextView) findViewById(R.id.txtCat);
         img = (ImageView) findViewById(R.id.bookthumbnail);
-        price= (TextView)findViewById(R.id.Price);
+        price= (TextView)findViewById(R.id.price);
 
 
         // Recieve data

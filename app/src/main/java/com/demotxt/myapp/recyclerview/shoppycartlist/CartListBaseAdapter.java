@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.demotxt.myapp.recyclerview.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -102,10 +103,12 @@ public class CartListBaseAdapter extends BaseAdapter {
 
         CartListBeanlist bean = (CartListBeanlist)getItem(position);
 
-        viewHolder.image.setImageResource(bean.getImage());
+       // viewHolder.image.setImageResource(bean.getImage());
+        Picasso.get().load(bean.getImage()).into(viewHolder.image);
         viewHolder.title.setText(bean.getTitle());
 
-        viewHolder.price.setText(bean.getPrice());
+      String pricestr=String.valueOf(bean.getPrice());
+        viewHolder.price.setText(pricestr);
 
 
 //        number = 01;
