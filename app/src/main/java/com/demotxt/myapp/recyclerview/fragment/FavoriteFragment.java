@@ -68,12 +68,12 @@ public class FavoriteFragment extends Fragment {
         Bean=new ArrayList<>();
 
 
-        cartpreferrence =   getContext().getSharedPreferences("cartpref", MODE_PRIVATE);
+        cartpreferrence =   getContext().getSharedPreferences("favpref", MODE_PRIVATE);
  //
-       ids=cartpreferrence.getStringSet("ids",null);
+       ids=cartpreferrence.getStringSet("ids",ids);
 
 
-       getconnection("http://ahmedishtiaqbutt-001-site1.atempurl.com/Home/getproductswithproId");
+       getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswithproId");
         //
       /*  Bean = new ArrayList<CartListBeanlist>();
 
@@ -113,7 +113,7 @@ public class FavoriteFragment extends Fragment {
                                     //String category = product.getString("category");
                                     double price = product.getDouble("price");
                                   //  int id = product.getInt("productId");
-                                    img="http://ahmedishtiaqbutt-001-site1.atempurl.com"+img;
+                                    img="http://ahmedishtiaq9778-001-site1.ftempurl.com"+img;
                                     Bean.add(new CartListBeanlist(img,title,price));
 
 
@@ -141,7 +141,8 @@ public class FavoriteFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-//                        Toast.makeText(getContext(),  Toast.LENGTH_SHORT).show();
+//
+//                       Toast.makeText(getContext(),  Toast.LENGTH_SHORT).show();
                         error.printStackTrace();
                     }
                 }

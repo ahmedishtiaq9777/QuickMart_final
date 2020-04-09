@@ -55,7 +55,7 @@ public class HomeFragment extends Fragment {
         lstBook2 = new ArrayList<>();
         Book22 = new ArrayList<>();
         mTrends = new ArrayList<>();
-        getconnection("http://ahmedishtiaqbutt-001-site1.atempurl.com/Home/getrecommendedpro/",1);
+        getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getrecommendedpro/",1);
 
 
         //Data for view 1
@@ -76,7 +76,7 @@ public class HomeFragment extends Fragment {
 
         //Data for view 2
 
-        getconnection("http://ahmedishtiaqbutt-001-site1.atempurl.com/Home/getNewpro/",2);
+        getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getNewpro/",2);
 
         /*
         Book22.add(new Prod("Toddler suit","Kids","Description",R.drawable.baby));
@@ -97,7 +97,7 @@ public class HomeFragment extends Fragment {
         //Data for view 3
 
 
-        getconnection("http://ahmedishtiaqbutt-001-site1.atempurl.com/Home/gettrendingpro/",3);
+        getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/gettrendingpro/",3);
 
         /*
         mTrends.add(new r3("Toddler suit","Kids","Description",R.drawable.baby));
@@ -198,7 +198,7 @@ return  view;
                                     String category=product.getString("category");
                                     double price= product.getDouble("price");
                                     int id=product.getInt("productId");
-                                    img="http://ahmedishtiaqbutt-001-site1.atempurl.com"+img;
+                                    img="http://ahmedishtiaq9778-001-site1.ftempurl.com"+img;
                                     if(img!=null) {
                                         if(val==1) {
                                             lstBook2.add(new Book(title, category, description, img,price,id));

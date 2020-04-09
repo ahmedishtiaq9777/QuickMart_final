@@ -69,7 +69,7 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
                     final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
                     // String url = "http:// 192.168.10.13:64077/api/login";
                     //String url="https://api.myjson.com/bins/kp9wz";
-                    String url = "http://ahmedishtiaq9777-001-site1.dtempurl.com/Home/signup";
+                    String url = "http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/signup";
 
 
                     StringRequest rRequest = new StringRequest(Request.Method.POST, url,

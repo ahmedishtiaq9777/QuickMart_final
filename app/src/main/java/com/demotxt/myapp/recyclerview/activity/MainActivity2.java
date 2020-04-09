@@ -28,7 +28,18 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitymain2);
 
-
+try {
+    Intent i=getIntent();
+   int code= i.getExtras().getInt("code");
+   if(code==5)
+   {
+       Toast.makeText(getApplicationContext(), "Product Added to Cart" , Toast.LENGTH_SHORT).show();
+   }
+}
+catch (NullPointerException e)
+{
+    e.printStackTrace();
+}
 
 
 
@@ -109,7 +120,7 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
 
     private boolean getloginprefference() {
 
-        loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        loginPreferences = getSharedPreferences("loginPref", MODE_PRIVATE);
 
         loginPrefsEditor = loginPreferences.edit();
         String username=loginPreferences.getString("username", "");

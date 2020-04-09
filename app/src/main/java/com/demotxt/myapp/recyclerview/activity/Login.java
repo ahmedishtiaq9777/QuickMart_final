@@ -21,23 +21,35 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.R;
+import com.demotxt.myapp.recyclerview.ownmodels.Book;
 import com.demotxt.myapp.recyclerview.productlist.ShoppyProductListActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Login extends AppCompatActivity {
 TextView signup,signin;
-    EditText email,pass;
-    private SharedPreferences loginPreferences;
-    private SharedPreferences.Editor loginPrefsEditor;
+   private EditText email,pass;
+    private SharedPreferences rememberMepref,loginpref;
+    private SharedPreferences.Editor rememberMePrefsEditor,loginprefeditor;
     private  CheckBox checkBoxremember;
     private Boolean saveLogin;
+    private SharedPreferences cartlistpref;
+    private SharedPreferences.Editor cartlistprefeditor;
+    private int proid;
+    public Set<String> cartids;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitylogin);
+        cartids=new HashSet<String>();
+
 
 
 
@@ -51,19 +63,24 @@ TextView signup,signin;
         pass=(EditText) findViewById(R.id.passwordd);
         checkBoxremember=(CheckBox)findViewById(R.id.checkboxremember);
 
+        cartlistpref=getSharedPreferences("cartprefs",MODE_PRIVATE);//get cartpreferences that contains cartitemlist
 
 
-        loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
 
+        loginpref=getSharedPreferences("loginpref",MODE_PRIVATE);
+        rememberMepref = getSharedPreferences("remembermepref", MODE_PRIVATE);
 
-        loginPrefsEditor = loginPreferences.edit();
+        cartlistprefeditor=cartlistpref.edit();
+        rememberMePrefsEditor = rememberMepref.edit();
+        loginprefeditor=loginpref.edit();
 
-        saveLogin = loginPreferences.getBoolean("saveLogin", false);
+        cartids=cartlistpref.getStringSet("cartids",cartids);
+        saveLogin = rememberMepref.getBoolean("saveLogin", false);
 
 if(saveLogin==true) {
 
-    email.setText(loginPreferences.getString("username", ""));
-    pass.setText(loginPreferences.getString("password", ""));
+    email.setText(rememberMepref.getString("username", ""));
+    pass.setText(rememberMepref.getString("password", ""));
     checkBoxremember.setChecked(true);
 
 }
@@ -79,51 +96,76 @@ try {
     final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
     // String url = "http:// 192.168.10.13:64077/api/login";
     //String url="https://api.myjson.com/bins/kp9wz";
-    String url = "http://ahmedishtiaqbutt-001-site1.atempurl.com/Home/login";
+    String url = "http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/login";
 
 
     StringRequest rRequest = new StringRequest(Request.Method.POST, url,
             new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    // response
-                  //  Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
-                    int size=response.toString().length();
-
-String result=response.toString().substring(1,size-1);
+                    try {
 
 
+                        JSONObject user = new JSONObject(response);
+                        String strResult = user.getString("result");
+                        int userid = user.getInt("userid");
 
-                    if(result.equals("success")){
+                        // response
+                        //  Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
+                        //  int size=response.toString().length();
 
-                        saveloginPrefference();
-
-                        Intent intent=new Intent(Login.this, ShoppyProductListActivity.class);
-                        intent.putExtra("email",email.getText().toString());
-                        intent.putExtra("password",pass.getText().toString());
-                        startActivity(intent);
-                      // getconnection("http://ahmedishtiaqbutt-001-site1.atempurl.com/Home/getproducts/");
-
+//String result=response.toString().substring(1,size-1);
 
 
+                        if (strResult.equals("success")) {
+
+                            saveloginPrefference(userid);
+                            Intent i=getIntent();
+                            int pid=-1;
+
+                             pid=i.getExtras().getInt("proid");
+                            if(pid!=-1)
+                            {
+                               AddToCart(pid);
+                              // finish();
+                               Intent mainactivity2=new Intent(Login.this,MainActivity2.class);
+                               mainactivity2.putExtra("code",5);
+                               startActivity(mainactivity2);
+                            }
+
+                         //   Intent intent = new Intent(Login.this, ShoppyProductListActivity.class);        //this is for searching ....product list
+                          //  intent.putExtra("email", email.getText().toString());
+                        //    intent.putExtra("password", pass.getText().toString());
+                        //    startActivity(intent);
+                            // getconnection("http://ahmedishtiaqbutt-001-site1.atempurl.com/Home/getproducts/");
 
 
-                   // finish();
-                  //  Intent intent2=new Intent(Login.this,MainActivity2.class);
+                            // finish();
+                            //  Intent intent2=new Intent(Login.this,MainActivity2.class);
 
-                  //  startActivity(intent2);
-                    }else if(result.equals("sellersuccess")){
+                            //  startActivity(intent2);
+                        } else if (strResult.equals("sellersuccess")) {
 
-                        finish();
-                         Intent intent2=new Intent(Login.this, MainActivity2.class);
+                            finish();
+                            Intent intent2 = new Intent(Login.this, MainActivity2.class);
 
-                         startActivity(intent2);
+                            startActivity(intent2);
 
-                    }else {
-                        Toast.makeText(getApplicationContext(),"Error:"+response.toString(),Toast.LENGTH_SHORT).show();
-                    }
-                }
-            },
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Error:" + response.toString(), Toast.LENGTH_SHORT).show();
+                        }
+
+
+            }catch (JSONException e)
+    {
+        e.printStackTrace();
+
+        Toast.makeText(getApplicationContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+
+
+            }},
             new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
@@ -174,18 +216,30 @@ String result=response.toString().substring(1,size-1);
 
 
     }
+public  void AddToCart(int id)
+{
+    String strid=String.valueOf(id);
+    cartids.add(strid);
+    cartlistprefeditor.remove("cartids");
+    cartlistprefeditor.commit();
+    cartlistprefeditor.putStringSet("cartids",cartids);
+    cartlistprefeditor.commit();
 
+}
 
-     public void saveloginPrefference()
+     public void saveloginPrefference(int uid)
     {
+
+        loginprefeditor.putBoolean("loggedin",true);
+        loginprefeditor.putInt("userid",uid);
+        loginprefeditor.commit();
         if (checkBoxremember.isChecked()) {
-            loginPrefsEditor.putBoolean("saveLogin", true);
-            loginPrefsEditor.putString("username", email.getText().toString());
-            loginPrefsEditor.putString("password", pass.getText().toString());
-            loginPrefsEditor.commit();
+            rememberMePrefsEditor.putString("username", email.getText().toString());
+            rememberMePrefsEditor.putString("password", pass.getText().toString());
+            rememberMePrefsEditor.commit();
         } else {
-            loginPrefsEditor.clear();
-            loginPrefsEditor.commit();
+            rememberMePrefsEditor.clear();
+            rememberMePrefsEditor.commit();
         }
 
     }

@@ -30,6 +30,7 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
 
     private Context mContext;
     private List<Prod> Data1;
+
     private SharedPreferences cartpreferrence;
     private SharedPreferences.Editor cartprefEditor;
     private boolean isblack;
@@ -40,16 +41,15 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
     public RecyclerViewProdAdapter(Context mContext, List<Prod> data1) {
         this.mContext = mContext;
         this.Data1 = data1;
-
+        ids=new HashSet<String>();
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        cartpreferrence =   mContext.getSharedPreferences("cartpref", MODE_PRIVATE);
+        cartpreferrence =   mContext.getSharedPreferences("favpref", MODE_PRIVATE);
         cartprefEditor = cartpreferrence.edit();
-        ids=new HashSet<String>();
+        ids=cartpreferrence.getStringSet("ids",ids);
        // cartprefEditor.putBoolean("ischecked", false);
-
 
 
         View view ;
@@ -61,9 +61,19 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
+
+        int ID=Data1.get(position).getId();
+        String strID=String.valueOf(ID);
+        isblack=cartpreferrence.getBoolean(strID,false);
+        if(isblack==true)
+        {
+            holder.heart.setImageResource(R.drawable.ic_favorite_black_24dp);
+        }
+
         holder.tv_book_title.setText(Data1.get(position).getTitle());
        // holder.img_book_thumbnail.setImageResource(Data1.get(position).getThumbnail());
         Picasso.get().load(Data1.get(position).getThumbnail()).into(holder.img_book_thumbnail);
+
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +86,7 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
                 intent.putExtra("Description",Data1.get(position).getDescription());
                 intent.putExtra("Thumbnail",Data1.get(position).getThumbnail());
                 intent.putExtra("price",Data1.get(position).getPrice());
+                intent.putExtra("proid",Data1.get(position).getId());
                 // start the activity
                 mContext.startActivity(intent);
 
