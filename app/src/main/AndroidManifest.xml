@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.demotxt.myapp.recyclerview">
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
 
     <application
@@ -36,12 +36,10 @@
         <activity android:name=".activity.Prod_Activity"></activity>
         <activity android:name=".activity.r3_Activity"></activity>
         <activity android:name=".activity.Login"></activity>
+        <activity android:name=".activity.TabsBasic"></activity>
 
         <activity android:name=".Test"></activity>
         <activity android:name=".productlist.ShoppyProductListActivity"></activity>
-
-
-
 
 
     </application>

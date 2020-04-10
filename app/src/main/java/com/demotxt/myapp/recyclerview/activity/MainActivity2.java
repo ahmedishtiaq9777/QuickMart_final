@@ -97,7 +97,7 @@ catch (NullPointerException e)
 
             case  R.id.nav_nearby:
                 try {
-                    Intent i=new Intent(MainActivity2.this, MapFragment.class);
+                    Intent i=new Intent(MainActivity2.this, TabsBasic.class);
                     op=1;
                     startActivity(i);
                     //fragment=new MapFragment();

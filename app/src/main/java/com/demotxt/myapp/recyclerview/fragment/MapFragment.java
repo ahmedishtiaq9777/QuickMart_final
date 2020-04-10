@@ -1,6 +1,7 @@
 package com.demotxt.myapp.recyclerview.fragment;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -11,12 +12,16 @@ import android.location.LocationProvider;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.android.volley.Request;
@@ -33,6 +38,8 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
@@ -50,72 +57,53 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.Permission;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class MapFragment extends FragmentActivity implements OnMapReadyCallback {
-    Location currentlocation;
-    FusedLocationProviderClient fusedLocationProviderClient;
-    private static final int REQUEST_CODE = 101;
-
-    private GoogleMap map;
+public class MapFragment extends Fragment {
+    GoogleMap googleMap;
+    private MapView mMapView;
     ArrayList<LatLng> mArrayList = new ArrayList<LatLng>();
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View rootview = inflater.inflate(R.layout.activity_map, container, false);
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        fetchLastLocation();
+        mMapView = rootview.findViewById(R.id.mapView);
+        mMapView.onCreate(savedInstanceState);
 
-    }
+        mMapView.onResume(); //needed to display map immediately
 
-    //Current Location and permission Set-up
-    private void fetchLastLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]
-                    {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
-            return;
+        try {
+            MapsInitializer.initialize(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        Task<Location> task = fusedLocationProviderClient.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+        mMapView.getMapAsync(new OnMapReadyCallback() {
+
             @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    currentlocation = location;
-                    Toast.makeText(getApplicationContext(), currentlocation
-                            .getLatitude() + "" + currentlocation.getLongitude(), Toast.LENGTH_SHORT).show();
-                    SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map2);
-                    supportMapFragment.getMapAsync(MapFragment.this);
-                }
-            }
+            public void onMapReady(GoogleMap mMap) {
+                googleMap = mMap;
+
+                googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+                getConnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getlanlong");
+
+                //Adding Markers
+                for (int i = 0; i < mArrayList.size(); i++) {
+                    googleMap.addMarker(new MarkerOptions()
+                            .position(mArrayList.get(i)).title("Shop")
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN))
+                            .draggable(false).visible(true)); } }
         });
-    }
+        return rootview; }
 
-    @Override
-    public void onMapReady(GoogleMap retMap) {
-        map = retMap;
-
-        //CurrenLocation Marker
-        LatLng latLng = new LatLng(currentlocation.getLatitude(), currentlocation.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("User");
-        map.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18),5000,null);
-        map.addMarker(markerOptions);
-
-        setUpMap();
-    }
-
-    public void setUpMap() {
-
-        map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        getConnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getlanlong");
-    }
-
+    //For Getting Values through JSON
     void getConnection(String url) {
         try {
-            final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+            final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
             StringRequest rRequest = new StringRequest(Request.Method.GET, url,
                     new Response.Listener<String>() {
                         @Override
@@ -126,23 +114,19 @@ public class MapFragment extends FragmentActivity implements OnMapReadyCallback 
                                 for (int i = 0; i < array.length(); i++) {
                                     JSONObject coord = array.getJSONObject(i);
 
-                                    Double Jlat = coord.getDouble("latitude");
-                                    Double Jlan = coord.getDouble("longitude");
+                                    String lat = coord.getString("latitude");
+                                    String lan = coord.getString("longitude");
+
+                                    double Jlat = Double.valueOf(lat);
+                                    double Jlan = Double.valueOf(lan);
 
                                     //Adding Values to LatLng and then to ArrayList
                                     LatLng markers = new LatLng(Jlat, Jlan);
                                     mArrayList.add(markers);
                                 }
-                                //Adding Markers
-                                for (int i = 0; i < mArrayList.size(); i++) {
-                                    map.addMarker(new MarkerOptions().position(mArrayList.get(i)).title("Shop")
-      /*Setting icon*/            .icon(mBitmapDescriptor(getApplicationContext(), R.drawable.ic_local_mall_black_24dp)));
-                                    map.animateCamera(CameraUpdateFactory.zoomTo(15.0f));
-                                    map.moveCamera(CameraUpdateFactory.newLatLng(mArrayList.get(i)));
-                                }
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Toast.makeText(getApplicationContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
@@ -155,29 +139,7 @@ public class MapFragment extends FragmentActivity implements OnMapReadyCallback 
             requestQueue.add(rRequest);
 
         } catch (Exception E) {
-            Toast.makeText(getApplicationContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    //For custom icon
-    private BitmapDescriptor mBitmapDescriptor(Context context, int vectorResId) {
-        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
-        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
-        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        vectorDrawable.draw(canvas);
-        return BitmapDescriptorFactory.fromBitmap(bitmap);
-    }
-
-    //FOr Location Permission
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_CODE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    fetchLastLocation();
-                }
-                break;
+            Toast.makeText(getContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 }
