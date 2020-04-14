@@ -1,4 +1,4 @@
-package com.demotxt.myapp.recyclerview;
+package com.demotxt.myapp.recyclerview.CategoryFragments;
 
 public class Catkids {
 
@@ -6,7 +6,7 @@ public class Catkids {
     private String Category;
     private String Description;
     private String Thumbnail;
-    private float Price;
+    private double Price;
     private  int Id;
 
     public Catkids(String title, String category, String description, String thumbnail,double price,int id) {
@@ -14,7 +14,7 @@ public class Catkids {
         Category = category;
         Description = description;
         Thumbnail = thumbnail;
-        Price=(float)price;
+        Price=price;
         Id=id;
 
     }
@@ -36,7 +36,7 @@ public class Catkids {
     public String getThumbnail() {
         return Thumbnail;
     }
-    public  float getPrice(){return Price;}
+    public  String getPrice(){return String.valueOf(Price);}
 
 
     public void setTitle(String title) {

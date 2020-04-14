@@ -1,4 +1,4 @@
-package com.demotxt.myapp.recyclerview;
+package com.demotxt.myapp.recyclerview.CategoryFragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,8 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.activity.TabsBasic;
-import com.demotxt.myapp.recyclerview.adapter.RecyclerViewAdapter;
 import com.demotxt.myapp.recyclerview.ownmodels.Book;
 import com.squareup.picasso.Picasso;
 
@@ -26,7 +26,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKidsViewHolder> {
 
     private Context mContext;
-    private List<Book> mData;
+    private List<Catkids> mData;
     //
     private SharedPreferences cartpreferrence;
     private SharedPreferences.Editor cartprefEditor;
@@ -34,6 +34,9 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
     //  private List<Integer> Ids;
     public Set<String> ids;
 
+    public CatKids_Adapter(List<Catkids> mdata){
+        mData = mdata;
+    }
 
     @NonNull
     @Override
@@ -57,16 +60,13 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
             holder.heart.setImageResource(R.drawable.ic_favorite_black_24dp);
         }
 
-        holder.tv_book_title.setText(mData.get(position).getTitle());
+        holder.tv_kids_title.setText(mData.get(position).getTitle());
+        holder.tv_price.setText(mData.get(position).getPrice());
         //holder.img_book_thumbnail.setImageResource(mData.get(position).getThumbnail());
-        Picasso.get().load(mData.get(position).getThumbnail()).into(holder.img_book_thumbnail);
+        Picasso.get().load(mData.get(position).getThumbnail()).into(holder.img_kids_thumbnail);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //Starting Activity To show Category Activity
-                Intent intent = new Intent(mContext, TabsBasic.class);
-                mContext.startActivity(intent);
 
             }
         });
@@ -131,22 +131,23 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mData.size();
     }
 
     public static class CatKidsViewHolder extends RecyclerView.ViewHolder   {
 
-        TextView tv_book_title;
-        ImageView img_book_thumbnail, heart;
+        TextView tv_kids_title,tv_price;
+        ImageView img_kids_thumbnail, heart;
         CardView cardView;
 
 
         public CatKidsViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tv_book_title = itemView.findViewById(R.id.book_title_id);
-            img_book_thumbnail = itemView.findViewById(R.id.book_img_id);
-            cardView = itemView.findViewById(R.id.cardview_id);
+            tv_kids_title = itemView.findViewById(R.id.kids_title_id);
+            tv_price = itemView.findViewById(R.id.kids_prod_price);
+            img_kids_thumbnail = itemView.findViewById(R.id.kids_img_id);
+            cardView = itemView.findViewById(R.id.cardview_kids);
             heart = itemView.findViewById(R.id.heart);
         }
     }

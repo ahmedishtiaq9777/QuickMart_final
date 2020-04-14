@@ -1,7 +1,6 @@
 <resources>
 
 
-
     <string-array name="Accounttypes">
 
 
@@ -22,7 +21,6 @@
     <string name="txt_profile_share">Share</string>
 
 
-
     <!--profile preferences-->
     <string name="pref_group_profile">PROFILE</string>
     <string name="pref_title_name">Name</string>
@@ -40,11 +38,8 @@
     <string name="txt_profile_privacy">Privacy Policy</string>
 
 
-
     <string name="signin"><u><b>Sign in</b></u></string>
     <string name="tandc"><u>terms &amp; conditions</u></string>
-
-
 
 
     <string name="share_app">I Would like to share this E-Commerce Android App with you. Here You Can Download This Application from PlayStore</string>
@@ -54,8 +49,8 @@
         \n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam efficitur ipsum in placerat molestie.  Fusce quis mauris a enim sollicitudin
     </string>
 
-
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

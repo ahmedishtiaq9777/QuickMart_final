@@ -15,7 +15,6 @@ import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.fragment.CartFragment;
 import com.demotxt.myapp.recyclerview.fragment.FavoriteFragment;
 import com.demotxt.myapp.recyclerview.fragment.HomeFragment;
-import com.demotxt.myapp.recyclerview.fragment.MapFragment;
 import com.demotxt.myapp.recyclerview.fragment.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -28,24 +27,18 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitymain2);
 
-try {
-    Intent i=getIntent();
-   int code= i.getExtras().getInt("code");
-   if(code==5)
-   {
-       Toast.makeText(getApplicationContext(), "Product Added to Cart" , Toast.LENGTH_SHORT).show();
-   }
-}
-catch (NullPointerException e)
-{
-    e.printStackTrace();
-}
-
-
+        try {
+            Intent i = getIntent();
+            int code = i.getExtras().getInt("code");
+            if (code == 5) {
+                Toast.makeText(getApplicationContext(), "Product Added to Cart", Toast.LENGTH_SHORT).show();
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
-
 
 
         navView.setOnNavigationItemSelectedListener(this);
@@ -55,67 +48,47 @@ catch (NullPointerException e)
 
     }
 
-    public  boolean loadFragment(Fragment fragment)
-    {
-        if(fragment!=null)
-        {
+    public boolean loadFragment(Fragment fragment) {
+        if (fragment != null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragmentcontainer,fragment).addToBackStack(null)
+                    .replace(R.id.fragmentcontainer, fragment).addToBackStack(null)
                     .commit();
-            return  true;
+            return true;
         }
-        return  false;
+        return false;
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        int op=0;
+        int op = 0;
 
-        Fragment fragment=null;
-        switch (menuItem.getItemId())
-        {
+        Fragment fragment = null;
+        switch (menuItem.getItemId()) {
             case R.id.nav_home:
-                fragment=new HomeFragment();
+                fragment = new HomeFragment();
                 break;
-            case  R.id.nav_favourite:
-                fragment=new FavoriteFragment();
+            case R.id.nav_favourite:
+                fragment = new FavoriteFragment();
                 break;
-            case  R.id.nav_cart:
-                fragment=new CartFragment();
+            case R.id.nav_cart:
+                fragment = new CartFragment();
                 break;
 
-            case  R.id.nav_acc:
-                if(getloginprefference()==true) {
+            case R.id.nav_acc:
+                if (getloginprefference() == true) {
                     fragment = new ProfileFragment();
                     break;
-                }else {
+                } else {
 
-                    Intent login=new Intent(MainActivity2.this, Login.class);
+                    Intent login = new Intent(MainActivity2.this, Login.class);
                     startActivity(login);
                 }
-
-            case  R.id.nav_nearby:
-                try {
-                    Intent i=new Intent(MainActivity2.this, TabsBasic.class);
-                    op=1;
-                    startActivity(i);
-                    //fragment=new MapFragment();
-                    break;
-
-                }catch (Exception E){
-
-                    Toast.makeText(getApplicationContext(),"error"+E.getMessage(),Toast.LENGTH_SHORT).show();
-                }
-
-
-
-
         }
 
-      if(op!=1)
-        return  loadFragment(fragment);
-      return false;
+        if (op != 1)
+            return loadFragment(fragment);
+        return false;
     }
 
     private boolean getloginprefference() {
@@ -123,13 +96,12 @@ catch (NullPointerException e)
         loginPreferences = getSharedPreferences("loginPref", MODE_PRIVATE);
 
         loginPrefsEditor = loginPreferences.edit();
-        String username=loginPreferences.getString("username", "");
-        String pass=loginPreferences.getString("password", "");
-        if(username!=null||pass!=null)
-        {
+        String username = loginPreferences.getString("username", "");
+        String pass = loginPreferences.getString("password", "");
+        if (username != null || pass != null) {
             return true;
-        }else{
-            return  false;
+        } else {
+            return false;
         }
 
     }

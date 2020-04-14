@@ -48,10 +48,6 @@ public class HomeFragment extends Fragment {
        // View view2=inflater.inflate(R.layout.homefragment,null);
        // viewFlipper=(ViewFlipper)view2.findViewById(R.id.flipper);
 
-
-
-
-
         lstBook2 = new ArrayList<>();
         Book22 = new ArrayList<>();
         mTrends = new ArrayList<>();
@@ -201,7 +197,7 @@ return  view;
                                     img="http://ahmedishtiaq9778-001-site1.ftempurl.com"+img;
                                     if(img!=null) {
                                         if(val==1) {
-                                            lstBook2.add(new Book(title, category, description, img,price,id));
+                                            lstBook2.add(new Book(title,img));
                                         }else if(val==2)
                                         {
                                             Book22.add(new Prod(title, category, description, img,price,id));

@@ -51,7 +51,7 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
 
         View view ;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
-        view = mInflater.inflate(R.layout.cardveiw_item_book,parent,false);
+        view = mInflater.inflate(R.layout.cardview_item_r3,parent,false);
         return new MyViewHolder(view);
     }
 
@@ -67,9 +67,9 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
             holder.heart.setImageResource(R.drawable.ic_favorite_black_24dp);
         }
 
-        holder.tv_book_title.setText(Data2.get(position).getTitle());
+        holder.tv_r3_title.setText(Data2.get(position).getTitle());
        // holder.img_book_thumbnail.setImageResource(Data2.get(position).getThumbnail());
-        Picasso.get().load(Data2.get(position).getThumbnail()).into(holder.img_book_thumbnail);
+        Picasso.get().load(Data2.get(position).getThumbnail()).into(holder.img_r3_thumbnail);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,16 +131,17 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_book_title;
-        ImageView img_book_thumbnail,heart;
+        TextView tv_r3_title;
+        ImageView img_r3_thumbnail,heart;
         CardView cardView ;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            tv_book_title = itemView.findViewById(R.id.book_title_id) ;
-            img_book_thumbnail = itemView.findViewById(R.id.book_img_id);
-            cardView = itemView.findViewById(R.id.cardview_id);
+            tv_r3_title = itemView.findViewById(R.id.r3_title_id) ;
+            img_r3_thumbnail = itemView.findViewById(R.id.r3_img_id);
+            //same cardview as of book activity
+            cardView = itemView.findViewById(R.id.cardview_id_r3);
             heart=itemView.findViewById(R.id.heart);
 
 
