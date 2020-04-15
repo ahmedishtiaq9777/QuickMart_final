@@ -3,6 +3,7 @@ package com.demotxt.myapp.recyclerview.CategoryFragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,7 +19,7 @@ import java.util.List;
 public class CatMen_Fragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private GridLayoutManager mLayoutManager;
 
     List<CatMen> ProdMen;
 
@@ -34,7 +35,7 @@ public class CatMen_Fragment extends Fragment {
         //TODO Add Data in The Recycler Views;
 
         mRecyclerView = rootview.findViewById(R.id.Rv_CatMen);
-        mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager = new GridLayoutManager(getContext(),2);
         mAdapter = new CatMen_Adapter(ProdMen);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
