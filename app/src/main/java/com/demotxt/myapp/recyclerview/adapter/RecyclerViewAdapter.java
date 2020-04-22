@@ -72,9 +72,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View v) {
                 //To send data to next frag
-                Fragment fragment = new Fragment();
-                Bundle b = new Bundle();
-
+              //  Fragment fragment = new Fragment();
+                //Bundle b = new Bundle();
+int userid= mData.get(position).getUserId();
+Toast.makeText(mContext.getApplicationContext(),"seller id:"+userid,Toast.LENGTH_LONG).show();
+         // String T= mData.get(position).getTitle();
                /* if(ShopID == "Outfitter") {
                   //  b.putInt("", );
                     fragment.setArguments(b);
@@ -84,6 +86,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                 //Starting Activity To show Category Activity
                 Intent intent = new Intent(mContext, TabsBasic.class);
+                intent.putExtra("sellerid",userid);
                 mContext.startActivity(intent);
 
             }

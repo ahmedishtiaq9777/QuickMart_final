@@ -1,12 +1,17 @@
 package com.demotxt.myapp.recyclerview.CategoryFragments;
 
-public class CatWomen {
+import com.google.gson.annotations.SerializedName;
 
+public class CatWomen {
+    @SerializedName("title")// Server side  column name
     private String Title;
     private String Category;
     private String Description;
+    @SerializedName("productImage")
     private String Thumbnail;
+    @SerializedName("price")
     private double Price;
+    @SerializedName("productId")
     private  int Id;
 
     public CatWomen(String title, String category, String description, String thumbnail, double price, int id) {

@@ -34,7 +34,9 @@ public class CatMen_Adapter extends RecyclerView.Adapter<CatMen_Adapter.CatMenVi
     //  private List<Integer> Ids;
     public Set<String> ids;
 
-    public CatMen_Adapter(List<CatMen> mdata){
+    public CatMen_Adapter(Context mContext,List<CatMen> mdata)
+    {
+        this.mContext=mContext;
         mData = mdata;
     }
 
