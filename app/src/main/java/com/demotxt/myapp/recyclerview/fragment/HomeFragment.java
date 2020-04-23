@@ -2,6 +2,7 @@ package com.demotxt.myapp.recyclerview.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,6 @@ import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,62 +29,149 @@ import com.demotxt.myapp.recyclerview.adapter.RecyclerView3;
 import com.demotxt.myapp.recyclerview.adapter.RecyclerViewAdapter;
 import com.demotxt.myapp.recyclerview.adapter.RecyclerViewProdAdapter;
 import com.demotxt.myapp.recyclerview.ownmodels.r3;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
-    List<Book> lstBook2;
+   // List<Book> lstBook2;
+    List<Book> list;
     List<Prod> Book22;
     List<r3> mTrends;
-    View view;
+     View view;
     View v2;
     ViewFlipper viewFlipper;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        lstBook2 = new ArrayList<>();
+       // View view2=inflater.inflate(R.layout.homefragment,null);
+       // viewFlipper=(ViewFlipper)view2.findViewById(R.id.flipper);
+
+        list = new ArrayList<>();
         Book22 = new ArrayList<>();
         mTrends = new ArrayList<>();
-        getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getrecommendedpro/", 1);
-        getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getNewpro/", 2);
-        getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/gettrendingpro/", 3);
+        getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getsellers/",1);
 
-        view = inflater.inflate(R.layout.homefragment, container, false);
 
-        v2 = inflater.inflate(R.layout.cardveiw_item_prod, null);
-        setrecycleone();
+        //Data for view 1
 
-        ImageView prod = (ImageView) v2.findViewById(R.id.book_img_id);
+
+     /*   lstBook2.add(new Book("Toddler suit","Kids","Description",R.drawable.baby));
+        lstBook2.add(new Book("Black shoes","Shoes","Description",R.drawable.shoes));
+        lstBook2.add(new Book("Dress","Women","Description",R.drawable.female));
+        lstBook2.add(new Book("Designer Jacket"," Men","Description",R.drawable.jacket));
+        lstBook2.add(new Book("Toddler suit","Kids","Description",R.drawable.baby));
+        lstBook2.add(new Book("Black shoes","Shoes","Description",R.drawable.shoes));
+        lstBook2.add(new Book("Dress","Women","Description",R.drawable.female));
+        lstBook2.add(new Book("Designer Jacket","Men","Description",R.drawable.jacket));
+        lstBook2.add(new Book("Toddler suit","Kids","Description",R.drawable.baby));
+        lstBook2.add(new Book("Black shoes","Shoes","Description",R.drawable.shoes));
+        lstBook2.add(new Book("Dress","Women","Description",R.drawable.female));
+        lstBook2.add(new Book("Designer Jacket","Men","Description",R.drawable.jacket));*/
+
+        //Data for view 2
+
+        getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getrecommendedpro/",2);
+
+        /*
+        Book22.add(new Prod("Toddler suit","Kids","Description",R.drawable.baby));
+        Book22.add(new Prod("Black shoes","Shoes","Description",R.drawable.shoes));
+        Book22.add(new Prod("Dress","Women","Description",R.drawable.female));
+        Book22.add(new Prod("Designer Jacket"," Men","Description",R.drawable.jacket));
+        Book22.add(new Prod("Toddler suit","Kids","Description",R.drawable.baby));
+        Book22.add(new Prod("Black shoes","Shoes","Description",R.drawable.shoes));
+        Book22.add(new Prod("Dress","Women","Description",R.drawable.female));
+        Book22.add(new Prod("Designer Jacket","Men","Description",R.drawable.jacket));
+        Book22.add(new Prod("Toddler suit","Kids","Description",R.drawable.baby));
+        Book22.add(new Prod("Black shoes","Shoes","Description",R.drawable.shoes));
+        Book22.add(new Prod("Dress","Women","Description",R.drawable.female));
+        Book22.add(new Prod("Designer Jacket","Men","Description",R.drawable.jacket));
+        */
+
+
+        //Data for view 3
+
+
+        getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/gettrendingpro/",3);
+
+        /*
+        mTrends.add(new r3("Toddler suit","Kids","Description",R.drawable.baby));
+        mTrends.add(new r3("Black shoes","Shoes","Description",R.drawable.shoes));
+        mTrends.add(new r3("Dress","Women","Description",R.drawable.female));
+        mTrends.add(new r3("Designer Jacket"," Men","Description",R.drawable.jacket));
+        mTrends.add(new r3("Toddler suit","Kids","Description",R.drawable.baby));
+        mTrends.add(new r3("Black shoes","Shoes","Description",R.drawable.shoes));
+        mTrends.add(new r3("Dress","Women","Description",R.drawable.female));
+        mTrends.add(new r3("Designer Jacket","Men","Description",R.drawable.jacket));
+        mTrends.add(new r3("Toddler suit","Kids","Description",R.drawable.baby));
+        mTrends.add(new r3("Black shoes","Shoes","Description",R.drawable.shoes));
+        mTrends.add(new r3("Dress","Women","Description",R.drawable.female));
+        mTrends.add(new r3("Designer Jacket","Men","Description",R.drawable.jacket));
+
+*/
+//Recycler View 1
+         view= inflater.inflate(R.layout.homefragment,container,false);
+
+         v2=inflater.inflate(R.layout.cardveiw_item_prod,null);
+       setrecycleone();
+
+
+//Recycler View 2
+
+      //  View view2= inflater.inflate(R.layout.homefragment,  null);
+        /*RecyclerView myrv2=(RecyclerView) view.findViewById(R.id.recyclerview2);
+        RecyclerViewProdAdapter myAdapter1 = new RecyclerViewProdAdapter(getActivity(),Book22);
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        myrv2.setLayoutManager(layoutManager1);
+        myrv2.setAdapter(myAdapter1);*/
+
+//Recycler View 3
+
+        //  View view2= inflater.inflate(R.layout.homefragment,  null);
+        /*RecyclerView myrv3=(RecyclerView) view.findViewById(R.id.recyclerview3);
+        RecyclerView3 myAdapter2 = new RecyclerView3(getActivity(),mTrends);
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        myrv3.setLayoutManager(layoutManager2);
+        myrv3.setAdapter(myAdapter2);*/
+
+
+
+        ImageView prod =(ImageView)v2.findViewById(R.id.book_img_id);
 
 
         prod.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent productdetail = new Intent(getActivity(), Prod_Activity.class);
+                Intent productdetail=new Intent(getActivity(), Prod_Activity.class);
                 startActivity(productdetail);
             }
         });
 
         //flipper
-        viewFlipper = (ViewFlipper) view.findViewById(R.id.flipper);
-        int images[] = {R.drawable.ac_banner, R.drawable.cloth_banner, R.drawable.sale1, R.drawable.mobile_banner};
+        viewFlipper=(ViewFlipper)view.findViewById(R.id.flipper);
+        int images[] = {R.drawable.ac_banner,R.drawable.cloth_banner,R.drawable.sale1,R.drawable.mobile_banner};
 
-        for (int image : images) {
+        for (int image:images) {
             flipperimages(image);
         }
 
-        return view;
+return  view;
+
+
+
 
 
         //return inflater.inflate(R.layout.homefragment,  null);
 
     }
+    public  void   getconnection(String url,final int val){
 
-    public void getconnection(String url, final int val) {
 
 
         try {
@@ -94,6 +181,7 @@ public class HomeFragment extends Fragment {
             //String url="https://api.myjson.com/bins/kp9wz";
 
 
+
             StringRequest rRequest = new StringRequest(Request.Method.GET, url,
                     new Response.Listener<String>() {
                         @Override
@@ -101,41 +189,63 @@ public class HomeFragment extends Fragment {
                             //  Toast.makeText(ShoppyProductListActivity.this, response, Toast.LENGTH_SHORT).show();
                             try {
                                 //m=new ArrayList<String>();
-                                JSONArray array = new JSONArray(response);
+                                if(val!=1) {
+                                    JSONArray array = new JSONArray(response);
 
-                                for (int i = 0; i < array.length(); i++) {
-                                    JSONObject product = array.getJSONObject(i);
-                                    String img = product.getString("productImage");
-                                    String title = product.getString("title");
-                                    String description = product.getString("description");
-                                    String category = product.getString("category");
-                                    double price = product.getDouble("price");
-                                    int id = product.getInt("productId");
-                                    img = "http://ahmedishtiaq9778-001-site1.ftempurl.com" + img;
-                                    if (img != null) {
-                                        if (val == 1) {
-                                            lstBook2.add(new Book(title, img));
-                                        } else if (val == 2) {
-                                            Book22.add(new Prod(title, category, description, img, price, id));
-                                        } else if (val == 3) {
-                                            mTrends.add(new r3(title, category, description, img, price, id));
+                                    for (int i = 0; i < array.length(); i++) {
+                                        JSONObject product = array.getJSONObject(i);
+                                        String img = product.getString("productImage");
+                                        String title = product.getString("title");
+                                        String description = product.getString("description");
+                                        String category = product.getString("category");
+                                        double price = product.getDouble("price");
+                                        int id = product.getInt("productId");
+                                        img = "http://ahmedishtiaq9778-001-site1.ftempurl.com" + img;
+                                        if (img != null) {
+                                           /* if (val == 1) {
+                                                lstBook2.add(new Book(title, img));
+                                            } else  */  if (val == 2) {
+                                                Book22.add(new Prod(title, category, description, img, price, id));
+                                            } else if (val == 3) {
+                                                mTrends.add(new r3(title, category, description, img, price, id));
+                                            }
                                         }
+
                                     }
+                                  /*  if (val == 1) {
+                                        setrecycleone();
+                                    } else    */  if (val == 2) {
+                                        setrecycletwo();
+                                    } else if (val == 3) {
+                                        setrecyclethree();
+                                    }
+                                }else {
+                                    GsonBuilder builder = new GsonBuilder();
+                                    Gson gson = builder.create();
+                                    list = Arrays.asList(gson.fromJson(response, Book[].class));
+                                  /*  for (Book one:list) {
+                                        Log.i("userid",  String.valueOf(one.getUserId()));
+                                        Log.i("thumbnail",  one.getThumbnail());
+                                        Log.i("Title",  one.getTitle());
+                                    }*/
+                                 //   Toast.makeText(getContext(), list.toString(), Toast.LENGTH_LONG).show();
+                                    //  for(Book )
+                                   int n = 0;
+                                    for (Book i : list) {
+                                        i.setThumbnail("http://ahmedishtiaq9778-001-site1.ftempurl.com" + i.getThumbnail());
+                                       // list.remove(n);
+                                        list.set(n,i);
+                                        n++;
 
-                                }
-                                if (val == 1) {
+
+                                    }
                                     setrecycleone();
-                                } else if (val == 2) {
-                                    setrecycletwo();
-                                } else if (val == 3) {
-                                    setrecyclethree();
                                 }
-
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
 
-                                Toast.makeText(getContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(),"error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
                             }
 
                             // response
@@ -151,52 +261,76 @@ public class HomeFragment extends Fragment {
                     });
 
 
+
             requestQueue.add(rRequest);
 
 
-        } catch (Exception E) {
-            Toast.makeText(getContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
+        }catch (Exception E)
+        {
+            Toast.makeText(getContext(),"Error: "+E.getMessage(),Toast.LENGTH_SHORT).show();
         }
 
 
-    }
 
-    public void flipperimages(int image) {
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+    public  void flipperimages(int image)
+    {
         try {
-            ImageView imageView = new ImageView(getContext());
+            ImageView imageView=new ImageView(getContext());
             imageView.setImageResource(image);
             viewFlipper.addView(imageView);
             viewFlipper.setFlipInterval(3000);
             viewFlipper.setAutoStart(true);
-            viewFlipper.setInAnimation(getContext(), android.R.anim.slide_in_left);
-            viewFlipper.setOutAnimation(getContext(), android.R.anim.slide_out_right);
-        } catch (Exception e) {
-            Toast.makeText(getContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            viewFlipper.setInAnimation(getContext(),android.R.anim.slide_in_left);
+            viewFlipper.setOutAnimation(getContext(),android.R.anim.slide_out_right);
+        }catch(Exception e)
+        {
+            Toast.makeText(getContext(),"error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
         }
 
-    }
 
-    public void setrecycleone() {
-        RecyclerView myrv = (RecyclerView) view.findViewById(R.id.recyclerview_id);
-        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(getActivity(), lstBook2);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        myrv.setLayoutManager(layoutManager);
-        myrv.setAdapter(myAdapter);
+
 
     }
 
-    public void setrecycletwo() {
-        RecyclerView myrv2 = (RecyclerView) view.findViewById(R.id.recyclerview2);
-        RecyclerViewProdAdapter myAdapter1 = new RecyclerViewProdAdapter(getActivity(), Book22);
+  public void setrecycleone()
+     {
+
+
+         RecyclerView myrv = (RecyclerView) view.findViewById(R.id.recyclerview_id);
+         RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(getActivity(),list);
+         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+         //  myrv.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+         myrv.setLayoutManager(layoutManager);
+         myrv.setAdapter(myAdapter);
+
+     }
+    public void setrecycletwo()
+    {
+        RecyclerView myrv2=(RecyclerView) view.findViewById(R.id.recyclerview2);
+        RecyclerViewProdAdapter myAdapter1 = new RecyclerViewProdAdapter(getActivity(),Book22);
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         myrv2.setLayoutManager(layoutManager1);
         myrv2.setAdapter(myAdapter1);
     }
-
-    public void setrecyclethree() {
-        RecyclerView myrv3 = (RecyclerView) view.findViewById(R.id.recyclerview3);
-        RecyclerView3 myAdapter2 = new RecyclerView3(getActivity(), mTrends);
-        GridLayoutManager layoutManager2 = new GridLayoutManager(getContext(), 2);
+    public void setrecyclethree()
+    {
+        RecyclerView myrv3=(RecyclerView) view.findViewById(R.id.recyclerview3);
+        RecyclerView3 myAdapter2 = new RecyclerView3(getActivity(),mTrends);
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         myrv3.setLayoutManager(layoutManager2);
         myrv3.setAdapter(myAdapter2);
     }

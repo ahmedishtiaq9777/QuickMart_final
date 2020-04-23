@@ -149,24 +149,6 @@ Boolean is_logedin=loginpref.getBoolean("loggedin",false);
      }
  };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     }*/
+    }*/
 
 }

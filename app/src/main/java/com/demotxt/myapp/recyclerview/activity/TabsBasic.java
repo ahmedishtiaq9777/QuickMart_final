@@ -1,6 +1,8 @@
 package com.demotxt.myapp.recyclerview.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,12 +30,17 @@ public class TabsBasic extends AppCompatActivity {
 
     private ViewPager view_pager;
     private TabLayout tab_layout;
+    private    int userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabs_basic);
-
+        Intent i=getIntent();
+       userid=i.getExtras().getInt("sellerid");
+       // userid=i.getIntExtra("sellerid",0); this
+       // userid=7;
+      //  Log.i("UserId", "Seller id: "+userid);
         initToolbar();
         initComponent();
     }
@@ -79,6 +86,9 @@ public class TabsBasic extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    public  int getuserid(){
+        return userid;
+    }
 
     public static class PlaceholderFragment extends Fragment {
         private static final String ARG_SECTION_NUMBER = "section_number";
@@ -90,7 +100,38 @@ public class TabsBasic extends AppCompatActivity {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+
             fragment.setArguments(args);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             return fragment;
         }
 
@@ -116,16 +157,21 @@ public class TabsBasic extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             Fragment frag = null;
+
+
             switch (position)
             {
                 case 0:
                     frag = new CatMen_Fragment();
+
                     break;
                 case 1:
                     frag = new CatWomen_Fragment();
+
                     break;
                 case 2:
                     frag = new CatKids_Fragment();
+
                     break;
             }
             return frag;

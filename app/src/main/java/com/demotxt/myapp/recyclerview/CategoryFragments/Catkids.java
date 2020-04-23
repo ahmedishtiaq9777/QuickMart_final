@@ -1,12 +1,18 @@
 package com.demotxt.myapp.recyclerview.CategoryFragments;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Catkids {
 
+    @SerializedName("title")
     private String Title;
     private String Category;
     private String Description;
+    @SerializedName("productImage")
     private String Thumbnail;
+    @SerializedName("price")
     private double Price;
+    @SerializedName("productId")
     private  int Id;
 
     public Catkids(String title, String category, String description, String thumbnail,double price,int id) {
