@@ -1,6 +1,7 @@
 package com.demotxt.myapp.recyclerview.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.android.volley.AuthFailureError;
@@ -21,16 +23,21 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.R;
+import com.demotxt.myapp.recyclerview.activity.Payment;
 import com.demotxt.myapp.recyclerview.shoppycartlist.CartListActivity;
 import com.demotxt.myapp.recyclerview.shoppycartlist.CartListBaseAdapter;
 import com.demotxt.myapp.recyclerview.shoppycartlist.CartListBeanlist;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -52,11 +59,12 @@ public class CartFragment extends Fragment  {
 
 
   //  private String[] PRICE = {"$ 220.00", "$ 49.00", "$ 320.00", "$ 220.00", "$ 49.00", "$ 320.00", "$ 220.00"};
-    private ArrayList<CartListBeanlist> Bean;
+    private List<CartListBeanlist> Bean;
     private CartListBaseAdapter baseAdapter;
     public Set<String> cartids;
     private SharedPreferences cartprefs;
     private SharedPreferences.Editor cartprefeditor;
+    private Button pay;
 
 
     @Override
@@ -69,6 +77,16 @@ public class CartFragment extends Fragment  {
 cartids=cartprefs.getStringSet("cartids",cartids);
         Bean = new ArrayList<CartListBeanlist>();
 getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswithproId");
+
+        pay=(Button)view.findViewById(R.id.pay);
+        pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), Payment.class);
+                startActivity(i);
+            }
+        });
+
        /* for (int i = 0; i < TITLE.length; i++) {
 
             CartListBeanlist bean = new CartListBeanlist(IMAGE[i], TITLE[i], PRICE[i]);
@@ -98,7 +116,11 @@ getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswi
                         // Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
                         try {
 
-                            JSONArray array = new JSONArray(response);
+                            GsonBuilder builder = new GsonBuilder();
+                            Gson gson = builder.create();
+                            Bean= Arrays.asList(gson.fromJson(response, CartListBeanlist[].class));
+                            setimageurl();
+                          /*  JSONArray array = new JSONArray(response);
 
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject product = array.getJSONObject(i);
@@ -113,7 +135,7 @@ getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswi
 
 
 
-                            }
+                            }*/
 
                             baseAdapter = new CartListBaseAdapter(getActivity(), Bean) {
                             };
@@ -169,6 +191,17 @@ getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswi
         request.add(rRequest);
 
 
+    }
+    private  void setimageurl(){
+        int n = 0;
+        for (CartListBeanlist i : Bean) {
+            i.setImage("http://ahmedishtiaq9778-001-site1.ftempurl.com" + i.getImage());
+            // list.remove(n);
+            Bean.set(n,i);
+            n++;
+
+
+        }
     }
 
 }
