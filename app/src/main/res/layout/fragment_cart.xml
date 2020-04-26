@@ -22,7 +22,7 @@
         />
 
 
-    <com.demotxt.myapp.recyclerview.customfonts.MyTextView
+    <Button
         android:id="@+id/pay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
