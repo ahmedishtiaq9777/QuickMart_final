@@ -2,6 +2,7 @@ package com.demotxt.myapp.recyclerview.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,16 +29,20 @@ import com.demotxt.myapp.recyclerview.adapter.RecyclerView3;
 import com.demotxt.myapp.recyclerview.adapter.RecyclerViewAdapter;
 import com.demotxt.myapp.recyclerview.adapter.RecyclerViewProdAdapter;
 import com.demotxt.myapp.recyclerview.ownmodels.r3;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
-    List<Book> lstBook2;
+   // List<Book> lstBook2;
+    List<Book> list;
     List<Prod> Book22;
     List<r3> mTrends;
      View view;
@@ -48,10 +53,10 @@ public class HomeFragment extends Fragment {
        // View view2=inflater.inflate(R.layout.homefragment,null);
        // viewFlipper=(ViewFlipper)view2.findViewById(R.id.flipper);
 
-        lstBook2 = new ArrayList<>();
+        list = new ArrayList<>();
         Book22 = new ArrayList<>();
         mTrends = new ArrayList<>();
-        getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getrecommendedpro/",1);
+        getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getsellers/",1);
 
 
         //Data for view 1
@@ -72,7 +77,7 @@ public class HomeFragment extends Fragment {
 
         //Data for view 2
 
-        getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getNewpro/",2);
+        getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getrecommendedpro/",2);
 
         /*
         Book22.add(new Prod("Toddler suit","Kids","Description",R.drawable.baby));
@@ -184,38 +189,58 @@ return  view;
                             //  Toast.makeText(ShoppyProductListActivity.this, response, Toast.LENGTH_SHORT).show();
                             try {
                                 //m=new ArrayList<String>();
-                                JSONArray array = new JSONArray(response);
+                                if(val!=1) {
+                                    JSONArray array = new JSONArray(response);
 
-                                for (int i = 0; i < array.length(); i++) {
-                                    JSONObject product = array.getJSONObject(i);
-                                    String img=product.getString("productImage");
-                                    String title=product.getString("title");
-                                    String description=product.getString("description");
-                                    String category=product.getString("category");
-                                    double price= product.getDouble("price");
-                                    int id=product.getInt("productId");
-                                    img="http://ahmedishtiaq9778-001-site1.ftempurl.com"+img;
-                                    if(img!=null) {
-                                        if(val==1) {
-                                            lstBook2.add(new Book(title,img));
-                                        }else if(val==2)
-                                        {
-                                            Book22.add(new Prod(title, category, description, img,price,id));
-                                        }else if(val==3){
-                                            mTrends.add(new r3(title, category, description, img,price,id));
+                                    for (int i = 0; i < array.length(); i++) {
+                                        JSONObject product = array.getJSONObject(i);
+                                        String img = product.getString("productImage");
+                                        String title = product.getString("title");
+                                        String description = product.getString("description");
+                                        String category = product.getString("category");
+                                        double price = product.getDouble("price");
+                                        int id = product.getInt("productId");
+                                        img = "http://ahmedishtiaq9778-001-site1.ftempurl.com" + img;
+                                        if (img != null) {
+                                           /* if (val == 1) {
+                                                lstBook2.add(new Book(title, img));
+                                            } else  */  if (val == 2) {
+                                                Book22.add(new Prod(title, category, description, img, price, id));
+                                            } else if (val == 3) {
+                                                mTrends.add(new r3(title, category, description, img, price, id));
+                                            }
                                         }
+
                                     }
+                                  /*  if (val == 1) {
+                                        setrecycleone();
+                                    } else    */  if (val == 2) {
+                                        setrecycletwo();
+                                    } else if (val == 3) {
+                                        setrecyclethree();
+                                    }
+                                }else {
+                                    GsonBuilder builder = new GsonBuilder();
+                                    Gson gson = builder.create();
+                                    list = Arrays.asList(gson.fromJson(response, Book[].class));
+                                  /*  for (Book one:list) {
+                                        Log.i("userid",  String.valueOf(one.getUserId()));
+                                        Log.i("thumbnail",  one.getThumbnail());
+                                        Log.i("Title",  one.getTitle());
+                                    }*/
+                                 //   Toast.makeText(getContext(), list.toString(), Toast.LENGTH_LONG).show();
+                                    //  for(Book )
+                                   int n = 0;
+                                    for (Book i : list) {
+                                        i.setThumbnail("http://ahmedishtiaq9778-001-site1.ftempurl.com" + i.getThumbnail());
+                                       // list.remove(n);
+                                        list.set(n,i);
+                                        n++;
 
+
+                                    }
+                                    setrecycleone();
                                 }
-                                if(val==1){
-                                setrecycleone();
-                                }else if(val==2){
-                                    setrecycletwo();
-                                }else if(val==3){
-                                    setrecyclethree();
-                                }
-
-
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -285,7 +310,7 @@ return  view;
 
 
          RecyclerView myrv = (RecyclerView) view.findViewById(R.id.recyclerview_id);
-         RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(getActivity(),lstBook2);
+         RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(getActivity(),list);
          LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
          //  myrv.setLayoutManager(new LinearLayoutManager(getActivity()));
 

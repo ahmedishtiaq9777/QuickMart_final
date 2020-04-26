@@ -35,7 +35,8 @@ public class CatWomen_Adapter extends RecyclerView.Adapter<CatWomen_Adapter.CatW
     //  private List<Integer> Ids;
     public Set<String> ids;
 
-    public CatWomen_Adapter(List<CatWomen> mdata){
+    public CatWomen_Adapter(Context mContext,List<CatWomen> mdata){
+        this.mContext=mContext;
         mData = mdata;
     }
 
