@@ -27,12 +27,15 @@ import com.demotxt.myapp.recyclerview.ownmodels.Prod;
 import com.demotxt.myapp.recyclerview.ownmodels.r3;
 import com.demotxt.myapp.recyclerview.shoppycartlist.CartListBaseAdapter;
 import com.demotxt.myapp.recyclerview.shoppycartlist.CartListBeanlist;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -45,9 +48,11 @@ public class FavoriteFragment extends Fragment {
     private ListView listview;
     private Set<String> ids;
     private SharedPreferences cartpreferrence;
+    private SharedPreferences.Editor cartprefEditor;
+
 
     Typeface fonts1, fonts2;
-    private ArrayList<CartListBeanlist> Bean;
+    private List<CartListBeanlist> Bean;
     private CartListBaseAdapter baseAdapter;
 
     //private int[] IMAGE = {R.drawable.shoppy_logo, R.drawable.shoppy_logo, R.drawable.shoppy_logo,
@@ -102,8 +107,11 @@ public class FavoriteFragment extends Fragment {
 
                            // Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
                             try {
-
-                                JSONArray array = new JSONArray(response);
+                                GsonBuilder builder = new GsonBuilder();
+                                Gson gson = builder.create();
+                                Bean= Arrays.asList(gson.fromJson(response, CartListBeanlist[].class));
+                                setimageurl();
+                              /*  JSONArray array = new JSONArray(response);
 
                                 for (int i = 0; i < array.length(); i++) {
                                     JSONObject product = array.getJSONObject(i);
@@ -118,7 +126,7 @@ public class FavoriteFragment extends Fragment {
 
 
 
-                                }
+                                }*/
 
                                 baseAdapter = new CartListBaseAdapter(getActivity(), Bean) {
                                 };
@@ -175,5 +183,16 @@ public class FavoriteFragment extends Fragment {
         request.add(rRequest);
 
 
+    }
+    private  void setimageurl(){
+        int n = 0;
+        for (CartListBeanlist i : Bean) {
+            i.setImage("http://ahmedishtiaq9778-001-site1.ftempurl.com" + i.getImage());
+            // list.remove(n);
+            Bean.set(n,i);
+            n++;
+
+
+        }
     }
 }

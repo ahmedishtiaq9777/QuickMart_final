@@ -68,6 +68,7 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
         }
 
         holder.tv_r3_title.setText(Data2.get(position).getTitle());
+        holder.r3_price.setText(Data2.get(position).getPrice());
        // holder.img_book_thumbnail.setImageResource(Data2.get(position).getThumbnail());
         Picasso.get().load(Data2.get(position).getThumbnail()).into(holder.img_r3_thumbnail);
 
@@ -131,7 +132,7 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_r3_title;
+        TextView tv_r3_title,r3_price;
         ImageView img_r3_thumbnail,heart;
         CardView cardView ;
 
@@ -140,7 +141,7 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
 
             tv_r3_title = itemView.findViewById(R.id.r3_title_id) ;
             img_r3_thumbnail = itemView.findViewById(R.id.r3_img_id);
-            //same cardview as of book activity
+            r3_price = itemView.findViewById(R.id.r3_prod_price);
             cardView = itemView.findViewById(R.id.cardview_id_r3);
             heart=itemView.findViewById(R.id.heart);
 
