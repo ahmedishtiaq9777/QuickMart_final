@@ -1,6 +1,7 @@
 package com.demotxt.myapp.recyclerview.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.android.volley.AuthFailureError;
@@ -21,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.R;
+import com.demotxt.myapp.recyclerview.activity.Payment;
 import com.demotxt.myapp.recyclerview.shoppycartlist.CartListActivity;
 import com.demotxt.myapp.recyclerview.shoppycartlist.CartListBaseAdapter;
 import com.demotxt.myapp.recyclerview.shoppycartlist.CartListBeanlist;
@@ -57,12 +60,22 @@ public class CartFragment extends Fragment  {
     public Set<String> cartids;
     private SharedPreferences cartprefs;
     private SharedPreferences.Editor cartprefeditor;
+    private Button pay;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
        View view= inflater.inflate(R.layout.fragment_cart, container, false);
         listview = (ListView) view.findViewById(R.id.listview);
+        pay=(Button)view.findViewById(R.id.pay);
+        pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), Payment.class);
+                startActivity(i);
+            }
+        });
+
         cartids=new HashSet<String>();
         cartprefs=getContext().getSharedPreferences("cartprefs",MODE_PRIVATE);
         cartprefeditor=cartprefs.edit();
