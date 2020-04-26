@@ -2,6 +2,7 @@ package com.demotxt.myapp.recyclerview.shoppycartlist;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,19 +10,28 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.demotxt.myapp.recyclerview.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class CartListBaseAdapter extends BaseAdapter {
 
     Context context;
 
-    ArrayList<CartListBeanlist> bean;
-
+    List<CartListBeanlist> Bean;
+    private SharedPreferences cartlistpref;
+    private SharedPreferences.Editor cartlistprefeditor;
+    public Set<String> cartids;
+    private int proid;
 
 
 
@@ -33,22 +43,31 @@ public class CartListBaseAdapter extends BaseAdapter {
 
 
 
-    public CartListBaseAdapter(Context context, ArrayList<CartListBeanlist> bean) {
+    public CartListBaseAdapter(Context context, List<CartListBeanlist> bean) {
 
 
         this.context = context;
-        this.bean = bean;
+        this.Bean = bean;
+        cartids=new HashSet<String>();
+
+        cartlistpref=context.getSharedPreferences("cartprefs",MODE_PRIVATE);//get cartpreferences that contains cartitemlist
+        cartlistprefeditor=cartlistpref.edit();// this is to add stuff in preferences
+        cartids=cartlistpref.getStringSet("cartids",cartids);//get current product ids in cartprefferences
+
+
+
+
     }
 
 
     @Override
     public int getCount() {
-        return bean.size();
+        return Bean.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return bean.get(position);
+        return Bean.get(position);
     }
 
     @Override
@@ -57,7 +76,7 @@ public class CartListBaseAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         fonts1 =  Typeface.createFromAsset(context.getAssets(),
                 "fonts/MavenPro-Regular.ttf");
@@ -73,7 +92,10 @@ public class CartListBaseAdapter extends BaseAdapter {
 
             viewHolder = new ViewHolder();
 
+
             viewHolder.image = (ImageView)convertView.findViewById(R.id.image);
+            viewHolder.cross = (ImageView)convertView.findViewById(R.id.cross);
+
             viewHolder.title = (TextView)convertView.findViewById(R.id.title);
 
             viewHolder.price = (TextView)convertView.findViewById(R.id.price);
@@ -101,7 +123,7 @@ public class CartListBaseAdapter extends BaseAdapter {
 
 
 
-        CartListBeanlist bean = (CartListBeanlist)getItem(position);
+        final CartListBeanlist bean = (CartListBeanlist)getItem(position);
 
        // viewHolder.image.setImageResource(bean.getImage());
         Picasso.get().load(bean.getImage()).into(viewHolder.image);
@@ -109,6 +131,36 @@ public class CartListBaseAdapter extends BaseAdapter {
 
       String pricestr=String.valueOf(bean.getPrice());
         viewHolder.price.setText(pricestr);
+
+        // delete element from cartlist
+        viewHolder.cross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              //  try {
+                    proid=bean.getId();
+                    cartlistprefeditor.remove("cartids");
+                    cartlistprefeditor.commit();
+                    String strpid=String.valueOf(proid);
+                    cartids.remove(strpid);
+                    cartlistprefeditor.putStringSet("cartids",cartids);
+                    cartlistprefeditor.commit();
+
+                    Bean.remove(position);
+
+                Toast.makeText(context.getApplicationContext()," position:"+position,Toast.LENGTH_SHORT).show();
+                 //   CartListBaseAdapter.this.notifyAll();
+                    notifyDataSetChanged();
+
+
+              //  }catch (Exception e){
+                //    Toast.makeText(context.getApplicationContext()," Error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+              //  }
+
+
+
+
+            }
+        });
 
 
 //        number = 01;
@@ -170,11 +222,13 @@ public class CartListBaseAdapter extends BaseAdapter {
 
     private class ViewHolder{
         ImageView image;
+        ImageView cross;
         TextView title;
 
         TextView price;
 
         TextView text;
+
 
 
 

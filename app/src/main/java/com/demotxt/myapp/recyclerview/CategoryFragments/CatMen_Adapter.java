@@ -8,12 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.demotxt.myapp.recyclerview.R;
+import com.demotxt.myapp.recyclerview.activity.Prod_Activity;
 import com.demotxt.myapp.recyclerview.activity.TabsBasic;
 import com.demotxt.myapp.recyclerview.ownmodels.Book;
 import com.squareup.picasso.Picasso;
@@ -54,7 +56,7 @@ public class CatMen_Adapter extends RecyclerView.Adapter<CatMen_Adapter.CatMenVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CatMenViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final CatMenViewHolder holder, final int position) {
         int ID = mData.get(position).getId();
         String strID = String.valueOf(ID);
         isblack = cartpreferrence.getBoolean(strID, false);
@@ -63,7 +65,7 @@ public class CatMen_Adapter extends RecyclerView.Adapter<CatMen_Adapter.CatMenVi
         }
 
         holder.tv_men_title.setText(mData.get(position).getTitle());
-        holder.tv_price.setText(mData.get(position).getPrice());
+        holder.tv_price.setText(String.valueOf(mData.get(position).getPrice()));
         //holder.img_book_thumbnail.setImageResource(mData.get(position).getThumbnail());
         Picasso.get().load(mData.get(position).getThumbnail()).into(holder.img_men_thumbnail);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -71,12 +73,20 @@ public class CatMen_Adapter extends RecyclerView.Adapter<CatMen_Adapter.CatMenVi
             public void onClick(View v) {
 
                 //Starting Activity To show Category Activity
-                Intent intent = new Intent(mContext, TabsBasic.class);
+                Intent intent = new Intent(mContext, Prod_Activity.class);
+
+                // passing data to the book activity
+                intent.putExtra("Title",mData.get(position).getTitle());
+                intent.putExtra("Description",mData.get(position).getDescription());
+                intent.putExtra("Thumbnail",mData.get(position).getThumbnail());
+                intent.putExtra("price",mData.get(position).getPrice());
+                intent.putExtra("proid",mData.get(position).getId());
+                // start the activity
                 mContext.startActivity(intent);
 
             }
         });
-      /*  holder.heart.setOnClickListener(new View.OnClickListener() {
+        holder.heart.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -109,7 +119,7 @@ public class CatMen_Adapter extends RecyclerView.Adapter<CatMen_Adapter.CatMenVi
                 }
 
 
-              *//*  if (iscjd=false)
+              /*  if (iscjd=false)
                 {
                     heart black
                 }
@@ -127,11 +137,11 @@ public class CatMen_Adapter extends RecyclerView.Adapter<CatMen_Adapter.CatMenVi
 
                 }else {
                     cartprefEditor=
-                }*//*
+                }*/
 
 
             }
-        });*/
+        });
 
     }
 
