@@ -20,24 +20,17 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.demotxt.myapp.recyclerview.CategoryFragments.CatKids_Fragment;
-import com.demotxt.myapp.recyclerview.CategoryFragments.Catkids;
 import com.demotxt.myapp.recyclerview.R;
-import com.demotxt.myapp.recyclerview.ownmodels.Prod;
 import com.demotxt.myapp.recyclerview.shoppycartlist.CartListActivity;
 import com.demotxt.myapp.recyclerview.shoppycartlist.CartListBaseAdapter;
 import com.demotxt.myapp.recyclerview.shoppycartlist.CartListBeanlist;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -59,7 +52,7 @@ public class CartFragment extends Fragment  {
 
 
   //  private String[] PRICE = {"$ 220.00", "$ 49.00", "$ 320.00", "$ 220.00", "$ 49.00", "$ 320.00", "$ 220.00"};
-    private List<CartListBeanlist> Bean;
+    private ArrayList<CartListBeanlist> Bean;
     private CartListBaseAdapter baseAdapter;
     public Set<String> cartids;
     private SharedPreferences cartprefs;
@@ -74,7 +67,7 @@ public class CartFragment extends Fragment  {
         cartprefs=getContext().getSharedPreferences("cartprefs",MODE_PRIVATE);
         cartprefeditor=cartprefs.edit();
 cartids=cartprefs.getStringSet("cartids",cartids);
-        Bean = new ArrayList<>();
+        Bean = new ArrayList<CartListBeanlist>();
 getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswithproId");
        /* for (int i = 0; i < TITLE.length; i++) {
 
@@ -105,13 +98,7 @@ getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswi
                         // Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
                         try {
 
-
-                            GsonBuilder builder = new GsonBuilder();
-                            Gson gson = builder.create();
-                             Bean= Arrays.asList(gson.fromJson(response, CartListBeanlist[].class));
-                             setimageurl();
-
-                          /*  JSONArray array = new JSONArray(response);
+                            JSONArray array = new JSONArray(response);
 
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject product = array.getJSONObject(i);
@@ -126,13 +113,12 @@ getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswi
 
 
 
-                            }*/
+                            }
 
                             baseAdapter = new CartListBaseAdapter(getActivity(), Bean) {
                             };
 
                             listview.setAdapter(baseAdapter);
-
 
                         } catch (Exception e) {
                             // Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
@@ -183,17 +169,6 @@ getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswi
         request.add(rRequest);
 
 
-    }
-    private  void setimageurl(){
-        int n = 0;
-        for (CartListBeanlist i : Bean) {
-            i.setImage("http://ahmedishtiaq9778-001-site1.ftempurl.com" + i.getImage());
-            // list.remove(n);
-            Bean.set(n,i);
-            n++;
-
-
-        }
     }
 
 }

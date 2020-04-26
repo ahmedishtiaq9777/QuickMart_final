@@ -36,6 +36,7 @@
         <activity android:name=".activity.Prod_Activity"></activity>
         <activity android:name=".activity.r3_Activity"></activity>
         <activity android:name=".activity.Login"></activity>
+        <activity android:name=".activity.Payment"></activity>
         <activity android:name=".activity.TabsBasic"></activity>
 
         <activity android:name=".Test"></activity>
