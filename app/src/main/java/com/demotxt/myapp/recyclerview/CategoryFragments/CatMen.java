@@ -7,15 +7,16 @@ public class CatMen {
     @SerializedName("title")/// server side column name
     private String Title;
     private String Category;
+    @SerializedName("description")
     private String Description;
     @SerializedName("productImage")
     private String Thumbnail;
     @SerializedName("price")
-    private Double Price;
+    private float Price;
     @SerializedName("productId")
     private  int Id;
 
-    public CatMen(String title, String category, String description, String thumbnail, double price, int id) {
+    public CatMen(String title, String category, String description, String thumbnail, float price, int id) {
         Title = title;
         Category = category;
         Description = description;
@@ -42,7 +43,7 @@ public class CatMen {
     public String getThumbnail() {
         return Thumbnail;
     }
-    public  String getPrice(){return String.valueOf(Price);}
+    public  float getPrice(){return Price;}
 
 
     public void setTitle(String title) {

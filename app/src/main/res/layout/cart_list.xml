@@ -60,6 +60,7 @@
                     />
 
                 <ImageView
+                    android:id="@+id/cross"
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:src="@drawable/cross"
