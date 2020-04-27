@@ -47,7 +47,7 @@ import java.util.Set;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class CartFragment extends Fragment  {
+public class CartFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
@@ -55,13 +55,13 @@ public class CartFragment extends Fragment  {
 
     Typeface fonts1, fonts2;
 
-  //  private int[] IMAGE = {R.drawable.shoppy_logo, R.drawable.shoppy_logo, R.drawable.shoppy_logo,
-       //     R.drawable.shoppy_logo, R.drawable.shoppy_logo, R.drawable.shoppy_logo, R.drawable.shoppy_logo};
+    //  private int[] IMAGE = {R.drawable.shoppy_logo, R.drawable.shoppy_logo, R.drawable.shoppy_logo,
+    //     R.drawable.shoppy_logo, R.drawable.shoppy_logo, R.drawable.shoppy_logo, R.drawable.shoppy_logo};
 
     //private String[] TITLE = {"Teak & Steel Petanque Set", "Lemon Peel Baseball", "Seil Marschall Hiking Pack", "Teak & Steel Petanque Set", "Lemon Peel Baseball", "Seil Marschall Hiking Pack", "Teak & Steel Petanque Set"};
 
 
-  //  private String[] PRICE = {"$ 220.00", "$ 49.00", "$ 320.00", "$ 220.00", "$ 49.00", "$ 320.00", "$ 220.00"};
+    //  private String[] PRICE = {"$ 220.00", "$ 49.00", "$ 320.00", "$ 220.00", "$ 49.00", "$ 320.00", "$ 220.00"};
     private List<CartListBeanlist> Bean;
     private CartListBaseAdapter baseAdapter;
     public Set<String> cartids;
@@ -72,9 +72,9 @@ public class CartFragment extends Fragment  {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-       View view= inflater.inflate(R.layout.fragment_cart, container, false);
+        View view = inflater.inflate(R.layout.fragment_cart, container, false);
         listview = (ListView) view.findViewById(R.id.listview);
-        pay=(Button)view.findViewById(R.id.pay);
+        pay = (Button) view.findViewById(R.id.pay);
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,12 +83,12 @@ public class CartFragment extends Fragment  {
             }
         });
 
-        cartids=new HashSet<String>();
-        cartprefs=getContext().getSharedPreferences("cartprefs",MODE_PRIVATE);
-        cartprefeditor=cartprefs.edit();
-cartids=cartprefs.getStringSet("cartids",cartids);
+        cartids = new HashSet<String>();
+        cartprefs = getContext().getSharedPreferences("cartprefs", MODE_PRIVATE);
+        cartprefeditor = cartprefs.edit();
+        cartids = cartprefs.getStringSet("cartids", cartids);
         Bean = new ArrayList<>();
-getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswithproId");
+        getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswithproId");
        /* for (int i = 0; i < TITLE.length; i++) {
 
             CartListBeanlist bean = new CartListBeanlist(IMAGE[i], TITLE[i], PRICE[i]);
@@ -106,7 +106,8 @@ getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswi
         // Inflate the layout for this fragment
         return view;
     }
-    public  void   getconnection(String url) {
+
+    public void getconnection(String url) {
         final RequestQueue request = Volley.newRequestQueue(getContext());
 
 
@@ -121,8 +122,8 @@ getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswi
 
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
-                             Bean= Arrays.asList(gson.fromJson(response, CartListBeanlist[].class));
-                             setimageurl();
+                            Bean = Arrays.asList(gson.fromJson(response, CartListBeanlist[].class));
+                            setimageurl();
 
                           /*  JSONArray array = new JSONArray(response);
 
@@ -167,15 +168,15 @@ getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswi
                         error.printStackTrace();
                     }
                 }
-        )  {
+        ) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                JSONArray jsonArray= new JSONArray();
-                for (String  i:cartids) {
+                JSONArray jsonArray = new JSONArray();
+                for (String i : cartids) {
                     jsonArray.put(i);
                 }
-                params.put("idsarray",jsonArray.toString());
+                params.put("idsarray", jsonArray.toString());
 
                 //  params.p
 
@@ -190,19 +191,17 @@ getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswi
         };
 
 
-
-
-
         request.add(rRequest);
 
 
     }
-    private  void setimageurl(){
+
+    private void setimageurl() {
         int n = 0;
         for (CartListBeanlist i : Bean) {
             i.setImage("http://ahmedishtiaq9778-001-site1.ftempurl.com" + i.getImage());
             // list.remove(n);
-            Bean.set(n,i);
+            Bean.set(n, i);
             n++;
 
 

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -48,14 +50,28 @@ public class Prod_Activity extends AppCompatActivity {
     private View lyt_expand_reviews, lyt_expand_warranty, lyt_expand_description;
     private NestedScrollView nested_scroll_view;
 
-    public Prod_Activity() {
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prod_);
+
+        //for toolbar
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Detail");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Tools.setSystemBarColor(this);
+
+
+
+
+
+
+
+
         cartids=new HashSet<String>();
 
        loginpref=getSharedPreferences("loginpref",MODE_PRIVATE);// get login preferences which contains information like "userid" and login status
@@ -240,5 +256,21 @@ Boolean is_logedin=loginpref.getBoolean("loggedin",false);
             return false;
         }
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search_setting, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        } else {
+            Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 }
