@@ -128,7 +128,7 @@ public class FavoriteFragment extends Fragment {
 
                                 }*/
 
-                                baseAdapter = new CartListBaseAdapter(getActivity(), Bean) {
+                                baseAdapter = new CartListBaseAdapter(getActivity(), Bean,2) {
                                 };
 
                                 listview.setAdapter(baseAdapter);

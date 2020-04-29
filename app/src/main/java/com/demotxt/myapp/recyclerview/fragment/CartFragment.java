@@ -75,7 +75,7 @@ public class CartFragment extends Fragment  {
         cartprefs=getContext().getSharedPreferences("cartprefs",MODE_PRIVATE);
         cartprefeditor=cartprefs.edit();
 cartids=cartprefs.getStringSet("cartids",cartids);
-        Bean = new ArrayList<CartListBeanlist>();
+        Bean = new ArrayList<>();
 getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswithproId");
 
         pay=(Button)view.findViewById(R.id.pay);
@@ -137,7 +137,7 @@ getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswi
 
                             }*/
 
-                            baseAdapter = new CartListBaseAdapter(getActivity(), Bean) {
+                            baseAdapter = new CartListBaseAdapter(getActivity(), Bean,1) {
                             };
 
                             listview.setAdapter(baseAdapter);
