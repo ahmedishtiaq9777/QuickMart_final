@@ -4,22 +4,22 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="Home"
+        android:title="@string/navHome"
         />
     <item
         android:id="@+id/nav_favourite"
         android:icon="@drawable/ic_favorite_black_24dp"
-        android:title="Favourite"
+        android:title="@string/navFav"
         />
     <item
         android:id="@+id/nav_cart"
         android:icon="@drawable/ic_shopping_cart_black_24dp"
-        android:title="Cart"
+        android:title="@string/navCart"
         />
     <item
         android:id="@+id/nav_acc"
         android:icon="@drawable/ic_account_box_black_24dp"
-        android:title="Account"
+        android:title="@string/navProf"
         />
 
 </menu>

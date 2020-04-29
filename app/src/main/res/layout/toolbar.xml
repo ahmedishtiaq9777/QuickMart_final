@@ -24,7 +24,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="CART"
+    android:text="@string/Cart"
     android:textColor="@color/white"
     android:textSize="@dimen/text"
     android:gravity="center"

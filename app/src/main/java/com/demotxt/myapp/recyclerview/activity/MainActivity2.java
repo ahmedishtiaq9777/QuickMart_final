@@ -1,5 +1,6 @@
 package com.demotxt.myapp.recyclerview.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -57,6 +58,8 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         }
         return false;
     }
+
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

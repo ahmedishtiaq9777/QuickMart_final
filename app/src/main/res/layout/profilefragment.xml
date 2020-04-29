@@ -151,7 +151,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
                     android:layout_marginLeft="6dp"
-                    android:text="Favourite"
+                    android:text="@string/Favourite"
                     android:textColor="@color/white" />
 
             </LinearLayout>
@@ -186,7 +186,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
                     android:layout_marginLeft="6dp"
-                    android:text="Setting"
+                    android:text="@string/Setting"
                     android:textColor="@color/white" />
 
             </LinearLayout>
@@ -221,7 +221,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
                     android:layout_marginLeft="6dp"
-                    android:text="Language"
+                    android:text="@string/Language"
                     android:textColor="@color/white" />
 
                 <TextView
@@ -335,7 +335,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
                     android:layout_marginLeft="6dp"
-                    android:text="Exit"
+                    android:text="@string/Exit"
                     android:textColor="@color/white" />
 
             </LinearLayout>

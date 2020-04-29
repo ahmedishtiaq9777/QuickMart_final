@@ -3,26 +3,48 @@
 
     <string-array name="Accounttypes">
 
-
         <item>As a Buyer</item>
         <item>As a Seller</item>
 
-
     </string-array>
-    <string name="invoice_address">
+
+    <string name="invoice_address" translatable="false">
         Terry M Smith\n(904) 246-1297\n207 Cherry St, Neptune Beach, FL, 32266
     </string>
 
     <string name="app_name">QuickMart</string>
-    <string name="btn_edit_profile">EDIT</string>]
+    <string name="Shops">Shops</string>
+    <string name="Recommended">Recommended</string>
+    <string name="Trending">Trending</string>
+
+
+
+    <string name="btn_edit_profile">EDIT</string>
+    <string name="Exit">Exit</string>
+    <string name="Favourite">Favourite</string>
+    <string name="Setting">Setting</string>
+    <string name="Profile">Profile</string>
+    <string name="Productlist">Product list</string>
+    <string name="Order">Order</string>
+    <string name="PlaceOrder">Place the Order</string>
+    <string name="Cart">Cart</string>
+    <string name="Checkout">Checkout</string>
+    <string name="Shipping">Shipping</string>
+    <string name="Payment">Payment</string>
+    <string name="Confirm">Confirm</string>
+    <string name="Language">Language</string>
 
     <string name="txt_profile_history">Order History</string>
     <string name="txt_profile_rate">Rate Us</string>
     <string name="txt_profile_share">Share</string>
+    <string name="navHome">Home</string>
+    <string name="navCart">Cart</string>
+    <string name="navFav">Favourite</string>
+    <string name="navProf">Profile</string>
 
 
     <!--profile preferences-->
-    <string name="pref_group_profile">PROFILE</string>
+    <string name="pref_group_profile" translatable="false">PROFILE</string>
     <string name="pref_title_name">Name</string>
     <string name="pref_title_email">Email</string>
     <string name="pref_title_phone">Phone Number</string>
@@ -39,20 +61,20 @@
 
 
     <string name="signin"><u><b>Sign in</b></u></string>
-    <string name="tandc"><u>terms &amp; conditions</u></string>
+    <string name="tandc" translatable="false"><u>terms &amp; conditions</u></string>
 
 
-    <string name="share_app">I Would like to share this QuickMart Android App with you. Here You Can Download This Application from PlayStore</string>
+    <string name="share_app" translatable="false">I Would like to share this QuickMart Android App with you. Here You Can Download This Application from PlayStore</string>
 
-    <string name="lorem_ipsum">
+    <string name="lorem_ipsum" translatable="false">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam efficitur ipsum in placerat molestie.  Fusce quis mauris a enim sollicitudin
         \n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam efficitur ipsum in placerat molestie.  Fusce quis mauris a enim sollicitudin
     </string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="NEXT" />
-    <string name="Privacy_Policy">This is for Showing Privacy Policy</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="NEXT" translatable="false" />
+    <string name="Privacy_Policy" translatable="false">This is for Showing Privacy Policy</string>
 
 
 </resources>

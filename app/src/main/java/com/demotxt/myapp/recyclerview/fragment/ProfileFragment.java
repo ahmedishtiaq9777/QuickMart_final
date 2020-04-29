@@ -1,7 +1,11 @@
 package com.demotxt.myapp.recyclerview.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
@@ -27,6 +31,8 @@ import com.demotxt.myapp.recyclerview.sharepref.SharedPref;
 import com.demotxt.myapp.recyclerview.shoppyorders.ShoppyOrderActivity;
 import com.demotxt.myapp.recyclerview.utils.Tools;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Locale;
 
 
 public class ProfileFragment extends Fragment {
@@ -59,6 +65,8 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        loadLocale();
 
         sharedPref = new SharedPref(getActivity());
 
@@ -143,6 +151,9 @@ public class ProfileFragment extends Fragment {
         language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                showChangeLanguageDialog();
+
               /*  AlertDialog dialog;
                 AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
                 builder.setMessage("LANGUAGE").setView(view);
@@ -150,7 +161,7 @@ public class ProfileFragment extends Fragment {
                 dialog=builder.create();
                 dialog.show();
 */
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                /*AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("Phone Ringtone");
                 builder.setSingleChoiceItems(Languages, 0, new DialogInterface.OnClickListener() {
                     @Override
@@ -163,12 +174,12 @@ public class ProfileFragment extends Fragment {
                 builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Snackbar.make(view,"Language Selected ",Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(view, "Language Selected ", Snackbar.LENGTH_SHORT).show();
                         // Snackbar.make(parent_view, "selected : " + single_choice_selected, Snackbar.LENGTH_SHORT).show();
                     }
                 });
                 builder.setNegativeButton("cancel", null);
-                builder.show();
+                builder.show();*/
             }
         });
 
@@ -195,6 +206,47 @@ public class ProfileFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private void showChangeLanguageDialog() {
+
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
+        mBuilder.setTitle("Choose Language....");
+        mBuilder.setSingleChoiceItems(Languages, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                if (i == 0) {
+                    setLocale("en");
+                    getActivity().recreate();
+                } else if (i == 1) {
+                    setLocale("ur");
+                    getActivity().recreate();
+                }
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog mDialog = mBuilder.create();
+        mDialog.show();
+    }
+
+    private void setLocale(String lang) {
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getContext().getResources().updateConfiguration(config, getContext().getResources().getDisplayMetrics());
+        //saving data in shared preference
+
+        SharedPreferences.Editor editor = getContext().getSharedPreferences("Settings", Context.MODE_PRIVATE).edit();
+        editor.putString("My_Lang", lang);
+        editor.apply();
+    }
+
+    public void loadLocale() {
+        SharedPreferences pref = getContext().getSharedPreferences("Settings", Activity.MODE_PRIVATE);
+        String lan = pref.getString("My_Lang", "");
+        setLocale(lan);
     }
 }
 

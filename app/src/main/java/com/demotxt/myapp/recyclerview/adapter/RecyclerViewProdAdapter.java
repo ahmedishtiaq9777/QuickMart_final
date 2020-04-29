@@ -71,6 +71,7 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
         }
 
         holder.tv_book_title.setText(Data1.get(position).getTitle());
+        holder.price.setText(Data1.get(position).getPrice());
        // holder.img_book_thumbnail.setImageResource(Data1.get(position).getThumbnail());
         Picasso.get().load(Data1.get(position).getThumbnail()).into(holder.img_book_thumbnail);
 
@@ -157,7 +158,7 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_book_title;
+        TextView tv_book_title,price;
         ImageView img_book_thumbnail,heart;
         CardView cardView ;
 
@@ -165,6 +166,7 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
             super(itemView);
 
             tv_book_title = itemView.findViewById(R.id.book_title_id);
+            price = itemView.findViewById(R.id.book_prod_price);
             img_book_thumbnail = itemView.findViewById(R.id.book_img_id);
             cardView = itemView.findViewById(R.id.cardview2);
             heart=itemView.findViewById(R.id.heart);
