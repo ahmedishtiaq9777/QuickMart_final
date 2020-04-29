@@ -41,6 +41,8 @@
     <string name="navCart">Cart</string>
     <string name="navFav">Favourite</string>
     <string name="navProf">Profile</string>
+    <string name="contactdetail">Contact_detail</string>
+    <string name="shippingAdd">shipping Address</string>
 
 
     <!--profile preferences-->

@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CONTACT DETAILS"
+            android:text="@string/contactdetail"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             android:textColor="@color/grey_40"
             app:fontFamily="sans-serif-medium" />
@@ -25,9 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_large"
             android:background="@drawable/edit_text_round_bg_outline"
-            android:hint="Name"
-            android:minHeight="@dimen/spacing_xmlarge"
-            android:text="Laura Michelle" />
+            android:hint="@string/default_your_name"
+            android:minHeight="@dimen/spacing_xmlarge" />
 
         <EditText
             style="@style/EditText.Flat.Grey"
@@ -35,9 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_middle"
             android:background="@drawable/edit_text_round_bg_outline"
-            android:hint="Email"
-            android:minHeight="@dimen/spacing_xmlarge"
-            android:text="laura.michelle@mail.com" />
+            android:hint="@string/default_your_email"
+            android:minHeight="@dimen/spacing_xmlarge" />
 
         <EditText
             style="@style/EditText.Flat.Grey"
@@ -45,15 +43,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_middle"
             android:background="@drawable/edit_text_round_bg_outline"
-            android:hint="Phone"
-            android:minHeight="@dimen/spacing_xmlarge"
-            android:text="(859) 261-0876" />
+            android:hint="@string/default_your_phone"
+            android:minHeight="@dimen/spacing_xmlarge" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_large"
-            android:text="SHIPPING ADDRESS"
+            android:text="@string/shippingAdd"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             android:textColor="@color/grey_40"
             app:fontFamily="sans-serif-medium" />
@@ -64,9 +61,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_large"
             android:background="@drawable/edit_text_round_bg_outline"
-            android:hint="Address"
-            android:minHeight="@dimen/spacing_xmlarge"
-            android:text="1144 Central" />
+            android:hint="@string/default_your_address"
+            android:minHeight="@dimen/spacing_xmlarge" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -81,7 +77,6 @@
                 android:layout_weight="1"
                 android:background="@drawable/edit_text_round_bg_outline"
                 android:hint="Country"
-                android:text="United State"
                 android:drawableEnd="@drawable/ic_expand_arrow"
                 android:drawableRight="@drawable/ic_expand_arrow"
                 android:minHeight="@dimen/spacing_xmlarge" />

@@ -41,5 +41,7 @@
     <string name="navFav">پسندیدہ</string>
     <string name="navProf">پروفائل</string>
     <string name="navCart">ٹوکری</string>
+    <string name="contactdetail">رابطہ کی تفصیل</string>
+    <string name="shippingAdd">شپنگ ایڈریس</string>
 
 </resources>
