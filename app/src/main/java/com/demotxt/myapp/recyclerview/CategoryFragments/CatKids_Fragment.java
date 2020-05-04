@@ -46,6 +46,7 @@ public class CatKids_Fragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
 
     List<Catkids> ProdKids;
+
    // private int sid;
 
     @Override
@@ -86,6 +87,7 @@ public class CatKids_Fragment extends Fragment {
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
                             ProdKids = Arrays.asList(gson.fromJson(response, Catkids[].class));
+
                            /* for (Catkids one:ProdKids) {
                                 Log.i("userid",  String.valueOf(one.getId()));
                                 Log.i("thumbnail",  one.getThumbnail());

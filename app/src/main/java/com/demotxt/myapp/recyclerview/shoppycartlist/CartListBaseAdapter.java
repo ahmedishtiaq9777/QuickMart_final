@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.demotxt.myapp.recyclerview.R;
+import com.demotxt.myapp.recyclerview.fragment.CartFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -28,10 +30,13 @@ public class CartListBaseAdapter extends BaseAdapter {
     Context context;
 
     List<CartListBeanlist> Bean;
-    private SharedPreferences cartlistpref;
-    private SharedPreferences.Editor cartlistprefeditor;
+    List<CartListBeanlist> BeanTemp;
+    private SharedPreferences cartlistpref,favouritepref;
+    private SharedPreferences.Editor cartlistprefeditor,favouriteprefeditor;
     public Set<String> cartids;
+    public Set<String> favids;
     private int proid;
+    private int selectionid;
 
 
 
@@ -43,20 +48,34 @@ public class CartListBaseAdapter extends BaseAdapter {
 
 
 
-    public CartListBaseAdapter(Context context, List<CartListBeanlist> bean) {
+    public CartListBaseAdapter(Context context, List<CartListBeanlist> bean,int number) {
 
 
         this.context = context;
-        this.Bean = bean;
+
+        selectionid=number;
+        this.BeanTemp=bean;
+        initializearray();
+       // this.Bean = bean;
         cartids=new HashSet<String>();
 
         cartlistpref=context.getSharedPreferences("cartprefs",MODE_PRIVATE);//get cartpreferences that contains cartitemlist
+        favouritepref=context.getSharedPreferences("favpref",MODE_PRIVATE);
         cartlistprefeditor=cartlistpref.edit();// this is to add stuff in preferences
+        favouriteprefeditor=favouritepref.edit();
         cartids=cartlistpref.getStringSet("cartids",cartids);//get current product ids in cartprefferences
+        favids=favouritepref.getStringSet("ids",favids);
 
 
 
 
+    }
+    public void initializearray(){
+        Bean = new ArrayList<>();
+        for (CartListBeanlist item: BeanTemp) {
+            Bean.add(item);
+
+        }
     }
 
 
@@ -136,25 +155,47 @@ public class CartListBaseAdapter extends BaseAdapter {
         viewHolder.cross.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  try {
-                    proid=bean.getId();
-                    cartlistprefeditor.remove("cartids");
-                    cartlistprefeditor.commit();
-                    String strpid=String.valueOf(proid);
-                    cartids.remove(strpid);
-                    cartlistprefeditor.putStringSet("cartids",cartids);
-                    cartlistprefeditor.commit();
+                try {
+                    String strid;
+                    proid = bean.getId();
+                   if(selectionid==1) {
 
-                    Bean.remove(position);
+                       cartlistprefeditor.remove("cartids");
+                       cartlistprefeditor.commit();
+                        strid = String.valueOf(proid);
+                       cartids.remove(strid);
+                       cartlistprefeditor.putStringSet("cartids", cartids);
+                       cartlistprefeditor.commit();
+                       Bean.remove(position);
+                       notifyDataSetChanged();
 
-                Toast.makeText(context.getApplicationContext()," position:"+position,Toast.LENGTH_SHORT).show();
+                   }else if(selectionid==2){
+                       favouriteprefeditor.remove("ids");
+                       favouriteprefeditor.commit();
+                        strid=String.valueOf(proid);
+                        favids.remove(strid);
+                        favouriteprefeditor.putStringSet("ids",favids);
+                        favouriteprefeditor.putBoolean(strid,false);
+                       favouriteprefeditor.commit();
+                        Bean.remove(position);
+                        notifyDataSetChanged();
+                   }
+
+               /* for (CartListBeanlist obj:Bean) {
+                    Log.i("Item "+obj.getId(), "Title "+obj.getTitle());
+                }*/
+             // CartListBeanlist obj= Bean.get(position);
+               // Toast.makeText(context.getApplicationContext()," Title:"+obj.getTitle(),Toast.LENGTH_SHORT).show();
+
+
+             //   Toast.makeText(context.getApplicationContext()," position:"+position,Toast.LENGTH_SHORT).show();
                  //   CartListBaseAdapter.this.notifyAll();
-                    notifyDataSetChanged();
 
 
-              //  }catch (Exception e){
-                //    Toast.makeText(context.getApplicationContext()," Error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
-              //  }
+
+                }catch (Exception e){
+                   Toast.makeText(context.getApplicationContext()," Error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+                }
 
 
 
