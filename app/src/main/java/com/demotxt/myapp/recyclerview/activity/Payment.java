@@ -77,6 +77,10 @@ public class Payment extends AppCompatActivity {
                 if (idx_state == array_state.length - 1) return;
                 idx_state++;
                 displayFragment(array_state[idx_state]);
+
+
+
+
             }
         });
 
