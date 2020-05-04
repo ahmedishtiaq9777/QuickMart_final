@@ -12,6 +12,7 @@ import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,100 +51,24 @@ public class HomeFragment extends Fragment {
     ViewFlipper viewFlipper;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-       // View view2=inflater.inflate(R.layout.homefragment,null);
-       // viewFlipper=(ViewFlipper)view2.findViewById(R.id.flipper);
 
         list = new ArrayList<>();
         Book22 = new ArrayList<>();
         mTrends = new ArrayList<>();
+
         getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getsellers/",1);
-
-
-        //Data for view 1
-
-
-     /*   lstBook2.add(new Book("Toddler suit","Kids","Description",R.drawable.baby));
-        lstBook2.add(new Book("Black shoes","Shoes","Description",R.drawable.shoes));
-        lstBook2.add(new Book("Dress","Women","Description",R.drawable.female));
-        lstBook2.add(new Book("Designer Jacket"," Men","Description",R.drawable.jacket));
-        lstBook2.add(new Book("Toddler suit","Kids","Description",R.drawable.baby));
-        lstBook2.add(new Book("Black shoes","Shoes","Description",R.drawable.shoes));
-        lstBook2.add(new Book("Dress","Women","Description",R.drawable.female));
-        lstBook2.add(new Book("Designer Jacket","Men","Description",R.drawable.jacket));
-        lstBook2.add(new Book("Toddler suit","Kids","Description",R.drawable.baby));
-        lstBook2.add(new Book("Black shoes","Shoes","Description",R.drawable.shoes));
-        lstBook2.add(new Book("Dress","Women","Description",R.drawable.female));
-        lstBook2.add(new Book("Designer Jacket","Men","Description",R.drawable.jacket));*/
-
-        //Data for view 2
 
         getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getrecommendedpro/",2);
 
-        /*
-        Book22.add(new Prod("Toddler suit","Kids","Description",R.drawable.baby));
-        Book22.add(new Prod("Black shoes","Shoes","Description",R.drawable.shoes));
-        Book22.add(new Prod("Dress","Women","Description",R.drawable.female));
-        Book22.add(new Prod("Designer Jacket"," Men","Description",R.drawable.jacket));
-        Book22.add(new Prod("Toddler suit","Kids","Description",R.drawable.baby));
-        Book22.add(new Prod("Black shoes","Shoes","Description",R.drawable.shoes));
-        Book22.add(new Prod("Dress","Women","Description",R.drawable.female));
-        Book22.add(new Prod("Designer Jacket","Men","Description",R.drawable.jacket));
-        Book22.add(new Prod("Toddler suit","Kids","Description",R.drawable.baby));
-        Book22.add(new Prod("Black shoes","Shoes","Description",R.drawable.shoes));
-        Book22.add(new Prod("Dress","Women","Description",R.drawable.female));
-        Book22.add(new Prod("Designer Jacket","Men","Description",R.drawable.jacket));
-        */
-
-
-        //Data for view 3
-
-
         getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/gettrendingpro/",3);
 
-        /*
-        mTrends.add(new r3("Toddler suit","Kids","Description",R.drawable.baby));
-        mTrends.add(new r3("Black shoes","Shoes","Description",R.drawable.shoes));
-        mTrends.add(new r3("Dress","Women","Description",R.drawable.female));
-        mTrends.add(new r3("Designer Jacket"," Men","Description",R.drawable.jacket));
-        mTrends.add(new r3("Toddler suit","Kids","Description",R.drawable.baby));
-        mTrends.add(new r3("Black shoes","Shoes","Description",R.drawable.shoes));
-        mTrends.add(new r3("Dress","Women","Description",R.drawable.female));
-        mTrends.add(new r3("Designer Jacket","Men","Description",R.drawable.jacket));
-        mTrends.add(new r3("Toddler suit","Kids","Description",R.drawable.baby));
-        mTrends.add(new r3("Black shoes","Shoes","Description",R.drawable.shoes));
-        mTrends.add(new r3("Dress","Women","Description",R.drawable.female));
-        mTrends.add(new r3("Designer Jacket","Men","Description",R.drawable.jacket));
+        view= inflater.inflate(R.layout.homefragment,container,false);
 
-*/
-//Recycler View 1
-         view= inflater.inflate(R.layout.homefragment,container,false);
+        v2=inflater.inflate(R.layout.cardveiw_item_prod,null);
 
-         v2=inflater.inflate(R.layout.cardveiw_item_prod,null);
-       setrecycleone();
-
-
-//Recycler View 2
-
-      //  View view2= inflater.inflate(R.layout.homefragment,  null);
-        /*RecyclerView myrv2=(RecyclerView) view.findViewById(R.id.recyclerview2);
-        RecyclerViewProdAdapter myAdapter1 = new RecyclerViewProdAdapter(getActivity(),Book22);
-        LinearLayoutManager layoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        myrv2.setLayoutManager(layoutManager1);
-        myrv2.setAdapter(myAdapter1);*/
-
-//Recycler View 3
-
-        //  View view2= inflater.inflate(R.layout.homefragment,  null);
-        /*RecyclerView myrv3=(RecyclerView) view.findViewById(R.id.recyclerview3);
-        RecyclerView3 myAdapter2 = new RecyclerView3(getActivity(),mTrends);
-        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        myrv3.setLayoutManager(layoutManager2);
-        myrv3.setAdapter(myAdapter2);*/
-
-
+        setrecycleone();
 
         ImageView prod =(ImageView)v2.findViewById(R.id.book_img_id);
-
 
         prod.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,26 +86,13 @@ public class HomeFragment extends Fragment {
             flipperimages(image);
         }
 
-return  view;
-
-
-
-
-
-        //return inflater.inflate(R.layout.homefragment,  null);
+        return  view;
 
     }
     public  void   getconnection(String url,final int val){
-
-
-
         try {
 
             final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-            // String url = "http:// 192.168.10.13:64077/api/login";
-            //String url="https://api.myjson.com/bins/kp9wz";
-
-
 
             StringRequest rRequest = new StringRequest(Request.Method.GET, url,
                     new Response.Listener<String>() {
@@ -269,22 +181,8 @@ return  view;
         {
             Toast.makeText(getContext(),"Error: "+E.getMessage(),Toast.LENGTH_SHORT).show();
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
+
     public  void flipperimages(int image)
     {
         try {
@@ -299,13 +197,9 @@ return  view;
         {
             Toast.makeText(getContext(),"error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
         }
-
-
-
-
     }
 
-  public void setrecycleone()
+    public void setrecycleone()
      {
 
 
@@ -330,7 +224,7 @@ return  view;
     {
         RecyclerView myrv3=(RecyclerView) view.findViewById(R.id.recyclerview3);
         RecyclerView3 myAdapter2 = new RecyclerView3(getActivity(),mTrends);
-        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        GridLayoutManager layoutManager2 = new GridLayoutManager(getContext(),2);
         myrv3.setLayoutManager(layoutManager2);
         myrv3.setAdapter(myAdapter2);
     }

@@ -45,7 +45,6 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         loadFragment(new HomeFragment());
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-
     }
 
     public boolean loadFragment(Fragment fragment) {
@@ -58,6 +57,8 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         }
         return false;
     }
+
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

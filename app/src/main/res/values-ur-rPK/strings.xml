@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QuickMart</string>
+
+    <string name="txt_profile_history">آرڈر کی تاریخ</string>
+    <string name="txt_profile_rate">ہمیں شرح دیں</string>
+    <string name="txt_profile_share">بانٹیں</string>
+    <string name="pref_title_name">نام</string>
+    <string name="pref_title_email">ای میل</string>
+    <string name="pref_title_phone">فون نمبر</string>
+    <string name="pref_title_address">پتہ</string>
+    <string name="default_your_name">تمھارا نام</string>
+    <string name="default_your_email">آپ کا ای میل</string>
+    <string name="default_your_phone">آپ کا فون نمبر</string>
+    <string name="default_your_address">آپ کا پتہ</string>
+    <string name="pref_msg_invalid_name">غلط نام</string>
+    <string name="pref_msg_invalid_email">غلط ای میل</string>
+    <string name="pref_msg_invalid_phone">غلط فون نمبر</string>
+    <string name="pref_msg_invalid_address">غلط پتہ</string>
+    <string name="txt_profile_privacy">رازداری کی پالیسی</string>
+    <string name="signin">سائن ان</string>
+    <string name="signup">">سائن اپ</string>
+    <string name="Shops">دکانیں</string>
+    <string name="Recommended">تجویز کردہ</string>
+    <string name="Trending">رجحان</string>
+    <string name="btn_edit_profile">معلومات کو تبدیل کریں</string>
+    <string name="Exit">باہر نکلیں</string>
+    <string name="Favourite">پسندیدہ</string>
+    <string name="Setting">سیٹنگ</string>
+    <string name="Profile">پروفائل</string>
+    <string name="Productlist">مصنوع کی فہرست</string>
+    <string name="Order">آرڈر</string>
+    <string name="Cart">ٹوکری</string>
+    <string name="PlaceOrder">آرڈر کرین</string>
+    <string name="Checkout">آرڈر چیک آؤٹ</string>
+    <string name="Shipping">شپنگ</string>
+    <string name="Payment">رقم کی ادائیگی</string>
+    <string name="Confirm">تصدیق کریں</string>
+    <string name="Language">زبان</string>
+    <string name="navHome">مرکزی</string>
+    <string name="navFav">پسندیدہ</string>
+    <string name="navProf">پروفائل</string>
+    <string name="navCart">ٹوکری</string>
+    <string name="contactdetail">رابطہ کی تفصیل</string>
+    <string name="shippingAdd">شپنگ ایڈریس</string>
+
+</resources>

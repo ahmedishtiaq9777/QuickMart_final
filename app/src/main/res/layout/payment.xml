@@ -33,7 +33,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Checkout"
+                    android:text="@string/Checkout"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/grey_80"
                     app:fontFamily="sans-serif-medium" />
@@ -101,7 +101,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/spacing_mxlarge"
-                        android:text="Shipping"
+                        android:text="@string/Shipping"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:textColor="@color/grey_90" />
 
@@ -125,7 +125,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/spacing_mxlarge"
-                        android:text="Payment"
+                        android:text="@string/Payment"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:textColor="@color/grey_20" />
 
@@ -150,7 +150,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/spacing_mxlarge"
-                        android:text="Confirm"
+                        android:text="@string/Confirm"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:textColor="@color/grey_20" />
 

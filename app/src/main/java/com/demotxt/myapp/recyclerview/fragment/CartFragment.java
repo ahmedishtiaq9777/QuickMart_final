@@ -52,13 +52,13 @@ public class CartFragment extends Fragment  {
 
     Typeface fonts1, fonts2;
 
-  //  private int[] IMAGE = {R.drawable.shoppy_logo, R.drawable.shoppy_logo, R.drawable.shoppy_logo,
-       //     R.drawable.shoppy_logo, R.drawable.shoppy_logo, R.drawable.shoppy_logo, R.drawable.shoppy_logo};
+    //  private int[] IMAGE = {R.drawable.shoppy_logo, R.drawable.shoppy_logo, R.drawable.shoppy_logo,
+    //     R.drawable.shoppy_logo, R.drawable.shoppy_logo, R.drawable.shoppy_logo, R.drawable.shoppy_logo};
 
     //private String[] TITLE = {"Teak & Steel Petanque Set", "Lemon Peel Baseball", "Seil Marschall Hiking Pack", "Teak & Steel Petanque Set", "Lemon Peel Baseball", "Seil Marschall Hiking Pack", "Teak & Steel Petanque Set"};
 
 
-  //  private String[] PRICE = {"$ 220.00", "$ 49.00", "$ 320.00", "$ 220.00", "$ 49.00", "$ 320.00", "$ 220.00"};
+    //  private String[] PRICE = {"$ 220.00", "$ 49.00", "$ 320.00", "$ 220.00", "$ 49.00", "$ 320.00", "$ 220.00"};
     private List<CartListBeanlist> Bean;
     private CartListBaseAdapter baseAdapter;
     public Set<String> cartids;
@@ -69,14 +69,14 @@ public class CartFragment extends Fragment  {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-       View view= inflater.inflate(R.layout.fragment_cart, container, false);
+        View view= inflater.inflate(R.layout.fragment_cart, container, false);
         listview = (ListView) view.findViewById(R.id.listview);
         cartids=new HashSet<String>();
         cartprefs=getContext().getSharedPreferences("cartprefs",MODE_PRIVATE);
         cartprefeditor=cartprefs.edit();
-cartids=cartprefs.getStringSet("cartids",cartids);
+        cartids=cartprefs.getStringSet("cartids",cartids);
         Bean = new ArrayList<>();
-getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswithproId");
+        getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswithproId");
 
         pay=(Button)view.findViewById(R.id.pay);
         pay.setOnClickListener(new View.OnClickListener() {
@@ -88,16 +88,11 @@ getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswi
         });
 
        /* for (int i = 0; i < TITLE.length; i++) {
-
             CartListBeanlist bean = new CartListBeanlist(IMAGE[i], TITLE[i], PRICE[i]);
             Bean.add(bean);
-
         }
-
-
         baseAdapter = new CartListBaseAdapter(getActivity(), Bean) {
         };
-
         listview.setAdapter(baseAdapter);
 */
 
@@ -121,7 +116,6 @@ getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswi
                             Bean= Arrays.asList(gson.fromJson(response, CartListBeanlist[].class));
                             setimageurl();
                           /*  JSONArray array = new JSONArray(response);
-
                             for (int i = 0; i < array.length(); i++) {
                                 JSONObject product = array.getJSONObject(i);
                                 String img = product.getString("productImage");
@@ -132,9 +126,6 @@ getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswi
                                 //  int id = product.getInt("productId");
                                 img="http://ahmedishtiaq9778-001-site1.ftempurl.com"+img;
                                 Bean.add(new CartListBeanlist(img,title,price));
-
-
-
                             }*/
 
                             baseAdapter = new CartListBaseAdapter(getActivity(), Bean,1) {
