@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,9 +28,11 @@ import androidx.fragment.app.Fragment;
 import com.balysv.materialripple.MaterialRippleLayout;
 import com.demotxt.myapp.recyclerview.Config;
 import com.demotxt.myapp.recyclerview.R;
+import com.demotxt.myapp.recyclerview.adapter.RecyclerViewAdapter;
 import com.demotxt.myapp.recyclerview.sharepref.SharedPref;
 import com.demotxt.myapp.recyclerview.shoppyorders.ShoppyOrderActivity;
 import com.demotxt.myapp.recyclerview.utils.Tools;
+import com.google.android.material.bottomnavigation.BottomNavigationMenu;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Locale;
@@ -44,7 +47,7 @@ public class ProfileFragment extends Fragment {
     TextView txt_user_address;
     TextView lang;
     MaterialRippleLayout btn_edit_user;
-    MaterialRippleLayout btn_order_history, btn_rate, btn_share, btn_privacy, language, fav, exit;
+    MaterialRippleLayout btn_order_history, btn_share, btn_privacy, language, fav, exit;
     LinearLayout lyt_root;
 
     private static final String[] Languages = new String[]{
@@ -191,9 +194,9 @@ public class ProfileFragment extends Fragment {
                 Fragment fragment = null;
                 fragment = new FavoriteFragment();
                 loadFragment(fragment);
+
             }
         });
-
 
         //For Exiting the App
         exit = view.findViewById(R.id.exit);
@@ -217,7 +220,10 @@ public class ProfileFragment extends Fragment {
             public void onClick(DialogInterface dialog, int i) {
                 if (i == 0) {
                     setLocale("en");
-                    getActivity().recreate();
+                 /*   Intent intent = new Intent(getContext(),);
+                    startActivity(intent);*/
+
+                  getActivity().recreate();
                 } else if (i == 1) {
                     setLocale("ur");
                     getActivity().recreate();

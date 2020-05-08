@@ -52,10 +52,10 @@
 
                 <ImageView
                     android:id="@+id/cross"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
+                    android:layout_width="14dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/cross" />
+                    android:src="@drawable/ic_clear_black_24dp" />
 
             </LinearLayout>
 

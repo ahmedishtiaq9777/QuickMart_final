@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,35 +13,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".activity.MainActivity2">
+        <activity android:name=".activity.Splash_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".activity.Book_Activity"></activity>
-
-        <activity android:name=".fragment.UsersettingFragment"></activity>
-
-
-        <activity android:name=".activity.Signup"></activity>
-        <activity android:name=".shoppyorders.ShoppyOrderActivity"></activity>
-        <activity android:name=".activity.Prod_Activity"></activity>
-        <activity android:name=".activity.r3_Activity"></activity>
-        <activity android:name=".activity.Login"></activity>
-        <activity android:name=".activity.Payment"></activity>
-        <activity android:name=".activity.TabsBasic"></activity>
-
-        <activity android:name=".Test"></activity>
-        <activity android:name=".productlist.ShoppyProductListActivity"></activity>
-
-
+        <activity android:name=".activity.Book_Activity" />
+        <activity android:name=".fragment.UsersettingFragment" />
+        <activity android:name=".activity.Signup" />
+        <activity android:name=".shoppyorders.ShoppyOrderActivity" />
+        <activity android:name=".activity.Prod_Activity" />
+        <activity android:name=".activity.r3_Activity" />
+        <activity android:name=".activity.Login" />
+        <activity android:name=".activity.Payment" />
+        <activity android:name=".activity.TabsBasic" />
+        <activity android:name=".Test" />
+        <activity android:name=".activity.MainActivity2"/>
+        <activity android:name=".productlist.ShoppyProductListActivity" />
     </application>
 
 </manifest>
