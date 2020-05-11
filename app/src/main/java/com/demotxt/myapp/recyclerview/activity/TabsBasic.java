@@ -30,17 +30,17 @@ public class TabsBasic extends AppCompatActivity {
 
     private ViewPager view_pager;
     private TabLayout tab_layout;
-    private    int userid;
+    private int userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabs_basic);
-        Intent i=getIntent();
-       userid=i.getExtras().getInt("sellerid");
-       // userid=i.getIntExtra("sellerid",0); this
-       // userid=7;
-      //  Log.i("UserId", "Seller id: "+userid);
+        Intent i = getIntent();
+        userid = i.getExtras().getInt("sellerid");
+        // userid=i.getIntExtra("sellerid",0); this
+        // userid=7;
+        //  Log.i("UserId", "Seller id: "+userid);
         initToolbar();
         initComponent();
     }
@@ -65,8 +65,8 @@ public class TabsBasic extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(PlaceholderFragment.newInstance(0), "Men");
-        adapter.addFragment(PlaceholderFragment.newInstance(1),"Women");
-        adapter.addFragment(PlaceholderFragment.newInstance(2),"Kids");
+        adapter.addFragment(PlaceholderFragment.newInstance(1), "Women");
+        adapter.addFragment(PlaceholderFragment.newInstance(2), "Kids");
 
         viewPager.setAdapter(adapter);
     }
@@ -86,7 +86,8 @@ public class TabsBasic extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    public  int getuserid(){
+
+    public int getuserid() {
         return userid;
     }
 
@@ -104,44 +105,17 @@ public class TabsBasic extends AppCompatActivity {
             fragment.setArguments(args);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             return fragment;
         }
 
-      //For changing Fragments
+        //For changing Fragments
         View rootView;
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-            inflater.inflate(R.layout.activity_tabs_basic,container,false);
-                return rootView;
+            inflater.inflate(R.layout.activity_tabs_basic, container, false);
+            return rootView;
         }
     }
 
@@ -159,8 +133,7 @@ public class TabsBasic extends AppCompatActivity {
             Fragment frag = null;
 
 
-            switch (position)
-            {
+            switch (position) {
                 case 0:
                     frag = new CatMen_Fragment();
 

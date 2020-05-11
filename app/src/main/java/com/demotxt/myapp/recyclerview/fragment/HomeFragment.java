@@ -104,6 +104,8 @@ public class HomeFragment extends Fragment {
 
         //flipper
         viewFlipper = (ViewFlipper) view.findViewById(R.id.flipper);
+
+
         int images[] = {R.drawable.ac_banner, R.drawable.cloth_banner, R.drawable.sale1, R.drawable.mobile_banner};
 
         for (int image : images) {
@@ -174,7 +176,8 @@ public class HomeFragment extends Fragment {
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
-                                Toast.makeText(getContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show(); }
+                                Toast.makeText(getContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
                         }
                     },
                     new Response.ErrorListener() {
