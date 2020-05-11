@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/shipline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -20,6 +21,7 @@
             app:fontFamily="sans-serif-medium" />
 
         <EditText
+            android:id="@+id/nameShip"
             style="@style/EditText.Flat.Grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,6 +58,7 @@
             app:fontFamily="sans-serif-medium" />
 
         <EditText
+            android:id="@+id/addShip"
             style="@style/EditText.Flat.Grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,8 +73,10 @@
             android:layout_marginTop="@dimen/spacing_middle"
             android:orientation="horizontal">
 
-            <EditText
-                style="@style/EditText.Flat.Grey"
+            <Spinner
+                android:id="@+id/country"
+                android:hint="Country"
+                android:background="@drawable/edit_text_round_bg_outline"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -79,7 +84,10 @@
                 android:hint="Country"
                 android:drawableEnd="@drawable/ic_expand_arrow"
                 android:drawableRight="@drawable/ic_expand_arrow"
-                android:minHeight="@dimen/spacing_xmlarge" />
+                android:minHeight="@dimen/spacing_xmlarge"
+                android:spinnerMode="dropdown"
+                android:entries="@array/country_arrays"
+                android:prompt="@string/country_prompt"/>
 
             <View
                 android:layout_width="@dimen/spacing_middle"
@@ -92,33 +100,28 @@
                 android:layout_weight="1"
                 android:background="@drawable/edit_text_round_bg_outline"
                 android:hint="ZIP Code"
-                android:text="41071"
+
                 android:minHeight="@dimen/spacing_xmlarge" />
 
         </LinearLayout>
 
-        <EditText
+        <Spinner
             style="@style/EditText.Flat.Grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_middle"
-            android:drawableEnd="@drawable/ic_expand_arrow"
-            android:drawableRight="@drawable/ic_expand_arrow"
             android:background="@drawable/edit_text_round_bg_outline"
-            android:hint="City"
-            android:text="Newport"
-            android:minHeight="@dimen/spacing_xmlarge" />
+            android:minHeight="@dimen/spacing_xmlarge"
+            android:entries="@array/city"/>
 
         <EditText
             style="@style/EditText.Flat.Grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_middle"
-            android:drawableEnd="@drawable/ic_expand_arrow"
-            android:drawableRight="@drawable/ic_expand_arrow"
+
             android:background="@drawable/edit_text_round_bg_outline"
             android:hint="State / Province"
-            android:text="Kentucky"
             android:minHeight="@dimen/spacing_xmlarge" />
 
     </LinearLayout>

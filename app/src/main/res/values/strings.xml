@@ -77,5 +77,26 @@
     <string name="NEXT" translatable="false" />
     <string name="Privacy_Policy" translatable="false">This is for Showing Privacy Policy</string>
 
+    <string name="country_prompt">Choose a country</string>
+
+    <string-array name="country_arrays">
+        <item>Pakistan</item>
+    </string-array>
+    <string-array name="city">
+        <item>Sialkot</item>
+        <item>Lahore</item>
+        <item>Islamabad</item>
+        <item>Karachi</item>
+        <item>Rawalpindi</item>
+
+    </string-array>
+    <string-array name="card">
+        <item>Visa</item>
+        <item>MasterCard</item>
+        <item>Paypal</item>
+
+    </string-array>
+
+
 
 </resources>
