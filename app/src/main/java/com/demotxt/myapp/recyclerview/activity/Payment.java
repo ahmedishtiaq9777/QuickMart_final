@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.balysv.materialripple.MaterialRippleLayout;
 import com.demotxt.myapp.recyclerview.CategoryFragments.CatKids_Fragment;
 import com.demotxt.myapp.recyclerview.CategoryFragments.CatMen_Fragment;
 import com.demotxt.myapp.recyclerview.CategoryFragments.CatWomen_Fragment;
@@ -54,7 +55,7 @@ public class Payment extends AppCompatActivity {
     private ImageView image_shipping, image_payment, image_confirm;
     private TextView tv_shipping, tv_payment, tv_confirm;
 
-    private int idx_state = 0;
+   // private int idx_state = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,13 +130,11 @@ public class Payment extends AppCompatActivity {
     }
 
  */
-
     private void refreshStepTitle() {
         tv_shipping.setTextColor(getResources().getColor(R.color.grey_20));
         tv_payment.setTextColor(getResources().getColor(R.color.grey_20));
         tv_confirm.setTextColor(getResources().getColor(R.color.grey_20));
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -206,18 +205,23 @@ public class Payment extends AppCompatActivity {
             switch (position) {
                 case 0:
                     frag = new FragmentShipping();
+
                     tv_shipping.setTextColor(getResources().getColor(R.color.grey_90));
                     image_shipping.clearColorFilter();
+
                     break;
                 case 1:
                     frag = new FragmentPayment();
+
                     line_first.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     image_shipping.setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
                     image_payment.clearColorFilter();
                     tv_payment.setTextColor(getResources().getColor(R.color.grey_90));
+
                     break;
                 case 2:
                     frag = new FragmentConfirmation();
+
                     line_second.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     image_payment.setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
                     image_confirm.clearColorFilter();
