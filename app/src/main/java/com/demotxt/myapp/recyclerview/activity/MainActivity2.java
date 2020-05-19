@@ -1,7 +1,10 @@
 package com.demotxt.myapp.recyclerview.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -21,11 +24,23 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity2 extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
+    private int Check;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        CheckConnection();
+
+        //To Check Internet Connection
+        if (Check == 1){
         setContentView(R.layout.activitymain2);
+        }
+        else {
+            Intent intent = new Intent(getApplicationContext(),Error_Screen_Activity.class);
+            startActivity(intent);
+        }
+
 
         try {
             Intent i = getIntent();
@@ -42,10 +57,14 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
 
 
         navView.setOnNavigationItemSelectedListener(this);
+
         loadFragment(new HomeFragment());
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
+
     }
+
+
 
     public boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
@@ -106,5 +125,29 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         }
 
     }
+
+    //Internet Connection Check
+    public void CheckConnection(){
+
+        ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
+
+        if (null != activeNetwork){
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI){
+                Toast.makeText(this,"Wifi On",Toast.LENGTH_SHORT).show();
+                Check = 1;
+            }
+            else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE){
+                Toast.makeText(this,"Mobile Data On",Toast.LENGTH_SHORT).show();
+                Check = 1;
+            }
+            else{
+                Toast.makeText(this,"No Internet Connection",Toast.LENGTH_SHORT).show();
+                Check = 0;
+            }
+
+        }
+    }
+
 }
 

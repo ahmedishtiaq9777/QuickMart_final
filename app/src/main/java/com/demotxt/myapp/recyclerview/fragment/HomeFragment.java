@@ -1,6 +1,9 @@
 package com.demotxt.myapp.recyclerview.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,6 +28,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.demotxt.myapp.recyclerview.activity.Error_Screen_Activity;
 import com.demotxt.myapp.recyclerview.ownmodels.Book;
 import com.demotxt.myapp.recyclerview.ownmodels.Prod;
 import com.demotxt.myapp.recyclerview.activity.Prod_Activity;
@@ -55,6 +59,9 @@ public class HomeFragment extends Fragment {
 
         view = inflater.inflate(R.layout.homefragment, container, false);
 
+        //Connection Check
+        CheckConnection();
+
         list = new ArrayList<>();
         Book22 = new ArrayList<>();
         mTrends = new ArrayList<>();
@@ -63,8 +70,11 @@ public class HomeFragment extends Fragment {
         RefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
                 RefreshLayout.setRefreshing(true);
+
+                list = new ArrayList<>();
+                Book22 = new ArrayList<>();
+                mTrends = new ArrayList<>();
 
                 getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getsellers/", 1);
 
@@ -231,6 +241,28 @@ public class HomeFragment extends Fragment {
         GridLayoutManager layoutManager2 = new GridLayoutManager(getContext(), 2);
         myrv3.setLayoutManager(layoutManager2);
         myrv3.setAdapter(myAdapter2);
+    }
+
+    public void CheckConnection(){
+
+        ConnectivityManager manager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
+
+        if (null != activeNetwork){
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI){
+                Toast.makeText(getContext(),"Wifi On",Toast.LENGTH_SHORT).show();
+            }
+            else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE){
+                Toast.makeText(getContext(),"Mobile Data On",Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Intent intent = new Intent(getContext(), Error_Screen_Activity.class);
+                startActivity(intent);
+                Toast.makeText(getContext(),"No Internet Connection",Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
     }
 
 }

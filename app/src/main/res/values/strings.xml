@@ -32,6 +32,7 @@
     <string name="Payment">Payment</string>
     <string name="Confirm">Confirm</string>
     <string name="Language">Language</string>
+    <string name="Reload">Reload</string>
 
     <string name="txt_profile_history">Order History</string>
     <string name="txt_profile_rate">Rate Us</string>
