@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,21 +15,24 @@ import android.widget.Toast;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.demotxt.myapp.recyclerview.CategoryFragments.Catkids;
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.ownmodels.r3;
 import com.demotxt.myapp.recyclerview.activity.r3_Activity;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHolder> {
+public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHolder> implements Filterable {
 
     private Context mContext;
     private List<r3> Data2;
+    private List<r3> Data2Full;
 
     private SharedPreferences cartpreferrence;
     private SharedPreferences.Editor cartprefEditor;
@@ -39,6 +44,7 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
     public RecyclerView3(Context mContext, List<r3> data) {
         this.mContext = mContext;
         this.Data2 = data;
+        Data2Full = new ArrayList<>(Data2);
         ids = new HashSet<String>();
     }
 
@@ -145,5 +151,46 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
 
         }
     }
+
+    //For Search Purposes
+    @Override
+    public Filter getFilter() {
+        return mDataFilter;
+    }
+
+    private Filter mDataFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<r3> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(Data2Full);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (r3 item : Data2Full) {
+                    if (item.getTitle().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            Data2 = new ArrayList<>();
+            Data2.addAll( (List) results.values);
+            notifyDataSetChanged();
+
+        }
+    };
+
+
 
 }

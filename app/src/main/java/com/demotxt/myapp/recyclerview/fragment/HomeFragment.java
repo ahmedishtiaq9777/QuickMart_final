@@ -8,14 +8,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -53,9 +56,14 @@ public class HomeFragment extends Fragment {
     View v2;
     ViewFlipper viewFlipper;
     SwipeRefreshLayout RefreshLayout;
-    ImageButton search;
+    private RecyclerViewAdapter myAdapter;
+    private RecyclerViewProdAdapter myAdapter1;
+    private RecyclerView3 myAdapter2;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        setHasOptionsMenu(true);
 
         view = inflater.inflate(R.layout.homefragment, container, false);
 
@@ -85,7 +93,6 @@ public class HomeFragment extends Fragment {
 
             }
         });
-
 
         getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getsellers/", 1);
 
@@ -117,8 +124,6 @@ public class HomeFragment extends Fragment {
         for (int image : images) {
             flipperimages(image);
         }
-
-
         return view;
     }
 
@@ -218,7 +223,7 @@ public class HomeFragment extends Fragment {
 
 
         RecyclerView myrv = (RecyclerView) view.findViewById(R.id.recyclerview_id);
-        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(getActivity(), list);
+        myAdapter = new RecyclerViewAdapter(getActivity(), list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         //  myrv.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -229,7 +234,7 @@ public class HomeFragment extends Fragment {
 
     public void setrecycletwo() {
         RecyclerView myrv2 = (RecyclerView) view.findViewById(R.id.recyclerview2);
-        RecyclerViewProdAdapter myAdapter1 = new RecyclerViewProdAdapter(getActivity(), Book22);
+        myAdapter1 = new RecyclerViewProdAdapter(getActivity(), Book22);
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         myrv2.setLayoutManager(layoutManager1);
         myrv2.setAdapter(myAdapter1);
@@ -237,7 +242,7 @@ public class HomeFragment extends Fragment {
 
     public void setrecyclethree() {
         RecyclerView myrv3 = (RecyclerView) view.findViewById(R.id.recyclerview3);
-        RecyclerView3 myAdapter2 = new RecyclerView3(getActivity(), mTrends);
+        myAdapter2 = new RecyclerView3(getActivity(), mTrends);
         GridLayoutManager layoutManager2 = new GridLayoutManager(getContext(), 2);
         myrv3.setLayoutManager(layoutManager2);
         myrv3.setAdapter(myAdapter2);
@@ -264,5 +269,35 @@ public class HomeFragment extends Fragment {
         }
 
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.menu_search_setting,menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                myAdapter.getFilter().filter(newText);
+                myAdapter1.getFilter().filter(newText);
+                myAdapter2.getFilter().filter(newText);
+                return false;
+            }
+        });
+    }
+
+
+
 
 }

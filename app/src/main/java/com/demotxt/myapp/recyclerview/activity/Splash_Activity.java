@@ -48,6 +48,6 @@ public class Splash_Activity extends AppCompatActivity {
         loader.setInterpolator(new LinearInterpolator());
 
         mLoader.addView(loader);
-        
+
     }
 }

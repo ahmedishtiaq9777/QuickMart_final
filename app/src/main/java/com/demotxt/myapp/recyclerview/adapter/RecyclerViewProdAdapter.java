@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,16 +22,18 @@ import com.demotxt.myapp.recyclerview.R;
 import com.squareup.picasso.Picasso;
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewProdAdapter.MyViewHolder> {
+public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewProdAdapter.MyViewHolder> implements Filterable {
 
     private Context mContext;
     private List<Prod> Data1;
+    private List<Prod> Data1Full;
 
     private SharedPreferences cartpreferrence;
     private SharedPreferences.Editor cartprefEditor;
@@ -41,6 +45,7 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
     public RecyclerViewProdAdapter(Context mContext, List<Prod> data1) {
         this.mContext = mContext;
         this.Data1 = data1;
+        Data1Full = new ArrayList<>(Data1);
         ids=new HashSet<String>();
     }
 
@@ -174,5 +179,46 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
 
         }
     }
+
+    //For Search Purposes
+    @Override
+    public Filter getFilter() {
+        return mDataFilter;
+    }
+
+    private Filter mDataFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Prod> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(Data1Full);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (Prod item : Data1Full) {
+                    if (item.getTitle().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            Data1 = new ArrayList<>();
+            Data1.addAll( (List) results.values);
+            notifyDataSetChanged();
+
+        }
+    };
+
+
 
 }

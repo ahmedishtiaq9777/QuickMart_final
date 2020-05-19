@@ -19,6 +19,7 @@ import com.demotxt.myapp.recyclerview.fragment.CartFragment;
 import com.demotxt.myapp.recyclerview.fragment.FavoriteFragment;
 import com.demotxt.myapp.recyclerview.fragment.HomeFragment;
 import com.demotxt.myapp.recyclerview.fragment.ProfileFragment;
+import com.demotxt.myapp.recyclerview.utils.Tools;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity2 extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -41,6 +42,7 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
             startActivity(intent);
         }
 
+        initToolbar();
 
         try {
             Intent i = getIntent();
@@ -147,6 +149,14 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
             }
 
         }
+    }
+
+    private void initToolbar() {
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Tools.setSystemBarColor(this);
     }
 
 }

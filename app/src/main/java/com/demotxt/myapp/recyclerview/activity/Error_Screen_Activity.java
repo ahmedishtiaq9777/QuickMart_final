@@ -28,11 +28,6 @@ public class Error_Screen_Activity extends AppCompatActivity {
 
         reload = findViewById(R.id.Reload_button);
 
-
-
-
-
-
         reload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
