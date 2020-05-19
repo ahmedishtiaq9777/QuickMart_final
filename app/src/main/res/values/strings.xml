@@ -18,7 +18,6 @@
     <string name="Trending">Trending</string>
 
 
-
     <string name="btn_edit_profile">EDIT</string>
     <string name="Exit">Exit</string>
     <string name="Favourite">Favourite</string>
@@ -33,6 +32,7 @@
     <string name="Payment">Payment</string>
     <string name="Confirm">Confirm</string>
     <string name="Language">Language</string>
+    <string name="Reload">Reload</string>
 
     <string name="txt_profile_history">Order History</string>
     <string name="txt_profile_rate">Rate Us</string>
@@ -97,7 +97,6 @@
         <item>Paypal</item>
 
     </string-array>
-
 
 
 </resources>

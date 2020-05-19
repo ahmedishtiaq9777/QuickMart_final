@@ -1,12 +1,19 @@
 package com.demotxt.myapp.recyclerview.ownmodels;
 
+import com.google.gson.annotations.SerializedName;
+
 public class r3 {
 
+    @SerializedName("title")
     private String Title;
     private String Category;
+    @SerializedName("description")
     private String Description;
+    @SerializedName("productImage")
     private String Thumbnail;
+    @SerializedName("price")
     private double Price;
+    @SerializedName("productId")
     private  int Id;
 
     public r3() {

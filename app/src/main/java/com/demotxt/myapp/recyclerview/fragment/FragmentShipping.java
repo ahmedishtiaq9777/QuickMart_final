@@ -1,14 +1,11 @@
 package com.demotxt.myapp.recyclerview.fragment;
 
-
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -30,6 +27,7 @@ public class FragmentShipping extends Fragment {
         View root = inflater.inflate(R.layout.fragment_shipping, container, false);
         e1= (EditText) root.findViewById(R.id.nameShip);
         e2=(EditText)root.findViewById(R.id.addShip);
+
 
         return root;
     }

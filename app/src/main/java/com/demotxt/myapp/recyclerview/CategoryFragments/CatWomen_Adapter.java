@@ -6,30 +6,30 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.activity.Prod_Activity;
-import com.demotxt.myapp.recyclerview.activity.TabsBasic;
-import com.demotxt.myapp.recyclerview.ownmodels.Book;
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class CatWomen_Adapter extends RecyclerView.Adapter<CatWomen_Adapter.CatWomenViewHolder> {
+public class CatWomen_Adapter extends RecyclerView.Adapter<CatWomen_Adapter.CatWomenViewHolder> implements Filterable {
 
     private Context mContext;
     private List<CatWomen> mData;
+    private List<CatWomen> mDataFull;
     //
     private SharedPreferences cartpreferrence;
     private SharedPreferences.Editor cartprefEditor;
@@ -37,9 +37,11 @@ public class CatWomen_Adapter extends RecyclerView.Adapter<CatWomen_Adapter.CatW
     //  private List<Integer> Ids;
     public Set<String> ids;
 
-    public CatWomen_Adapter(Context mContext,List<CatWomen> mdata){
-        this.mContext=mContext;
-        mData = mdata;
+    public CatWomen_Adapter(Context mContext, List<CatWomen> mData) {
+        this.mContext = mContext;
+        this.mData = mData;
+        mDataFull = new ArrayList<>(mData);
+
     }
 
     @NonNull
@@ -77,11 +79,11 @@ public class CatWomen_Adapter extends RecyclerView.Adapter<CatWomen_Adapter.CatW
                 Intent intent = new Intent(mContext, Prod_Activity.class);
 
                 // passing data to the book activity
-                intent.putExtra("Title",mData.get(position).getTitle());
-                intent.putExtra("Description",mData.get(position).getDescription());
-                intent.putExtra("Thumbnail",mData.get(position).getThumbnail());
-                intent.putExtra("price",mData.get(position).getPrice());
-                intent.putExtra("proid",mData.get(position).getId());
+                intent.putExtra("Title", mData.get(position).getTitle());
+                intent.putExtra("Description", mData.get(position).getDescription());
+                intent.putExtra("Thumbnail", mData.get(position).getThumbnail());
+                intent.putExtra("price", mData.get(position).getPrice());
+                intent.putExtra("proid", mData.get(position).getId());
                 // start the activity
                 mContext.startActivity(intent);
 
@@ -151,9 +153,9 @@ public class CatWomen_Adapter extends RecyclerView.Adapter<CatWomen_Adapter.CatW
         return mData.size();
     }
 
-    public static class CatWomenViewHolder extends RecyclerView.ViewHolder   {
+    public static class CatWomenViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_women_title,tv_price;
+        TextView tv_women_title, tv_price;
         ImageView img_women_thumbnail, heart;
         CardView cardView;
 
@@ -168,4 +170,43 @@ public class CatWomen_Adapter extends RecyclerView.Adapter<CatWomen_Adapter.CatW
             heart = itemView.findViewById(R.id.heart);
         }
     }
+
+    //For Search Purposes
+    @Override
+    public Filter getFilter() {
+        return mDataFilter;
+    }
+
+    private Filter mDataFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<CatWomen> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(mDataFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (CatWomen item : mDataFull) {
+                    if (item.getTitle().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            mData = new ArrayList<>();
+            mData.addAll( (List) results.values);
+            notifyDataSetChanged();
+
+        }
+    };
 }

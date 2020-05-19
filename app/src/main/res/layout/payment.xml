@@ -168,8 +168,8 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <FrameLayout
-            android:id="@+id/frame_content"
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/Payment_ViewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />

@@ -43,5 +43,7 @@
     <string name="navCart">ٹوکری</string>
     <string name="contactdetail">رابطہ کی تفصیل</string>
     <string name="shippingAdd">شپنگ ایڈریس</string>
+    <string name="Reload">دوبارہ لوڈ کریں</string>
+    <string name="country_prompt">ایک ملک کا انتخاب کریں</string>
 
 </resources>
