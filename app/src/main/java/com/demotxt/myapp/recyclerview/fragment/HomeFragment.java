@@ -2,10 +2,12 @@ package com.demotxt.myapp.recyclerview.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -34,11 +36,6 @@ import com.demotxt.myapp.recyclerview.ownmodels.r3;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.sql.Ref;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,6 +49,7 @@ public class HomeFragment extends Fragment {
     View v2;
     ViewFlipper viewFlipper;
     SwipeRefreshLayout RefreshLayout;
+    ImageButton search;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -66,9 +64,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onRefresh() {
 
-                list = new ArrayList<>();
-                Book22 = new ArrayList<>();
-                mTrends = new ArrayList<>();
+                RefreshLayout.setRefreshing(true);
 
                 getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getsellers/", 1);
 
@@ -76,7 +72,7 @@ public class HomeFragment extends Fragment {
 
                 getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/gettrendingpro/", 3);
 
-                RefreshLayout.setRefreshing(false);
+
             }
         });
 
@@ -236,4 +232,5 @@ public class HomeFragment extends Fragment {
         myrv3.setLayoutManager(layoutManager2);
         myrv3.setAdapter(myAdapter2);
     }
+
 }

@@ -1,20 +1,13 @@
 package com.demotxt.myapp.recyclerview.activity;
 
-import android.content.Context;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
-
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,20 +16,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.balysv.materialripple.MaterialRippleLayout;
-import com.demotxt.myapp.recyclerview.CategoryFragments.CatKids_Fragment;
-import com.demotxt.myapp.recyclerview.CategoryFragments.CatMen_Fragment;
-import com.demotxt.myapp.recyclerview.CategoryFragments.CatWomen_Fragment;
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.fragment.FragmentConfirmation;
 import com.demotxt.myapp.recyclerview.fragment.FragmentPayment;
 import com.demotxt.myapp.recyclerview.fragment.FragmentShipping;
 import com.demotxt.myapp.recyclerview.utils.Tools;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 
 public class Payment extends AppCompatActivity {
@@ -48,9 +34,7 @@ public class Payment extends AppCompatActivity {
         PAYMENT,
         CONFIRMATION
     }
-
     State[] array_state = new State[]{State.SHIPPING, State.PAYMENT, State.CONFIRMATION};*/
-
     private View line_first, line_second;
     private ImageView image_shipping, image_payment, image_confirm;
     private TextView tv_shipping, tv_payment, tv_confirm;
@@ -63,7 +47,6 @@ public class Payment extends AppCompatActivity {
         setContentView(R.layout.payment);
         initToolbar();
         initComponent();
-
         // displayFragment(State.SHIPPING);
     }
 

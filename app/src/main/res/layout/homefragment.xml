@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:id="@+id/SwipeRefresh">
@@ -10,8 +12,6 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/gradient2"
@@ -22,9 +22,11 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:context="com.demotxt.myapp.recyclerview.fragment.HomeFragment">
 
-        <include
-            android:id="@+id/toolhome_id"
-            layout="@layout/toolbar_homepage"
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/Search_View"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +37,7 @@
             android:layout_height="130dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolhome_id"></ViewFlipper>
+            app:layout_constraintTop_toBottomOf="@id/Search_View"/>
 
         <TextView
             android:id="@+id/textRecommend"

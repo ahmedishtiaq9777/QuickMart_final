@@ -35,7 +35,7 @@
         <activity android:name=".activity.Payment" />
         <activity android:name=".activity.TabsBasic" />
         <activity android:name=".Test" />
-        <activity android:name=".activity.MainActivity2"/>
+        <activity android:name=".activity.MainActivity2" />
         <activity android:name=".productlist.ShoppyProductListActivity" />
     </application>
 

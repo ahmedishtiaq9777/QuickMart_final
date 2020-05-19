@@ -2,14 +2,19 @@ package com.demotxt.myapp.recyclerview.CategoryFragments;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -32,7 +37,7 @@ import java.util.Map;
 
 public class CatWomen_Fragment extends Fragment {
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private CatWomen_Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     List<CatWomen> ProdWomen;
@@ -41,6 +46,8 @@ public class CatWomen_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        setHasOptionsMenu(true);
         // Inflate the layout for this fragment
         View rootview =  inflater.inflate(R.layout.fragment_cat_women_, container, false);
 
@@ -157,6 +164,31 @@ public class CatWomen_Fragment extends Fragment {
 
 
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
+
+        inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.menu_search_setting,menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
     }
 
 

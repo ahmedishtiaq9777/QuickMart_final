@@ -2,7 +2,6 @@ package com.demotxt.myapp.recyclerview.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -69,12 +68,6 @@ public class TabsBasic extends AppCompatActivity {
         adapter.addFragment(PlaceholderFragment.newInstance(2), "Kids");
 
         viewPager.setAdapter(adapter);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_search_setting, menu);
-        return true;
     }
 
     @Override

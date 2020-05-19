@@ -19,21 +19,19 @@
         android:id="@+id/Progressloader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_below="@id/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="120dp"
+        android:layout_marginBottom="20dp"
         app:lazyloader_animDur="800"
-        app:lazyloader_dotsDist="10dp"
-        app:lazyloader_dotsRadius="16dp"
+        app:lazyloader_dotsDist="8dp"
+        app:lazyloader_dotsRadius="10dp"
         app:lazyloader_firstDelayDur="150"
         app:lazyloader_firstDotColor="@color/red"
         app:lazyloader_interpolator="@android:anim/decelerate_interpolator"
         app:lazyloader_secondDelayDur="300"
         app:lazyloader_secondDotColor="@color/green"
-        app:lazyloader_thirdDotColor="@color/yellow2"
-        android:layout_below="@id/logo"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"/>
-
+        app:lazyloader_thirdDotColor="@color/yellow2" />
 
 
 </RelativeLayout>
