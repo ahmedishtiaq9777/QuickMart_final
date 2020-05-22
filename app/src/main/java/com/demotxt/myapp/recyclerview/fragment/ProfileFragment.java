@@ -11,8 +11,6 @@ import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -25,25 +23,11 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.balysv.materialripple.MaterialRippleLayout;
 import com.demotxt.myapp.recyclerview.Config;
+import com.demotxt.myapp.recyclerview.Order.Order_Activity;
 import com.demotxt.myapp.recyclerview.R;
-import com.demotxt.myapp.recyclerview.activity.MainActivity2;
-import com.demotxt.myapp.recyclerview.activity.Signup;
-import com.demotxt.myapp.recyclerview.adapter.RecyclerViewAdapter;
 import com.demotxt.myapp.recyclerview.sharepref.SharedPref;
-import com.demotxt.myapp.recyclerview.shoppyorders.ShoppyOrderActivity;
-import com.demotxt.myapp.recyclerview.utils.Tools;
-import com.google.android.material.bottomnavigation.BottomNavigationMenu;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -127,7 +111,7 @@ public class ProfileFragment extends Fragment {
         btn_order_history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ShoppyOrderActivity.class);
+                Intent intent = new Intent(getActivity(), Order_Activity.class);
                 startActivity(intent);
             }
         });
