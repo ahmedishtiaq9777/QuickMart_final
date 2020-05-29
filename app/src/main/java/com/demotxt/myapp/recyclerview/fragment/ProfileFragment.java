@@ -9,9 +9,8 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -24,18 +23,15 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
 import com.balysv.materialripple.MaterialRippleLayout;
 import com.demotxt.myapp.recyclerview.Config;
+import com.demotxt.myapp.recyclerview.Order.Order_Activity;
 import com.demotxt.myapp.recyclerview.R;
-import com.demotxt.myapp.recyclerview.adapter.RecyclerViewAdapter;
 import com.demotxt.myapp.recyclerview.sharepref.SharedPref;
-import com.demotxt.myapp.recyclerview.shoppyorders.ShoppyOrderActivity;
-import com.demotxt.myapp.recyclerview.utils.Tools;
-import com.google.android.material.bottomnavigation.BottomNavigationMenu;
-import com.google.android.material.snackbar.Snackbar;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 
 public class ProfileFragment extends Fragment {
@@ -56,7 +52,7 @@ public class ProfileFragment extends Fragment {
 
     public boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
-            getFragmentManager()
+            getActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragmentcontainer, fragment).addToBackStack(null)
                     .commit();
@@ -115,7 +111,7 @@ public class ProfileFragment extends Fragment {
         btn_order_history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ShoppyOrderActivity.class);
+                Intent intent = new Intent(getActivity(), Order_Activity.class);
                 startActivity(intent);
             }
         });
@@ -156,33 +152,6 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
 
                 showChangeLanguageDialog();
-
-              /*  AlertDialog dialog;
-                AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
-                builder.setMessage("LANGUAGE").setView(view);
-
-                dialog=builder.create();
-                dialog.show();
-*/
-                /*AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Phone Ringtone");
-                builder.setSingleChoiceItems(Languages, 0, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        lang.setText(Languages[i]);
-                        //single_choice_selected = Languages[i];
-                        // language.
-                    }
-                });
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Snackbar.make(view, "Language Selected ", Snackbar.LENGTH_SHORT).show();
-                        // Snackbar.make(parent_view, "selected : " + single_choice_selected, Snackbar.LENGTH_SHORT).show();
-                    }
-                });
-                builder.setNegativeButton("cancel", null);
-                builder.show();*/
             }
         });
 
@@ -223,7 +192,7 @@ public class ProfileFragment extends Fragment {
                  /*   Intent intent = new Intent(getContext(),);
                     startActivity(intent);*/
 
-                  getActivity().recreate();
+                    getActivity().recreate();
                 } else if (i == 1) {
                     setLocale("ur");
                     getActivity().recreate();
@@ -254,5 +223,10 @@ public class ProfileFragment extends Fragment {
         String lan = pref.getString("My_Lang", "");
         setLocale(lan);
     }
+
 }
+
+
+
+
 

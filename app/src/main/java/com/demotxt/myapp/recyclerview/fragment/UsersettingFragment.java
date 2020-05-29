@@ -118,18 +118,5 @@ public class UsersettingFragment extends PreferenceActivity {
             }
         });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

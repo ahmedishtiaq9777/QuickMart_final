@@ -6,9 +6,6 @@
     android:background="@drawable/gradient"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbarfavorite" />
-
-
     <ListView
 
         android:id="@+id/listview"

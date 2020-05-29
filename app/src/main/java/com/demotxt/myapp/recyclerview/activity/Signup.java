@@ -28,42 +28,30 @@ import java.util.Map;
 
 public class Signup extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    TextView signin,signup;
-    EditText email,password;
+    TextView signin, signup;
+    EditText email, password;
     Spinner spiner;
-    public  String selectedaccount;
+    public String selectedaccount;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitysignup);
 //INITIALLIZE
         signin = (TextView) findViewById(R.id.signin);
-        signup=(TextView)findViewById(R.id.signin1);
+        signup = (TextView) findViewById(R.id.signin1);
+        email = (EditText) findViewById(R.id.emaill);
+        password = (EditText) findViewById(R.id.passwordd);
+        spiner = (Spinner) findViewById(R.id.spinner1);
 
-        email=(EditText)findViewById(R.id.emaill);
-        password=(EditText)findViewById(R.id.passwordd);
-        spiner=(Spinner)findViewById(R.id.spinner1);
-
-        ArrayAdapter<String> listadapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item ,getResources().getStringArray(R.array.Accounttypes));
+        ArrayAdapter<String> listadapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.Accounttypes));
         listadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spiner.setAdapter(listadapter);
         spiner.setOnItemSelectedListener(this);
 
-
-
-
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-
-
-
-
-
-
                 try {
 
                     final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -71,30 +59,28 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
                     //String url="https://api.myjson.com/bins/kp9wz";
                     String url = "http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/signup";
 
-
                     StringRequest rRequest = new StringRequest(Request.Method.POST, url,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
                                     // response
                                     //  Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
-                                    int size=response.toString().length();
+                                    int size = response.toString().length();
 
-                                    String result=response.toString().substring(1,size-1);
+                                    String result = response.toString().substring(1, size - 1);
 
 
-
-                                    if(result.toString().equals("registered")){
+                                    if (result.toString().equals("registered")) {
                                         finish();
-                                        Intent intent=new Intent(Signup.this, MainActivity2.class);
+                                        Intent intent = new Intent(Signup.this, MainActivity2.class);
 
                                         startActivity(intent);
                                     }
-                                    if(result.toString().equals("alreadyregistered")){
-                                        Toast.makeText(getApplicationContext(),"This Email is Already Registered",Toast.LENGTH_SHORT).show();
-                                    }else {
-                                        Log.i("APIERROR","error");
-                                        Toast.makeText(getApplicationContext(), "error"+response.toString(), Toast.LENGTH_SHORT).show();
+                                    if (result.toString().equals("alreadyregistered")) {
+                                        Toast.makeText(getApplicationContext(), "This Email is Already Registered", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Log.i("APIERROR", "error");
+                                        Toast.makeText(getApplicationContext(), "error" + response.toString(), Toast.LENGTH_SHORT).show();
 
                                     }
                                 }
@@ -114,7 +100,7 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
 
                             params.put("email", email.getText().toString());
                             params.put("password", password.getText().toString());
-                            params.put("UserType",selectedaccount);
+                            params.put("UserType", selectedaccount);
                             return params;
                         }
 
@@ -128,17 +114,10 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
                     requestQueue.add(rRequest);
 
 
-                }catch (Exception E)
-                {
-                    Toast.makeText(getApplicationContext(),"Error: "+E.getMessage(),Toast.LENGTH_SHORT).show();
+                } catch (Exception E) {
+                    Toast.makeText(getApplicationContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
                     Log.i("error", E.getMessage());
                 }
-
-
-
-
-
-
 
 
             }
@@ -158,14 +137,14 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-selectedaccount=parent.getItemAtPosition(position).toString();
-if(selectedaccount.equals("As a Buyer")){
-    selectedaccount="C";
+        selectedaccount = parent.getItemAtPosition(position).toString();
+        if (selectedaccount.equals("As a Buyer")) {
+            selectedaccount = "C";
 
-}else if(selectedaccount.equals("As a Seller")){
+        } else if (selectedaccount.equals("As a Seller")) {
 
-    selectedaccount="S";
-}
+            selectedaccount = "S";
+        }
     }
 
     @Override

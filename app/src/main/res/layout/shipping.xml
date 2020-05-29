@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <LinearLayout
         android:id="@+id/shipline"
         android:layout_width="match_parent"
@@ -21,6 +22,10 @@
             android:textColor="@color/grey_40"
             android:textStyle="bold"
             app:fontFamily="sans-serif-medium" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tipname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/nameShip"
@@ -31,7 +36,12 @@
             android:background="@drawable/edit_text_round_bg_outline"
             android:hint="@string/default_your_name"
             android:minHeight="@dimen/spacing_xmlarge" />
+        </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tipemail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <EditText
             android:id="@+id/emailShip"
             style="@style/EditText.Flat.Grey"
@@ -41,7 +51,11 @@
             android:background="@drawable/edit_text_round_bg_outline"
             android:hint="@string/default_your_email"
             android:minHeight="@dimen/spacing_xmlarge" />
-
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tipcontact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <EditText
             android:id="@+id/contactShip"
             style="@style/EditText.Flat.Grey"
@@ -51,6 +65,7 @@
             android:background="@drawable/edit_text_round_bg_outline"
             android:hint="@string/default_your_phone"
             android:minHeight="@dimen/spacing_xmlarge" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -62,6 +77,10 @@
             android:textStyle="bold"
             app:fontFamily="sans-serif-medium" />
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tipaddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <EditText
             android:id="@+id/addShip"
             style="@style/EditText.Flat.Grey"
@@ -71,6 +90,7 @@
             android:background="@drawable/edit_text_round_bg_outline"
             android:hint="@string/default_your_address"
             android:minHeight="@dimen/spacing_xmlarge" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
