@@ -45,5 +45,12 @@
     <string name="shippingAdd">شپنگ ایڈریس</string>
     <string name="Reload">دوبارہ لوڈ کریں</string>
     <string name="country_prompt">ایک ملک کا انتخاب کریں</string>
+    <string name="error_name">غلط نام</string>
+    <string name="error_email">غلط نام</string>
+    <string name="error_contact">غلط نام</string>
+    <string name="error_address">غلط نام</string>
+    <string name="error_zip">غلط نام</string>
+    <string name="error_state">غلط نام</string>
+
 
 </resources>

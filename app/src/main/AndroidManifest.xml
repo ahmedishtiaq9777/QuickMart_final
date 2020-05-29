@@ -15,11 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-         <activity android:name=".activity.Splash_Activity">
+        <activity android:name=".activity.Splash_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,13 +34,13 @@
         <activity android:name=".activity.Prod_Activity" />
         <activity android:name=".activity.r3_Activity" />
         <activity android:name=".activity.Login" />
-        <activity android:name=".activity.Payment" />
+        <activity android:name=".activity.Shipping" />
+        <activity android:name=".activity.Confirmation" />
         <activity android:name=".activity.TabsBasic" />
         <activity android:name=".Test" />
         <activity android:name=".activity.MainActivity2" />
         <activity android:name=".productlist.ShoppyProductListActivity" />
-        <activity android:name=".activity.Error_Screen_Activity"/>
-
+        <activity android:name=".activity.Error_Screen_Activity" />
     </application>
 
 </manifest>

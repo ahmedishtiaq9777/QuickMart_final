@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.demotxt.myapp.recyclerview.R;
-import com.demotxt.myapp.recyclerview.fragment.FragmentConfirmation;
+//import com.demotxt.myapp.recyclerview.fragment.FragmentConfirmation;
 import com.demotxt.myapp.recyclerview.fragment.HomeFragment;
 
 public class Error_Screen_Activity extends AppCompatActivity {
