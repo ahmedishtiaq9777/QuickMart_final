@@ -13,12 +13,12 @@
     </string>
 
     <string name="app_name">QuickMart</string>
-    <string name="error_name">Name Required</string>
-    <string name="error_email">Email Required</string>
-    <string name="error_contact">Contact Required</string>
-    <string name="error_address">Address Required</string>
-    <string name="error_zip">Zip Required</string>
-    <string name="error_state">State Required</string>
+    <string name="error_name">Enter Valid Name</string>
+    <string name="error_email">Enter Valid Email </string>
+    <string name="error_contact">Enter Valid Contact</string>
+    <string name="error_address">Enter Valid Address</string>
+    <string name="error_zip">Enter Valid Zip</string>
+
 
     <string name="Shops">Shops</string>
     <string name="Recommended">Recommended</string>
@@ -50,8 +50,9 @@
     <string name="navCart">Cart</string>
     <string name="navFav">Favourite</string>
     <string name="navProf">Profile</string>
-    <string name="contactdetail">Contact Detail</string>
+    <string name="contactDetail">Contact Detail</string>
     <string name="shippingAdd">Shipping Address</string>
+    <string name="paymentDetail">Payment Details</string>
 
 
 
