@@ -72,7 +72,7 @@ public class CartFragment extends Fragment  {
         cartprefeditor=cartprefs.edit();
         cartids=cartprefs.getStringSet("cartids",cartids);
         Bean = new ArrayList<>();
-        getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswithproId");
+        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getproductswithproId");
 
         pay=(Button)view.findViewById(R.id.pay);
         pay.setOnClickListener(new View.OnClickListener() {

@@ -78,7 +78,7 @@ public class FavoriteFragment extends Fragment {
        ids=cartpreferrence.getStringSet("ids",ids);
 
 
-       getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswithproId");
+       getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getproductswithproId");
         //
       /*  Bean = new ArrayList<CartListBeanlist>();
 
@@ -187,7 +187,7 @@ public class FavoriteFragment extends Fragment {
     private  void setimageurl(){
         int n = 0;
         for (CartListBeanlist i : Bean) {
-            i.setImage("http://ahmedishtiaq9778-001-site1.ftempurl.com" + i.getImage());
+            i.setImage("http://ahmedishtiaq1997-001-site1.ftempurl.com" + i.getImage());
             // list.remove(n);
             Bean.set(n,i);
             n++;
