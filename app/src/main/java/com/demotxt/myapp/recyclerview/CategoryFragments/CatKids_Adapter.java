@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,15 +22,17 @@ import com.demotxt.myapp.recyclerview.activity.TabsBasic;
 import com.demotxt.myapp.recyclerview.ownmodels.Book;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKidsViewHolder> {
+public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKidsViewHolder> implements Filterable {
 
     private Context mContext;
     private List<Catkids> mData;
+    private List<Catkids> mDataFull;
     //
     private SharedPreferences cartpreferrence;
     private SharedPreferences.Editor cartprefEditor;
@@ -38,7 +42,8 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
 
     public CatKids_Adapter(Context mContext,List<Catkids> mdata){
         this.mContext=mContext;
-        mData = mdata;
+        this.mData = mdata;
+        mDataFull = new ArrayList<>(mData);
     }
 
     @NonNull
@@ -169,4 +174,46 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
             heart = itemView.findViewById(R.id.heart);
         }
     }
+
+    //For Search Purposes
+    @Override
+    public Filter getFilter() {
+        return mDataFilter;
+    }
+
+    private Filter mDataFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Catkids> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(mDataFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (Catkids item : mDataFull) {
+                    if (item.getTitle().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            mData = new ArrayList<>();
+            mData.addAll( (List) results.values);
+            notifyDataSetChanged();
+
+        }
+    };
+
+
+
 }

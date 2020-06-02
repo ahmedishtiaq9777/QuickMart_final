@@ -7,9 +7,6 @@
     android:background="@drawable/gradient2"
     >
 
-    <include layout="@layout/toolbar"/>
-
-
     <ListView
 
         android:id="@+id/listview"
@@ -27,8 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/red2"
-        android:text="PLACE THIS ORDER"
-        android:textSize="16dp"
+        android:text="@string/PlaceOrder"
+        android:textSize="16sp"
         android:textColor="#fff"
         android:padding="16dp"
         android:gravity="center"

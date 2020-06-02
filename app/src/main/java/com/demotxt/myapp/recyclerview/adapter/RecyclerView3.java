@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,21 +15,24 @@ import android.widget.Toast;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.demotxt.myapp.recyclerview.CategoryFragments.Catkids;
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.ownmodels.r3;
 import com.demotxt.myapp.recyclerview.activity.r3_Activity;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHolder> {
+public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHolder> implements Filterable {
 
-    private Context mContext ;
-    private List<r3> Data2 ;
+    private Context mContext;
+    private List<r3> Data2;
+    private List<r3> Data2Full;
 
     private SharedPreferences cartpreferrence;
     private SharedPreferences.Editor cartprefEditor;
@@ -39,19 +44,20 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
     public RecyclerView3(Context mContext, List<r3> data) {
         this.mContext = mContext;
         this.Data2 = data;
-        ids=new HashSet<String>();
+        Data2Full = new ArrayList<>(Data2);
+        ids = new HashSet<String>();
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        cartpreferrence =   mContext.getSharedPreferences("favpref", MODE_PRIVATE);
+        cartpreferrence = mContext.getSharedPreferences("favpref", MODE_PRIVATE);
         cartprefEditor = cartpreferrence.edit();
-        ids=cartpreferrence.getStringSet("ids",ids);
+        ids = cartpreferrence.getStringSet("ids", ids);
 
-        View view ;
+        View view;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
-        view = mInflater.inflate(R.layout.cardview_item_r3,parent,false);
+        view = mInflater.inflate(R.layout.cardview_item_r3, parent, false);
         return new MyViewHolder(view);
     }
 
@@ -59,16 +65,16 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
 
-        int ID=Data2.get(position).getId();
-        String strID=String.valueOf(ID);
-        isblack=cartpreferrence.getBoolean(strID,false);
-        if(isblack==true)
-        {
+        int ID = Data2.get(position).getId();
+        String strID = String.valueOf(ID);
+        isblack = cartpreferrence.getBoolean(strID, false);
+        if (isblack == true) {
             holder.heart.setImageResource(R.drawable.ic_favorite_black_24dp);
         }
 
         holder.tv_r3_title.setText(Data2.get(position).getTitle());
-       // holder.img_book_thumbnail.setImageResource(Data2.get(position).getThumbnail());
+        holder.r3_price.setText(Data2.get(position).getPrice());
+        // holder.img_book_thumbnail.setImageResource(Data2.get(position).getThumbnail());
         Picasso.get().load(Data2.get(position).getThumbnail()).into(holder.img_r3_thumbnail);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -78,11 +84,11 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
                 Intent intent = new Intent(mContext, r3_Activity.class);
 
                 // passing data to the book activity
-                intent.putExtra("Title",Data2.get(position).getTitle());
-                intent.putExtra("Description",Data2.get(position).getDescription());
-                intent.putExtra("Thumbnail",Data2.get(position).getThumbnail());
-                intent.putExtra("price",Data2.get(position).getPrice());
-                intent.putExtra("proid",Data2.get(position).getId());
+                intent.putExtra("Title", Data2.get(position).getTitle());
+                intent.putExtra("Description", Data2.get(position).getDescription());
+                intent.putExtra("Thumbnail", Data2.get(position).getThumbnail());
+                intent.putExtra("price", Data2.get(position).getPrice());
+                intent.putExtra("proid", Data2.get(position).getId());
                 // start the activity
                 mContext.startActivity(intent);
 
@@ -96,7 +102,7 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
                     int ID = Data2.get(position).getId();// get selected product Id
                     String strID = String.valueOf(ID);// convert to String
                     isblack = cartpreferrence.getBoolean(strID, false);// Check whether selected product is black or not
-                    if(isblack == true) {
+                    if (isblack == true) {
                         holder.heart.setImageResource(R.drawable.ic_favorite_border_24dp);
                         ids.remove(strID);
                         cartprefEditor.putBoolean(strID, false);
@@ -120,9 +126,7 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
         });
 
 
-
-
-            }
+    }
 
     @Override
     public int getItemCount() {
@@ -131,21 +135,62 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_r3_title;
-        ImageView img_r3_thumbnail,heart;
-        CardView cardView ;
+        TextView tv_r3_title, r3_price;
+        ImageView img_r3_thumbnail, heart;
+        CardView cardView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            tv_r3_title = itemView.findViewById(R.id.r3_title_id) ;
+            tv_r3_title = itemView.findViewById(R.id.r3_title_id);
             img_r3_thumbnail = itemView.findViewById(R.id.r3_img_id);
-            //same cardview as of book activity
+            r3_price = itemView.findViewById(R.id.r3_prod_price);
             cardView = itemView.findViewById(R.id.cardview_id_r3);
-            heart=itemView.findViewById(R.id.heart);
+            heart = itemView.findViewById(R.id.heart);
 
 
         }
     }
+
+    //For Search Purposes
+    @Override
+    public Filter getFilter() {
+        return mDataFilter;
+    }
+
+    private Filter mDataFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<r3> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(Data2Full);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (r3 item : Data2Full) {
+                    if (item.getTitle().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            Data2 = new ArrayList<>();
+            Data2.addAll( (List) results.values);
+            notifyDataSetChanged();
+
+        }
+    };
+
+
 
 }

@@ -38,7 +38,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="PRODUCT lIST"
+    android:text="@string/Productlist"
     android:textColor="@color/white"
     android:textSize="@dimen/text"
     android:gravity="center"

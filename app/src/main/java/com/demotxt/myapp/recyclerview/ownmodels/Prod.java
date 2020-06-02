@@ -44,7 +44,7 @@ public class Prod {
     public String getThumbnail() {
         return Thumbnail;
     }
-    public float getPrice(){return  Price;}
+    public String getPrice(){return  String.valueOf(Price);}
 
 
     public void setTitle(String title) {

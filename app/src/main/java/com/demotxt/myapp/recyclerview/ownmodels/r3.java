@@ -1,12 +1,19 @@
 package com.demotxt.myapp.recyclerview.ownmodels;
 
+import com.google.gson.annotations.SerializedName;
+
 public class r3 {
 
+    @SerializedName("title")
     private String Title;
     private String Category;
+    @SerializedName("description")
     private String Description;
+    @SerializedName("productImage")
     private String Thumbnail;
-    private float Price;
+    @SerializedName("price")
+    private double Price;
+    @SerializedName("productId")
     private  int Id;
 
     public r3() {
@@ -17,7 +24,7 @@ public class r3 {
         Category = category;
         Description = description;
         Thumbnail = thumbnail;
-        Price=(float)price;
+        Price=price;
         Id=id;
     }
 
@@ -38,7 +45,7 @@ public class r3 {
     public String getThumbnail() {
         return Thumbnail;
     }
-    public  float getPrice(){return  Price;}
+    public  String getPrice(){return  String.valueOf(Price);}
 
 
     public void setTitle(String title) {
