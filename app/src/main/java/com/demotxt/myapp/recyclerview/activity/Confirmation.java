@@ -7,17 +7,62 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.demotxt.myapp.recyclerview.R;
+import com.demotxt.myapp.recyclerview.adapter.OrderViewAdapter;
 import com.demotxt.myapp.recyclerview.fragment.CartFragment;
+import com.demotxt.myapp.recyclerview.model.OrderViewImg;
+
+import java.util.ArrayList;
 
 public class Confirmation extends AppCompatActivity {
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
     Button confirm;
     TextView t1,t2;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.confirmation);
+
+
+        ArrayList<OrderViewImg> orderViewImgs = new ArrayList<>();
+        orderViewImgs.add(new OrderViewImg(R.drawable.shoes,"SHirt",2,1000));
+        orderViewImgs.add(new OrderViewImg(R.drawable.shoes,"SHirt",2,1000));
+        orderViewImgs.add(new OrderViewImg(R.drawable.shoes,"SHirt",2,1000));
+        orderViewImgs.add(new OrderViewImg(R.drawable.shoes,"SHirt",2,1000));
+
+
+        recyclerView = findViewById(R.id.recyclerViewOrder);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        adapter = new OrderViewAdapter(orderViewImgs);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         confirm=(Button)findViewById(R.id.button3);
         t1 = (TextView)findViewById(R.id.getname);
         t2 = (TextView)findViewById(R.id.getaddress);

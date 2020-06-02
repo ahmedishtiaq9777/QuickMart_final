@@ -7,6 +7,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,8 +45,10 @@ public class Shipping extends AppCompatActivity {
 
         awesomeValidation.addValidation(Shipping.this, R.id.nameShip, "[a-zA-Z\\s]+", R.string.error_name);
         awesomeValidation.addValidation(Shipping.this, R.id.emailShip, android.util.Patterns.EMAIL_ADDRESS, R.string.error_email);
-        awesomeValidation.addValidation(Shipping.this, R.id.contactShip, "^[0-9]{10}", R.string.error_contact);
-        awesomeValidation.addValidation(Shipping.this, R.id.addShip, "^[a-zA-Z0-9_.-]*$", R.string.error_address);
+        awesomeValidation.addValidation(Shipping.this, R.id.contactShip, "^[0-9]{11}", R.string.error_contact);
+        awesomeValidation.addValidation(Shipping.this, R.id.addShip, RegexTemplate.NOT_EMPTY, R.string.error_address);
+        awesomeValidation.addValidation(Shipping.this, R.id.zipShip, "^[0-9]{5}", R.string.error_zip);
+
 
 
         ship=(Button)findViewById(R.id.button1);
@@ -76,7 +79,7 @@ public class Shipping extends AppCompatActivity {
 
                 }else {
 
-                    Toast.makeText(getApplicationContext(),"Invalid",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),"Invalid",Toast.LENGTH_SHORT).show();
                 }
 
 
