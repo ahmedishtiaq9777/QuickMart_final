@@ -32,11 +32,12 @@
         <activity android:name=".activity.Book_Activity" />
         <activity android:name=".fragment.UsersettingFragment" />
         <activity android:name=".activity.Signup" />
-        <activity android:name=".shoppyorders.ShoppyOrderActivity" />
+
         <activity android:name=".activity.Prod_Activity" />
         <activity android:name=".activity.r3_Activity" />
         <activity android:name=".activity.Login" />
-        <activity android:name=".activity.Payment" />
+        <activity android:name=".activity.Shipping" />
+        <activity android:name=".activity.Confirmation" />
         <activity android:name=".activity.TabsBasic" />
         <activity android:name=".Test" />
         <activity android:name=".activity.MainActivity2" />

@@ -60,7 +60,7 @@ public class CatMen_Fragment extends Fragment {
         int sid= activity.getuserid();
         Log.i("Seller id",  String.valueOf(sid));
         String userid=String.valueOf(sid);
-        String url="http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getprowithsellerid";
+        String url="http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getprowithsellerid";
         getconnection(url,userid);
 
 
@@ -156,7 +156,7 @@ public class CatMen_Fragment extends Fragment {
     private  void setimageurl(){
         int n = 0;
         for (CatMen i : ProdMen) {
-            i.setThumbnail("http://ahmedishtiaq9778-001-site1.ftempurl.com" + i.getThumbnail());
+            i.setThumbnail("http://ahmedishtiaq1997-001-site1.ftempurl.com" + i.getThumbnail());
             // list.remove(n);
             ProdMen.set(n,i);
             n++;

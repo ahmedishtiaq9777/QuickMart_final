@@ -31,36 +31,27 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                     android:textColor="@color/grey_40"
                     app:fontFamily="sans-serif-medium" />
-
-
-
-
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_middle"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:textColor="@color/grey_90"
-                app:fontFamily="sans-serif-medium" />
 
             <TextView
                 android:id="@+id/getname"
-                android:layout_marginTop="0dp"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
+                android:layout_marginTop="0dp"
                 android:selectAllOnFocus="false"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:text="TextView" />
+                android:textSize="20dp"
+                android:text="TextView"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
             <TextView
                 android:id="@+id/getaddress"
                 android:layout_marginTop="0dp"
                 android:layout_width="match_parent"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:layout_height="25dp"
+                android:layout_height="35dp"
                 android:selectAllOnFocus="false"
+                android:textSize="15dp"
                 android:text="TextView" />
 
         </LinearLayout>
@@ -89,9 +80,6 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                     android:textColor="@color/grey_40"
                     app:fontFamily="sans-serif-medium" />
-
-
-
             </LinearLayout>
 
             <TextView
@@ -330,9 +318,17 @@
             android:layout_height="1dp"
             android:background="@color/grey_10" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/spacing_xxlarge" />
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:background="@color/colorAccent"
+            android:text="Done"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

@@ -3,8 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/QuickMart_final.iml" filepath="$PROJECT_DIR$/QuickMart_final.iml" group="QuickMart_final" />
-      <module fileurl="file://$PROJECT_DIR$/app/QuickMart_final-app.iml" filepath="$PROJECT_DIR$/app/QuickMart_final-app.iml" group="QuickMart_final/app" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="QuickMart_final/app" />
+      <module fileurl="file://$PROJECT_DIR$/awais new push1-rv2gridlayout-master-a78dce4848d172d2061d8ae5077cdaa01a8112b9.iml" filepath="$PROJECT_DIR$/awais new push1-rv2gridlayout-master-a78dce4848d172d2061d8ae5077cdaa01a8112b9.iml" group="rv2gridlayout-master-a78dce4848d172d2061d8ae5077cdaa01a8112b9" />
+      <module fileurl="file://$PROJECT_DIR$/app/awais new push1-rv2gridlayout-master-a78dce4848d172d2061d8ae5077cdaa01a8112b9-app.iml" filepath="$PROJECT_DIR$/app/awais new push1-rv2gridlayout-master-a78dce4848d172d2061d8ae5077cdaa01a8112b9-app.iml" group="rv2gridlayout-master-a78dce4848d172d2061d8ae5077cdaa01a8112b9/app" />
+      <module fileurl="file://$PROJECT_DIR$/rv2gridlayout-master-a78dce4848d172d2061d8ae5077cdaa01a8112b9.iml" filepath="$PROJECT_DIR$/rv2gridlayout-master-a78dce4848d172d2061d8ae5077cdaa01a8112b9.iml" group="rv2gridlayout-master-a78dce4848d172d2061d8ae5077cdaa01a8112b9" />
+      <module fileurl="file://$PROJECT_DIR$/app/rv2gridlayout-master-a78dce4848d172d2061d8ae5077cdaa01a8112b9-app.iml" filepath="$PROJECT_DIR$/app/rv2gridlayout-master-a78dce4848d172d2061d8ae5077cdaa01a8112b9-app.iml" group="rv2gridlayout-master-a78dce4848d172d2061d8ae5077cdaa01a8112b9/app" />
     </modules>
   </component>
 </project>

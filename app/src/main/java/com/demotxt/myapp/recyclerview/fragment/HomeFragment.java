@@ -84,21 +84,21 @@ public class HomeFragment extends Fragment {
                 Book22 = new ArrayList<>();
                 mTrends = new ArrayList<>();
 
-                getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getsellers/", 1);
+                getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getsellers/", 1);
 
-                getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getrecommendedpro/", 2);
+                getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getrecommendedpro/", 2);
 
-                getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/gettrendingpro/", 3);
+                getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/gettrendingpro/", 3);
 
 
             }
         });
 
-        getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getsellers/", 1);
+        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getsellers/", 1);
 
-        getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getrecommendedpro/", 2);
+        getconnection("hhttp://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getrecommendedpro/", 2);
 
-        getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/gettrendingpro/", 3);
+        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/gettrendingpro/", 3);
 
 
         v2 = inflater.inflate(R.layout.cardveiw_item_prod, null);
@@ -148,7 +148,7 @@ public class HomeFragment extends Fragment {
                                         list = Arrays.asList(gson.fromJson(response, Book[].class));
                                         int n = 0;
                                         for (Book i : list) {
-                                            i.setThumbnail("http://ahmedishtiaq9778-001-site1.ftempurl.com" + i.getThumbnail());
+                                            i.setThumbnail("http://ahmedishtiaq1997-001-site1.ftempurl.com" + i.getThumbnail());
                                             // list.remove(n);
                                             list.set(n, i);
                                             n++;
@@ -162,7 +162,7 @@ public class HomeFragment extends Fragment {
                                         Book22 = Arrays.asList(gson.fromJson(response, Prod[].class));
                                         int n = 0;
                                         for (Prod i : Book22) {
-                                            i.setThumbnail("http://ahmedishtiaq9778-001-site1.ftempurl.com" + i.getThumbnail());
+                                            i.setThumbnail("http://ahmedishtiaq1997-001-site1.ftempurl.com" + i.getThumbnail());
                                             // list.remove(n);
                                             Book22.set(n, i);
                                             n++;
@@ -176,7 +176,7 @@ public class HomeFragment extends Fragment {
                                         mTrends = Arrays.asList(gson.fromJson(response, r3[].class));
                                         int n = 0;
                                         for (r3 i : mTrends) {
-                                            i.setThumbnail("http://ahmedishtiaq9778-001-site1.ftempurl.com" + i.getThumbnail());
+                                            i.setThumbnail("http://ahmedishtiaq1997-001-site1.ftempurl.com" + i.getThumbnail());
                                             // list.remove(n);
                                             mTrends.set(n, i);
                                             n++;

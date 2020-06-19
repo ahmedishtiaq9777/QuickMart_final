@@ -1,10 +1,8 @@
 package com.demotxt.myapp.recyclerview.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -23,15 +21,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.R;
-import com.demotxt.myapp.recyclerview.activity.Payment;
-import com.demotxt.myapp.recyclerview.shoppycartlist.CartListActivity;
+import com.demotxt.myapp.recyclerview.activity.Shipping;
 import com.demotxt.myapp.recyclerview.shoppycartlist.CartListBaseAdapter;
 import com.demotxt.myapp.recyclerview.shoppycartlist.CartListBeanlist;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,13 +65,13 @@ public class CartFragment extends Fragment  {
         cartprefeditor=cartprefs.edit();
         cartids=cartprefs.getStringSet("cartids",cartids);
         Bean = new ArrayList<>();
-        getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getproductswithproId");
+        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getproductswithproId");
 
         pay=(Button)view.findViewById(R.id.pay);
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(), Payment.class);
+                Intent i = new Intent(getActivity(), Shipping.class);
                 startActivity(i);
             }
         });
