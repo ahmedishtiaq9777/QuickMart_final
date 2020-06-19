@@ -34,11 +34,10 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         CheckConnection();
 
         //To Check Internet Connection
-        if (Check == 1){
-        setContentView(R.layout.activitymain2);
-        }
-        else {
-            Intent intent = new Intent(getApplicationContext(),Error_Screen_Activity.class);
+        if (Check == 1) {
+            setContentView(R.layout.activitymain2);
+        } else {
+            Intent intent = new Intent(getApplicationContext(), Error_Screen_Activity.class);
             startActivity(intent);
         }
 
@@ -67,7 +66,6 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
     }
 
 
-
     public boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
             getSupportFragmentManager()
@@ -78,8 +76,6 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         }
         return false;
     }
-
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -129,22 +125,20 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
     }
 
     //Internet Connection Check
-    public void CheckConnection(){
+    public void CheckConnection() {
 
         ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
 
-        if (null != activeNetwork){
-            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI){
-                Toast.makeText(this,"Wifi On",Toast.LENGTH_SHORT).show();
+        if (null != activeNetwork) {
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
+                Toast.makeText(this, "Wifi On", Toast.LENGTH_SHORT).show();
                 Check = 1;
-            }
-            else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE){
-                Toast.makeText(this,"Mobile Data On",Toast.LENGTH_SHORT).show();
+            } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
+                Toast.makeText(this, "Mobile Data On", Toast.LENGTH_SHORT).show();
                 Check = 1;
-            }
-            else{
-                Toast.makeText(this,"No Internet Connection",Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
                 Check = 0;
             }
 
