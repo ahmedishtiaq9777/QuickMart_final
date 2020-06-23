@@ -41,9 +41,7 @@ public class Order_Activity extends AppCompatActivity {
     private Order_Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ConstraintLayout ExplandableView;
-    private Button Arrow_Down;
     private CardView mCardView;
-    View  v2;
     private List<Order> mOrderList;
 
 
@@ -51,12 +49,19 @@ public class Order_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_);
+
         mOrderList = new ArrayList<>();
+        //dummy data
+        mOrderList.add(new Order("1","23/6/20","Shoes,Shirt","50$"));
+        mOrderList.add(new Order("2","23/6/20","Shirt","30$"));
+        mOrderList.add(new Order("3","23/6/20","Pants,Shirt","20$"));
+        mOrderList.add(new Order("4","23/6/20","Pants,Shirt","65$"));
         //
         ExplandableView = findViewById(R.id.expandable_list);
-        Arrow_Down = findViewById(R.id.dropdown);
         mCardView = findViewById(R.id.order_cardview);
         mRecyclerView = findViewById(R.id.Order_Recyclerview);
+
+        setadapterRecyclerView();
 
        /* v2 = getLayoutInflater().inflate(R.layout.cardview_item_order,null);
 
@@ -89,7 +94,7 @@ public class Order_Activity extends AppCompatActivity {
     */
     }
 
-    public void getconnection(String url, final String User_Id) {
+    /*public void getconnection(String url, final String User_Id) {
         final RequestQueue request = Volley.newRequestQueue(getApplicationContext());
 
         StringRequest rRequest = new StringRequest(Request.Method.POST, url,
@@ -135,7 +140,7 @@ public class Order_Activity extends AppCompatActivity {
 
 
     }
-
+*/
     private void setadapterRecyclerView() {
         mLayoutManager = new LinearLayoutManager(this);
         mAdapter = new Order_Adapter(getApplicationContext(),mOrderList);
