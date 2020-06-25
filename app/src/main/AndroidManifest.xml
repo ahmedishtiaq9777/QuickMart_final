@@ -30,6 +30,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.Book_Activity" />
+        <activity android:name=".activity.Error_Screen_Activity" />
+
         <activity android:name=".fragment.UsersettingFragment" />
         <activity android:name=".activity.Signup" />
 
@@ -42,7 +44,7 @@
         <activity android:name=".Test" />
         <activity android:name=".activity.MainActivity2" />
         <activity android:name=".productlist.ShoppyProductListActivity" />
-        <activity android:name=".activity.Error_Screen_Activity" />
+
     </application>
 
 </manifest>

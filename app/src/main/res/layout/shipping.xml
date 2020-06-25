@@ -120,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/edit_text_round_bg_outline"
-                android:hint="ZIP Code"
+                android:hint="@string/hint_of_zipcode"
 
                 android:minHeight="@dimen/spacing_xmlarge" />
 
@@ -143,7 +143,7 @@
             android:layout_marginTop="@dimen/spacing_middle"
 
             android:background="@drawable/edit_text_round_bg_outline"
-            android:hint="State / Province"
+            android:hint="@string/hint_of_province"
             android:minHeight="@dimen/spacing_xmlarge" />
 
         <TextView
@@ -155,13 +155,13 @@
             android:id="@+id/radioButton1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cash On Delivery (COD)"
+            android:text="@string/cash_on_dilivery"
             android:textSize="15dp"/>
         <RadioButton
             android:id="@+id/radioButton2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pay with Card"
+            android:text="@string/pay_with_card"
             android:textSize="15dp"/>
 
 
@@ -172,7 +172,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
             android:background="@color/colorAccent"
-            android:text="Done"
+            android:text="@string/Done"
             android:textColor="@color/white"
             android:textSize="25dp"
             android:textStyle="bold" />

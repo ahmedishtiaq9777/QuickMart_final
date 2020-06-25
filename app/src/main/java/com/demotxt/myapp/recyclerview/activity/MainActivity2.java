@@ -38,11 +38,26 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         setContentView(R.layout.activitymain2);
         }
         else {
-            Intent intent = new Intent(getApplicationContext(),Error_Screen_Activity.class);
+            finish();
+           // Intent intent = new Intent(getApplicationContext(),Error_Screen_Activity.class);
+            Intent intent = new Intent(MainActivity2.this,Error_Screen_Activity.class);
             startActivity(intent);
         }
 
-        initToolbar();
+        try {
+            initToolbar();
+        }catch (Exception e)
+        {
+
+        }
+
+
+
+
+           // Toast.makeText(getApplicationContext(),"error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+
+
+
 
         try {
             Intent i = getIntent();
@@ -50,20 +65,23 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
             if (code == 5) {
                 Toast.makeText(getApplicationContext(), "Product Added to Cart", Toast.LENGTH_SHORT).show();
             }
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
+try {
+    navView.setOnNavigationItemSelectedListener(this);
 
-        navView.setOnNavigationItemSelectedListener(this);
-
-        loadFragment(new HomeFragment());
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-
+    loadFragment(new HomeFragment());
+    // Passing each menu ID as a set of Ids because each
+    // menu should be considered as top level destinations.
+}catch (Exception e)
+{
+    Toast.makeText(getApplicationContext(),"Error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
+}
     }
 
 
@@ -130,25 +148,27 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
 
     //Internet Connection Check
     public void CheckConnection(){
+try {
+    ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+    NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
 
-        ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
-
-        if (null != activeNetwork){
-            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI){
-                Toast.makeText(this,"Wifi On",Toast.LENGTH_SHORT).show();
-                Check = 1;
-            }
-            else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE){
-                Toast.makeText(this,"Mobile Data On",Toast.LENGTH_SHORT).show();
-                Check = 1;
-            }
-            else{
-                Toast.makeText(this,"No Internet Connection",Toast.LENGTH_SHORT).show();
-                Check = 0;
-            }
-
+    if (null != activeNetwork) {
+        if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
+            Toast.makeText(this, "Wifi On", Toast.LENGTH_SHORT).show();
+            Check = 1;
+        } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
+            Toast.makeText(this, "Mobile Data On", Toast.LENGTH_SHORT).show();
+            Check = 1;
+        } else {
+            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            Check = 0;
         }
+
+    }
+}catch (Exception e)
+{
+    Toast.makeText(getApplicationContext(), "error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
+}
     }
 
     private void initToolbar() {
