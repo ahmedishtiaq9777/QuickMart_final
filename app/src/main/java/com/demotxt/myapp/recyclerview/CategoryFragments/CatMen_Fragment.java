@@ -27,6 +27,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.activity.TabsBasic;
+import com.demotxt.myapp.recyclerview.ownmodels.CheckConnection;
+import com.demotxt.myapp.recyclerview.ownmodels.CustomInternetDialog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -42,6 +44,8 @@ public class CatMen_Fragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
 
     List<CatMen> ProdMen;
+    CheckConnection connection;
+    CustomInternetDialog dialog;
 
 
     @Override
@@ -51,6 +55,16 @@ public class CatMen_Fragment extends Fragment {
         // Inflate the layout for this fragment
         View rootview =  inflater.inflate(R.layout.fragment_cat_men_, container, false);
         mRecyclerView = rootview.findViewById(R.id.Rv_CatMen);
+
+        connection=new CheckConnection(getActivity());
+        dialog=new CustomInternetDialog(getActivity());
+
+        boolean is_connected=connection.CheckConnection();
+        if(!is_connected)
+        {
+            dialog.showCustomDialog();
+        }
+
         ProdMen = new ArrayList<>();
 
 
@@ -60,7 +74,7 @@ public class CatMen_Fragment extends Fragment {
         int sid= activity.getuserid();
         Log.i("Seller id",  String.valueOf(sid));
         String userid=String.valueOf(sid);
-        String url="http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getprowithsellerid";
+        String url="http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getprowithsellerid";
         getconnection(url,userid);
 
 
@@ -156,7 +170,7 @@ public class CatMen_Fragment extends Fragment {
     private  void setimageurl(){
         int n = 0;
         for (CatMen i : ProdMen) {
-            i.setThumbnail("http://ahmedishtiaq9778-001-site1.ftempurl.com" + i.getThumbnail());
+            i.setThumbnail("http://ahmedishtiaq1997-001-site1.ftempurl.com" + i.getThumbnail());
             // list.remove(n);
             ProdMen.set(n,i);
             n++;

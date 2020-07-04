@@ -13,13 +13,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.fragment.CartFragment;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -31,11 +43,12 @@ public class CartListBaseAdapter extends BaseAdapter {
 
     List<CartListBeanlist> Bean;
     List<CartListBeanlist> BeanTemp;
-    private SharedPreferences cartlistpref,favouritepref;
-    private SharedPreferences.Editor cartlistprefeditor,favouriteprefeditor;
+    private SharedPreferences favouritepref,loginpref;
+
+    private SharedPreferences.Editor favouriteprefeditor;
     public Set<String> cartids;
     public Set<String> favids;
-    private int proid;
+    private String  proid,userid;
     private int selectionid;
 
 
@@ -59,11 +72,15 @@ public class CartListBaseAdapter extends BaseAdapter {
        // this.Bean = bean;
         cartids=new HashSet<String>();
 
-        cartlistpref=context.getSharedPreferences("cartprefs",MODE_PRIVATE);//get cartpreferences that contains cartitemlist
+      //  cartlistpref=context.getSharedPreferences("cartprefs",MODE_PRIVATE);//get cartpreferences that contains cartitemlist
         favouritepref=context.getSharedPreferences("favpref",MODE_PRIVATE);
-        cartlistprefeditor=cartlistpref.edit();// this is to add stuff in preferences
+        loginpref = context.getSharedPreferences("loginpref", MODE_PRIVATE);
+
+        userid=  String.valueOf(loginpref.getInt("userid", 0));
+
+        //  cartlistprefeditor=cartlistpref.edit();// this is to add stuff in preferences
         favouriteprefeditor=favouritepref.edit();
-        cartids=cartlistpref.getStringSet("cartids",cartids);//get current product ids in cartprefferences
+      //  cartids=cartlistpref.getStringSet("cartids",cartids);//get current product ids in cartprefferences
         favids=favouritepref.getStringSet("ids",favids);
 
 
@@ -157,15 +174,38 @@ public class CartListBaseAdapter extends BaseAdapter {
             public void onClick(View v) {
                 try {
                     String strid;
-                    proid = bean.getId();
+                    proid =     String.valueOf(bean.getId());
                    if(selectionid==1) {
 
-                       cartlistprefeditor.remove("cartids");
-                       cartlistprefeditor.commit();
-                        strid = String.valueOf(proid);
-                       cartids.remove(strid);
-                       cartlistprefeditor.putStringSet("cartids", cartids);
-                       cartlistprefeditor.commit();
+                       getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/home/DeleteProductFromCart");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                       //cartlistprefeditor.remove("cartids");
+                       //cartlistprefeditor.commit();
+                      //  strid = String.valueOf(proid);
+                      // cartids.remove(strid);
+                      // cartlistprefeditor.putStringSet("cartids", cartids);
+                       //cartlistprefeditor.commit();
                        Bean.remove(position);
                        notifyDataSetChanged();
 
@@ -256,7 +296,68 @@ public class CartListBaseAdapter extends BaseAdapter {
 
 
 
+    public  void   getconnection(String url) {
+        final RequestQueue request = Volley.newRequestQueue(context);
 
+
+        StringRequest rRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("Responce on clickCross", "onResponse: "+response );
+
+                        Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+
+
+
+                        //  Toast.makeText(ShoppyProductListActivity.this, response, Toast.LENGTH_SHORT).show();
+
+
+                        // response
+                        //  Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                       Toast.makeText(context,"Error:"+error.getMessage(),  Toast.LENGTH_SHORT).show();
+                        error.printStackTrace();
+
+                    }
+                }
+        )  {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                /*JSONArray jsonArray= new JSONArray();
+                for (String  i:cartids) {
+                    jsonArray.put(i);
+                }*/
+                params.put("userid",userid);
+                params.put("proid",proid);
+
+                //  params.p
+
+                return params;
+            }
+
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+
+
+
+
+
+        request.add(rRequest);
+
+
+    }
 
 
 

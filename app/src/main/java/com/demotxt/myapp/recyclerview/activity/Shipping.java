@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
-import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.demotxt.myapp.recyclerview.MainActivity;
 import com.demotxt.myapp.recyclerview.R;
 import com.google.android.material.textfield.TextInputLayout;
@@ -43,7 +42,10 @@ public class Shipping extends AppCompatActivity {
 
         awesomeValidation = new AwesomeValidation(BASIC);
 
+
+
         awesomeValidation.addValidation(Shipping.this, R.id.nameShip, "[a-zA-Z\\s]+", R.string.error_name);
+        awesomeValidation.addValidation(Shipping.this, R.id.contactShip, "^[0-9]{11}", R.string.error_contact);
         awesomeValidation.addValidation(Shipping.this, R.id.emailShip, android.util.Patterns.EMAIL_ADDRESS, R.string.error_email);
         awesomeValidation.addValidation(Shipping.this, R.id.contactShip, "^[0-9]{11}", R.string.error_contact);
         awesomeValidation.addValidation(Shipping.this, R.id.addShip, RegexTemplate.NOT_EMPTY, R.string.error_address);

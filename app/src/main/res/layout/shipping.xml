@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/edit_text_round_bg_outline"
-                android:hint="ZIP Code"
+                android:hint="@string/hint_of_zipcode"
 
                 android:minHeight="@dimen/spacing_xmlarge" />
 
@@ -125,12 +125,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_large"
-            android:text="@string/paymentDetail"
-            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            android:textColor="@color/grey_40"
-            android:textStyle="bold"
-            app:fontFamily="sans-serif-medium" />
+            android:layout_marginTop="@dimen/spacing_middle"
+
+            android:background="@drawable/edit_text_round_bg_outline"
+            android:hint="@string/hint_of_province"
+            android:minHeight="@dimen/spacing_xmlarge" />
 
         <TextView
             android:id="@+id/textView25"
@@ -141,15 +140,14 @@
             android:id="@+id/radioButton1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cash On Delivery (COD)"
+            android:text="@string/cash_on_dilivery"
             android:textSize="15dp"
-            android:checked="true"
-            />
+            android:checked="true"/>
         <RadioButton
             android:id="@+id/radioButton2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pay with Card"
+            android:text="@string/pay_with_card"
             android:textSize="15dp"
             android:enabled="false"/>
 
@@ -160,8 +158,9 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
+
+            android:text="@string/Done"
             android:background="@drawable/button_border"
-            android:text="Done"
             android:textColor="@color/white"
             android:textSize="25dp"
             android:textStyle="bold" />

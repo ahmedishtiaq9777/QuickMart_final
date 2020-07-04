@@ -41,7 +41,7 @@
     <string name="Payment">Payment</string>
     <string name="Confirm">Confirm</string>
     <string name="Language">Language</string>
-    <string name="Reload">Reload</string>
+    <string name="Reload">Try Again</string>
 
     <string name="txt_profile_history">Order History</string>
     <string name="txt_profile_rate">Rate Us</string>
@@ -52,6 +52,13 @@
     <string name="navProf">Profile</string>
     <string name="contactDetail">Contact Detail</string>
     <string name="shippingAdd">Shipping Address</string>
+    <string name="hint_of_province">State / Province</string>
+    <string name="hint_of_zipcode">Zip Code</string>
+    <string name="cash_on_dilivery">Cash on Delivery (COD)</string>
+    <string name="pay_with_card">Pay With Card</string>
+    <string name="Done">Conform</string>
+
+
     <string name="paymentDetail">Payment Details</string>
 
 
@@ -92,7 +99,7 @@
     <string name="Privacy_Policy" translatable="false">This is for Showing Privacy Policy</string>
 
     <string name="country_prompt">Choose a country</string>
-
+    <string name="short_lorem_ipsum">Please Check Your Internet Connection.</string>
     <string-array name="city">
         <item>Sialkot</item>
         <item>Lahore</item>
