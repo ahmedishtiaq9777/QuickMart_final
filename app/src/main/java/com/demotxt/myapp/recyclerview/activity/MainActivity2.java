@@ -75,7 +75,7 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
 try {
     navView.setOnNavigationItemSelectedListener(this);
 
-    loadFragment(new HomeFragment());
+     loadFragment(new HomeFragment(),"homestack");
     // Passing each menu ID as a set of Ids because each
     // menu should be considered as top level destinations.
 }catch (Exception e)
@@ -86,12 +86,18 @@ try {
 
 
 
-    public boolean loadFragment(Fragment fragment) {
-        if (fragment != null) {
+    public boolean loadFragment(Fragment fragment,String stackname) {
+        if (fragment != null && !stackname.equals("homestack")) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragmentcontainer, fragment).addToBackStack(null)
                     .commit();
+            return true;
+        }else if(stackname.equals("homestack"))
+        {  getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentcontainer, fragment)
+                .commit();
             return true;
         }
         return false;
@@ -102,22 +108,27 @@ try {
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int op = 0;
-
+String backstackname=null;
         Fragment fragment = null;
         switch (menuItem.getItemId()) {
             case R.id.nav_home:
                 fragment = new HomeFragment();
+                backstackname="homestack";
+
                 break;
             case R.id.nav_favourite:
                 fragment = new FavoriteFragment();
+                backstackname="favstack";
                 break;
             case R.id.nav_cart:
                 fragment = new CartFragment();
+                backstackname="cartstack";
                 break;
 
             case R.id.nav_acc:
                 if (getloginprefference() == true) {
                     fragment = new ProfileFragment();
+                    backstackname="profilestack";
                     break;
                 } else {
 
@@ -127,7 +138,7 @@ try {
         }
 
         if (op != 1)
-            return loadFragment(fragment);
+            return loadFragment(fragment,backstackname);
         return false;
     }
 

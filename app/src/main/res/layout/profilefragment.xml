@@ -13,11 +13,14 @@
 
 
         <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/Information"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="20dp">
 
             <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toStartOf="@+id/btn_edit_user"
@@ -86,6 +89,64 @@
             </com.balysv.materialripple.MaterialRippleLayout>
 
         </RelativeLayout>
+
+        <RelativeLayout
+            android:visibility="visible"
+            android:id="@+id/fornotlogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/signup"
+                android:layout_toLeftOf="@+id/signup"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txt_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Login"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+
+
+
+
+            </LinearLayout>
+
+            <com.balysv.materialripple.MaterialRippleLayout
+                android:id="@+id/signup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:padding="10dp"
+                app:mrl_rippleAlpha="0.2"
+                app:mrl_rippleColor="@color/ripple_color"
+                app:mrl_rippleHover="true"
+                app:mrl_rippleOverlay="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/signup"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    />
+
+            </com.balysv.materialripple.MaterialRippleLayout>
+
+        </RelativeLayout>
+
 
         <include layout="@layout/include_row_separator" />
 

@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,11 +28,14 @@ import com.balysv.materialripple.MaterialRippleLayout;
 import com.demotxt.myapp.recyclerview.Config;
 import com.demotxt.myapp.recyclerview.Order.Order_Activity;
 import com.demotxt.myapp.recyclerview.R;
+
 import com.demotxt.myapp.recyclerview.sharepref.SharedPref;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class ProfileFragment extends Fragment {
@@ -45,10 +49,24 @@ public class ProfileFragment extends Fragment {
     MaterialRippleLayout btn_edit_user;
     MaterialRippleLayout btn_order_history, btn_share, btn_privacy, language, fav, exit;
     LinearLayout lyt_root;
+    RelativeLayout relativeLayoutfornotlogin,relativeLayoutforloggenin;
+    private SharedPreferences  loginpref;
 
     private static final String[] Languages = new String[]{
             "English", "Urdu"
     };
+    public  boolean loadsubFragment(Fragment fragment)
+    {
+        if(fragment!=null)
+        {
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.Information,fragment).addToBackStack(null)
+                    .commit();
+            return  true;
+        }
+        return  false;
+    }
 
     public boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
@@ -66,7 +84,9 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         loadLocale();
-
+       // Fragment fragment=null;
+           //  fragment=   new ProfileSubFragment();
+//loadsubFragment(fragment);
         sharedPref = new SharedPref(getActivity());
 
         final View view = inflater.inflate(R.layout.profilefragment, container, false);
@@ -77,12 +97,29 @@ public class ProfileFragment extends Fragment {
         if (Config.ENABLE_RTL_MODE) {
             lyt_root.setRotationY(180);
         }
-
+        loginpref = getContext().getSharedPreferences("loginpref", MODE_PRIVATE);
         txt_user_name = view.findViewById(R.id.txt_user_name);
         txt_user_email = view.findViewById(R.id.txt_user_email);
         txt_user_phone = view.findViewById(R.id.txt_user_phone);
         txt_user_address = view.findViewById(R.id.txt_user_address);
+        btn_order_history = view.findViewById(R.id.btn_order_history);
+
         lang = view.findViewById(R.id.languagetext);
+         relativeLayoutfornotlogin=(RelativeLayout) view.findViewById(R.id.fornotlogin);
+         relativeLayoutforloggenin=(RelativeLayout)view.findViewById(R.id.Information);
+boolean islogin=loginpref.getBoolean("loggedin",false);
+if(islogin)
+{
+    relativeLayoutfornotlogin.setVisibility(View.GONE);
+    relativeLayoutforloggenin.setVisibility(View.VISIBLE);
+}else {
+    relativeLayoutforloggenin.setVisibility(View.GONE);
+    relativeLayoutfornotlogin.setVisibility(View.VISIBLE);
+    btn_order_history.setVisibility(View.GONE);
+}
+
+
+
 
         txt_user_name.setText(sharedPref.getYourName());
         txt_user_email.setText(sharedPref.getYourEmail());
@@ -107,7 +144,7 @@ public class ProfileFragment extends Fragment {
         });
 
         //For Order history
-        btn_order_history = view.findViewById(R.id.btn_order_history);
+
         btn_order_history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -213,16 +250,22 @@ public class ProfileFragment extends Fragment {
         getContext().getResources().updateConfiguration(config, getContext().getResources().getDisplayMetrics());
         //saving data in shared preference
 
-        SharedPreferences.Editor editor = getContext().getSharedPreferences("Settings", Context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = getContext().getSharedPreferences("Settings", MODE_PRIVATE).edit();
         editor.putString("My_Lang", lang);
         editor.apply();
     }
 
     public void loadLocale() {
-        SharedPreferences pref = getContext().getSharedPreferences("Settings", Activity.MODE_PRIVATE);
+        SharedPreferences pref = getContext().getSharedPreferences("Settings", MODE_PRIVATE);
         String lan = pref.getString("My_Lang", "");
         setLocale(lan);
     }
+
+
+
+
+
+
 
 }
 
