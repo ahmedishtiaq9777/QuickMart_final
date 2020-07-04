@@ -14,9 +14,10 @@ import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.model.OrderViewImg;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewAdapter.OrderViewHolder> {
-    private ArrayList<OrderViewImg> mOrderList;
+    private List<OrderViewImg> mOrderList;
 
     public static class OrderViewHolder extends RecyclerView.ViewHolder{
         public ImageView imageView;
@@ -33,7 +34,7 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewAdapter.Orde
         }
     }
 
-    public OrderViewAdapter(ArrayList<OrderViewImg> orderViewImgs){
+    public OrderViewAdapter(List<OrderViewImg> orderViewImgs){
         mOrderList = orderViewImgs;
     }
 
@@ -50,8 +51,10 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewAdapter.Orde
         OrderViewImg currentItem = mOrderList.get(position);
         holder.imageView.setImageResource(currentItem.getImage());
         holder.tit.setText(currentItem.getTitle());
-        holder.qty.setText(currentItem.getQuantity());
-        holder.pri.setText(currentItem.getPrice());
+        holder.qty.setText(String.valueOf(currentItem.getQuantity()));
+        holder.pri.setText(String.valueOf(currentItem.getPrice()));
+
+
 
     }
 

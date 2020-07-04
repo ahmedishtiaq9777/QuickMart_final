@@ -16,20 +16,21 @@ import com.demotxt.myapp.recyclerview.fragment.CartFragment;
 import com.demotxt.myapp.recyclerview.model.OrderViewImg;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Confirmation extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private OrderViewAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     Button confirm;
     TextView t1,t2;
+    List<OrderViewImg> orderViewImgs;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.confirmation);
 
-
-        ArrayList<OrderViewImg> orderViewImgs = new ArrayList<>();
+        List<OrderViewImg> orderViewImgs = new ArrayList<>();
         orderViewImgs.add(new OrderViewImg(R.drawable.shoes,"SHirt",2,1000));
         orderViewImgs.add(new OrderViewImg(R.drawable.shoes,"SHirt",2,1000));
         orderViewImgs.add(new OrderViewImg(R.drawable.shoes,"SHirt",2,1000));
