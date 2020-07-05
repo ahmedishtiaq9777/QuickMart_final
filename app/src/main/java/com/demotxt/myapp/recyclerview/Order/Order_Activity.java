@@ -40,7 +40,6 @@ public class Order_Activity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private Order_Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ConstraintLayout ExplandableView;
     private CardView mCardView;
     private List<Order> mOrderList;
 
@@ -52,12 +51,11 @@ public class Order_Activity extends AppCompatActivity {
 
         mOrderList = new ArrayList<>();
         //dummy data
-        mOrderList.add(new Order("1","23/6/20","Shoes,Shirt","50$"));
-        mOrderList.add(new Order("2","23/6/20","Shirt","30$"));
-        mOrderList.add(new Order("3","23/6/20","Pants,Shirt","20$"));
-        mOrderList.add(new Order("4","23/6/20","Pants,Shirt","65$"));
+        mOrderList.add(new Order("1","23/6/20","ongoing","50$"));
+        mOrderList.add(new Order("2","23/6/20","completed","30$"));
+        mOrderList.add(new Order("3","23/6/20","completed","20$"));
+        mOrderList.add(new Order("4","23/6/20","ongoing","65$"));
         //
-        ExplandableView = findViewById(R.id.expandable_list);
         mCardView = findViewById(R.id.order_cardview);
         mRecyclerView = findViewById(R.id.Order_Recyclerview);
 
