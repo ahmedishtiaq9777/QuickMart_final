@@ -58,6 +58,18 @@ public class Order_Activity extends AppCompatActivity {
         mCardView = findViewById(R.id.order_cardview);
         mRecyclerView = findViewById(R.id.Order_Recyclerview);
 
+
+        mOrderList.add(new Order("1","23/6/20","Shoes,Shirt","50$"));
+        mOrderList.add(new Order("2","23/6/20","Shirt","30$"));
+        mOrderList.add(new Order("3","23/6/20","Pants,Shirt","20$"));
+        mOrderList.add(new Order("4","23/6/20","Pants,Shirt","65$"));
+        //
+        ExplandableView = findViewById(R.id.expandable_list);
+        mCardView = findViewById(R.id.order_cardview);
+        setadapterRecyclerView();
+
+
+
        /* v2 = getLayoutInflater().inflate(R.layout.cardview_item_order,null);
 
         //Drop Down
@@ -88,7 +100,7 @@ public class Order_Activity extends AppCompatActivity {
 
     */
     }
-
+/*
     public void getconnection(String url, final String User_Id) {
         final RequestQueue request = Volley.newRequestQueue(getApplicationContext());
 
@@ -134,7 +146,7 @@ public class Order_Activity extends AppCompatActivity {
         request.add(rRequest);
 
 
-    }
+    }*/
 
     private void setadapterRecyclerView() {
         mLayoutManager = new LinearLayoutManager(this);
