@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.demotxt.myapp.recyclerview.MainActivity;
 import com.demotxt.myapp.recyclerview.R;
 import com.google.android.material.textfield.TextInputLayout;

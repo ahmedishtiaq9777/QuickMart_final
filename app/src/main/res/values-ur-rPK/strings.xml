@@ -43,11 +43,9 @@
     <string name="navCart">ٹوکری</string>
     <string name="contactDetail">رابطہ کی تفصیل</string>
     <string name="shippingAdd">شپنگ ایڈریس</string>
-    <string name="Reload">دوبارہ کوشش کریں</string>
     <string name="paymentDetail">پیسوں کی تفصیل</string>
     <string name="Reload">دوبارہ لوڈ کریں</string>
     <string name="country_prompt">ایک ملک کا انتخاب کریں</string>
-    <string name=
     <string name="hint_of_province">صوبہ لکھیں</string>
     <string name="hint_of_zipcode">زپ کورڈ</string>
     <string name="cash_on_dilivery">کیش آن ڈلیوری</string>

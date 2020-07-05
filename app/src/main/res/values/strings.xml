@@ -56,7 +56,7 @@
     <string name="hint_of_zipcode">Zip Code</string>
     <string name="cash_on_dilivery">Cash on Delivery (COD)</string>
     <string name="pay_with_card">Pay With Card</string>
-    <string name="Done">Conform</string>
+    <string name="Done">Confirm</string>
 
 
     <string name="paymentDetail">Payment Details</string>

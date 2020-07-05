@@ -19,7 +19,7 @@ import com.demotxt.myapp.recyclerview.CategoryFragments.CatKids_Fragment;
 import com.demotxt.myapp.recyclerview.CategoryFragments.CatMen_Fragment;
 import com.demotxt.myapp.recyclerview.CategoryFragments.CatWomen_Fragment;
 import com.demotxt.myapp.recyclerview.R;
-import com.demotxt.myapp.recyclerview.ownmodels.CheckConnection;
+//import com.demotxt.myapp.recyclerview.ownmodels.CheckConnection;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomInternetDialog;
 import com.demotxt.myapp.recyclerview.utils.Tools;
 import com.google.android.material.tabs.TabLayout;
@@ -33,7 +33,7 @@ public class TabsBasic extends AppCompatActivity {
     private TabLayout tab_layout;
     private int userid;
     CustomInternetDialog dialog;
-    CheckConnection connection;
+   // CheckConnection connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

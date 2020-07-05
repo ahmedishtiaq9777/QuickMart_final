@@ -61,8 +61,6 @@ public class Login extends AppCompatActivity {
         checkBoxremember = (CheckBox) findViewById(R.id.checkboxremember);
 
         cartlistpref = getSharedPreferences("cartprefs", MODE_PRIVATE);//get cartpreferences that contains cartitemlist
-
-
         loginpref = getSharedPreferences("loginpref", MODE_PRIVATE);
         rememberMepref = getSharedPreferences("remembermepref", MODE_PRIVATE);
 

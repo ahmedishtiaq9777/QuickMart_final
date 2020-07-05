@@ -222,7 +222,7 @@ try{
                         try {
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(Prod_Activity.this);
                             builder1.setTitle("Allready Added");
-                            builder1.setMessage("Your product is allready Added to Cart?");
+                            builder1.setMessage("Your product is Already Added to Cart?");
 
                             builder1 .setIcon(R.drawable.exclamationmarkresize);
                             // builder1.show();

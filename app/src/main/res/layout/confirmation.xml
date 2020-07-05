@@ -46,9 +46,10 @@
                 android:selectAllOnFocus="false"
                 android:gravity="center"
                 android:textAllCaps="true"
-                android:background="@drawable/edit_text_round_bg_outline"
+                android:background="@color/light_blue_700"
                 android:textSize="20dp"
                 android:text="TextView"
+                android:textColor="@color/white"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
             <TextView
                 android:layout_width="match_parent"
@@ -59,11 +60,16 @@
                 android:layout_marginTop="0dp"
                 android:layout_width="match_parent"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:layout_height="35dp"
-                android:background="@drawable/edit_text_round_bg_outline"
+                android:layout_height="40dp"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="18sp"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeStepGranularity="2sp"
+                android:background="@color/light_blue_700"
+                android:textColor="@color/white"
+                android:gravity="center"
                 android:textAllCaps="true"
                 android:selectAllOnFocus="false"
-                android:textSize="18dp"
                 android:text="TextView" />
 
         </LinearLayout>
@@ -95,13 +101,16 @@
             </LinearLayout>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
                 android:layout_marginTop="@dimen/spacing_middle"
                 android:text="Cash On Delivery"
+                android:textAllCaps="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                android:textColor="@color/grey_90"
+                android:textColor="@color/white"
+                android:background="@color/light_blue_700"
                 app:fontFamily="sans-serif-medium"
+                android:gravity="center"
                 android:selectAllOnFocus="false"/>
 
         </LinearLayout>

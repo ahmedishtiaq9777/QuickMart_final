@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ccc"
+    android:background="#ffffff"
     android:padding="10dp">
 
     <androidx.cardview.widget.CardView
@@ -20,14 +20,13 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:background="@drawable/gradient2"
-            android:padding="4dp">
+            android:padding="3dp">
 
 
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -38,13 +37,13 @@
                 android:id="@+id/textTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:selectAllOnFocus="false"
                 android:text="Title"
                 android:textColor="#fff"
                 android:textSize="20sp"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginBottom="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.51"
                 app:layout_constraintStart_toEndOf="@+id/imageView2"
@@ -54,10 +53,10 @@
                 android:id="@+id/titleQty"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:selectAllOnFocus="false"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
+                android:selectAllOnFocus="false"
                 android:text="Qty :"
                 android:textColor="#fff"
 
@@ -71,42 +70,41 @@
                 android:id="@+id/textQty"
                 android:layout_width="20dp"
                 android:layout_height="wrap_content"
-                android:selectAllOnFocus="false"
-
                 android:layout_marginStart="30dp"
+
                 android:layout_marginTop="8dp"
+                android:selectAllOnFocus="false"
                 android:text="2"
                 android:textColor="#fff"
                 android:textSize="15dp"
-               app:layout_constraintStart_toEndOf="@+id/titleQty"
-                app:layout_constraintTop_toBottomOf="@+id/textTitle"/>
+                app:layout_constraintStart_toEndOf="@+id/titleQty"
+                app:layout_constraintTop_toBottomOf="@+id/textTitle" />
 
             <TextView
                 android:id="@+id/titlePrice"
                 android:layout_width="40dp"
                 android:layout_height="19dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:selectAllOnFocus="false"
                 android:text="Price :"
                 android:textColor="#fff"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintTop_toBottomOf="@id/titleQty"
                 app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintTop_toBottomOf="@id/titleQty"
                 tools:layout_editor_absoluteY="12dp" />
 
             <TextView
                 android:id="@+id/textPrice"
                 android:layout_width="35dp"
                 android:layout_height="19dp"
-               android:layout_marginTop="8dp
+                android:layout_marginTop="8dp
 "
                 android:selectAllOnFocus="false"
                 android:text="1500"
                 android:textColor="#fff"
-                app:layout_constraintTop_toBottomOf="@+id/textQty"
                 app:layout_constraintStart_toStartOf="@+id/textQty"
-                 />
+                app:layout_constraintTop_toBottomOf="@+id/textQty" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
