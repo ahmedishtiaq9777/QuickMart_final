@@ -26,8 +26,6 @@
     <string name="Trending">Trending</string>
 
 
-
-
     <string name="btn_edit_profile">EDIT</string>
     <string name="Exit">Exit</string>
     <string name="Favourite">Favourite</string>
@@ -61,9 +59,6 @@
 
 
     <string name="paymentDetail">Payment Details</string>
-
-
-
 
 
     <!--profile preferences-->
@@ -109,7 +104,6 @@
         <item>Rawalpindi</item>
 
     </string-array>
-
 
 
 </resources>

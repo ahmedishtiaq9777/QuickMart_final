@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Order.Order_Activity"></activity>
+        <activity android:name=".activity.AnimationOrder"></activity>
+        <activity android:name=".Order.Order_Activity" />
         <activity android:name=".activity.User_Detail_Activity" />
 
         <meta-data
@@ -31,10 +32,8 @@
         </activity>
         <activity android:name=".activity.Book_Activity" />
         <activity android:name=".activity.Error_Screen_Activity" />
-
         <activity android:name=".fragment.UsersettingFragment" />
         <activity android:name=".activity.Signup" />
-
         <activity android:name=".activity.Prod_Activity" />
         <activity android:name=".activity.r3_Activity" />
         <activity android:name=".activity.Login" />
@@ -44,7 +43,6 @@
         <activity android:name=".Test" />
         <activity android:name=".activity.MainActivity2" />
         <activity android:name=".productlist.ShoppyProductListActivity" />
-
     </application>
 
 </manifest>

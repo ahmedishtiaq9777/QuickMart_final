@@ -78,7 +78,7 @@ public class Confirmation extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getBaseContext(), MainActivity2.class);
+                Intent i = new Intent(getBaseContext(), AnimationOrder.class);
                 startActivity(i);
             }
         });
