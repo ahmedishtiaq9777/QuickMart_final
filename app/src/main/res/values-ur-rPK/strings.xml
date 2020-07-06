@@ -53,6 +53,7 @@
     <string name="Done">ٹھیک ہے</string>
     <string name="error_name"> نام درست کریں</string>
     <string name="error_email"> ای-میل درست کریں</string>
+    <string name="error_password">پاسورڈ درست کریں</string>
     <string name="error_contact"> نمبر درست کریں</string>
     <string name="error_address"> پتہ درست کریں</string>
     <string name="error_zip"> کوڈ درست کریں</string>
