@@ -68,10 +68,10 @@ public class Prod_Activity extends AppCompatActivity {
         LayoutInflater inflater = getLayoutInflater();
         final View layout = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toast_layout_root));//for product added :to make custom toast with tick mark
 
-        ImageView tickicon = (ImageView) layout.findViewById(R.id.image);
-        tickicon.setImageResource(R.drawable.tick3resize);
+       // ImageView tickicon = (ImageView) layout.findViewById(R.id.image);
+       // tickicon.setImageResource(R.drawable.tick3resize);
         TextView text = (TextView) layout.findViewById(R.id.text);
-        text.setText("Product added to the cart!");
+        //text.setText("Product added to the cart!");
 
 
 
@@ -221,8 +221,8 @@ try{
                         // response
                         try {
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(Prod_Activity.this);
-                            builder1.setTitle("Allready Added");
-                            builder1.setMessage("Your product is Already Added to Cart?");
+                            builder1.setTitle("Already Added");
+                            builder1.setMessage("Your product is Already Added to Cart!");
 
                             builder1 .setIcon(R.drawable.exclamationmarkresize);
                             // builder1.show();
