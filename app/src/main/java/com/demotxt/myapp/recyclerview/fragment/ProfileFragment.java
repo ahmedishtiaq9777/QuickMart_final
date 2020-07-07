@@ -226,9 +226,6 @@ if(islogin)
             public void onClick(DialogInterface dialog, int i) {
                 if (i == 0) {
                     setLocale("en");
-                 /*   Intent intent = new Intent(getContext(),);
-                    startActivity(intent);*/
-
                     getActivity().recreate();
                 } else if (i == 1) {
                     setLocale("ur");

@@ -9,15 +9,15 @@ public class Order {
     @SerializedName("")
     private String OrderDate;
     @SerializedName("")
-    private String OrderDetail;
+    private String OrderStatus;
     @SerializedName("")
     private String Price;
 
 
-    public Order(String OrderId, String OrderDate, String OrderDetail,String Price) {
+    public Order(String OrderId, String OrderDate, String OrderStatus,String Price) {
         this.OrderId = OrderId;
         this.OrderDate = OrderDate;
-        this.OrderDetail = OrderDetail;
+        this.OrderStatus = OrderStatus;
         this.Price = Price;
     }
 
@@ -30,8 +30,8 @@ public class Order {
         return OrderDate;
     }
 
-    public String getOrderDetail() {
-        return OrderDetail;
+    public String getOrderStatus() {
+        return OrderStatus;
     }
 
     public String getPrice(){return Price;};
@@ -44,8 +44,8 @@ public class Order {
         OrderDate = orderDate;
     }
 
-    public void setOrderDetail(String orderDetail) {
-        OrderDetail = orderDetail;
+    public void setOrderStatus(String orderStatus) {
+        OrderStatus = orderStatus;
     }
 
     public void setPrice(String price){Price = price;}

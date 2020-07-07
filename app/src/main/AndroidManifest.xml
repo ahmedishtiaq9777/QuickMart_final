@@ -17,6 +17,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activity.AnimationOrder"></activity>
         <activity android:name=".Order.Order_Activity" />
+        <!--activity android:name=".Order.Order_Detail_Activity"></activity-->
         <activity android:name=".activity.User_Detail_Activity" />
 
         <meta-data
