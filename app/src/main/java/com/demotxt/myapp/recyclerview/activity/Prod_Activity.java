@@ -56,20 +56,6 @@ public class Prod_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prod_);
 
-        //for toolbar
-        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
-
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Detail");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Tools.setSystemBarColor(this);
-
-
-
-
-
-
 
 
         cartids=new HashSet<String>();
@@ -256,21 +242,7 @@ Boolean is_logedin=loginpref.getBoolean("loggedin",false);
             return false;
         }
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_search_setting, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-        } else {
-            Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
 
 }

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.ownmodels.Prod;
+import com.demotxt.myapp.recyclerview.ownmodels.Product;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -22,9 +23,9 @@ import java.util.Set;
 public class Order_Detail_Adapter extends RecyclerView.Adapter<Order_Detail_Adapter.OrderViewHolder>{
 
     private Context mContext;
-    private List<Order_Detail> mData;
+    private List<Product> mData;
 
-    public Order_Detail_Adapter(Context mContext, List<Order_Detail> mdata){
+    public Order_Detail_Adapter(Context mContext, List<Product> mdata){
         this.mContext=mContext;
         this.mData = mdata;
     }
@@ -43,9 +44,9 @@ public class Order_Detail_Adapter extends RecyclerView.Adapter<Order_Detail_Adap
     public void onBindViewHolder(@NonNull final OrderViewHolder holder, final int position) {
 
         holder.ProdName.setText(mData.get(position).getTitle());
-        holder.ProdPrice.setText(mData.get(position).getPrice());
+        holder.ProdPrice.setText(String.valueOf(mData.get(position).getPrice()));
         holder.ProdQuantity.setText(mData.get(position).getQuantity());
-        Picasso.get().load(mData.get(position).getImage()).into(holder.ProdImage);
+        Picasso.get().load(mData.get(position).getProductImage()).into(holder.ProdImage);
 
 
     }

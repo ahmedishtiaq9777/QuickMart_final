@@ -4,19 +4,19 @@ import com.google.gson.annotations.SerializedName;
 
 public class Order_Detail {
 
-    @SerializedName("")
+    @SerializedName("title")
     private String Title;
-    @SerializedName("")
-    private String Price;
-    @SerializedName("")
+    @SerializedName("price")
+    private float Price;
+    @SerializedName("quantity")
     private String Quantity;
-    @SerializedName("")
+    @SerializedName("productImage")
     private int Image;
 
 
-    public Order_Detail(String Title, String Price, String Quantity, int Image) {
+    public Order_Detail(String Title, double Price, String Quantity, int Image) {
         this.Title = Title;
-        this.Price = Price;
+        this.Price = (float) Price;
         this.Quantity = Quantity;
         this.Image = Image;
     }
@@ -31,10 +31,10 @@ public class Order_Detail {
     }
 
     public String getPrice() {
-        return Price;
+        return String.valueOf(Price);
     }
 
-    public void setPrice(String price) {
+    public void setPrice(float price) {
         Price = price;
     }
 

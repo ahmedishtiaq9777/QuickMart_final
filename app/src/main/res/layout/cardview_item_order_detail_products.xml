@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:layout_margin="8dp">
+    android:padding="4dp"
+    android:layout_margin="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/gradient2"
-        android:padding="8dp"
+        android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,8 +20,8 @@
 
         <ImageView
             android:id="@+id/prodImage"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:padding="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -30,12 +30,38 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.13"
             app:layout_constraintStart_toEndOf="@+id/prodImage"
             app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingTop="16dp"
+                >
+
+            <TextView
+                android:id="@+id/prodQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quantity"
+                android:padding="2dp"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="X"
+                android:padding="2dp"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_toEndOf="@id/prodQuantity"
+                />
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/prodName"
@@ -43,28 +69,36 @@
                 android:layout_height="wrap_content"
                 android:text="Product Name"
                 android:layout_margin="4dp"
+                android:padding="12dp"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingTop="16dp">
             <TextView
-                android:id="@+id/prodQuantity"
+                android:id="@+id/txt_RS"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:text="Quantity"
+                android:textSize="16sp"
+                android:padding="2dp"
+                android:text="Rs. "
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                />
+
 
             <TextView
                 android:id="@+id/prodPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Price"
-                android:layout_margin="4dp"
+                android:padding="2dp"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:layout_toEndOf="@id/txt_RS"/>
 
-
+            </RelativeLayout>
         </LinearLayout>
 
 
