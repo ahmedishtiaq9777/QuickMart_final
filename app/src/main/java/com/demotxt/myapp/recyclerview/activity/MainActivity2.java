@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -67,6 +68,7 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Log.i("ExceptionMainActivity2",e.getMessage());
         }
 
 
@@ -114,7 +116,6 @@ String backstackname=null;
             case R.id.nav_home:
                 fragment = new HomeFragment();
                 backstackname="homestack";
-
                 break;
             case R.id.nav_favourite:
                 fragment = new FavoriteFragment();

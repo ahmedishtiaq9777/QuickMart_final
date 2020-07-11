@@ -24,6 +24,7 @@
     <string name="Recommended">آپکی پسند کے مطابق</string>
     <string name="Trending">زیادہ بکنے والی</string>
     <string name="btn_edit_profile">معلومات کو تبدیل کریں</string>
+    <string name="logout">لاگ آوٹ</string>
     <string name="Exit">باہر نکلیں</string>
     <string name="Favourite">پسندیدہ</string>
     <string name="Setting">سیٹنگ</string>
