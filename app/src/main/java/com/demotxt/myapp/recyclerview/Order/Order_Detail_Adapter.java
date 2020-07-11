@@ -23,9 +23,9 @@ import java.util.Set;
 public class Order_Detail_Adapter extends RecyclerView.Adapter<Order_Detail_Adapter.OrderViewHolder>{
 
     private Context mContext;
-    private List<Product> mData;
+    private List<Order_Detail> mData;
 
-    public Order_Detail_Adapter(Context mContext, List<Product> mdata){
+    public Order_Detail_Adapter(Context mContext, List<Order_Detail> mdata){
         this.mContext=mContext;
         this.mData = mdata;
     }
@@ -46,7 +46,7 @@ public class Order_Detail_Adapter extends RecyclerView.Adapter<Order_Detail_Adap
         holder.ProdName.setText(mData.get(position).getTitle());
         holder.ProdPrice.setText(String.valueOf(mData.get(position).getPrice()));
         holder.ProdQuantity.setText(mData.get(position).getQuantity());
-        Picasso.get().load(mData.get(position).getProductImage()).into(holder.ProdImage);
+        Picasso.get().load(mData.get(position).getImage()).into(holder.ProdImage);
 
 
     }

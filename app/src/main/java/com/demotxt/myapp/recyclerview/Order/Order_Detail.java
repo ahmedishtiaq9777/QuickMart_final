@@ -11,10 +11,11 @@ public class Order_Detail {
     @SerializedName("quantity")
     private String Quantity;
     @SerializedName("productImage")
-    private int Image;
+    private String Image;
 
 
-    public Order_Detail(String Title, double Price, String Quantity, int Image) {
+
+    public Order_Detail(String Title, double Price, String Quantity, String Image) {
         this.Title = Title;
         this.Price = (float) Price;
         this.Quantity = Quantity;
@@ -46,11 +47,11 @@ public class Order_Detail {
         Quantity = quantity;
     }
 
-    public int getImage() {
+    public String getImage() {
         return Image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         Image = image;
     }
 }
