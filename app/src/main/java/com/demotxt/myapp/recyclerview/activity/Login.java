@@ -50,7 +50,6 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activitylogin);
         cartids = new HashSet<String>();
 
-
         signin = (TextView) findViewById(R.id.signin1);
 
         signup = (TextView) findViewById(R.id.signup);

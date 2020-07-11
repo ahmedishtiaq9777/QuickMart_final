@@ -2,17 +2,13 @@ package com.demotxt.myapp.recyclerview.Order;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
-import android.transition.AutoTransition;
-import android.transition.TransitionManager;
-import android.view.View;
-import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -22,10 +18,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.demotxt.myapp.recyclerview.CategoryFragments.CatKids_Adapter;
-import com.demotxt.myapp.recyclerview.CategoryFragments.Catkids;
 import com.demotxt.myapp.recyclerview.R;
-import com.demotxt.myapp.recyclerview.activity.TabsBasic;
+import com.demotxt.myapp.recyclerview.ownmodels.Prod;
+import com.demotxt.myapp.recyclerview.ownmodels.Product;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -35,41 +30,68 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Order_Activity extends AppCompatActivity {
+public class Order_Detail_Activity extends AppCompatActivity {
 
+    TextView txt_price,txt_status,txt_id,txt_date;
+    ProgressBar mProgressBar;
 
+    //For Cartlist
     private RecyclerView mRecyclerView;
-    private Order_Adapter mAdapter;
+    private Order_Detail_Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private List<Order> mOrderList;
-    private SharedPreferences login;
-    String Uid;
-
+    private List<Product> mList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_);
+        setContentView(R.layout.activity_order__detail_);
 
-        mOrderList = new ArrayList<>();
-/*
+        mList = new ArrayList<>();
+        //Dummy Data
+        /*
+        mList.add(new Order_Detail("Shoes",15,"2",R.drawable.image_1));
+        mList.add(new Order_Detail("Shirt",25,"1",R.drawable.image_2));
+        mList.add(new Order_Detail("Tie",5,"1",R.drawable.image_3));
+        mList.add(new Order_Detail("Pant",20,"1",R.drawable.image_4));
+        */
 
-        mOrderList.add(new Order("1","23/6/20","ongoing","50$"));
-        mOrderList.add(new Order("2","23/6/20","completed","30$"));
-        mOrderList.add(new Order("3","23/6/20","completed","20$"));
-        mOrderList.add(new Order("4","23/6/20","ongoing","65$"));
-*/
+        //INIT
+        txt_id = findViewById(R.id.txt_id);
+        txt_status = findViewById(R.id.txt_status);
+        txt_price = findViewById(R.id.txt_price);
+        txt_date = findViewById(R.id.txt_Date);
+        mProgressBar = findViewById(R.id.progressBar);
+        mRecyclerView = findViewById(R.id.order_detail_products);
 
-        mRecyclerView = findViewById(R.id.Order_Recyclerview);
-        //Id
-        login = getSharedPreferences("loginpref", MODE_PRIVATE);
-        Uid = String.valueOf(login.getInt("userid", 0));
+        //Receive Data
+        Intent intent = getIntent();
+        String Price = intent.getExtras().getString("Price");
+        String status = intent.getExtras().getString("Status");
+        String id = intent.getExtras().getString("ID");
+        String date = intent.getExtras().getString("Date");
         //
-        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/GetOrders", Uid);
-    }
+        //Setting Values on Text Views
+        txt_id.setText(id);
+        txt_date.setText(date);
+        txt_price.setText(Price);
+        txt_status.setText(status);
 
+        //Progressbar conditions
+        if (status.equals("completed")){
+            mProgressBar.setProgress(100);
+        }
+        else if (status.equals("ongoing")){
+            mProgressBar.setProgress(50);
+        }
+        else if (status.equals("waiting")){
+            mProgressBar.setProgress(25);
+        }
+
+        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/GetOrderItems",id);
+
+    }
     //Get Connection
-    public void getconnection(String url, final String User_Id) {
+    public void getconnection(String url,final String Order_Id) {
         final RequestQueue request = Volley.newRequestQueue(getApplicationContext());
 
         StringRequest rRequest = new StringRequest(Request.Method.POST, url,
@@ -80,7 +102,7 @@ public class Order_Activity extends AppCompatActivity {
                         try {
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
-                            mOrderList = Arrays.asList(gson.fromJson(response, Order[].class));
+                            mList = Arrays.asList(gson.fromJson(response, Product[].class));
 
                             setAdapterRecyclerView();
 
@@ -95,11 +117,11 @@ public class Order_Activity extends AppCompatActivity {
                         error.printStackTrace();
                     }
                 }
-        ) {
+        ){
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("userid", User_Id);
+                params.put("orderid", Order_Id);
 
                 return params;
             }
@@ -114,10 +136,13 @@ public class Order_Activity extends AppCompatActivity {
 
     }
 
+    //for Recycler View
     private void setAdapterRecyclerView() {
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new Order_Adapter(getApplicationContext(), mOrderList);
+        mAdapter = new Order_Detail_Adapter(getApplicationContext(),mList);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
     }
+
+
 }
