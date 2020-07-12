@@ -27,7 +27,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.activity.TabsBasic;
-import com.demotxt.myapp.recyclerview.ownmodels.CheckConnection;
+//import com.demotxt.myapp.recyclerview.ownmodels.CheckConnection;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomInternetDialog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -44,7 +44,7 @@ public class CatKids_Fragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
 
     List<Catkids> ProdKids;
-    CheckConnection connection;
+    //CheckConnection connection;
     CustomInternetDialog dialog;
 
     // private int sid;
@@ -56,15 +56,15 @@ public class CatKids_Fragment extends Fragment {
         // Inflate the layout for this fragment
         View rootview = inflater.inflate(R.layout.fragment_cat_kids_, container, false);
         mRecyclerView = rootview.findViewById(R.id.Rv_CatKids);
-        connection=new CheckConnection(getActivity());
+      //  connection=new CheckConnection(getActivity());
         dialog=new CustomInternetDialog(getActivity());
 
-        boolean is_connected=connection.CheckConnection();
+    /*    boolean is_connected=connection.CheckConnection();
         if(!is_connected)
         {
             dialog.showCustomDialog();
         }
-
+*/
 
 
 

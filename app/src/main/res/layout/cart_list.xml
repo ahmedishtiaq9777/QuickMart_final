@@ -82,7 +82,7 @@
                     android:layout_width="21dp"
                     android:layout_height="21dp"
                     android:gravity="center"
-                    android:src="@drawable/minus"
+                    android:src="@drawable/ms"
 
 
                     />
@@ -104,7 +104,7 @@
                     android:layout_width="21dp"
                     android:layout_height="21dp"
                     android:gravity="center"
-                    android:src="@drawable/plus" />
+                    android:src="@drawable/ps" />
 
 
             </LinearLayout>

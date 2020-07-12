@@ -42,21 +42,23 @@
     <string name="navFav">پسندیدہ</string>
     <string name="navProf">پروفائل</string>
     <string name="navCart">ٹوکری</string>
-    <string name="contactdetail">رابطہ کی تفصیل</string>
+    <string name="contactDetail">رابطہ کی تفصیل</string>
     <string name="shippingAdd">شپنگ ایڈریس</string>
-    <string name="Reload">دوبارہ کوشش کریں</string>
+    <string name="paymentDetail">پیسوں کی تفصیل</string>
+    <string name="Reload">دوبارہ لوڈ کریں</string>
     <string name="country_prompt">ایک ملک کا انتخاب کریں</string>
-    <string name="error_name">غلط نام</string>
-    <string name="error_email">غلط نام</string>
-    <string name="error_contact">غلط نام</string>
-    <string name="error_address">غلط نام</string>
-    <string name="error_zip">غلط نام</string>
-    <string name="error_state">غلط نام</string>
     <string name="hint_of_province">صوبہ لکھیں</string>
     <string name="hint_of_zipcode">زپ کورڈ</string>
     <string name="cash_on_dilivery">کیش آن ڈلیوری</string>
     <string name="pay_with_card">کارڈ سے پیمنٹ</string>
     <string name="Done">ٹھیک ہے</string>
+    <string name="error_name"> نام درست کریں</string>
+    <string name="error_email"> ای-میل درست کریں</string>
+    <string name="error_password">پاسورڈ درست کریں</string>
+    <string name="error_contact"> نمبر درست کریں</string>
+    <string name="error_address"> پتہ درست کریں</string>
+    <string name="error_zip"> کوڈ درست کریں</string>
+
 
 
     <string name="short_lorem_ipsum">براہ کرم اپنا انٹرنیٹ کنکشن چیک کریں</string>

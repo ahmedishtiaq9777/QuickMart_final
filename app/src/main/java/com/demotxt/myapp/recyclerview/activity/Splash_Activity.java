@@ -42,7 +42,7 @@ public class Splash_Activity extends AppCompatActivity {
    Boolean  is_connected=connection.CheckConnection();
 
 
-                if(is_connected){
+               if(is_connected){
                     Intent start = new Intent(Splash_Activity.this, MainActivity2.class);
                     startActivity(start);
                     finish();

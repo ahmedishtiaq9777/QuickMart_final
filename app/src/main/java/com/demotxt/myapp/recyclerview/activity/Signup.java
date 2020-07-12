@@ -21,15 +21,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.demotxt.myapp.recyclerview.R;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
+
 public class Signup extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     TextView signin, signup;
-    EditText email, password;
+    EditText email, password, userName;
+    AwesomeValidation awesomeValidation;
     Spinner spiner;
     public String selectedaccount;
 
@@ -37,9 +42,17 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitysignup);
+
+        awesomeValidation = new AwesomeValidation(BASIC);
+
+        awesomeValidation.addValidation(Signup.this, R.id.usernamee, "[a-zA-Z\\s]+", R.string.error_name);
+        awesomeValidation.addValidation(Signup.this, R.id.emaill, android.util.Patterns.EMAIL_ADDRESS, R.string.error_email);
+        awesomeValidation.addValidation(Signup.this, R.id.passwordd, RegexTemplate.NOT_EMPTY, R.string.error_password);
+
 //INITIALLIZE
         signin = (TextView) findViewById(R.id.signin);
         signup = (TextView) findViewById(R.id.signin1);
+        userName= (EditText) findViewById(R.id.usernamee);
         email = (EditText) findViewById(R.id.emaill);
         password = (EditText) findViewById(R.id.passwordd);
         spiner = (Spinner) findViewById(R.id.spinner1);
@@ -48,6 +61,8 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
         listadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spiner.setAdapter(listadapter);
         spiner.setOnItemSelectedListener(this);
+
+
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override

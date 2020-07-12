@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.demotxt.myapp.recyclerview.R;
 //import com.demotxt.myapp.recyclerview.fragment.FragmentConfirmation;
 import com.demotxt.myapp.recyclerview.fragment.HomeFragment;
-import com.demotxt.myapp.recyclerview.ownmodels.CheckConnection;
+//import com.demotxt.myapp.recyclerview.ownmodels.CheckConnection;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomInternetDialog;
 
 public class Error_Screen_Activity extends AppCompatActivity {
