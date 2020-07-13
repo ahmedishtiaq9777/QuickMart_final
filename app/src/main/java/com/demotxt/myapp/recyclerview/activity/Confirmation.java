@@ -31,10 +31,10 @@ public class Confirmation extends AppCompatActivity {
         setContentView(R.layout.confirmation);
 
         List<OrderViewImg> orderViewImgs = new ArrayList<>();
+      /*  orderViewImgs.add(new OrderViewImg(R.drawable.shoes,"SHirt",2,1000));
         orderViewImgs.add(new OrderViewImg(R.drawable.shoes,"SHirt",2,1000));
         orderViewImgs.add(new OrderViewImg(R.drawable.shoes,"SHirt",2,1000));
-        orderViewImgs.add(new OrderViewImg(R.drawable.shoes,"SHirt",2,1000));
-        orderViewImgs.add(new OrderViewImg(R.drawable.shoes,"SHirt",2,1000));
+        orderViewImgs.add(new OrderViewImg(R.drawable.shoes,"SHirt",2,1000));*/
 
 
         recyclerView = findViewById(R.id.recyclerViewOrder);

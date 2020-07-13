@@ -63,6 +63,8 @@ public class Shipping extends AppCompatActivity {
 
 
 
+
+
         ship.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,6 +80,7 @@ public class Shipping extends AppCompatActivity {
                     Intent i = new Intent(getBaseContext(), Confirmation.class);
                     i.putExtra("getname", name);
                     i.putExtra("getaddress", address);
+
                     startActivity(i);
 
                 }else {

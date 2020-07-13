@@ -68,28 +68,6 @@ public class Prod_Activity extends AppCompatActivity {
         LayoutInflater inflater = getLayoutInflater();
         final View layout = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toast_layout_root));//for product added :to make custom toast with tick mark
 
-       // ImageView tickicon = (ImageView) layout.findViewById(R.id.image);
-       // tickicon.setImageResource(R.drawable.tick3resize);
-        TextView text = (TextView) layout.findViewById(R.id.text);
-        //text.setText("Product added to the cart!");
-
-
-
-
-
-        //for toolbar
-        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
-
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Detail");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Tools.setSystemBarColor(this);
-
-
-
-
-
 
 
 //result=new StringResponceFromWeb();
