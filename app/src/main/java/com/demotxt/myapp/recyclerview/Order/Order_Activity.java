@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
@@ -40,8 +41,9 @@ public class Order_Activity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private Order_Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private CardView mCardView;
     private List<Order> mOrderList;
+    private SharedPreferences login;
+    String Uid;
 
 
     @Override
@@ -50,49 +52,24 @@ public class Order_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_order_);
 
         mOrderList = new ArrayList<>();
-        //dummy data
+/*
+
         mOrderList.add(new Order("1","23/6/20","ongoing","50$"));
         mOrderList.add(new Order("2","23/6/20","completed","30$"));
         mOrderList.add(new Order("3","23/6/20","completed","20$"));
         mOrderList.add(new Order("4","23/6/20","ongoing","65$"));
-        //
-        mCardView = findViewById(R.id.order_cardview);
+*/
+
         mRecyclerView = findViewById(R.id.Order_Recyclerview);
-
-        setadapterRecyclerView();
-
-       /* v2 = getLayoutInflater().inflate(R.layout.cardview_item_order,null);
-
-        //Drop Down
-        Arrow_Down.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ExplandableView.getVisibility()==v2.GONE){
-                    TransitionManager.beginDelayedTransition(mCardView,new AutoTransition());
-                    ExplandableView.setVisibility(v2.VISIBLE);
-                    Arrow_Down.setBackgroundResource(R.drawable.ic_keyboard_arrow_up_black_24dp);
-                }
-                else{
-                    TransitionManager.beginDelayedTransition(mCardView,new AutoTransition());
-                    ExplandableView.setVisibility(v2.GONE);
-                    Arrow_Down.setBackgroundResource(R.drawable.ic_keyboard_arrow_down_black_24dp);
-                }
-            }
-        });*/
-
-/*
-        //int   sid=getArguments().getInt("user_id");
-        TabsBasic activity = (TabsBasic) getActivity();// get acticity data
-        int sid = activity.getuserid();
-        String userid = String.valueOf(sid);
-        String url = "http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/getprowithsellerid";
-
-        getconnection(url, userid);
-
-    */
+        //Id
+        login = getSharedPreferences("loginpref", MODE_PRIVATE);
+        Uid = String.valueOf(login.getInt("userid", 0));
+        //
+        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/GetOrders", Uid);
     }
 
-    /*public void getconnection(String url, final String User_Id) {
+    //Get Connection
+    public void getconnection(String url, final String User_Id) {
         final RequestQueue request = Volley.newRequestQueue(getApplicationContext());
 
         StringRequest rRequest = new StringRequest(Request.Method.POST, url,
@@ -104,7 +81,8 @@ public class Order_Activity extends AppCompatActivity {
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
                             mOrderList = Arrays.asList(gson.fromJson(response, Order[].class));
-                            setadapterRecyclerView();
+
+                            setAdapterRecyclerView();
 
                         } catch (Exception e) {
                             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
@@ -132,19 +110,14 @@ public class Order_Activity extends AppCompatActivity {
                 return params;
             }
         };
-
-
         request.add(rRequest);
 
-
     }
-*/
-    private void setadapterRecyclerView() {
+
+    private void setAdapterRecyclerView() {
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new Order_Adapter(getApplicationContext(),mOrderList);
+        mAdapter = new Order_Adapter(getApplicationContext(), mOrderList);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
     }
-
-
 }

@@ -69,6 +69,15 @@ public class Prod_Activity extends AppCompatActivity {
         final View layout = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toast_layout_root));//for product added :to make custom toast with tick mark
 
 
+        ImageView tickicon = (ImageView) layout.findViewById(R.id.image);
+        tickicon.setImageResource(R.drawable.tick3resize);
+        TextView text = (TextView) layout.findViewById(R.id.text);
+        text.setText("Product added to the cart!");
+
+
+
+
+
 
 //result=new StringResponceFromWeb();
         cartids=new HashSet<String>();
@@ -389,21 +398,7 @@ catch (Exception e)
             return false;
         }
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_search_setting, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-        } else {
-            Toast.makeText(getApplicationContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
 
 }

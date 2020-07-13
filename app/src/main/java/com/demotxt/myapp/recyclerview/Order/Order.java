@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class Order {
 
-    @SerializedName("")
+    @SerializedName("orderId")
     private String OrderId;
-    @SerializedName("")
+    @SerializedName("date")
     private String OrderDate;
-    @SerializedName("")
+    @SerializedName("status")
     private String OrderStatus;
-    @SerializedName("")
+    @SerializedName("total")
     private String Price;
 
 

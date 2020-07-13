@@ -6,49 +6,104 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.text.Html;
-import android.util.Log;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.Fragment;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.balysv.materialripple.MaterialRippleLayout;
 import com.demotxt.myapp.recyclerview.Config;
 import com.demotxt.myapp.recyclerview.Order.Order_Activity;
 import com.demotxt.myapp.recyclerview.R;
-import com.demotxt.myapp.recyclerview.sharepref.SharedPref;
 
+import com.demotxt.myapp.recyclerview.activity.Login;
+import com.demotxt.myapp.recyclerview.activity.Signup;
+import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
+import com.demotxt.myapp.recyclerview.sharepref.SharedPref;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.squareup.picasso.Picasso;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import static android.content.Context.MODE_PRIVATE;
+
+
 
 public class ProfileFragment extends Fragment {
 
-    private SharedPref sharedPref;
-    TextView txt_user_name;
-    TextView txt_user_email;
-    TextView txt_user_phone;
-    TextView txt_user_address;
+   // private SharedPref sharedPref;
+
+    TextView username;
+    ImageView phtotimage;
     TextView lang;
-    MaterialRippleLayout btn_edit_user;
-    MaterialRippleLayout btn_order_history, btn_share, btn_privacy, language, fav, exit;
+    MaterialRippleLayout logout;
+    MaterialRippleLayout btn_order_history, btn_share, btn_privacy, language, fav, exit,login,signup;
     LinearLayout lyt_root;
+    RelativeLayout relativeLayoutfornotlogin,relativeLayoutforloggenin;
+    private SharedPreferences  loginpref;
+    SharedPreferences.Editor  loginprefeditor;
+    private String userid;
+    private boolean islogin;
+    StringResponceFromWeb result;
+    StringResponceFromWeb result2;
+    String filename;
+    public static final int PICK_PHOTO_FOR_AVATAR = 2;
+    public static final int PIC_CROP = 1;
+
 
     private static final String[] Languages = new String[]{
             "English", "Urdu"
     };
+   /* public  boolean loadsubFragment(Fragment fragment)
+    {
+        if(fragment!=null)
+        {
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.Information,fragment).addToBackStack(null)
+                    .commit();
+            return  true;
+        }
+        return  false;
+    }*/
 
     public boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
@@ -64,40 +119,97 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+//selectphoto();
         loadLocale();
-
-        sharedPref = new SharedPref(getActivity());
+       // Fragment fragment=null;
+           //  fragment=   new ProfileSubFragment();
+//loadsubFragment(fragment);
+       // sharedPref = new SharedPref(getActivity());
 
         final View view = inflater.inflate(R.layout.profilefragment, container, false);
 
-        sharedPref = new SharedPref(getActivity());
+      //  sharedPref = new SharedPref(getActivity());
 
         lyt_root = view.findViewById(R.id.lyt_root);
         if (Config.ENABLE_RTL_MODE) {
             lyt_root.setRotationY(180);
         }
+        loginpref = getContext().getSharedPreferences("loginpref", MODE_PRIVATE);
+        loginprefeditor=loginpref.edit();
+      userid=String.valueOf(loginpref.getInt("userid",0));
+        //txt_user_name = view.findViewById(R.id.txt_user_name);
+        //txt_user_email = view.findViewById(R.id.txt_user_email);
+        //txt_user_phone = view.findViewById(R.id.txt_user_phone);
+        //txt_user_address = view.findViewById(R.id.txt_user_address);
+        username=view.findViewById(R.id.username);
+        btn_order_history = view.findViewById(R.id.btn_order_history);
+     phtotimage=view.findViewById(R.id.selectimage);
+        login =view.findViewById(R.id.login);
+        signup=view.findViewById(R.id.signup);
 
-        txt_user_name = view.findViewById(R.id.txt_user_name);
-        txt_user_email = view.findViewById(R.id.txt_user_email);
-        txt_user_phone = view.findViewById(R.id.txt_user_phone);
-        txt_user_address = view.findViewById(R.id.txt_user_address);
         lang = view.findViewById(R.id.languagetext);
+         relativeLayoutfornotlogin=(RelativeLayout) view.findViewById(R.id.fornotlogin);
+         relativeLayoutforloggenin=(RelativeLayout)view.findViewById(R.id.forloggedin);
+ islogin=loginpref.getBoolean("loggedin",false);
+if(islogin)
+{
+    relativeLayoutfornotlogin.setVisibility(View.GONE);
+    relativeLayoutforloggenin.setVisibility(View.VISIBLE);
+    btn_order_history.setVisibility(View.VISIBLE);
+    GetProfile("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/GetProfile");
 
-        txt_user_name.setText(sharedPref.getYourName());
-        txt_user_email.setText(sharedPref.getYourEmail());
-        txt_user_address.setText(sharedPref.getYourAddress());
-        txt_user_phone.setText(sharedPref.getYourPhone());
+}else {
+    relativeLayoutforloggenin.setVisibility(View.GONE);
+    relativeLayoutfornotlogin.setVisibility(View.VISIBLE);
+    btn_order_history.setVisibility(View.GONE);
+}
 
-        btn_edit_user = view.findViewById(R.id.btn_edit_user);
-        btn_edit_user.setOnClickListener(new View.OnClickListener() {
+
+
+
+      //  txt_user_name.setText(sharedPref.getYourName());
+       // txt_user_email.setText(sharedPref.getYourEmail());
+        //txt_user_address.setText(sharedPref.getYourAddress());
+        //txt_user_phone.setText(sharedPref.getYourPhone());
+
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                Intent intent = new Intent(getActivity(), UsersettingFragment.class);
+                Intent intent=new Intent(getActivity(), Login.class);
+                intent.putExtra("loginfromprofile",true);
                 startActivity(intent);
+            }
+        });
+signup.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Intent intent=new Intent(getActivity(), Signup.class);
+        startActivity(intent);
+    }
+});
+phtotimage.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        selectphoto();
+    }
+});
 
+logout= view.findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginprefeditor.putBoolean("loggedin", false);
+               // loginprefeditor.putInt("userid", uid);
+
+                loginprefeditor.remove("userid");
+                loginprefeditor.commit();
+                relativeLayoutforloggenin.setVisibility(View.GONE);
+                relativeLayoutfornotlogin.setVisibility(View.VISIBLE);
+                btn_order_history.setVisibility(View.GONE);
+
+               /* Intent intent = new Intent(getActivity(), UsersettingFragment.class);
+                startActivity(intent);
+*/
                 ///FragmentTransaction ft=getChildFragmentManager().beginTransaction();
 
 
@@ -107,7 +219,7 @@ public class ProfileFragment extends Fragment {
         });
 
         //For Order history
-        btn_order_history = view.findViewById(R.id.btn_order_history);
+
         btn_order_history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -210,15 +322,491 @@ public class ProfileFragment extends Fragment {
         getContext().getResources().updateConfiguration(config, getContext().getResources().getDisplayMetrics());
         //saving data in shared preference
 
-        SharedPreferences.Editor editor = getContext().getSharedPreferences("Settings", Context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = getContext().getSharedPreferences("Settings", MODE_PRIVATE).edit();
         editor.putString("My_Lang", lang);
         editor.apply();
     }
 
     public void loadLocale() {
-        SharedPreferences pref = getContext().getSharedPreferences("Settings", Activity.MODE_PRIVATE);
+        SharedPreferences pref = getContext().getSharedPreferences("Settings", MODE_PRIVATE);
         String lan = pref.getString("My_Lang", "");
         setLocale(lan);
     }
 
+
+
+
+public  void selectphoto(){
+
+
+   Intent intent = new Intent(Intent.ACTION_GET_CONTENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+   // Intent intent = new Intent(Intent.ACTION_PICK);
+    intent.setType("image/*");
+    startActivityForResult(intent, PICK_PHOTO_FOR_AVATAR);
 }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+     //   super.onActivityResult(requestCode, resultCode, data);
+
+       super.onActivityResult(requestCode, resultCode, data);
+
+
+        if (requestCode == PICK_PHOTO_FOR_AVATAR && resultCode == Activity.RESULT_OK) {
+            if (data == null) {
+                //Display an error
+                return;
+            }
+            try {
+                Uri uri=data.getData();
+                filename=getFileName(uri);
+
+
+
+   Bitmap bitmap=MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),uri);
+   phtotimage.setImageBitmap(bitmap);
+   phtotimage.setVisibility(View.VISIBLE);
+   try {
+       String bitMapToString = BitMapToString(bitmap);
+       UploadProfile("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/UploadProfile", bitMapToString, filename);
+   }catch (Exception e)
+   {
+       Toast.makeText(getContext(),"error"+e.getMessage(),Toast.LENGTH_SHORT).show();
+   }
+//phtotimage.setImageURI(data.getData());
+
+
+            /*  InputStream inputStream = getActivity().getContentResolver().openInputStream(data.getData());*/
+
+               // BitmapFactory.Options options = new BitmapFactory.Options();
+                //options.inSampleSize = 2; //Scale it down
+                //options.inPreferredConfig = Bitmap.Config.RGB_565;
+               // Bitmap b = BitmapFactory.decodeStream( inputStream, null, options );
+
+                /* Bitmap binput = BitmapFactory.decodeStream(inputStream);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+
+                binput.compress(Bitmap.CompressFormat.JPEG,50,stream);
+                byte[] byteArray = stream.toByteArray();
+                Bitmap compressedBitmap = BitmapFactory.decodeByteArray(byteArray,0,byteArray.length);
+                String bitMapToString=BitMapToString(compressedBitmap);
+               */
+
+
+              //  getconnection("dsds",bitMapToString);
+                //phtotimage.setImageBitmap (compressedBitmap);
+
+
+                //   Uri uri= getImageUri(getContext(),binput);
+
+            //  Bitmap finalbitmap= handleSamplingAndRotationBitmap(getContext(),uri);
+              //  phtotimage.setImageBitmap(finalbitmap);
+            // calculateInSampleSize(getContext(),uri);
+
+
+
+
+
+
+               // FileOutputStream fos = openFileOutput("desiredFilename.png", Context.MODE_PRIVATE);
+               /* File pictureFile = getOutputMediaFile();*/
+              //  Bitmap bOutput;
+             //   Matrix matrix = new Matrix();
+             //   matrix.preScale(-0.5f, 1.0f);
+              //  bOutput = Bitmap.createBitmap(binput, 0, 0, binput.getWidth(), binput.getHeight(), matrix, true);*/
+              /*  Drawable drawable=new BitmapDrawable(this.getResources(),binput);*/
+             //   phtotimage.setImageDrawable(drawable);
+
+              //  phtotimage.setScaleType(ImageView.ScaleType.valueOf("fitXY"));
+       /*   phtotimage.setImageBitmap(binput);*/
+
+              //  phtotimage.setImageBitmap((decodeImage(R.drawable.justry)));
+               // phtotimage.setImageBitmap (bitmap);
+
+            }catch (Exception e)
+            {
+              Toast.makeText(getContext(),"error"+e.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+            //Now you can do whatever you want with your inpustream, save it as file, upload to a server, decode a bitmap...
+
+        }
+
+
+    }
+
+    public String getFileName(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = getContext().getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
+    }
+
+    public  void    UploadProfile(String url, final String bitmapstr, final String filename) {
+        final RequestQueue request = Volley.newRequestQueue(getContext());
+
+
+        StringRequest rRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                         Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
+                        try {
+
+                            GsonBuilder builder = new GsonBuilder();
+                            Gson gson = builder.create();
+                            result2=gson.fromJson(response, StringResponceFromWeb.class);
+                              Toast.makeText(getContext(),"Responce:"+result2.getresult(),Toast.LENGTH_SHORT).show();
+                              if(result2.getresult().equals("updated"))
+                              {
+
+
+
+                                  try{
+                                      GetProfile("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/GetProfile");
+                                  }catch (Exception e)
+                                  {
+                                      Toast.makeText(getContext(),e.getMessage(), Toast.LENGTH_SHORT).show();
+                                  }
+
+
+
+                              }
+
+
+
+
+
+                        } catch (Exception e) {
+                             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+
+                        //  Toast.makeText(ShoppyProductListActivity.this, response, Toast.LENGTH_SHORT).show();
+
+
+                        // response
+                        //  Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+//                        Toast.makeText(getContext(),  Toast.LENGTH_SHORT).show();
+                        error.printStackTrace();
+                    }
+                }
+        )  {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                /*JSONArray jsonArray= new JSONArray();
+                for (String  i:cartids) {
+                    jsonArray.put(i);
+                }*/
+                params.put("userid",userid);
+                params.put("bitmapstr",bitmapstr);
+                params.put("filename",filename);
+
+                //  params.p
+
+                return params;
+            }
+
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+
+
+
+
+
+        request.add(rRequest);
+
+
+    }
+
+
+
+
+    public  void    GetProfile(String url) {
+        final RequestQueue request = Volley.newRequestQueue(getContext());
+
+
+        StringRequest rRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        // Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
+                        try {
+
+                           // Toast.makeText(getContext(),"Responce:"+response,Toast.LENGTH_SHORT).show();
+                            GsonBuilder builder = new GsonBuilder();
+                            Gson gson = builder.create();
+                            result=gson.fromJson(response, StringResponceFromWeb.class);
+
+                            if(result.getresult().equals("error"))
+                            {
+                                Toast.makeText(getContext(),"error:"+result.getErrorResult(),Toast.LENGTH_SHORT).show();
+                            }else if(!result.getUsername().equals(null)){
+                                try{
+
+                                    username.setText(result.getUsername());
+                                    String url=  result.getresult();
+                                    url="http://ahmedishtiaq1997-001-site1.ftempurl.com"+url;
+                                    Picasso.get().load(url).into(phtotimage);
+                                }catch (Exception e)
+                                {
+                                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                }
+
+                               // Bitmap bitmap=StringToBitMap(strbitmap);
+
+                              //  phtotimage.setImageBitmap(bitmap);
+                            }
+
+
+
+
+
+
+
+                        } catch (Exception e) {
+                             Toast.makeText(getContext(), "excaption:"+e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+
+                        //  Toast.makeText(ShoppyProductListActivity.this, response, Toast.LENGTH_SHORT).show();
+
+
+                        // response
+                        //  Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+//                        Toast.makeText(getContext(),  Toast.LENGTH_SHORT).show();
+                        error.printStackTrace();
+                    }
+                }
+        )  {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                /*JSONArray jsonArray= new JSONArray();
+                for (String  i:cartids) {
+                    jsonArray.put(i);
+                }*/
+                params.put("userid",userid);
+
+
+                //  params.p
+
+                return params;
+            }
+
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+
+
+
+
+
+        request.add(rRequest);
+
+
+    }
+
+    private  File getOutputMediaFile(){
+        // To be safe, you should check that the SDCard is mounted
+        // using Environment.getExternalStorageState() before doing this.
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
+                + "/Android/data/"
+                + getContext().getPackageName()
+                + "/Files");
+
+        // This location works best if you want the created images to be shared
+        // between applications and persist after your app has been uninstalled.
+
+        // Create the storage directory if it does not exist
+        if (! mediaStorageDir.exists()){
+            if (! mediaStorageDir.mkdirs()){
+                return null;
+            }
+        }
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
+        File mediaFile;
+        String mImageName="MI_"+ timeStamp +".jpg";
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
+        return mediaFile;
+    }
+    public String BitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String temp= Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
+    }
+    public Bitmap StringToBitMap(String encodedString){
+        try{
+            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }
+        catch(Exception e){
+            e.getMessage();
+            return null;
+        }
+    }
+    public Bitmap decodeImage(int resourceId) {
+        try {
+            // Decode image size
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            BitmapFactory.decodeResource(getResources(), resourceId, o);
+            // The new size we want to scale to
+            final int REQUIRED_SIZE = 100; // you are free to modify size as your requirement
+
+            // Find the correct scale value. It should be the power of 2.
+            int scale = 1;
+            while (o.outWidth / scale / 2 >= REQUIRED_SIZE && o.outHeight / scale / 2 >= REQUIRED_SIZE)
+                scale *= 2;
+
+            // Decode with inSampleSize
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize = scale;
+            return BitmapFactory.decodeResource(getResources(), resourceId, o2);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    public static Bitmap handleSamplingAndRotationBitmap(Context context, Uri selectedImage)
+            throws IOException {
+        int MAX_HEIGHT = 1024;
+        int MAX_WIDTH = 1024;
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        InputStream imageStream = context.getContentResolver().openInputStream(selectedImage);
+        BitmapFactory.decodeStream(imageStream, null, options);
+        imageStream.close();
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, MAX_WIDTH, MAX_HEIGHT);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        imageStream = context.getContentResolver().openInputStream(selectedImage);
+        Bitmap img = BitmapFactory.decodeStream(imageStream, null, options);
+
+        img = rotateImageIfRequired(context, img, selectedImage);
+        return img;
+    }
+    private static int calculateInSampleSize(BitmapFactory.Options options,
+                                             int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            // Calculate ratios of height and width to requested height and width
+            final int heightRatio = Math.round((float) height / (float) reqHeight);
+            final int widthRatio = Math.round((float) width / (float) reqWidth);
+
+            // Choose the smallest ratio as inSampleSize value, this will guarantee a final image
+            // with both dimensions larger than or equal to the requested height and width.
+            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+
+            // This offers some additional logic in case the image has a strange
+            // aspect ratio. For example, a panorama may have a much larger
+            // width than height. In these cases the total pixels might still
+            // end up being too large to fit comfortably in memory, so we should
+            // be more aggressive with sample down the image (=larger inSampleSize).
+
+            final float totalPixels = width * height;
+
+            // Anything more than 2x the requested pixels we'll sample down further
+            final float totalReqPixelsCap = reqWidth * reqHeight * 2;
+
+            while (totalPixels / (inSampleSize * inSampleSize) > totalReqPixelsCap) {
+                inSampleSize++;
+            }
+        }
+        return inSampleSize;
+    }
+    private static Bitmap rotateImageIfRequired(Context context, Bitmap img, Uri selectedImage) throws IOException {
+
+        InputStream input = context.getContentResolver().openInputStream(selectedImage);
+        ExifInterface ei;
+        if (Build.VERSION.SDK_INT > 23)
+            ei = new ExifInterface(input);
+        else
+            ei = new ExifInterface(selectedImage.getPath());
+
+        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                return rotateImage(img, 90);
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                return rotateImage(img, 180);
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                return rotateImage(img, 270);
+            default:
+                return img;
+        }
+    }
+
+    private static Bitmap rotateImage(Bitmap img, int degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
+        img.recycle();
+        return rotatedImg;
+    }
+}
+
+
+
+
+
