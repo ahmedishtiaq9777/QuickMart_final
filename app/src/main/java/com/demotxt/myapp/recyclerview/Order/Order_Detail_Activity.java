@@ -47,6 +47,7 @@ public class Order_Detail_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_order__detail_);
 
         mList = new ArrayList<>();
+
         //Dummy Data
         /*
         mList.add(new Order_Detail("Shoes",15,"2",R.drawable.image_1));

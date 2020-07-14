@@ -8,6 +8,12 @@
 
     </string-array>
 
+
+    <string name="facebook_app_id" translatable="false">720309855414019</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb720309855414019</string>
+
+
+
     <string name="invoice_address" translatable="false">
         Terry M Smith\n(904) 246-1297\n207 Cherry St, Neptune Beach, FL, 32266
     </string>

@@ -22,32 +22,65 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.R;
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Signup extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class Signup extends AppCompatActivity {
 
     TextView signin, signup;
     EditText email, password;
-    Spinner spiner;
     public String selectedaccount;
+    //facebook
+    private LoginButton mLoginButton;
+    private CallbackManager mCallbackManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitysignup);
-//INITIALLIZE
+        //INIT
         signin = (TextView) findViewById(R.id.signin);
         signup = (TextView) findViewById(R.id.signin1);
         email = (EditText) findViewById(R.id.emaill);
         password = (EditText) findViewById(R.id.passwordd);
-        spiner = (Spinner) findViewById(R.id.spinner1);
+        //facebook
+        mLoginButton = findViewById(R.id.login_button);
 
-        ArrayAdapter<String> listadapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.Accounttypes));
-        listadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spiner.setAdapter(listadapter);
-        spiner.setOnItemSelectedListener(this);
+        mCallbackManager = CallbackManager.Factory.create();
+        mLoginButton.setPermissions(Arrays.asList("email", "public_profile"));
+
+        mLoginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+        });
+
+        //
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,11 +96,9 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
                                 @Override
                                 public void onResponse(String response) {
                                     // response
-                                    //  Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
                                     int size = response.toString().length();
 
                                     String result = response.toString().substring(1, size - 1);
-
 
                                     if (result.toString().equals("registered")) {
                                         finish();
@@ -78,9 +109,8 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
                                     if (result.toString().equals("alreadyregistered")) {
                                         Toast.makeText(getApplicationContext(), "This Email is Already Registered", Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Log.i("APIERROR", "error");
+                                        Log.i("API-ERROR", "error");
                                         Toast.makeText(getApplicationContext(), "error" + response.toString(), Toast.LENGTH_SHORT).show();
-
                                     }
                                 }
                             },
@@ -88,7 +118,7 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     // error
-                                    Log.i("APIERROR", error.getMessage());
+                                    Log.i("API-ERROR", error.getMessage());
                                     Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -99,7 +129,6 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
 
                             params.put("email", email.getText().toString());
                             params.put("password", password.getText().toString());
-                            params.put("UserType", selectedaccount);
                             return params;
                         }
 
@@ -134,20 +163,43 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-        selectedaccount = parent.getItemAtPosition(position).toString();
-        if (selectedaccount.equals("As a Buyer")) {
-            selectedaccount = "C";
-
-        } else if (selectedaccount.equals("As a Seller")) {
-
-            selectedaccount = "S";
-        }
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
+    AccessTokenTracker mTokenTracker = new AccessTokenTracker() {
+        @Override
+        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
 
+            loadUserProfile(currentAccessToken);
+        }
+    };
+
+    private void loadUserProfile(AccessToken newAccessToken) {
+        GraphRequest request = GraphRequest.newMeRequest(newAccessToken, new GraphRequest.GraphJSONObjectCallback() {
+            @Override
+            public void onCompleted(JSONObject object, GraphResponse response) {
+
+                try {
+                    String first_name = object.getString("first_name");
+                    String last_name = object.getString("last_name");
+                    String email = object.getString("email");
+                    String id = object.getString("id");
+                    String image_url = "https://graph.facebook.com/" + id + "/picture?type=normal";
+
+                    //
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "first_name,last_name,email,id");
+        request.setParameters(parameters);
+        request.executeAsync();
     }
 }
