@@ -21,6 +21,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.demotxt.myapp.recyclerview.R;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -39,9 +41,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Signup extends AppCompatActivity {
+import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
+
+public class Signup extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     TextView signin, signup;
+    EditText email, password, userName;
+    AwesomeValidation awesomeValidation;
+    Spinner spiner;
     EditText email, password;
     public String selectedaccount;
     //facebook
@@ -53,8 +60,17 @@ public class Signup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitysignup);
         //INIT
+
+        awesomeValidation = new AwesomeValidation(BASIC);
+
+        awesomeValidation.addValidation(Signup.this, R.id.usernamee, "[a-zA-Z\\s]+", R.string.error_name);
+        awesomeValidation.addValidation(Signup.this, R.id.emaill, android.util.Patterns.EMAIL_ADDRESS, R.string.error_email);
+        awesomeValidation.addValidation(Signup.this, R.id.passwordd, RegexTemplate.NOT_EMPTY, R.string.error_password);
+
+//INITIALLIZE
         signin = (TextView) findViewById(R.id.signin);
         signup = (TextView) findViewById(R.id.signin1);
+        userName= (EditText) findViewById(R.id.usernamee);
         email = (EditText) findViewById(R.id.emaill);
         password = (EditText) findViewById(R.id.passwordd);
         //facebook
@@ -81,6 +97,8 @@ public class Signup extends AppCompatActivity {
         });
 
         //
+
+
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,4 +221,4 @@ public class Signup extends AppCompatActivity {
         request.setParameters(parameters);
         request.executeAsync();
     }
-}
+    }

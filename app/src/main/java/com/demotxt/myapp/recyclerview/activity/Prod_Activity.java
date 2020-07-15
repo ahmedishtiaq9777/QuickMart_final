@@ -3,6 +3,7 @@ package com.demotxt.myapp.recyclerview.activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -11,8 +12,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,8 +44,11 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -68,10 +75,131 @@ public class Prod_Activity extends AppCompatActivity {
         LayoutInflater inflater = getLayoutInflater();
         final View layout = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toast_layout_root));//for product added :to make custom toast with tick mark
 
-        ImageView tickicon = (ImageView) layout.findViewById(R.id.image);
-        tickicon.setImageResource(R.drawable.tick3resize);
-        TextView text = (TextView) layout.findViewById(R.id.text);
-        text.setText("Product added to the cart!");
+
+
+
+        // Size Spinner
+        final Spinner spinner1 = (Spinner) findViewById(R.id.sizeSpinner);
+        // Initializing a String Array
+        String[] size = new String[]{
+                "Size",
+                "S",
+                "M",
+                "L",
+                "XL"
+        };
+        final List<String> SizeList = new ArrayList<>(Arrays.asList(size));
+        final ArrayAdapter<String> Sizespinner = new ArrayAdapter<String>(
+                this,R.layout.item_spinner,SizeList){
+            @Override
+            public boolean isEnabled(int position){
+                if(position == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if(position == 0){
+                    // Set the hint text color gray
+                    tv.setTextColor(Color.GRAY);
+                }
+                else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+        Sizespinner.setDropDownViewResource(R.layout.item_spinner);
+        spinner1.setAdapter(Sizespinner);
+        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItemText = (String) parent.getItemAtPosition(position);
+
+                if(position > 0){
+                    // Notify the selected item text
+                    Toast.makeText
+                            (getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT)
+                            .show();
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+
+        // Color Spinner
+
+        final Spinner spinner2 = (Spinner) findViewById(R.id.colorSpinner);
+        // Initializing a String Array
+        String[] color = new String[]{
+                "Color",
+                "Red",
+                "Yellow",
+                "White",
+                "Black"
+        };
+        final List<String> colorList = new ArrayList<>(Arrays.asList(color));
+        final ArrayAdapter<String> Colorspinner = new ArrayAdapter<String>(
+                this,R.layout.item_spinner,colorList){
+            @Override
+            public boolean isEnabled(int position){
+                if(position == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if(position == 0){
+                    // Set the hint text color gray
+                    tv.setTextColor(Color.GRAY);
+                }
+                else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+        Colorspinner.setDropDownViewResource(R.layout.item_spinner);
+        spinner2.setAdapter(Colorspinner);
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItemText = (String) parent.getItemAtPosition(position);
+
+                if(position > 0){
+                    // Notify the selected item text
+                    Toast.makeText
+                            (getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT)
+                            .show();
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+
+
+
+
 
 
 
@@ -121,15 +249,8 @@ public class Prod_Activity extends AppCompatActivity {
             }
         });
 
-        // section warranty
-        bt_toggle_warranty = (ImageButton) findViewById(R.id.bt_toggle_warranty);
-        lyt_expand_warranty = (View) findViewById(R.id.lyt_expand_warranty);
-        bt_toggle_warranty.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggleSection(view, lyt_expand_warranty);
-            }
-        });
+
+
 
 //section description
         bt_toggle_description = (ImageButton) findViewById(R.id.bt_toggle_description);
@@ -207,8 +328,8 @@ try{
                         // response
                         try {
                             AlertDialog.Builder builder1 = new AlertDialog.Builder(Prod_Activity.this);
-                            builder1.setTitle("Allready Added");
-                            builder1.setMessage("Your product is allready Added to Cart?");
+                            builder1.setTitle("Already Added");
+                            builder1.setMessage("Your product is Already Added to Cart!");
 
                             builder1 .setIcon(R.drawable.exclamationmarkresize);
                             // builder1.show();

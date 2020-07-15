@@ -1,19 +1,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toast_layout_root"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    android:background="#DAAA" >
+    android:background="@color/white">
 
-    <ImageView android:id="@+id/image"
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationView2"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginRight="10dp" />
+        app:lottie_fileName="tick.json"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="false"
+        android:layout_gravity="center" ></com.airbnb.lottie.LottieAnimationView>
 
-    <TextView android:id="@+id/text"
+
+    <TextView
+        android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:textColor="#FFF" />
+        android:text="Added to the cart!"
+        android:textColor="@color/colortext"
+        android:gravity="center
+"/>
 
 </LinearLayout>

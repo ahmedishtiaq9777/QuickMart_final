@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/red_300"
+        android:background="@drawable/gradient2"
         android:gravity="center"
         android:minHeight="120dp"
         android:orientation="vertical"
@@ -48,6 +48,7 @@
             android:layout_marginTop="@dimen/spacing_small"
             android:text="@string/short_lorem_ipsum"
             android:textAlignment="center"
+            android:textStyle="bold"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textColor="@color/grey_60" />
     </LinearLayout>
@@ -65,10 +66,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:background="@drawable/btn_rounded_red"
+            android:background="@drawable/button_border"
             android:paddingLeft="@dimen/spacing_mlarge"
             android:paddingRight="@dimen/spacing_mlarge"
             android:text="Retry"
+            android:textSize="20dp"
+            android:textStyle="bold"
             android:textColor="@android:color/white" />
 
     </LinearLayout>

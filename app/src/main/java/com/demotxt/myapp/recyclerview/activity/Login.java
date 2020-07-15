@@ -20,6 +20,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.ownmodels.Book;
 import com.demotxt.myapp.recyclerview.productlist.ShoppyProductListActivity;
@@ -42,9 +44,14 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
+
+
 public class Login extends AppCompatActivity {
     TextView signup, signin;
     private EditText email, pass;
+    AwesomeValidation awesomeValidation;
+
     private SharedPreferences rememberMepref, loginpref;
     private SharedPreferences.Editor rememberMePrefsEditor, loginprefeditor;
     private CheckBox checkBoxremember;
@@ -116,6 +123,12 @@ public class Login extends AppCompatActivity {
             checkBoxremember.setChecked(true);
 
         }
+
+
+
+        awesomeValidation = new AwesomeValidation(BASIC);
+        awesomeValidation.addValidation(Login.this, R.id.emaill, android.util.Patterns.EMAIL_ADDRESS, R.string.error_email);
+        awesomeValidation.addValidation(Login.this, R.id.passwordd, RegexTemplate.NOT_EMPTY, R.string.error_password);
 
 
         signin.setOnClickListener(new View.OnClickListener() {
