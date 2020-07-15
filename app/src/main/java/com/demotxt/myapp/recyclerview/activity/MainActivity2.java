@@ -24,6 +24,7 @@ import com.demotxt.myapp.recyclerview.utils.Tools;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity2 extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
     private int Check;
@@ -187,7 +188,7 @@ try {
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Tools.setSystemBarColor(this);
     }
 

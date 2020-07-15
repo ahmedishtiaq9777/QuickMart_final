@@ -153,13 +153,6 @@ public class CartFragment extends Fragment  {
                         } catch (Exception e) {
                             // Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                         }
-
-                        //  Toast.makeText(ShoppyProductListActivity.this, response, Toast.LENGTH_SHORT).show();
-
-
-                        // response
-                        //  Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
-
                     }
                 },
                 new Response.ErrorListener() {

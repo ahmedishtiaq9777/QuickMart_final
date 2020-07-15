@@ -43,6 +43,7 @@ public class Catkids {
     public String getThumbnail() {
         return Thumbnail;
     }
+
     public  float getPrice(){return Price;}
 
 

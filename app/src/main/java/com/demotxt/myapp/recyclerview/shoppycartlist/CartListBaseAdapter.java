@@ -2,6 +2,7 @@ package com.demotxt.myapp.recyclerview.shoppycartlist;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.util.Log;
@@ -13,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.R;
+import com.demotxt.myapp.recyclerview.activity.Prod_Activity;
 import com.demotxt.myapp.recyclerview.fragment.CartFragment;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -43,53 +47,48 @@ public class CartListBaseAdapter extends BaseAdapter {
 
     List<CartListBeanlist> Bean;
     List<CartListBeanlist> BeanTemp;
-    private SharedPreferences favouritepref,loginpref;
+    private SharedPreferences favouritepref, loginpref;
 
     private SharedPreferences.Editor favouriteprefeditor;
     public Set<String> cartids;
     public Set<String> favids;
-    private String  proid,userid;
+    private String proid, userid;
     private int selectionid;
-
 
 
     private int number = 01;
 
-    Typeface fonts1,fonts2;
+    Typeface fonts1, fonts2;
 
 
-
-
-
-    public CartListBaseAdapter(Context context, List<CartListBeanlist> bean,int number) {
+    public CartListBaseAdapter(Context context, List<CartListBeanlist> bean, int number) {
 
 
         this.context = context;
 
-        selectionid=number;
-        this.BeanTemp=bean;
+        selectionid = number;
+        this.BeanTemp = bean;
         initializearray();
-       // this.Bean = bean;
-        cartids=new HashSet<String>();
+        // this.Bean = bean;
+        cartids = new HashSet<String>();
 
-      //  cartlistpref=context.getSharedPreferences("cartprefs",MODE_PRIVATE);//get cartpreferences that contains cartitemlist
-        favouritepref=context.getSharedPreferences("favpref",MODE_PRIVATE);
+        //  cartlistpref=context.getSharedPreferences("cartprefs",MODE_PRIVATE);//get cartpreferences that contains cartitemlist
+        favouritepref = context.getSharedPreferences("favpref", MODE_PRIVATE);
         loginpref = context.getSharedPreferences("loginpref", MODE_PRIVATE);
 
-        userid=  String.valueOf(loginpref.getInt("userid", 0));
+        userid = String.valueOf(loginpref.getInt("userid", 0));
 
         //  cartlistprefeditor=cartlistpref.edit();// this is to add stuff in preferences
-        favouriteprefeditor=favouritepref.edit();
-      //  cartids=cartlistpref.getStringSet("cartids",cartids);//get current product ids in cartprefferences
-        favids=favouritepref.getStringSet("ids",favids);
-
-
+        favouriteprefeditor = favouritepref.edit();
+        //  cartids=cartlistpref.getStringSet("cartids",cartids);//get current product ids in cartprefferences
+        favids = favouritepref.getStringSet("ids", favids);
 
 
     }
-    public void initializearray(){
+
+    public void initializearray() {
         Bean = new ArrayList<>();
-        for (CartListBeanlist item: BeanTemp) {
+        for (CartListBeanlist item : BeanTemp) {
             Bean.add(item);
 
         }
@@ -114,7 +113,7 @@ public class CartListBaseAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        fonts1 =  Typeface.createFromAsset(context.getAssets(),
+        fonts1 = Typeface.createFromAsset(context.getAssets(),
                 "fonts/MavenPro-Regular.ttf");
 
         fonts2 = Typeface.createFromAsset(context.getAssets(),
@@ -122,22 +121,22 @@ public class CartListBaseAdapter extends BaseAdapter {
 
         ViewHolder viewHolder = null;
 
-        if (convertView == null){
-            LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.cart_list,null);
+        if (convertView == null) {
+            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+            convertView = layoutInflater.inflate(R.layout.cart_list, null);
 
             viewHolder = new ViewHolder();
 
 
-            viewHolder.image = (ImageView)convertView.findViewById(R.id.image);
-            viewHolder.cross = (ImageView)convertView.findViewById(R.id.cross);
+            viewHolder.image = (ImageView) convertView.findViewById(R.id.image);
+            viewHolder.cross = (ImageView) convertView.findViewById(R.id.cross);
 
-            viewHolder.title = (TextView)convertView.findViewById(R.id.title);
+            viewHolder.title = (TextView) convertView.findViewById(R.id.title);
 
-            viewHolder.price = (TextView)convertView.findViewById(R.id.price);
+            viewHolder.price = (TextView) convertView.findViewById(R.id.price);
 
-            viewHolder.text = (TextView)convertView.findViewById(R.id.text);
-
+            viewHolder.text = (TextView) convertView.findViewById(R.id.text);
+            viewHolder.mCardView = convertView.findViewById(R.id.Cardview_Cart);
 
 
             viewHolder.title.setTypeface(fonts2);
@@ -148,24 +147,18 @@ public class CartListBaseAdapter extends BaseAdapter {
             convertView.setTag(viewHolder);
 
 
-        }else {
+        } else {
 
-            viewHolder = (ViewHolder)convertView.getTag();
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
 
+        final CartListBeanlist bean = (CartListBeanlist) getItem(position);
 
-
-
-
-
-        final CartListBeanlist bean = (CartListBeanlist)getItem(position);
-
-       // viewHolder.image.setImageResource(bean.getImage());
+        // viewHolder.image.setImageResource(bean.getImage());
         Picasso.get().load(bean.getImage()).into(viewHolder.image);
         viewHolder.title.setText(bean.getTitle());
-
-      String pricestr=String.valueOf(bean.getPrice());
+        String pricestr = String.valueOf(bean.getPrice());
         viewHolder.price.setText(pricestr);
 
         // delete element from cartlist
@@ -174,75 +167,42 @@ public class CartListBaseAdapter extends BaseAdapter {
             public void onClick(View v) {
                 try {
                     String strid;
-                    proid =     String.valueOf(bean.getId());
-                   if(selectionid==1) {
+                    proid = String.valueOf(bean.getId());
+                    if (selectionid == 1) {
 
-                       getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/home/DeleteProductFromCart");
+                        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/home/DeleteProductFromCart");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                       //cartlistprefeditor.remove("cartids");
-                       //cartlistprefeditor.commit();
-                      //  strid = String.valueOf(proid);
-                      // cartids.remove(strid);
-                      // cartlistprefeditor.putStringSet("cartids", cartids);
-                       //cartlistprefeditor.commit();
-                       Bean.remove(position);
-                       notifyDataSetChanged();
-
-                   }else if(selectionid==2){
-                       favouriteprefeditor.remove("ids");
-                       favouriteprefeditor.commit();
-                        strid=String.valueOf(proid);
-                        favids.remove(strid);
-                        favouriteprefeditor.putStringSet("ids",favids);
-                        favouriteprefeditor.putBoolean(strid,false);
-                       favouriteprefeditor.commit();
                         Bean.remove(position);
                         notifyDataSetChanged();
-                   }
 
-               /* for (CartListBeanlist obj:Bean) {
-                    Log.i("Item "+obj.getId(), "Title "+obj.getTitle());
-                }*/
-             // CartListBeanlist obj= Bean.get(position);
-               // Toast.makeText(context.getApplicationContext()," Title:"+obj.getTitle(),Toast.LENGTH_SHORT).show();
-
-
-             //   Toast.makeText(context.getApplicationContext()," position:"+position,Toast.LENGTH_SHORT).show();
-                 //   CartListBaseAdapter.this.notifyAll();
-
-
-
-                }catch (Exception e){
-                   Toast.makeText(context.getApplicationContext()," Error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+                    } else if (selectionid == 2) {
+                        favouriteprefeditor.remove("ids");
+                        favouriteprefeditor.commit();
+                        strid = String.valueOf(proid);
+                        favids.remove(strid);
+                        favouriteprefeditor.putStringSet("ids", favids);
+                        favouriteprefeditor.putBoolean(strid, false);
+                        favouriteprefeditor.commit();
+                        Bean.remove(position);
+                        notifyDataSetChanged();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(context.getApplicationContext(), " Error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
-
-
-
             }
         });
 
+        viewHolder.mCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, Prod_Activity.class);
+                intent.putExtra("Title",bean.getTitle());
+                intent.putExtra("Thumbnail",bean.getImage());
+                intent.putExtra("price",bean.getPrice());
+                intent.putExtra("Description",bean.getDesc());
+                context.startActivity(intent);
+            }
+        });
 
 //        number = 01;
 //        viewHolder.text.setText(""+number);
@@ -288,58 +248,35 @@ public class CartListBaseAdapter extends BaseAdapter {
 //        });
 
 
-
-
         return convertView;
     }
 
-
-
-
-    public  void   getconnection(String url) {
+    public void getconnection(String url) {
         final RequestQueue request = Volley.newRequestQueue(context);
-
-
         StringRequest rRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("Responce on clickCross", "onResponse: "+response );
+                        Log.e("Responce on clickCross", "onResponse: " + response);
 
                         Toast.makeText(context, response, Toast.LENGTH_LONG).show();
-
-
-
-                        //  Toast.makeText(ShoppyProductListActivity.this, response, Toast.LENGTH_SHORT).show();
-
-
-                        // response
-                        //  Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
-
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                       Toast.makeText(context,"Error:"+error.getMessage(),  Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Error:" + error.getMessage(), Toast.LENGTH_SHORT).show();
                         error.printStackTrace();
-
                     }
                 }
-        )  {
+        ) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                /*JSONArray jsonArray= new JSONArray();
-                for (String  i:cartids) {
-                    jsonArray.put(i);
-                }*/
-                params.put("userid",userid);
-                params.put("proid",proid);
-
+                params.put("userid", userid);
+                params.put("proid", proid);
                 //  params.p
-
                 return params;
             }
 
@@ -349,42 +286,13 @@ public class CartListBaseAdapter extends BaseAdapter {
                 return params;
             }
         };
-
-
-
-
-
         request.add(rRequest);
-
-
     }
 
-
-
-
-    private class ViewHolder{
-        ImageView image;
-        ImageView cross;
-        TextView title;
-
-        TextView price;
-
-        TextView text;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    private class ViewHolder {
+        ImageView image,cross;
+        TextView title,price,text;
+        CardView mCardView;
     }
 }
 

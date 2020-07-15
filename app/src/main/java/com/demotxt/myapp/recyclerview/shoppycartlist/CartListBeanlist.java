@@ -2,26 +2,27 @@ package com.demotxt.myapp.recyclerview.shoppycartlist;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by apple on 15/03/16.
- */
 public class CartListBeanlist {
     @SerializedName("productImage")
     private String image;
     @SerializedName("title")
     private String title;
     @SerializedName("price")
-    private double price;
+    private float price;
     @SerializedName("productId")
     private  int Id;
+    @SerializedName("description")
+    private String desc;
 
 
 
-    public CartListBeanlist(String image, String title, double price,int id) {
+
+    public CartListBeanlist(String image, String title, float price, int id, String desc) {
         this.image = image;
         this.title = title;
         this.price = price;
         this.Id=id;
+        this.desc = desc;
     }
 
     public String getImage() {
@@ -41,17 +42,19 @@ public class CartListBeanlist {
         this.title = title;
     }
 
-
-
-    public double getPrice() {
+    public float getPrice() {
         return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     public void setId(int id) {
         Id = id;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 }

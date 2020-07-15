@@ -106,7 +106,7 @@ public class Prod_Activity extends AppCompatActivity {
         String Title = intent.getExtras().getString("Title");
         String Description = intent.getExtras().getString("Description");
         String image = intent.getExtras().getString("Thumbnail") ;
-        float pRise=intent.getExtras().getFloat("price");
+        Float pRise =intent.getExtras().getFloat("price");
 
         String strprice=String.valueOf(pRise);
 
