@@ -26,6 +26,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.activity.TabsBasic;
+import com.demotxt.myapp.recyclerview.ownmodels.CheckConnection;
+import com.demotxt.myapp.recyclerview.ownmodels.CustomInternetDialog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -39,6 +41,8 @@ public class CatWomen_Fragment extends Fragment {
     private RecyclerView mRecyclerView;
     private CatWomen_Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    CheckConnection connection;
+    CustomInternetDialog dialog;
 
     List<CatWomen> ProdWomen;
 
@@ -52,6 +56,14 @@ public class CatWomen_Fragment extends Fragment {
         View rootview =  inflater.inflate(R.layout.fragment_cat_women_, container, false);
 
         mRecyclerView = rootview.findViewById(R.id.Rv_CatWomen);
+        connection=new CheckConnection(getActivity());
+        dialog=new CustomInternetDialog(getActivity());
+
+        boolean is_connected=connection.CheckConnection();
+        if(!is_connected)
+        {
+            dialog.showCustomDialog();
+        }
 
         ProdWomen = new ArrayList<>();
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -226,10 +227,17 @@ public class HomeFragment extends Fragment {
         myAdapter = new RecyclerViewAdapter(getActivity(), list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         //  myrv.setLayoutManager(new LinearLayoutManager(getActivity()));
+try {
+    myrv.setLayoutManager(layoutManager);
 
-        myrv.setLayoutManager(layoutManager);
-        myrv.setAdapter(myAdapter);
+    myrv.setAdapter(myAdapter);
 
+  //  myrv.wait();
+
+}catch (Exception e)
+{
+    Log.e("Error", " "+e.getMessage());
+}
     }
 
     public void setrecycletwo() {

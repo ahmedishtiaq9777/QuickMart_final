@@ -2,9 +2,9 @@
 <resources>
     <string name="app_name">QuickMart</string>
 
-    <string name="txt_profile_history">آرڈر کی تاریخ</string>
+    <string name="txt_profile_history">آپکے کیے گے آرڈر</string>
     <string name="txt_profile_rate">ہمیں شرح دیں</string>
-    <string name="txt_profile_share">بانٹیں</string>
+    <string name="txt_profile_share">ایپ شیئر کریں</string>
     <string name="pref_title_name">نام</string>
     <string name="pref_title_email">ای میل</string>
     <string name="pref_title_phone">فون نمبر</string>
@@ -21,9 +21,10 @@
     <string name="signin">سائن ان</string>
     <string name="signup">">سائن اپ</string>
     <string name="Shops">دکانیں</string>
-    <string name="Recommended">تجویز کردہ</string>
-    <string name="Trending">رجحان</string>
+    <string name="Recommended">آپکی پسند کے مطابق</string>
+    <string name="Trending">زیادہ بکنے والی</string>
     <string name="btn_edit_profile">معلومات کو تبدیل کریں</string>
+    <string name="logout">لاگ آوٹ</string>
     <string name="Exit">باہر نکلیں</string>
     <string name="Favourite">پسندیدہ</string>
     <string name="Setting">سیٹنگ</string>
@@ -43,7 +44,7 @@
     <string name="navCart">ٹوکری</string>
     <string name="contactdetail">رابطہ کی تفصیل</string>
     <string name="shippingAdd">شپنگ ایڈریس</string>
-    <string name="Reload">دوبارہ لوڈ کریں</string>
+    <string name="Reload">دوبارہ کوشش کریں</string>
     <string name="country_prompt">ایک ملک کا انتخاب کریں</string>
     <string name="error_name">غلط نام</string>
     <string name="error_email">غلط نام</string>
@@ -51,6 +52,13 @@
     <string name="error_address">غلط نام</string>
     <string name="error_zip">غلط نام</string>
     <string name="error_state">غلط نام</string>
+    <string name="hint_of_province">صوبہ لکھیں</string>
+    <string name="hint_of_zipcode">زپ کورڈ</string>
+    <string name="cash_on_dilivery">کیش آن ڈلیوری</string>
+    <string name="pay_with_card">کارڈ سے پیمنٹ</string>
+    <string name="Done">ٹھیک ہے</string>
 
+
+    <string name="short_lorem_ipsum">براہ کرم اپنا انٹرنیٹ کنکشن چیک کریں</string>
 
 </resources>

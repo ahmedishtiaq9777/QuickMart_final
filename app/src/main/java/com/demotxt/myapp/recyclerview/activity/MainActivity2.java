@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -34,14 +35,30 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         CheckConnection();
 
         //To Check Internet Connection
-        if (Check == 1) {
-            setContentView(R.layout.activitymain2);
-        } else {
-            Intent intent = new Intent(getApplicationContext(), Error_Screen_Activity.class);
+        if (Check == 1){
+        setContentView(R.layout.activitymain2);
+        }
+        else {
+            finish();
+           // Intent intent = new Intent(getApplicationContext(),Error_Screen_Activity.class);
+            Intent intent = new Intent(MainActivity2.this,Error_Screen_Activity.class);
             startActivity(intent);
         }
 
-        initToolbar();
+        try {
+            initToolbar();
+        }catch (Exception e)
+        {
+
+        }
+
+
+
+
+           // Toast.makeText(getApplicationContext(),"error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+
+
+
 
         try {
             Intent i = getIntent();
@@ -49,53 +66,70 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
             if (code == 5) {
                 Toast.makeText(getApplicationContext(), "Product Added to Cart", Toast.LENGTH_SHORT).show();
             }
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            Log.i("ExceptionMainActivity2",e.getMessage());
         }
 
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
+try {
+    navView.setOnNavigationItemSelectedListener(this);
 
-        navView.setOnNavigationItemSelectedListener(this);
-
-        loadFragment(new HomeFragment());
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-
+     loadFragment(new HomeFragment(),"homestack");
+    // Passing each menu ID as a set of Ids because each
+    // menu should be considered as top level destinations.
+}catch (Exception e)
+{
+    Toast.makeText(getApplicationContext(),"Error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
+}
     }
 
 
-    public boolean loadFragment(Fragment fragment) {
-        if (fragment != null) {
+
+    public boolean loadFragment(Fragment fragment,String stackname) {
+        if (fragment != null && !stackname.equals("homestack")) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragmentcontainer, fragment).addToBackStack(null)
                     .commit();
             return true;
+        }else if(stackname.equals("homestack"))
+        {  getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmentcontainer, fragment)
+                .commit();
+            return true;
         }
         return false;
     }
 
+
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int op = 0;
-
+String backstackname=null;
         Fragment fragment = null;
         switch (menuItem.getItemId()) {
             case R.id.nav_home:
                 fragment = new HomeFragment();
+                backstackname="homestack";
                 break;
             case R.id.nav_favourite:
                 fragment = new FavoriteFragment();
+                backstackname="favstack";
                 break;
             case R.id.nav_cart:
                 fragment = new CartFragment();
+                backstackname="cartstack";
                 break;
 
             case R.id.nav_acc:
                 if (getloginprefference() == true) {
                     fragment = new ProfileFragment();
+                    backstackname="profilestack";
                     break;
                 } else {
 
@@ -105,7 +139,7 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         }
 
         if (op != 1)
-            return loadFragment(fragment);
+            return loadFragment(fragment,backstackname);
         return false;
     }
 
@@ -125,24 +159,28 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
     }
 
     //Internet Connection Check
-    public void CheckConnection() {
+    public void CheckConnection(){
+try {
+    ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+    NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
 
-        ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
-
-        if (null != activeNetwork) {
-            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
-                Toast.makeText(this, "Wifi On", Toast.LENGTH_SHORT).show();
-                Check = 1;
-            } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
-                Toast.makeText(this, "Mobile Data On", Toast.LENGTH_SHORT).show();
-                Check = 1;
-            } else {
-                Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
-                Check = 0;
-            }
-
+    if (null != activeNetwork) {
+        if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
+            Toast.makeText(this, "Wifi On", Toast.LENGTH_SHORT).show();
+            Check = 1;
+        } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
+            Toast.makeText(this, "Mobile Data On", Toast.LENGTH_SHORT).show();
+            Check = 1;
+        } else {
+            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            Check = 0;
         }
+
+    }
+}catch (Exception e)
+{
+    Toast.makeText(getApplicationContext(), "error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
+}
     }
 
     private void initToolbar() {

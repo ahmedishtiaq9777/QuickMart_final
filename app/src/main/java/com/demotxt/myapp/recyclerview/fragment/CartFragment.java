@@ -21,7 +21,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.R;
+import com.demotxt.myapp.recyclerview.activity.Login;
+import com.demotxt.myapp.recyclerview.activity.Prod_Activity;
 import com.demotxt.myapp.recyclerview.activity.Shipping;
+import com.demotxt.myapp.recyclerview.ownmodels.CheckConnection;
+import com.demotxt.myapp.recyclerview.ownmodels.CustomInternetDialog;
 import com.demotxt.myapp.recyclerview.shoppycartlist.CartListBaseAdapter;
 import com.demotxt.myapp.recyclerview.shoppycartlist.CartListBeanlist;
 import com.google.gson.Gson;
@@ -50,22 +54,46 @@ public class CartFragment extends Fragment  {
 
     private List<CartListBeanlist> Bean;
     private CartListBaseAdapter baseAdapter;
-    public Set<String> cartids;
-    private SharedPreferences cartprefs;
-    private SharedPreferences.Editor cartprefeditor;
+   // public Set<String> cartids;
+   // private SharedPreferences cartprefs;
+    //private SharedPreferences.Editor cartprefeditor;
     private Button pay;
+    private CheckConnection connection;
+    private CustomInternetDialog dialog;
+    private SharedPreferences  loginpref;
+    //private SharedPreferences.Editor  loginprefeditor;
+    private String  userid;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_cart, container, false);
         listview = (ListView) view.findViewById(R.id.listview);
-        cartids=new HashSet<String>();
-        cartprefs=getContext().getSharedPreferences("cartprefs",MODE_PRIVATE);
-        cartprefeditor=cartprefs.edit();
-        cartids=cartprefs.getStringSet("cartids",cartids);
+
+
+        connection=new CheckConnection(getActivity());
+        dialog=new CustomInternetDialog(getActivity());
+
+        boolean is_connected=connection.CheckConnection();
+        if(!is_connected)
+        {
+            dialog.showCustomDialog();
+        }
+        loginpref = getActivity().getSharedPreferences("loginpref", MODE_PRIVATE);
+       // loginprefeditor = loginpref.edit();
+
+        userid=  String.valueOf(loginpref.getInt("userid", 0));
+       /* if(userid.equals(0))
+        {
+            Intent login=new Intent(getActivity(), Login.class);
+            startActivity(login);
+        }*/
+      //  cartids=new HashSet<String>();
+     //   cartprefs=getContext().getSharedPreferences("cartprefs",MODE_PRIVATE);
+     //   cartprefeditor=cartprefs.edit();
+      //  cartids=cartprefs.getStringSet("cartids",cartids);
         Bean = new ArrayList<>();
-        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getproductswithproId");
+        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/LoadUserCartProducts");
 
         pay=(Button)view.findViewById(R.id.pay);
         pay.setOnClickListener(new View.OnClickListener() {
@@ -146,11 +174,11 @@ public class CartFragment extends Fragment  {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                JSONArray jsonArray= new JSONArray();
+                /*JSONArray jsonArray= new JSONArray();
                 for (String  i:cartids) {
                     jsonArray.put(i);
-                }
-                params.put("idsarray",jsonArray.toString());
+                }*/
+                params.put("userid",userid);
 
                 //  params.p
 
@@ -175,7 +203,8 @@ public class CartFragment extends Fragment  {
     private  void setimageurl(){
         int n = 0;
         for (CartListBeanlist i : Bean) {
-            i.setImage("http://ahmedishtiaq9778-001-site1.ftempurl.com" + i.getImage());
+          //  http://ahmedishtiaq1997-001-site1.ftempurl.com/
+            i.setImage("http://ahmedishtiaq1997-001-site1.ftempurl.com" + i.getImage());
             // list.remove(n);
             Bean.set(n,i);
             n++;

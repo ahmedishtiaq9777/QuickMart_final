@@ -19,6 +19,8 @@ import com.demotxt.myapp.recyclerview.CategoryFragments.CatKids_Fragment;
 import com.demotxt.myapp.recyclerview.CategoryFragments.CatMen_Fragment;
 import com.demotxt.myapp.recyclerview.CategoryFragments.CatWomen_Fragment;
 import com.demotxt.myapp.recyclerview.R;
+import com.demotxt.myapp.recyclerview.ownmodels.CheckConnection;
+import com.demotxt.myapp.recyclerview.ownmodels.CustomInternetDialog;
 import com.demotxt.myapp.recyclerview.utils.Tools;
 import com.google.android.material.tabs.TabLayout;
 
@@ -30,11 +32,27 @@ public class TabsBasic extends AppCompatActivity {
     private ViewPager view_pager;
     private TabLayout tab_layout;
     private int userid;
+    CustomInternetDialog dialog;
+    CheckConnection connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabs_basic);
+        //initialize both
+      /*  dialog=new CustomInternetDialog(TabsBasic.this);
+        connection=new CheckConnection(TabsBasic.this);
+        //check connection
+        boolean is_connected=connection.CheckConnection();
+        if(!is_connected)
+        {
+            dialog.showCustomDialog();
+
+
+
+
+        }*/
+
         Intent i = getIntent();
         userid = i.getExtras().getInt("sellerid");
         // userid=i.getIntExtra("sellerid",0); this
@@ -128,14 +146,17 @@ public class TabsBasic extends AppCompatActivity {
 
             switch (position) {
                 case 0:
+
                     frag = new CatMen_Fragment();
 
                     break;
                 case 1:
+
                     frag = new CatWomen_Fragment();
 
                     break;
                 case 2:
+
                     frag = new CatKids_Fragment();
 
                     break;

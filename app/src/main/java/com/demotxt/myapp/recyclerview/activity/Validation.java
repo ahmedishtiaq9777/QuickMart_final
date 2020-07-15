@@ -16,7 +16,8 @@ public class Validation {
     }
     public boolean email(String email){
 
-        String emailpattern = "[a-zA-Z0-9._-]+@[a-z]+.[a-z]+";
+       // String emailpattern = "[a-zA-Z0-9._-]+@[a-z]+.[a-z]+";
+        String emailpattern = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
         if (email.matches(emailpattern))
         {
             return true;

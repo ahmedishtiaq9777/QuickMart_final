@@ -125,7 +125,8 @@ public class Login extends AppCompatActivity {
                 try {
 
                     final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-
+                    // String url = "http:// 192.168.10.13:64077/api/login";
+                    //String url="https://api.myjson.com/bins/kp9wz";
                     String url = "http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/login";
 
 
@@ -152,13 +153,30 @@ public class Login extends AppCompatActivity {
                                             saveloginPrefference(userid);
                                             Intent i = getIntent();
                                             int pid = -1;
+                                            boolean login_from_profile=false;
+                                            try{
+                                                pid = i.getExtras().getInt("proid");
+                                            }catch (Exception e)
+                                            {
+                                                Log.i("Came from Profile","login through profile fragment");
+                                                Log.i("Exception",e.getMessage());
+                                            }
+                                            try{
+                                                login_from_profile=i.getExtras().getBoolean("loginfromprofile");
+                                            }catch (Exception e)
+                                            {
+                                                Log.i("ProdActivity","login through ProdActivity");
+                                                Log.i("Exception",e.getMessage());
+                                            }
 
-                                            pid = i.getExtras().getInt("proid");
                                             if (pid != -1) {
                                                 AddToCart(pid);
                                                 // finish();
                                                 Intent mainactivity2 = new Intent(Login.this, MainActivity2.class);
                                                 mainactivity2.putExtra("code", 5);
+                                                startActivity(mainactivity2);
+                                            }else if(login_from_profile)
+                                            { Intent mainactivity2 = new Intent(Login.this, MainActivity2.class);
                                                 startActivity(mainactivity2);
                                             }
 

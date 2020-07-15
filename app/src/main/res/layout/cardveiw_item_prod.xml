@@ -23,7 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="170dp"
             android:scaleType="centerCrop"
-            android:background="#2d2d2d"/>
+            android:background="#2d2d2d"
+            android:src="@drawable/loadingbackgroundd"/>
 
             <ImageView
                 android:layout_width="wrap_content"
