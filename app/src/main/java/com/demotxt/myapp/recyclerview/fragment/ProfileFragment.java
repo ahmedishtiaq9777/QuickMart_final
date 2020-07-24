@@ -30,9 +30,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.Fragment;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -63,6 +66,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import butterknife.BindView;
+
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -73,18 +78,20 @@ public class ProfileFragment extends Fragment {
 
     TextView username;
     ImageView phtotimage;
-    TextView lang;
-    MaterialRippleLayout logout;
-    MaterialRippleLayout btn_order_history, btn_share, btn_privacy, language, fav, exit,login,signup;
+    TextView login, signup;
+    TextView logout;
+    CardView btn_order_history, btn_privacy, dark, language,setting, fav,cart, exit;
     LinearLayout lyt_root;
-    RelativeLayout relativeLayoutfornotlogin,relativeLayoutforloggenin;
+   LinearLayout linearLayoutfornotlogin,linearLayoutforloggenin;
     private SharedPreferences  loginpref;
     SharedPreferences.Editor  loginprefeditor;
+    LottieAnimationView o,s,l,d,f,c,p,e;
     private String userid;
     private boolean islogin;
     StringResponceFromWeb result;
     StringResponceFromWeb result2;
     String filename;
+
     public static final int PICK_PHOTO_FOR_AVATAR = 2;
     public static final int PIC_CROP = 1;
 
@@ -92,18 +99,6 @@ public class ProfileFragment extends Fragment {
     private static final String[] Languages = new String[]{
             "English", "Urdu"
     };
-   /* public  boolean loadsubFragment(Fragment fragment)
-    {
-        if(fragment!=null)
-        {
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.Information,fragment).addToBackStack(null)
-                    .commit();
-            return  true;
-        }
-        return  false;
-    }*/
 
     public boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
@@ -126,41 +121,50 @@ public class ProfileFragment extends Fragment {
 //loadsubFragment(fragment);
        // sharedPref = new SharedPref(getActivity());
 
+      //  ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+
         final View view = inflater.inflate(R.layout.profilefragment, container, false);
 
       //  sharedPref = new SharedPref(getActivity());
 
-        lyt_root = view.findViewById(R.id.lyt_root);
-        if (Config.ENABLE_RTL_MODE) {
-            lyt_root.setRotationY(180);
-        }
+      //  lyt_root = view.findViewById(R.id.lyt_root);
+       // if (Config.ENABLE_RTL_MODE) {
+       //     lyt_root.setRotationY(180);
+       // }
         loginpref = getContext().getSharedPreferences("loginpref", MODE_PRIVATE);
         loginprefeditor=loginpref.edit();
-      userid=String.valueOf(loginpref.getInt("userid",0));
+        userid=String.valueOf(loginpref.getInt("userid",0));
         //txt_user_name = view.findViewById(R.id.txt_user_name);
         //txt_user_email = view.findViewById(R.id.txt_user_email);
         //txt_user_phone = view.findViewById(R.id.txt_user_phone);
         //txt_user_address = view.findViewById(R.id.txt_user_address);
         username=view.findViewById(R.id.username);
-        btn_order_history = view.findViewById(R.id.btn_order_history);
-     phtotimage=view.findViewById(R.id.selectimage);
-        login =view.findViewById(R.id.login);
+        o = view.findViewById(R.id.ORDER);
+        s = view.findViewById(R.id.SETTING);
+        l = view.findViewById(R.id.LANGUAGE);
+        d = view.findViewById(R.id.DARKMODE);
+        f = view.findViewById(R.id.FAVOURITE);
+        c = view.findViewById(R.id.CART);
+        p = view.findViewById(R.id.PRIVACY);
+        e = view.findViewById(R.id.EXIT);
+        btn_order_history = view.findViewById(R.id.OrderHistoryCard);
+        phtotimage=view.findViewById(R.id.selectimage);
         signup=view.findViewById(R.id.signup);
+        language = view.findViewById(R.id.LanguageCard);
+        linearLayoutfornotlogin=(LinearLayout) view.findViewById(R.id.fornotloggedin);
+        linearLayoutforloggenin=(LinearLayout) view.findViewById(R.id.forloggedin);
 
-        lang = view.findViewById(R.id.languagetext);
-         relativeLayoutfornotlogin=(RelativeLayout) view.findViewById(R.id.fornotlogin);
-         relativeLayoutforloggenin=(RelativeLayout)view.findViewById(R.id.forloggedin);
- islogin=loginpref.getBoolean("loggedin",false);
+         islogin=loginpref.getBoolean("loggedin",false);
 if(islogin)
 {
-    relativeLayoutfornotlogin.setVisibility(View.GONE);
-    relativeLayoutforloggenin.setVisibility(View.VISIBLE);
+    linearLayoutfornotlogin.setVisibility(View.GONE);
+    linearLayoutforloggenin.setVisibility(View.VISIBLE);
     btn_order_history.setVisibility(View.VISIBLE);
     GetProfile("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/GetProfile");
 
 }else {
-    relativeLayoutforloggenin.setVisibility(View.GONE);
-    relativeLayoutfornotlogin.setVisibility(View.VISIBLE);
+    linearLayoutforloggenin.setVisibility(View.GONE);
+    linearLayoutfornotlogin.setVisibility(View.VISIBLE);
     btn_order_history.setVisibility(View.GONE);
 }
 
@@ -172,14 +176,14 @@ if(islogin)
         //txt_user_address.setText(sharedPref.getYourAddress());
         //txt_user_phone.setText(sharedPref.getYourPhone());
 
-        login.setOnClickListener(new View.OnClickListener() {
+    /*    login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getActivity(), Login.class);
                 intent.putExtra("loginfromprofile",true);
                 startActivity(intent);
             }
-        });
+        });*/
 signup.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
@@ -203,51 +207,55 @@ logout= view.findViewById(R.id.logout);
 
                 loginprefeditor.remove("userid");
                 loginprefeditor.commit();
-                relativeLayoutforloggenin.setVisibility(View.GONE);
-                relativeLayoutfornotlogin.setVisibility(View.VISIBLE);
+                linearLayoutforloggenin.setVisibility(View.GONE);
+                linearLayoutfornotlogin.setVisibility(View.VISIBLE);
                 btn_order_history.setVisibility(View.GONE);
 
                /* Intent intent = new Intent(getActivity(), UsersettingFragment.class);
-                startActivity(intent);
-*/
+                startActivity(intent);*/
                 ///FragmentTransaction ft=getChildFragmentManager().beginTransaction();
-
-
                 // UsersettingFragment user=new UsersettingFragment();
                 // ft.replace(R.id.lyt_root,user);
             }
         });
 
         //For Order history
-
         btn_order_history.setOnClickListener(new View.OnClickListener() {
+            boolean isAnimated;
             @Override
             public void onClick(View view) {
+                if (!isAnimated){
+                    p.playAnimation();
+                    p.setSpeed(5);
+                    isAnimated=true;}
+                else {
+                    p.cancelAnimation();
+                    isAnimated=false;
+                }
                 Intent intent = new Intent(getActivity(), Order_Activity.class);
                 startActivity(intent);
             }
+
+
         });
 
-        //For Sharing
-        btn_share = view.findViewById(R.id.btn_share);
-        btn_share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String share_text = Html.fromHtml(getResources().getString(R.string.share_app)).toString();
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_TEXT, share_text + "\n\n" + "https://play.google.com/store/apps/details?id=" + getActivity().getPackageName());
-                intent.setType("text/plain");
-                startActivity(intent);
 
-            }
-        });
+
 
         //For Privacy Policy
-        btn_privacy = view.findViewById(R.id.btn_privacy);
+        btn_privacy = view.findViewById(R.id.PrivacyCard);
         btn_privacy.setOnClickListener(new View.OnClickListener() {
+            boolean isAnimated;
             @Override
             public void onClick(View view) {
+                if (!isAnimated){
+                    p.playAnimation();
+                    p.setSpeed(6);
+                    isAnimated=true;}
+                else {
+                    p.cancelAnimation();
+                    isAnimated=false;
+                }
                 String share_text = Html.fromHtml(getResources().getString(R.string.Privacy_Policy)).toString();
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
@@ -257,21 +265,59 @@ logout= view.findViewById(R.id.logout);
             }
         });
 
-        //For Language settings
-        language = view.findViewById(R.id.lang);
-        language.setOnClickListener(new View.OnClickListener() {
+
+        //For  settings
+        setting = view.findViewById(R.id.SettingCard);
+        setting.setOnClickListener(new View.OnClickListener() {
+            boolean isAnimated;
             @Override
             public void onClick(View v) {
+                if (!isAnimated){
+                    s.playAnimation();
+                    isAnimated=true;}
+                else {
+                    s.cancelAnimation();
+                    isAnimated=false;
+                }
+
+            }
+        });
+
+        //For Language settings
+        language = view.findViewById(R.id.LanguageCard);
+        language.setOnClickListener(new View.OnClickListener() {
+            boolean isAnimated;
+            @Override
+            public void onClick(View v) {
+                if (!isAnimated){
+                    l.playAnimation();
+                    l.setSpeed(9);
+                    isAnimated=true;}
+                else {
+                    l.cancelAnimation();
+                    isAnimated=false;
+                }
 
                 showChangeLanguageDialog();
             }
         });
 
-        //For Opening the Favourite Fragment
-        fav = view.findViewById(R.id.favourite);
+        //For Favourite
+        fav = view.findViewById(R.id.FavouriteCard);
         fav.setOnClickListener(new View.OnClickListener() {
+            boolean isAnimated;
             @Override
+
             public void onClick(View v) {
+                if (!isAnimated){
+                    f.playAnimation();
+                    isAnimated=true;
+                }
+                else {
+                    f.cancelAnimation();
+                    isAnimated=false;
+                }
+
                 Fragment fragment = null;
                 fragment = new FavoriteFragment();
                 loadFragment(fragment);
@@ -279,11 +325,60 @@ logout= view.findViewById(R.id.logout);
             }
         });
 
-        //For Exiting the App
-        exit = view.findViewById(R.id.exit);
-        exit.setOnClickListener(new View.OnClickListener() {
+        //For Cart
+        cart = view.findViewById(R.id.CartCard);
+        cart.setOnClickListener(new View.OnClickListener() {
+            boolean isAnimated;
             @Override
             public void onClick(View v) {
+                if (!isAnimated){
+                    c.playAnimation();
+                    isAnimated=true;}
+                else {
+                    c.cancelAnimation();
+                    isAnimated=false;
+                }
+                Fragment fragment = null;
+                fragment = new CartFragment();
+                loadFragment(fragment);
+
+            }
+        });
+
+        //For Darkmode
+        dark= view.findViewById(R.id.DarkModeCard);
+        dark.setOnClickListener(new View.OnClickListener() {
+            boolean isAnimated;
+            @Override
+            public void onClick(View v) {
+                if (!isAnimated){
+                    d.playAnimation();
+                    isAnimated=true;}
+                else {
+                    d.cancelAnimation();
+                    isAnimated=false;
+                }
+                LayoutInflater inflater = getLayoutInflater();
+                final View layout = inflater.inflate(R.layout.toast, (ViewGroup) view.findViewById(R.id.toast_layout_root));
+
+
+            }
+        });
+
+        //For Exiting the App
+        exit = view.findViewById(R.id.ExitCard);
+        exit.setOnClickListener(new View.OnClickListener() {
+            boolean isAnimated;
+            @Override
+            public void onClick(View v) {
+                if (!isAnimated){
+                    e.playAnimation();
+                    e.setSpeed(22);
+                    isAnimated=true;}
+                else {
+                    e.cancelAnimation();
+                    isAnimated=false;
+                }
 
                 System.exit(0);
 
@@ -621,6 +716,7 @@ public  void selectphoto(){
                     jsonArray.put(i);
                 }*/
                 params.put("userid",userid);
+
 
 
                 //  params.p

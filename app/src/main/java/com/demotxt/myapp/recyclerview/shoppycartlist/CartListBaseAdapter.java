@@ -114,11 +114,9 @@ public class CartListBaseAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        fonts1 =  Typeface.createFromAsset(context.getAssets(),
-                "fonts/MavenPro-Regular.ttf");
+        //fonts1 =  Typeface.createFromAsset(context.getAssets(),"fonts/MavenPro-Regular.ttf");
 
-        fonts2 = Typeface.createFromAsset(context.getAssets(),
-                "fonts/MavenPro-Regular.ttf");
+      //  fonts2 = Typeface.createFromAsset(context.getAssets(), "fonts/MavenPro-Regular.ttf");
 
         ViewHolder viewHolder = null;
 

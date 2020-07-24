@@ -15,7 +15,9 @@
         app:lottie_fileName="tick.json"
         app:lottie_autoPlay="true"
         app:lottie_loop="false"
-        android:layout_gravity="center" ></com.airbnb.lottie.LottieAnimationView>
+        android:layout_gravity="center">
+
+    </com.airbnb.lottie.LottieAnimationView>
 
 
     <TextView
@@ -24,7 +26,6 @@
         android:layout_height="match_parent"
         android:text="Added to the cart!"
         android:textColor="@color/colortext"
-        android:gravity="center
-"/>
+        android:gravity="center"/>
 
 </LinearLayout>

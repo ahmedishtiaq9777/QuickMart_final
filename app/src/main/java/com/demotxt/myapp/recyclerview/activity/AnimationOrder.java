@@ -15,7 +15,7 @@ public class AnimationOrder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animation_order);
 
-        new Handler().postDelayed(new Runnable() {
+       new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
