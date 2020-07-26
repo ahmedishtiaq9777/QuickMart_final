@@ -1,21 +1,21 @@
-package com.demotxt.myapp.recyclerview.model;
+package com.demotxt.myapp.recyclerview.ownmodels;
 
 public class OrderViewImg {
-    public int image;
+    public String image;
     public String title;
     public int quantity;
-    public int price;
+    public double price;
 
     public OrderViewImg() {
     }
 
-    public OrderViewImg(int image, String title, int quantity, int price) {
+    public OrderViewImg(String image, String title, int quantity, double price) {
         this.image = image;
         this.title = title;
         this.quantity = quantity;
         this.price = price;
     }
-    public int getImage(){
+    public String getImage(){
         return image;
     }
     public int getQuantity(){
@@ -24,7 +24,7 @@ public class OrderViewImg {
     public String getTitle(){
         return title;
     }
-    public int getPrice(){
+    public double getPrice(){
         return price;
     }
 

@@ -92,6 +92,8 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
                 intent.putExtra("Description",Data1.get(position).getDescription());
                 intent.putExtra("Thumbnail",Data1.get(position).getThumbnail());
                 intent.putExtra("price",Data1.get(position).getPrice());
+
+                Toast.makeText(mContext,"price:"+Data1.get(position).getPrice(),Toast.LENGTH_SHORT).show();
                 intent.putExtra("proid",Data1.get(position).getId());
                 // start the activity
                 mContext.startActivity(intent);

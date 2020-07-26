@@ -12,14 +12,14 @@ public class r3 {
     @SerializedName("productImage")
     private String Thumbnail;
     @SerializedName("price")
-    private double Price;
+    private float Price;
     @SerializedName("productId")
     private  int Id;
 
     public r3() {
     }
 
-    public r3(String title, String category, String description, String thumbnail,double price,int id) {
+    public r3(String title, String category, String description, String thumbnail,float price,int id) {
         Title = title;
         Category = category;
         Description = description;
@@ -45,7 +45,7 @@ public class r3 {
     public String getThumbnail() {
         return Thumbnail;
     }
-    public  String getPrice(){return  String.valueOf(Price);}
+    public  String  getPrice(){return  String.valueOf(Price);}
 
 
     public void setTitle(String title) {

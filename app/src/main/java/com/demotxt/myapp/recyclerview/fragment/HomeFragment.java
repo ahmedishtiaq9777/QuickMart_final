@@ -87,7 +87,7 @@ public class HomeFragment extends Fragment {
 
                 getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getsellers/", 1);
 
-                getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getrecommendedpro/", 2);
+                getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getrecommendedproduct/", 2);
 
                 getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/gettrendingpro/", 3);
 
@@ -97,7 +97,7 @@ public class HomeFragment extends Fragment {
 
         getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getsellers/", 1);
 
-        getconnection("hhttp://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getrecommendedpro/", 2);
+        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getrecommendedproduct/", 2);
 
         getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/gettrendingpro/", 3);
 

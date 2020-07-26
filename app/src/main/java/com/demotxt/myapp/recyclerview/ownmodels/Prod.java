@@ -18,12 +18,12 @@ public class Prod {
     public Prod() {
     }
 
-    public Prod(String title, String category, String description, String thumbnail,double price,int id) {
+    public Prod(String title, String category, String description, String thumbnail,float price,int id) {
         Title = title;
         Category = category;
         Description = description;
         Thumbnail = thumbnail;
-        Price=(float)price;
+        Price=price;
          Id=id;
     }
 
@@ -44,7 +44,7 @@ public class Prod {
     public String getThumbnail() {
         return Thumbnail;
     }
-    public String getPrice(){return  String.valueOf(Price);}
+    public String  getPrice(){return  String.valueOf(Price);}
 
 
     public void setTitle(String title) {
