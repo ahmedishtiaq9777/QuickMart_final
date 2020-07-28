@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -72,6 +73,9 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
         holder.tv_price.setText(String.valueOf(mData.get(position).getPrice()));
         //holder.img_book_thumbnail.setImageResource(mData.get(position).getThumbnail());
         Picasso.get().load(mData.get(position).getThumbnail()).into(holder.img_kids_thumbnail);
+        //For Rating Purposes
+        holder.mRatingBar.setRating(mData.get(position).getRating());
+        //
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,6 +166,7 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
         TextView tv_kids_title,tv_price;
         ImageView img_kids_thumbnail, heart;
         CardView cardView;
+        AppCompatRatingBar mRatingBar;
 
 
         public CatKidsViewHolder(@NonNull View itemView) {
@@ -172,6 +177,8 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
             img_kids_thumbnail = itemView.findViewById(R.id.kids_img_id);
             cardView = itemView.findViewById(R.id.cardview_kids);
             heart = itemView.findViewById(R.id.heart);
+            mRatingBar = itemView.findViewById(R.id.card_RatingBar);
+
         }
     }
 

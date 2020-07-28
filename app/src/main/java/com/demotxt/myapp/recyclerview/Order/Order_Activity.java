@@ -65,7 +65,7 @@ public class Order_Activity extends AppCompatActivity {
         login = getSharedPreferences("loginpref", MODE_PRIVATE);
         Uid = String.valueOf(login.getInt("userid", 0));
         //
-        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/GetOrders", Uid);
+        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/GetOrdersOfUser", Uid);
     }
 
     //Get Connection

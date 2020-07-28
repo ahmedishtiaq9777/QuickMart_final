@@ -63,6 +63,7 @@ public class HomeFragment extends Fragment {
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        ProfileFragment.loadLocale(getContext());
 
         setHasOptionsMenu(true);
 

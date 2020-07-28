@@ -43,13 +43,12 @@ import java.util.Map;
 
 import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
 
-public class Signup extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class Signup extends AppCompatActivity {
 
     TextView signin, signup;
     EditText email, password, userName;
     AwesomeValidation awesomeValidation;
     Spinner spiner;
-    EditText email, password;
     public String selectedaccount;
     //facebook
     private LoginButton mLoginButton;
@@ -221,4 +220,5 @@ public class Signup extends AppCompatActivity implements AdapterView.OnItemSelec
         request.setParameters(parameters);
         request.executeAsync();
     }
-    }
+}
+
