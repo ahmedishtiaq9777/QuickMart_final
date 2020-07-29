@@ -34,7 +34,6 @@ import com.demotxt.myapp.recyclerview.activity.Shipping;
 import com.demotxt.myapp.recyclerview.ownmodels.CheckConnection;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomInternetDialog;
 import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
-import com.demotxt.myapp.recyclerview.shoppycartlist.CartListAdapter2;
 import com.demotxt.myapp.recyclerview.shoppycartlist.CartListBaseAdapter;
 import com.demotxt.myapp.recyclerview.shoppycartlist.CartListBeanlist;
 import com.google.gson.Gson;
