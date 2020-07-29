@@ -1,17 +1,24 @@
 package com.demotxt.myapp.recyclerview.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -26,13 +33,21 @@ import com.demotxt.myapp.recyclerview.activity.Prod_Activity;
 import com.demotxt.myapp.recyclerview.activity.Shipping;
 import com.demotxt.myapp.recyclerview.ownmodels.CheckConnection;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomInternetDialog;
+import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
+import com.demotxt.myapp.recyclerview.shoppycartlist.CartListAdapter2;
 import com.demotxt.myapp.recyclerview.shoppycartlist.CartListBaseAdapter;
 import com.demotxt.myapp.recyclerview.shoppycartlist.CartListBeanlist;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 
+import java.io.Serializable;
+
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -52,7 +67,7 @@ public class CartFragment extends Fragment  {
 
     Typeface fonts1, fonts2;
 
-    private List<CartListBeanlist> Bean;
+  public    List<CartListBeanlist> Bean;
     private CartListBaseAdapter baseAdapter;
    // public Set<String> cartids;
    // private SharedPreferences cartprefs;
@@ -63,6 +78,52 @@ public class CartFragment extends Fragment  {
     private SharedPreferences  loginpref;
     //private SharedPreferences.Editor  loginprefeditor;
     private String  userid;
+    public static  ArrayList<CartListBeanlist> list;
+
+   // private List<String> quntities;
+   /* public BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {           // this hits when ever user click on plus button
+            // Get extra data included in the Intent
+
+          //  quantity = intent.getIntExtra("quantity",0);
+           // position = intent.getIntExtra("position",0);
+            Bundle args = intent.getBundleExtra("allquantitiesbundle");
+try{
+    quntities = (List<String>) args.getSerializable("quantitylist");    // getting  quantities list from bundle in broadcast
+
+}catch (Exception e)
+{
+    Log.i("ERROR",e.getMessage());
+Toast.makeText(getContext(),"error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+}
+
+           int index=0;
+            for (CartListBeanlist item: list) {                                            // assignning quantities fro that list to real cartlistbaselist
+                int tquant=Integer.parseInt(quntities.get(index));
+                item.setQuantity(tquant);
+
+                list.set(index,item);
+                index++;
+            }
+          //  Log.i("On Receive", "UpdatedQuantity: "+quantity);
+            //Log.i("On Receive", "Position: "+position);
+            int i=0;
+            for (String q:quntities) {
+                Log.i("On Receive", "Quantity "+i+": "+q);
+                i++;
+            }
+
+
+
+           // CartListBeanlist cartListBeanlist=list.get(position);
+           // cartListBeanlist.setQuantity(quantity);
+            //list.set(position,cartListBeanlist);
+          //  Toast.makeText(getContext(),"position:"+position+"..quantity:"+quantity,Toast.LENGTH_SHORT).show();
+           // Toast.makeText(MainActivity.this,ItemName +" "+qty ,Toast.LENGTH_SHORT).show();
+        }
+    };*/
+
 
 
     @Override
@@ -70,10 +131,13 @@ public class CartFragment extends Fragment  {
         View view= inflater.inflate(R.layout.fragment_cart, container, false);
         listview = (ListView) view.findViewById(R.id.listview);
 
+      //  LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
+        //        new IntentFilter("custom-message"));
 
         connection=new CheckConnection(getActivity());
         dialog=new CustomInternetDialog(getActivity());
-
+list=new ArrayList<CartListBeanlist>();
+//quntities=new ArrayList<String>();
         boolean is_connected=connection.CheckConnection();
         if(!is_connected)
         {
@@ -92,7 +156,7 @@ public class CartFragment extends Fragment  {
      //   cartprefs=getContext().getSharedPreferences("cartprefs",MODE_PRIVATE);
      //   cartprefeditor=cartprefs.edit();
       //  cartids=cartprefs.getStringSet("cartids",cartids);
-        Bean = new ArrayList<>();
+        Bean = new ArrayList<CartListBeanlist>();
         getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/LoadUserCartProducts");
 
         pay=(Button)view.findViewById(R.id.pay);
@@ -100,7 +164,25 @@ public class CartFragment extends Fragment  {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), Shipping.class);
-                startActivity(i);
+
+               Bundle args = new Bundle();
+
+
+                args.putSerializable("cartlist",(Serializable) list);
+//GsonBuilder builder=new GsonBuilder();
+//Gson gson=builder.create();
+           //     Type listOfTestObject = new TypeToken<List<CartListBeanlist>>(){}.getType();
+             //   String s = gson.toJson(list, listOfTestObject);
+                i.putExtra("bundle",args);
+
+    startActivity(i);
+
+
+
+  //  Toast.makeText(getContext(),"error: "+e.getMessage(),Toast.LENGTH_SHORT).show();
+
+
+
             }
         });
 
@@ -127,12 +209,49 @@ public class CartFragment extends Fragment  {
 
                         // Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
                         try {
-
+                            StringResponceFromWeb result=null;
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
-                            Bean= Arrays.asList(gson.fromJson(response, CartListBeanlist[].class));
-                            setimageurl();
+                            try {
+                                 result = gson.fromJson(response, StringResponceFromWeb.class);
 
+                            }catch (Exception e)
+                            {
+                               // Log.i(" ","User is not Login or have not carted any product");
+                            }
+                            try {
+                                Bean= Arrays.asList(gson.fromJson(response, CartListBeanlist[].class));
+                            }catch (JsonSyntaxException e)
+                            {
+                                Log.i("User not login","user not login or user have not carted any product");
+                            }
+
+if(result==null) {
+    list.addAll(Bean);
+int index=0;
+    for (CartListBeanlist cart:Bean
+         ) {  Log.i("quantities","index "+index+":"+cart.getQuantity());
+         index++;
+
+
+    }
+    index=0;
+    for (CartListBeanlist cart:list
+    ) {  Log.i("quantities","index "+index+":"+cart.getQuantity());
+        index++;
+
+
+    }
+
+    Log.i("Been count", String.valueOf(Bean.size()));
+    Toast.makeText(getContext(), "Beensize:" + Bean.size(), Toast.LENGTH_LONG).show();
+                          /*  for (CartListBeanlist i:  list) {
+                                Log.i("oks", " "+i.getTitle());
+
+                            }*/
+
+
+    setimageurl();
 
                           /*  JSONArray array = new JSONArray(response);
                             for (int i = 0; i < array.length(); i++) {
@@ -146,15 +265,28 @@ public class CartFragment extends Fragment  {
                                 img="http://ahmedishtiaq9778-001-site1.ftempurl.com"+img;
                                 Bean.add(new CartListBeanlist(img,title,price));
                             }*/
+    try{
+    baseAdapter = new CartListBaseAdapter(getActivity(), Bean, 1) {
+    };
 
-                            baseAdapter = new CartListBaseAdapter(getActivity(), Bean,1) {
-                            };
 
-                            listview.setAdapter(baseAdapter);
+    listview.setAdapter(baseAdapter);
+}catch (Exception e)
+{
+    Toast.makeText(getContext(),"error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+}
 
+}
                         } catch (Exception e) {
-                            // Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "error"+e.getMessage(), Toast.LENGTH_LONG).show();
                         }
+
+                        //  Toast.makeText(ShoppyProductListActivity.this, response, Toast.LENGTH_SHORT).show();
+
+
+                        // response
+                        //  Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -169,10 +301,7 @@ public class CartFragment extends Fragment  {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                /*JSONArray jsonArray= new JSONArray();
-                for (String  i:cartids) {
-                    jsonArray.put(i);
-                }*/
+
                 params.put("userid",userid);
 
                 //  params.p

@@ -1,26 +1,48 @@
 package com.demotxt.myapp.recyclerview.adapter;
 
+import android.app.AlertDialog;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.demotxt.myapp.recyclerview.Order.Order_Adapter;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.R;
-import com.demotxt.myapp.recyclerview.model.OrderViewImg;
+import com.demotxt.myapp.recyclerview.activity.Prod_Activity;
+import com.demotxt.myapp.recyclerview.model.Image;
+import com.demotxt.myapp.recyclerview.ownmodels.OrderViewImg;
+import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewAdapter.OrderViewHolder> {
     private List<OrderViewImg> mOrderList;
+    private StringResponceFromWeb result;
 
     public static class OrderViewHolder extends RecyclerView.ViewHolder{
         public ImageView imageView;
+        public ImageView plus,minus;
         public TextView tit;
         public TextView qty;
         public TextView pri;
@@ -28,6 +50,7 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewAdapter.Orde
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView2);
+
             tit = itemView.findViewById(R.id.textTitle);
             qty = itemView.findViewById(R.id.textQty);
             pri = itemView.findViewById(R.id.textPrice);
@@ -48,11 +71,15 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewAdapter.Orde
 
     @Override
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
-        OrderViewImg currentItem = mOrderList.get(position);
-        holder.imageView.setImageResource(currentItem.getImage());
+        final OrderViewImg currentItem = mOrderList.get(position);
+        Picasso.get().load(currentItem.getImage()).into(holder.imageView);
+       // holder.imageView.setImageResource(currentItem.getImage());
         holder.tit.setText(currentItem.getTitle());
         holder.qty.setText(String.valueOf(currentItem.getQuantity()));
         holder.pri.setText(String.valueOf(currentItem.getPrice()));
+
+
+
 
 
 

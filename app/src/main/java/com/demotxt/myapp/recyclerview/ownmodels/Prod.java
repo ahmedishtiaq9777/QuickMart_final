@@ -19,7 +19,7 @@ public class Prod {
     @SerializedName("avgrating")
     private float Rating;
 
-    public Prod(String title, String category, String description, String thumbnail,double price,int id,double rating) {
+    public Prod(String title, String category, String description, String thumbnail,float price,int id,double rating) {
         Title = title;
         Category = category;
         Description = description;

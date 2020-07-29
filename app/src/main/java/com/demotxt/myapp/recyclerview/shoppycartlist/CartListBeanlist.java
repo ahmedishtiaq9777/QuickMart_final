@@ -1,28 +1,46 @@
 package com.demotxt.myapp.recyclerview.shoppycartlist;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class CartListBeanlist {
+import java.io.Serializable;
+
+/**
+ * Created by apple on 15/03/16.
+ */
+public class CartListBeanlist implements Serializable {
     @SerializedName("productImage")
     private String image;
     @SerializedName("title")
     private String title;
     @SerializedName("price")
-    private float price;
+    private double price;
     @SerializedName("productId")
     private  int Id;
-    @SerializedName("description")
-    private String desc;
+    @SerializedName("userQuantity")
+    private int Quantity;
+    @SerializedName("sellerQuantity")
+    private int sellerQuantity;
 
 
 
-
-    public CartListBeanlist(String image, String title, float price, int id, String desc) {
+    public CartListBeanlist(String image, String title, double price,int id,int quantity,int  sellerQuantity) {
         this.image = image;
         this.title = title;
         this.price = price;
         this.Id=id;
-        this.desc = desc;
+        this.Quantity=quantity;
+        this.sellerQuantity=sellerQuantity;
+    }
+
+    public int getSellerQuantity() {
+        return sellerQuantity;
+    }
+
+    public void setSellerQuantity(int sellerQuantity) {
+        this.sellerQuantity = sellerQuantity;
     }
 
     public String getImage() {
@@ -42,19 +60,28 @@ public class CartListBeanlist {
         this.title = title;
     }
 
-    public float getPrice() {
+
+
+    public double getPrice() {
         return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public void setId(int id) {
         Id = id;
     }
 
-    public String getDesc() {
-        return desc;
+    public int getQuantity() {
+        return Quantity;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+
+    public void setQuantity(int quantity) {
+        Quantity = quantity;
     }
+
+
 }
