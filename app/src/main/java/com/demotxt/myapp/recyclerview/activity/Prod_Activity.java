@@ -84,7 +84,7 @@ public class Prod_Activity extends AppCompatActivity {
         LayoutInflater inflater = getLayoutInflater();
         final View layout = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toast_layout_root));//for product added :to make custom toast with tick mark
         // Size Spinner
-        /*     final Spinner spinner1 = (Spinner) findViewById(R.id.sizeSpinner);
+             final Spinner spinner1 = (Spinner) findViewById(R.id.sizeSpinner);
         // Initializing a String Array
         String[] size = new String[]{
                 "Size",
@@ -141,9 +141,8 @@ public class Prod_Activity extends AppCompatActivity {
             }
         });
 
-*/
         // Color Spinner
-        /*    final Spinner spinner2 = (Spinner) findViewById(R.id.colorSpinner);
+            final Spinner spinner2 = (Spinner) findViewById(R.id.colorSpinner);
         // Initializing a String Array
         String[] color = new String[]{
                 "Color",
@@ -198,7 +197,7 @@ public class Prod_Activity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
-        });*/
+        });
         //result=new StringResponseFromWeb();
         cartids = new HashSet<String>();
 
