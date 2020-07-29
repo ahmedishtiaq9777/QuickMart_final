@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -54,7 +53,6 @@ public class CartFragment extends Fragment  {
     Typeface fonts1, fonts2;
 
     private List<CartListBeanlist> Bean;
-    private ArrayList<CartListBeanlist> Send;
     private CartListBaseAdapter baseAdapter;
    // public Set<String> cartids;
    // private SharedPreferences cartprefs;
@@ -95,7 +93,6 @@ public class CartFragment extends Fragment  {
      //   cartprefeditor=cartprefs.edit();
       //  cartids=cartprefs.getStringSet("cartids",cartids);
         Bean = new ArrayList<>();
-        Send = new ArrayList<>();
         getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/LoadUserCartProducts");
 
         pay=(Button)view.findViewById(R.id.pay);
@@ -103,12 +100,9 @@ public class CartFragment extends Fragment  {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), Shipping.class);
-
                 startActivity(i);
-
             }
         });
-
 
        /* for (int i = 0; i < TITLE.length; i++) {
             CartListBeanlist bean = new CartListBeanlist(IMAGE[i], TITLE[i], PRICE[i]);
@@ -138,8 +132,6 @@ public class CartFragment extends Fragment  {
                             Gson gson = builder.create();
                             Bean= Arrays.asList(gson.fromJson(response, CartListBeanlist[].class));
                             setimageurl();
-                            Send.addAll(Bean);
-
 
 
                           /*  JSONArray array = new JSONArray(response);

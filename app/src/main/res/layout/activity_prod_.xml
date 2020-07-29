@@ -85,24 +85,20 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <androidx.appcompat.widget.AppCompatRatingBar
-                        style="@style/Yellow.Small.AppCompatRatingBar.White"
-                        android:layout_width="wrap_content"
+                    <Spinner
+                        android:id="@+id/colorSpinner"
+                        android:layout_width="125dp"
                         android:layout_height="wrap_content"
-                        android:clickable="false"
-                        android:numStars="5"
-                        android:rating="3.5"
-                        android:stepSize="1"
-                        android:theme="@style/Yellow.Small.AppCompatRatingBar.White" />
+                        android:backgroundTint="@color/white"
+                        />
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <Spinner
+                        android:id="@+id/sizeSpinner"
+                        android:layout_width="125dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/spacing_medium"
-                        android:layout_marginStart="@dimen/spacing_medium"
-                        android:text="381,380"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                        android:textColor="@color/grey_10" />
+                        android:backgroundTint="@color/white"
+
+                        />
 
                     <View
                         android:layout_width="0dp"
@@ -157,6 +153,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="monospace"
                         android:text="Description"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/grey_80" />
@@ -299,6 +296,31 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/grey_20" />
+
+
+                <LinearLayout
+                    android:id="@+id/lyt_expand_warranty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_middle"
+                    android:layout_marginEnd="@dimen/spacing_smlarge"
+                    android:layout_marginLeft="?attr/actionBarSize"
+                    android:layout_marginRight="@dimen/spacing_smlarge"
+                    android:layout_marginStart="?attr/actionBarSize"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/spacing_medium"
+                    android:paddingTop="@dimen/spacing_medium"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/invoice_address"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

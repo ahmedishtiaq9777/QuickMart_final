@@ -115,9 +115,9 @@ public class CartListBaseAdapter extends BaseAdapter {
 
         fonts1 = Typeface.createFromAsset(context.getAssets(),
                 "fonts/MavenPro-Regular.ttf");
+        //fonts1 =  Typeface.createFromAsset(context.getAssets(),"fonts/MavenPro-Regular.ttf");
 
-        fonts2 = Typeface.createFromAsset(context.getAssets(),
-                "fonts/MavenPro-Regular.ttf");
+      //  fonts2 = Typeface.createFromAsset(context.getAssets(), "fonts/MavenPro-Regular.ttf");
 
         ViewHolder viewHolder = null;
 
