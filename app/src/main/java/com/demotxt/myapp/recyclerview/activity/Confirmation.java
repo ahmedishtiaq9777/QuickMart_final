@@ -10,6 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,6 +43,8 @@ import static com.demotxt.myapp.recyclerview.fragment.CartFragment.list;
 
 
 public class Confirmation extends AppCompatActivity {
+    private final String CHANNEL_ID = "Notification";
+    private final int  NOTIFICATION_ID = 001;
     private RecyclerView recyclerView;
     private OrderViewAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -193,6 +197,9 @@ SaveOrder("http://ahmedishtiaq1997-001-site1.ftempurl.com/home/SaveOrder",s);
                                     Log.i("Orderconformed ..","Order is Conformed");
                                     Intent i = new Intent(getBaseContext(), AnimationOrder.class);
                                     startActivity(i);
+                                    //notification function
+                                    SetNotification();
+
                                 }
 
 
@@ -247,5 +254,17 @@ SaveOrder("http://ahmedishtiaq1997-001-site1.ftempurl.com/home/SaveOrder",s);
         }
 
 
+    }
+
+    //setting notification
+    public void SetNotification(){
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,CHANNEL_ID);
+        builder.setSmallIcon(R.drawable.logo);
+        builder.setContentTitle("Confirmation");
+        builder.setContentText("Your Order has benn Confirmed..");
+        builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+        notificationManagerCompat.notify(NOTIFICATION_ID,builder.build() );
     }
 }
