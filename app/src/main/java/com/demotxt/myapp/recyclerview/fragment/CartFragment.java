@@ -56,6 +56,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
 
 
 public class CartFragment extends Fragment  {
@@ -156,7 +157,7 @@ list=new ArrayList<CartListBeanlist>();
      //   cartprefeditor=cartprefs.edit();
       //  cartids=cartprefs.getStringSet("cartids",cartids);
         Bean = new ArrayList<CartListBeanlist>();
-        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/LoadUserCartProducts");
+        getconnection(hostinglink +"/Home/LoadUserCartProducts");
 
         pay=(Button)view.findViewById(R.id.pay);
         pay.setOnClickListener(new View.OnClickListener() {
@@ -327,7 +328,7 @@ int index=0;
         int n = 0;
         for (CartListBeanlist i : Bean) {
           //  http://ahmedishtiaq1997-001-site1.ftempurl.com/
-            i.setImage("http://ahmedishtiaq1997-001-site1.ftempurl.com" + i.getImage());
+            i.setImage(hostinglink  + i.getImage());
             // list.remove(n);
             Bean.set(n,i);
             n++;

@@ -56,6 +56,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
+
 public class Prod_Activity extends AppCompatActivity {
 
     private TextView tvtitle, tvdescription, tvcategory, price;
@@ -269,10 +271,10 @@ public class Prod_Activity extends AppCompatActivity {
 
                         try {
 
-                            final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-                            // String url = "http:// 192.168.10.13:64077/api/login";
-                            //String url="https://api.myjson.com/bins/kp9wz";
-                            String url = "http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/AddtoCart";
+    final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+    // String url = "http:// 192.168.10.13:64077/api/login";
+    //String url="https://api.myjson.com/bins/kp9wz";
+    String url = hostinglink +"/Home/AddtoCart";
 
                             StringRequest rRequest = new StringRequest(Request.Method.POST, url,
                                     new Response.Listener<String>() {

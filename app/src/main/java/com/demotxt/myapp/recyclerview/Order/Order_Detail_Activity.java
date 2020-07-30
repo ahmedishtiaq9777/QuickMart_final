@@ -32,6 +32,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
+
 public class Order_Detail_Activity extends AppCompatActivity {
 
     TextView txt_price,txt_status,txt_id,txt_date;
@@ -95,7 +97,7 @@ public class Order_Detail_Activity extends AppCompatActivity {
        // setAdapterRecyclerView();
 
         try{
-            getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/GetOrderItems", id);
+            getconnection(hostinglink +"/Home/GetOrderItems", id);
             //getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getrecommendedpro",id);
 
         }catch (Exception e) {
@@ -190,7 +192,7 @@ public class Order_Detail_Activity extends AppCompatActivity {
    private void setimageurl() {
        int n = 0;
        for (Order_Detail i :mList ) {
-           i.setImage("http://ahmedishtiaq1997-001-site1.ftempurl.com" + i.getImage());
+           i.setImage(hostinglink + i.getImage());
            // list.remove(n);
            mList.set(n, i);
            n++;
