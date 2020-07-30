@@ -98,8 +98,7 @@
                 android:id="@+id/textPrice"
                 android:layout_width="35dp"
                 android:layout_height="19dp"
-                android:layout_marginTop="8dp
-"
+                android:layout_marginTop="8dp"
                 android:selectAllOnFocus="false"
                 android:text="1500"
                 android:textColor="#fff"

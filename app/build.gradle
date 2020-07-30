@@ -50,8 +50,9 @@ dependencies {
     implementation 'com.basgeekball:awesome-validation:4.2'
     implementation 'com.mikhaellopez:circularimageview:4.2.0'
     implementation "com.airbnb.android:lottie:3.4.1"
-
+    implementation 'com.mikhaellopez:circularimageview:4.2.0'
     implementation 'com.facebook.android:facebook-login:[5,6)'
+
 
 
 }

@@ -32,6 +32,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.Fragment;
@@ -117,7 +118,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //selectphoto();
-        loadLocale();
+        loadLocale(getContext());
        // Fragment fragment=null;
            //  fragment=   new ProfileSubFragment();
 //loadsubFragment(fragment);
@@ -128,6 +129,8 @@ public class ProfileFragment extends Fragment {
         final View view = inflater.inflate(R.layout.profilefragment, container, false);
 
       //  sharedPref = new SharedPref(getActivity());
+/*
+        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();*/
 
       //  lyt_root = view.findViewById(R.id.lyt_root);
        // if (Config.ENABLE_RTL_MODE) {
@@ -402,10 +405,10 @@ logout= view.findViewById(R.id.logout);
             @Override
             public void onClick(DialogInterface dialog, int i) {
                 if (i == 0) {
-                    setLocale("en");
+                    setLocale("en",getContext());
                     getActivity().recreate();
                 } else if (i == 1) {
-                    setLocale("ur");
+                    setLocale("ur",getContext());
                     getActivity().recreate();
                 }
                 dialog.dismiss();
@@ -416,23 +419,24 @@ logout= view.findViewById(R.id.logout);
         mDialog.show();
     }
 
-    private void setLocale(String lang) {
+    private  static void setLocale(String lang,Context context) {
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
-        getContext().getResources().updateConfiguration(config, getContext().getResources().getDisplayMetrics());
+        context.getResources().updateConfiguration(config, context.getResources().getDisplayMetrics());
         //saving data in shared preference
 
-        SharedPreferences.Editor editor = getContext().getSharedPreferences("Settings", MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = context.getSharedPreferences("Settings", MODE_PRIVATE).edit();
         editor.putString("My_Lang", lang);
         editor.apply();
     }
 
-    public void loadLocale() {
-        SharedPreferences pref = getContext().getSharedPreferences("Settings", MODE_PRIVATE);
+    public static void loadLocale(Context cX) {
+
+        SharedPreferences pref = cX.getSharedPreferences("Settings", MODE_PRIVATE);
         String lan = pref.getString("My_Lang", "");
-        setLocale(lan);
+        setLocale(lan,cX);
     }
 
 

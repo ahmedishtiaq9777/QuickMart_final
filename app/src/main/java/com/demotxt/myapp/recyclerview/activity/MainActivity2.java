@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.fragment.CartFragment;
@@ -24,16 +25,19 @@ import com.demotxt.myapp.recyclerview.utils.Tools;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity2 extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
     private int Check;
     public  BottomNavigationView navView;
 
+    private  FragmentManager fragmentmanager;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        fragmentmanager=getSupportFragmentManager();
         CheckConnection();
 
         //To Check Internet Connection
@@ -72,14 +76,30 @@ try {
     navView.setOnNavigationItemSelectedListener(this);
 
      loadFragment(new HomeFragment(),"homestack");
-
-
     // Passing each menu ID as a set of Ids because each
     // menu should be considered as top level destinations.
 }catch (Exception e)
 {
     Toast.makeText(getApplicationContext(),"Error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
 }
+
+
+        fragmentmanager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+    @Override
+    public void onBackStackChanged() {
+        StringBuffer messege=null;
+        messege=new StringBuffer("current status of fragment back stack:"+fragmentmanager.getBackStackEntryCount()+"\n");
+        for(int index=(fragmentmanager.getBackStackEntryCount()-1);index>=0;index--)
+        {
+
+            FragmentManager.BackStackEntry entry=fragmentmanager.getBackStackEntryAt(index);
+            messege.append(entry.getName()+"\n");
+
+
+        }
+        Log.i("CALLBACKS",messege.toString());
+    }
+});
     }
 
 
@@ -88,7 +108,7 @@ try {
         if (fragment != null && !stackname.equals("homestack")) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragmentcontainer, fragment).addToBackStack(null)
+                    .replace(R.id.fragmentcontainer, fragment)
                     .commit();
             return true;
         }else if(stackname.equals("homestack"))
@@ -96,13 +116,29 @@ try {
                 .beginTransaction()
                 .replace(R.id.fragmentcontainer, fragment)
                 .commit();
-
             return true;
         }
         return false;
     }
 
+    @Override
+    public void onBackPressed() {
+        Fragment fragment=fragmentmanager.findFragmentById(R.id.fragmentcontainer);
+        if (fragment != null) {
 
+            if(fragment instanceof FavoriteFragment || fragment instanceof CartFragment || fragment instanceof  ProfileFragment) {
+                navView.getMenu().getItem(0).setChecked(true);
+
+            }
+Fragment Homefragment=new HomeFragment();
+loadFragment(Homefragment,"homestack");
+
+        }
+
+       // super.onBackPressed();
+
+       // Fragment fragment= FragmentManager.
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -189,7 +225,7 @@ try {
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Tools.setSystemBarColor(this);
     }
 

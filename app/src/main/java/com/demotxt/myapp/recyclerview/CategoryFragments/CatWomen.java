@@ -15,13 +15,17 @@ public class CatWomen {
     @SerializedName("productId")
     private  int Id;
 
-    public CatWomen(String title, String category, String description, String thumbnail, float price, int id) {
+    @SerializedName("avgrating")
+    private float Rating;
+
+    public CatWomen(String title, String category, String description, String thumbnail, float price, int id,double rating) {
         Title = title;
         Category = category;
         Description = description;
         Thumbnail = thumbnail;
         Price= price;
         Id=id;
+        Rating = (float) rating;
 
     }
 
@@ -43,6 +47,13 @@ public class CatWomen {
         return Thumbnail;
     }
     public  float getPrice(){return Price;}
+    public float getRating() {
+        return  Rating;
+    }
+
+    public void setRating(float rating) {
+        Rating = rating;
+    }
 
 
     public void setTitle(String title) {

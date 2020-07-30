@@ -64,6 +64,7 @@ public class HomeFragment extends Fragment {
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        ProfileFragment.loadLocale(getContext());
 
         setHasOptionsMenu(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().show();
@@ -89,7 +90,7 @@ public class HomeFragment extends Fragment {
 
                 getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getsellers/", 1);
 
-                getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getrecommendedpro/", 2);
+                getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getrecommendedproduct/", 2);
 
                 getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/gettrendingpro/", 3);
 
@@ -99,7 +100,7 @@ public class HomeFragment extends Fragment {
 
         getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getsellers/", 1);
 
-        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getrecommendedpro/", 2);
+        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getrecommendedproduct/", 2);
 
         getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/gettrendingpro/", 3);
 

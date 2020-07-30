@@ -2,8 +2,10 @@ package com.demotxt.myapp.recyclerview.shoppycartlist;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -22,10 +26,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.fragment.CartFragment;
+import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -35,9 +43,11 @@ import java.util.Map;
 import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class CartListBaseAdapter extends BaseAdapter {
+
 
     Context context;
 
@@ -46,11 +56,15 @@ public class CartListBaseAdapter extends BaseAdapter {
     private SharedPreferences favouritepref,loginpref;
 
     private SharedPreferences.Editor favouriteprefeditor;
-    public Set<String> cartids;
-    public Set<String> favids;
-    private String  proid,userid;
-    private int selectionid;
 
+    public Set<String> favids;
+    private String  proid,userid,finalQuantity;
+    private int selectionid;
+    private StringResponceFromWeb result;
+    List<String> quantities,proids;
+    //List<String> seller_quantities;
+
+    StringResponceFromWeb ResultForQuantitySave;
 
 
     private int number = 01;
@@ -64,15 +78,38 @@ public class CartListBaseAdapter extends BaseAdapter {
     public CartListBaseAdapter(Context context, List<CartListBeanlist> bean,int number) {
 
 
+        //  proids= Arrays.asList(new String[bean.size()]);
+        // quantities=Arrays.asList(new String[bean.size()]);
+        //  seller_quantities=Arrays.asList(new String[bean.size()]);
+
+      /*  for(int index=0;index<bean.size();index++)
+        {
+            quantities.set(index,"1");
+        }*/
+
+
+
+        // for (String q:quantities) {
+        //   q
+        //}
+
+
         this.context = context;
 
         selectionid=number;
-        this.BeanTemp=bean;
+       this.BeanTemp=bean;
         initializearray();
-       // this.Bean = bean;
-        cartids=new HashSet<String>();
+     //   this.Bean = bean;
+        int index=0;
+        for (CartListBeanlist i :Bean) {
+            Log.i("proid "+index,":"+i.getQuantity());
+            index++;
 
-      //  cartlistpref=context.getSharedPreferences("cartprefs",MODE_PRIVATE);//get cartpreferences that contains cartitemlist
+        }
+
+
+
+        //  cartlistpref=context.getSharedPreferences("cartprefs",MODE_PRIVATE);//get cartpreferences that contains cartitemlist
         favouritepref=context.getSharedPreferences("favpref",MODE_PRIVATE);
         loginpref = context.getSharedPreferences("loginpref", MODE_PRIVATE);
 
@@ -80,7 +117,7 @@ public class CartListBaseAdapter extends BaseAdapter {
 
         //  cartlistprefeditor=cartlistpref.edit();// this is to add stuff in preferences
         favouriteprefeditor=favouritepref.edit();
-      //  cartids=cartlistpref.getStringSet("cartids",cartids);//get current product ids in cartprefferences
+        //  cartids=cartlistpref.getStringSet("cartids",cartids);//get current product ids in cartprefferences
         favids=favouritepref.getStringSet("ids",favids);
 
 
@@ -114,11 +151,13 @@ public class CartListBaseAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        //fonts1 =  Typeface.createFromAsset(context.getAssets(),"fonts/MavenPro-Regular.ttf");
+        fonts1 =  Typeface.createFromAsset(context.getAssets(),
+                "fonts/MavenPro-Regular.ttf");
 
-      //  fonts2 = Typeface.createFromAsset(context.getAssets(), "fonts/MavenPro-Regular.ttf");
+        fonts2 = Typeface.createFromAsset(context.getAssets(),
+                "fonts/MavenPro-Regular.ttf");
 
-        ViewHolder viewHolder = null;
+        final ViewHolder viewHolder;
 
         if (convertView == null){
             LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -129,18 +168,21 @@ public class CartListBaseAdapter extends BaseAdapter {
 
             viewHolder.image = (ImageView)convertView.findViewById(R.id.image);
             viewHolder.cross = (ImageView)convertView.findViewById(R.id.cross);
+            viewHolder.plus=(ImageView) convertView.findViewById(R.id.plus);
+            viewHolder.minus=(ImageView)convertView.findViewById(R.id.minus);
 
             viewHolder.title = (TextView)convertView.findViewById(R.id.title);
 
             viewHolder.price = (TextView)convertView.findViewById(R.id.price);
 
-            viewHolder.text = (TextView)convertView.findViewById(R.id.text);
+            viewHolder.Quantity = (TextView)convertView.findViewById(R.id.prodQuantity);
+
 
 
 
             viewHolder.title.setTypeface(fonts2);
 
-            viewHolder.text.setTypeface(fonts1);
+            viewHolder.Quantity.setTypeface(fonts1);
             viewHolder.price.setTypeface(fonts2);
 
             convertView.setTag(viewHolder);
@@ -159,12 +201,96 @@ public class CartListBaseAdapter extends BaseAdapter {
 
         final CartListBeanlist bean = (CartListBeanlist)getItem(position);
 
-       // viewHolder.image.setImageResource(bean.getImage());
+        // viewHolder.image.setImageResource(bean.getImage());
         Picasso.get().load(bean.getImage()).into(viewHolder.image);
         viewHolder.title.setText(bean.getTitle());
 
-      String pricestr=String.valueOf(bean.getPrice());
+        String pricestr=String.valueOf(bean.getPrice());
+        String userquantity=String.valueOf(bean.getQuantity());
         viewHolder.price.setText(pricestr);
+        try{
+            viewHolder.Quantity.setText(userquantity);
+
+        }catch (Exception e)
+        {
+            Log.i("sellerQuantity not add","error:"+e.getMessage());
+        }
+
+
+
+
+        viewHolder.plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                proid =  String.valueOf(bean.getId());// get product id from object convert it to string
+              //  Toast.makeText(context,"proid:"+proid,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context,"Position:"+position,Toast.LENGTH_SHORT).show();
+
+                int quantity_on_cart=  Integer.parseInt(viewHolder.Quantity.getText().toString());/// quantity on view
+                if(selectionid==1)
+                {
+                    int Total_pro_quantity= bean.getSellerQuantity();
+                    //            int Total_pro_quantity=Integer.parseInt(seller_quantities.get(position));         ///  Product over all quantity from database
+
+                    if(Total_pro_quantity>=quantity_on_cart+1)
+                    {
+                        quantity_on_cart=quantity_on_cart+1;
+                        ChangeQuantityInCart(quantity_on_cart,bean,position,"Product Added");
+                        /*
+                        String str_quntity_on_cart=String.valueOf(quantity_on_cart);
+                        bean.setQuantity(quantity_on_cart);
+                       CartFragment.list.set(position,bean);
+                       notifyDataSetChanged();
+                     //   viewHolder.Quantity.setText(str_quntity_on_cart);
+                        Log.i("Quantity","Quantity:"+str_quntity_on_cart);
+
+                        SaveQuantityInDb("http://ahmedishtiaq1997-001-site1.ftempurl.com/home/SaveQuantityInCart",str_quntity_on_cart,proid);/// Intent intent = new Intent("custom-message");
+                       */
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    }else {
+                        Toast.makeText(context,"no more product",Toast.LENGTH_SHORT).show();
+                    }
+                    //    String fquantity= GetConnectionforquantity("http://ahmedishtiaq1997-001-site1.ftempurl.com/home/GetProductQuantity",proid,quantity);
+                    /// viewHolder.Quantity.setText(fquantity);
+
+                }
+
+            }
+        });
+        viewHolder.minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                proid =  String.valueOf(bean.getId());
+             //   Toast.makeText(context,"proid:"+proid,Toast.LENGTH_SHORT).show();
+               // Toast.makeText(context,"Position:"+position,Toast.LENGTH_SHORT).show();
+                int quantity_on_cart=  Integer.parseInt(viewHolder.Quantity.getText().toString());
+                if(selectionid==1) {
+                    int Total_pro_quantity = bean.getSellerQuantity();
+                    if(quantity_on_cart>1)
+                    {
+                        quantity_on_cart=quantity_on_cart-1;
+                        ChangeQuantityInCart(quantity_on_cart,bean,position,"Product neglected");
+
+                    }else {
+         //  quantity_on_cart=1;
+                    }
+                }
+
+            }
+        });
 
         // delete element from cartlist
         viewHolder.cross.setOnClickListener(new View.OnClickListener() {
@@ -173,24 +299,22 @@ public class CartListBaseAdapter extends BaseAdapter {
                 try {
                     String strid;
                     proid =     String.valueOf(bean.getId());
-                   if(selectionid==1) {
+                    if(selectionid==1) {
 
-                       getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/home/DeleteProductFromCart");
-
-
+                        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/home/DeleteProductFromCart",proid);
 
 
 
 
+                       //CartFragment.list.remove(position);
 
+                        try{
+                            Bean.remove(position);
+                        }catch (Exception e){
+                            Log.i("error in been remove",":"+e.getMessage());
+                        }
 
-
-
-
-
-
-
-
+                        notifyDataSetChanged();
 
 
 
@@ -198,41 +322,50 @@ public class CartListBaseAdapter extends BaseAdapter {
 
 
 
-                       //cartlistprefeditor.remove("cartids");
-                       //cartlistprefeditor.commit();
-                      //  strid = String.valueOf(proid);
-                      // cartids.remove(strid);
-                      // cartlistprefeditor.putStringSet("cartids", cartids);
-                       //cartlistprefeditor.commit();
-                       Bean.remove(position);
-                       notifyDataSetChanged();
 
-                   }else if(selectionid==2){
-                       favouriteprefeditor.remove("ids");
-                       favouriteprefeditor.commit();
+
+
+
+
+
+
+
+
+
+                        //cartlistprefeditor.remove("cartids");
+                        //cartlistprefeditor.commit();
+                        //  strid = String.valueOf(proid);
+                        // cartids.remove(strid);
+                        // cartlistprefeditor.putStringSet("cartids", cartids);
+                        //cartlistprefeditor.commit();
+
+
+                    }else if(selectionid==2){
+                        favouriteprefeditor.remove("ids");
+                        favouriteprefeditor.commit();
                         strid=String.valueOf(proid);
                         favids.remove(strid);
                         favouriteprefeditor.putStringSet("ids",favids);
                         favouriteprefeditor.putBoolean(strid,false);
-                       favouriteprefeditor.commit();
+                        favouriteprefeditor.commit();
                         Bean.remove(position);
                         notifyDataSetChanged();
-                   }
+                    }
 
                /* for (CartListBeanlist obj:Bean) {
                     Log.i("Item "+obj.getId(), "Title "+obj.getTitle());
                 }*/
-             // CartListBeanlist obj= Bean.get(position);
-               // Toast.makeText(context.getApplicationContext()," Title:"+obj.getTitle(),Toast.LENGTH_SHORT).show();
+                    // CartListBeanlist obj= Bean.get(position);
+                    // Toast.makeText(context.getApplicationContext()," Title:"+obj.getTitle(),Toast.LENGTH_SHORT).show();
 
 
-             //   Toast.makeText(context.getApplicationContext()," position:"+position,Toast.LENGTH_SHORT).show();
-                 //   CartListBaseAdapter.this.notifyAll();
+                    //   Toast.makeText(context.getApplicationContext()," position:"+position,Toast.LENGTH_SHORT).show();
+                    //   CartListBaseAdapter.this.notifyAll();
 
 
 
                 }catch (Exception e){
-                   Toast.makeText(context.getApplicationContext()," Error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context.getApplicationContext()," Error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -293,8 +426,8 @@ public class CartListBaseAdapter extends BaseAdapter {
 
 
 
-
-    public  void   getconnection(String url) {
+    // for deleting product
+    public  void   getconnection(String url,final String pid) {
         final RequestQueue request = Volley.newRequestQueue(context);
 
 
@@ -304,7 +437,8 @@ public class CartListBaseAdapter extends BaseAdapter {
                     public void onResponse(String response) {
                         Log.e("Responce on clickCross", "onResponse: "+response );
 
-                        Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+                       // Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+
 
 
 
@@ -320,7 +454,7 @@ public class CartListBaseAdapter extends BaseAdapter {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                       Toast.makeText(context,"Error:"+error.getMessage(),  Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,"Error:"+error.getMessage(),  Toast.LENGTH_SHORT).show();
                         error.printStackTrace();
 
                     }
@@ -334,7 +468,7 @@ public class CartListBaseAdapter extends BaseAdapter {
                     jsonArray.put(i);
                 }*/
                 params.put("userid",userid);
-                params.put("proid",proid);
+                params.put("proid",pid);
 
                 //  params.p
 
@@ -357,17 +491,115 @@ public class CartListBaseAdapter extends BaseAdapter {
 
     }
 
+    // for saving user quantity
+    public void  SaveQuantityInDb(String url, final String Selected_Quantity, final String pid, final String msg){
 
 
+        try{
+
+            final RequestQueue requestQueue = Volley.newRequestQueue(context);
+            // String url = "http:// 192.168.10.13:64077/api/login";
+            //String url="https://api.myjson.com/bins/kp9wz";
+            //    String url = "http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/AddtoCart";
+
+            StringRequest rRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                            GsonBuilder builder=new GsonBuilder();
+                            Gson gson=builder.create();
+                            ResultForQuantitySave=gson.fromJson(response,StringResponceFromWeb.class);
+                            if(ResultForQuantitySave.getresult().equals("SaveSuccessFully"))
+                            {
+                                Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
+                            }else {
+
+                            }
+
+
+
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // error
+                            Log.i("APIERROR", error.getMessage());
+                            Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            ) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("quantity",Selected_Quantity);
+                    params.put("proid",pid);
+                    params.put("userid",userid);
+ /*JSONArray jsonArray1= new JSONArray();
+ JSONArray jsonArray2= new JSONArray();
+
+                for (String  q:quantities) {
+                    jsonArray1.put(q);
+                }
+                    for (String p:proids) {
+                        jsonArray2.put(p);
+                    }
+                    params.put("quantities", jsonArray1.toString());
+                params.put("proids",jsonArray2.toString());
+            params.put("userid",userid);
+            */
+
+
+                    return params;
+                }
+
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Content-Type", "application/x-www-form-urlencoded");
+                    return params;
+                }
+            };
+
+            requestQueue.add(rRequest);
+
+
+        }catch (Exception e){
+            Toast.makeText(context, "Error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+
+        }
+
+
+    }
+
+
+public  void  ChangeQuantityInCart(int user_quantity,CartListBeanlist clist,int position,String message){
+    String str_quntity_on_cart=String.valueOf(user_quantity);
+    clist.setQuantity(user_quantity);
+    CartFragment.list.set(position,clist);
+    Bean.set(position,clist);
+    notifyDataSetChanged();
+    //   viewHolder.Quantity.setText(str_quntity_on_cart);
+    Log.i("Quantity","Quantity:"+str_quntity_on_cart);
+
+    SaveQuantityInDb("http://ahmedishtiaq1997-001-site1.ftempurl.com/home/SaveQuantityInCart",str_quntity_on_cart,proid,message);/// Intent intent = new Intent("custom-message");
+
+
+}
 
     private class ViewHolder{
         ImageView image;
+        ImageView plus;
+        ImageView minus;
         ImageView cross;
         TextView title;
 
         TextView price;
 
-        TextView text;
+        TextView Quantity;
+
 
 
 

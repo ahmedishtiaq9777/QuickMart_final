@@ -15,10 +15,9 @@ import android.widget.Toast;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.demotxt.myapp.recyclerview.CategoryFragments.Catkids;
 import com.demotxt.myapp.recyclerview.R;
+import com.demotxt.myapp.recyclerview.activity.Prod_Activity;
 import com.demotxt.myapp.recyclerview.ownmodels.r3;
-import com.demotxt.myapp.recyclerview.activity.r3_Activity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -81,7 +80,7 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(mContext, r3_Activity.class);
+                Intent intent = new Intent(mContext, Prod_Activity.class);
 
                 // passing data to the book activity
                 intent.putExtra("Title", Data2.get(position).getTitle());
@@ -148,7 +147,6 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
             cardView = itemView.findViewById(R.id.cardview_id_r3);
             heart = itemView.findViewById(R.id.heart);
 
-
         }
     }
 
@@ -185,12 +183,11 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
         protected void publishResults(CharSequence constraint, FilterResults results) {
 
             Data2 = new ArrayList<>();
-            Data2.addAll( (List) results.values);
+            Data2.addAll((List) results.values);
             notifyDataSetChanged();
 
         }
     };
-
 
 
 }
