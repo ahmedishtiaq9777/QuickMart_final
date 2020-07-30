@@ -35,6 +35,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
+
 public class Order_Activity extends AppCompatActivity {
 
 
@@ -65,7 +67,7 @@ public class Order_Activity extends AppCompatActivity {
         login = getSharedPreferences("loginpref", MODE_PRIVATE);
         Uid = String.valueOf(login.getInt("userid", 0));
         //
-        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/GetOrdersOfUser", Uid);
+        getconnection(hostinglink +"/Home/GetOrdersOfUser", Uid);
     }
 
     //Get Connection

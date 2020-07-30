@@ -30,11 +30,13 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
     private int Check;
     private  FragmentManager fragmentmanager;
     BottomNavigationView navView;
+    public static String hostinglink;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragmentmanager=getSupportFragmentManager();
+        hostinglink=getResources().getString(R.string.hosting);
         CheckConnection();
 
         //To Check Internet Connection
