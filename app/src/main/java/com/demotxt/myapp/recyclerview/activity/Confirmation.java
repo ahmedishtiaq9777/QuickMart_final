@@ -95,7 +95,7 @@ public class Confirmation extends AppCompatActivity {
 
 /*
         List<OrderViewImg> orderViewImgs = new ArrayList<>();
-        orderViewImgs.add(new OrderViewImg(R.drawable.shoes,"SHirt",2,1000));
+       orderViewImgs.add(new OrderViewImg(R.drawable.shoes,"SHirt",2,1000));
         orderViewImgs.add(new OrderViewImg(R.drawable.shoes,"SHirt",2,1000));
         orderViewImgs.add(new OrderViewImg(R.drawable.shoes,"SHirt",2,1000));
         orderViewImgs.add(new OrderViewImg(R.drawable.shoes,"SHirt",2,1000));
@@ -109,6 +109,9 @@ public class Confirmation extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
+        confirm=(Button)findViewById(R.id.button3);
+        t1 = (TextView)findViewById(R.id.getname);
+        t2 = (TextView)findViewById(R.id.getaddress);
 
 
 

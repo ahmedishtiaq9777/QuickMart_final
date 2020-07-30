@@ -102,6 +102,8 @@ Userid=String.valueOf(loginpref.getInt("userid",0));
 
 
 
+
+
         ship.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,6 +127,7 @@ Userid=String.valueOf(loginpref.getInt("userid",0));
                     Intent i = new Intent(getBaseContext(), Confirmation.class);
                     i.putExtra("getname", name);
                     i.putExtra("getaddress", address);
+
                     Bundle args = new Bundle();
                     args.putSerializable("list",(Serializable)list);
                     i.putExtra("Bundlelist",args);

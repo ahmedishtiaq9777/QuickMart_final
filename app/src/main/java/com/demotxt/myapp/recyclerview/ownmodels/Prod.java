@@ -1,5 +1,7 @@
 package com.demotxt.myapp.recyclerview.ownmodels;
 
+import android.media.Rating;
+
 import com.google.gson.annotations.SerializedName;
 
 public class Prod {
@@ -14,23 +16,24 @@ public class Prod {
     private float Price;
     @SerializedName("productId")
     private int Id;
+    @SerializedName("avgrating")
+    private float Rating;
 
-    public Prod() {
-    }
-
-    public Prod(String title, String category, String description, String thumbnail,float price,int id) {
+    public Prod(String title, String category, String description, String thumbnail,float price,int id,double rating) {
         Title = title;
         Category = category;
         Description = description;
         Thumbnail = thumbnail;
-        Price=price;
+        Price=(float)price;
          Id=id;
+         Rating = (float) rating;
     }
 
 
     public String getTitle() {
         return Title;
     }
+
     public int getId(){return Id;}
 
     public String getCategory() {
@@ -44,8 +47,16 @@ public class Prod {
     public String getThumbnail() {
         return Thumbnail;
     }
-    public String  getPrice(){return  String.valueOf(Price);}
 
+    public String getPrice(){return  String.valueOf(Price);}
+
+    public float getRating() {
+        return  Rating;
+    }
+
+    public void setRating(float rating) {
+        Rating = rating;
+    }
 
     public void setTitle(String title) {
         Title = title;
@@ -62,5 +73,6 @@ public class Prod {
     public void setThumbnail(String thumbnail) {
         Thumbnail = thumbnail;
     }
+
     public  void setPrice(float price){Price=Price;}
 }

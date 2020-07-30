@@ -14,15 +14,19 @@ public class CatMen {
     @SerializedName("price")
     private float Price;
     @SerializedName("productId")
-    private  int Id;
+    private int Id;
 
-    public CatMen(String title, String category, String description, String thumbnail, float price, int id) {
+    @SerializedName("avgrating")
+    private float Rating;
+
+    public CatMen(String title, String category, String description, String thumbnail, float price, int id,double rating) {
         Title = title;
         Category = category;
         Description = description;
         Thumbnail = thumbnail;
-        Price=price;
-        Id=id;
+        Price = price;
+        Id = id;
+        Rating = (float) rating;
 
     }
 
@@ -30,7 +34,10 @@ public class CatMen {
     public String getTitle() {
         return Title;
     }
-    public int getId(){return  Id;}
+
+    public int getId() {
+        return Id;
+    }
 
     public String getCategory() {
         return Category;
@@ -43,13 +50,26 @@ public class CatMen {
     public String getThumbnail() {
         return Thumbnail;
     }
-    public  float getPrice(){return Price;}
+
+    public float getPrice() {
+        return Price;
+    }
+    public float getRating() {
+        return  Rating;
+    }
+
+    public void setRating(float rating) {
+        Rating = rating;
+    }
 
 
     public void setTitle(String title) {
         Title = title;
     }
-    public  void setId(int id){Id=id;}
+
+    public void setId(int id) {
+        Id = id;
+    }
 
     public void setCategory(String category) {
         Category = category;

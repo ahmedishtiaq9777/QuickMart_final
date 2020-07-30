@@ -1,403 +1,485 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="720dp">
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/lyt_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/gradient2"
         android:orientation="vertical">
 
 
-        <RelativeLayout
-            android:visibility="visible"
-            android:id="@+id/forloggedin"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/LoginCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp">
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/gradient2"
+            android:padding="20dp"
+            app:cardCornerRadius="20dp">
 
             <LinearLayout
-
+                android:id="@+id/forloggedin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toStartOf="@+id/logout"
-                android:layout_toLeftOf="@+id/logout"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="visible">
 
                 <com.mikhaellopez.circularimageview.CircularImageView
                     android:id="@+id/selectimage"
-
                     android:layout_width="96dp"
                     android:layout_height="96dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="7dp"
                     android:src="@drawable/ic_photo_camera_black_24dp"
+                    android:visibility="visible"
                     app:civ_border_color="#3f51b5"
                     app:civ_border_width="4dp"
-                      android:visibility="visible"
                     app:civ_shadow="true"
-                    app:civ_shadow_radius="-1in"
-                    app:civ_shadow_color="#3f51b5"/>
-
-
+                    app:civ_shadow_color="#3f51b5"
+                    app:civ_shadow_radius="-1in" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="9dp"
+                    android:paddingLeft="5dp"
                     android:text="Username"
-                    android:textColor="@color/white"
+                    android:textColor="@color/blue_300"
+                    android:textStyle="bold">
 
-                    android:paddingLeft="5dp"></TextView>
-            </LinearLayout>
-
-            <com.balysv.materialripple.MaterialRippleLayout
-                android:id="@+id/logout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:padding="10dp"
-                app:mrl_rippleAlpha="0.2"
-                app:mrl_rippleColor="@color/ripple_color"
-                app:mrl_rippleHover="true"
-                app:mrl_rippleOverlay="true">
+                </TextView>
 
                 <TextView
+                    android:id="@+id/logout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|right"
+                    android:layout_marginRight="8dp"
                     android:text="@string/logout"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    />
-
-            </com.balysv.materialripple.MaterialRippleLayout>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:visibility="gone"
-            android:id="@+id/fornotlogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp">
-
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toStartOf="@+id/signup"
-                android:layout_toLeftOf="@+id/signup"
-                android:orientation="vertical">
-                <com.balysv.materialripple.MaterialRippleLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/login"
-                    app:mrl_rippleAlpha="0.2"
-                    app:mrl_rippleColor="@color/ripple_color">
-                <TextView
-                    android:id="@+id/txt_login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Login"
-
-                    android:textColor="@color/white"
+                    android:textColor="@color/blue_300"
                     android:textSize="18sp"
                     android:textStyle="bold" />
-
-
-
-                </com.balysv.materialripple.MaterialRippleLayout>
-
-
             </LinearLayout>
 
-            <com.balysv.materialripple.MaterialRippleLayout
-                android:id="@+id/signup"
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:id="@+id/fornotloggedin"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:padding="3dp"
-                app:mrl_rippleAlpha="0.2"
-                app:mrl_rippleColor="@color/ripple_color"
-                app:mrl_rippleHover="true"
-                app:mrl_rippleOverlay="true">
+                android:orientation="vertical"
+                android:visibility="gone">
+
 
                 <TextView
+                    android:id="@+id/signup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="9dp"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
                     android:text="@string/signup"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    />
+                    android:textColor="@color/blue_300"
+                    android:textStyle="bold">
 
-            </com.balysv.materialripple.MaterialRippleLayout>
-
-        </RelativeLayout>
-
-
-        <include layout="@layout/include_row_separator" />
-
-        <com.balysv.materialripple.MaterialRippleLayout
-            android:id="@+id/btn_order_history"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            app:mrl_rippleAlpha="0.2"
-            app:mrl_rippleColor="@color/ripple_color"
-            app:mrl_rippleHover="true"
-            app:mrl_rippleOverlay="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_order_history" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginLeft="6dp"
-                    android:text="@string/txt_profile_history"
-                    android:textColor="@color/white" />
-
+                </TextView>
             </LinearLayout>
 
-        </com.balysv.materialripple.MaterialRippleLayout>
 
-        <include layout="@layout/include_row_separator" />
+        </androidx.cardview.widget.CardView>
 
-        <com.balysv.materialripple.MaterialRippleLayout
-            android:id="@+id/favourite"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            app:mrl_rippleAlpha="0.2"
-            app:mrl_rippleColor="@color/ripple_color"
-            app:mrl_rippleHover="true"
-            app:mrl_rippleOverlay="true">
+            android:layout_height="match_parent">
 
-            <LinearLayout
+            <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:columnCount="2"
+                android:rowCount="4">
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_favorite_grey" />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/OrderHistoryCard"
+                    android:layout_width="80dp"
+                    android:layout_height="100dp"
+                    android:layout_row="0"
+                    android:layout_rowWeight="1"
+                    android:layout_column="0"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="5dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="8dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginLeft="6dp"
-                    android:text="@string/Favourite"
-                    android:textColor="@color/white" />
+                    <LinearLayout
+                        android:id="@+id/orderlayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
 
-            </LinearLayout>
-
-        </com.balysv.materialripple.MaterialRippleLayout>
-
-        <include layout="@layout/include_row_separator" />
-
-        <com.balysv.materialripple.MaterialRippleLayout
-            android:id="@+id/setting"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            app:mrl_rippleAlpha="0.2"
-            app:mrl_rippleColor="@color/ripple_color"
-            app:mrl_rippleHover="true"
-            app:mrl_rippleOverlay="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_settings_black_24dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginLeft="6dp"
-                    android:text="@string/Setting"
-                    android:textColor="@color/white" />
-
-            </LinearLayout>
-
-        </com.balysv.materialripple.MaterialRippleLayout>
-
-        <include layout="@layout/include_row_separator" />
-
-        <com.balysv.materialripple.MaterialRippleLayout
-            android:id="@+id/lang"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            app:mrl_rippleAlpha="0.2"
-            app:mrl_rippleColor="@color/ripple_color"
-            app:mrl_rippleHover="true"
-            app:mrl_rippleOverlay="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_language_black_24dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginLeft="6dp"
-                    android:text="@string/Language"
-                    android:textColor="@color/white" />
-
-                <TextView
-                    android:id="@+id/languagetext"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="60dp"
-                    android:textColor="@color/white" />
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/ORDER"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="5dp"
+                            app:lottie_autoPlay="true"
+                            app:lottie_fileName="OrderHistory1.json"
+                            app:lottie_speed="6">
 
 
-            </LinearLayout>
+                        </com.airbnb.lottie.LottieAnimationView>
 
-        </com.balysv.materialripple.MaterialRippleLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="9dp"
+                            android:text="Order History"
+                            android:textColor="@color/blue_300"
+                            android:textStyle="bold">
 
-        <include layout="@layout/include_row_separator" />
+                        </TextView>
 
-        <com.balysv.materialripple.MaterialRippleLayout
-            android:id="@+id/btn_share"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            app:mrl_rippleAlpha="0.2"
-            app:mrl_rippleColor="@color/ripple_color"
-            app:mrl_rippleHover="true"
-            app:mrl_rippleOverlay="true">
+                    </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                </androidx.cardview.widget.CardView>
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_share_grey"
-                    android:textColor="@color/white" />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/SettingCard"
+                    android:layout_width="80dp"
+                    android:layout_height="100dp"
+                    android:layout_row="0"
+                    android:layout_rowWeight="1"
+                    android:layout_column="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="20dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="8dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginLeft="6dp"
-                    android:text="@string/txt_profile_share"
-                    android:textColor="@color/white" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
 
-            </LinearLayout>
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/SETTING"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="7dp"
+                            app:lottie_autoPlay="false"
+                            app:lottie_fileName="Setting.json"
+                            app:lottie_speed="7">
 
-        </com.balysv.materialripple.MaterialRippleLayout>
 
-        <include layout="@layout/include_row_separator" />
+                        </com.airbnb.lottie.LottieAnimationView>
 
-        <com.balysv.materialripple.MaterialRippleLayout
-            android:id="@+id/btn_privacy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            app:mrl_rippleAlpha="0.2"
-            app:mrl_rippleColor="@color/ripple_color"
-            app:mrl_rippleHover="true"
-            app:mrl_rippleOverlay="true">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="9dp"
+                            android:text="@string/Setting"
+                            android:textColor="@color/blue_300"
+                            android:textStyle="bold">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                        </TextView>
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_privacy" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginLeft="6dp"
-                    android:text="@string/txt_profile_privacy"
-                    android:textColor="@color/white" />
+                    </LinearLayout>
 
-            </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
-        </com.balysv.materialripple.MaterialRippleLayout>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/LanguageCard"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_row="1"
+                    android:layout_rowWeight="1"
+                    android:layout_column="0"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="5dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="8dp">
 
-        <include layout="@layout/include_row_separator" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
 
-        <com.balysv.materialripple.MaterialRippleLayout
-            android:id="@+id/exit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            app:mrl_rippleAlpha="0.2"
-            app:mrl_rippleColor="@color/ripple_color"
-            app:mrl_rippleHover="true"
-            app:mrl_rippleOverlay="true">
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/LANGUAGE"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="5dp"
+                            app:lottie_autoPlay="false"
+                            app:lottie_fileName="Language.json"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="9dp"
+                            android:text="@string/Language"
+                            android:textColor="@color/blue_300"
+                            android:textStyle="bold">
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_exit" />
+                        </TextView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginLeft="6dp"
-                    android:text="@string/Exit"
-                    android:textColor="@color/white" />
 
-            </LinearLayout>
+                    </LinearLayout>
 
-        </com.balysv.materialripple.MaterialRippleLayout>
+                </androidx.cardview.widget.CardView>
 
-        <include layout="@layout/include_row_separator" />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/DarkModeCard"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_row="1"
+                    android:layout_rowWeight="1"
+                    android:layout_column="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/DARKMODE"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="7dp"
+                            app:lottie_autoPlay="false"
+                            app:lottie_fileName="DarkMode.json"
+                            app:lottie_speed="6">
+
+
+                        </com.airbnb.lottie.LottieAnimationView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="9dp"
+                            android:text="Dark Mode"
+                            android:textColor="@color/blue_300"
+                            android:textStyle="bold">
+
+                        </TextView>
+
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/FavouriteCard"
+                    android:layout_width="80dp"
+                    android:layout_height="100dp"
+                    android:layout_row="2"
+                    android:layout_rowWeight="1"
+                    android:layout_column="0"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="5dp"
+                    android:clickable="true"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/FAVOURITE"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="5dp"
+                            app:lottie_autoPlay="true"
+                            app:lottie_fileName="Favourite.json"
+                            app:lottie_speed="25">
+
+
+                        </com.airbnb.lottie.LottieAnimationView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="9dp"
+                            android:text="@string/Favourite"
+                            android:textColor="@color/blue_300"
+                            android:textStyle="bold">
+
+                        </TextView>
+
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/CartCard"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_row="2"
+                    android:layout_rowWeight="1"
+                    android:layout_column="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/CART"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            app:lottie_autoPlay="true"
+                            app:lottie_fileName="Cart1.json"
+                            app:lottie_speed="7"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="9dp"
+                            android:text="@string/Cart"
+                            android:textColor="@color/blue_300"
+                            android:textStyle="bold">
+
+                        </TextView>
+
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/PrivacyCard"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_row="3"
+                    android:layout_rowWeight="1"
+                    android:layout_column="0"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="5dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/PRIVACY"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="5dp"
+                            app:lottie_autoPlay="false"
+                            app:lottie_fileName="PrivacyPolicy.json"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="9dp"
+                            android:text="@string/Privacy_Policy"
+                            android:textColor="@color/blue_300"
+                            android:textStyle="bold">
+
+                        </TextView>
+
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/ExitCard"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_row="3"
+                    android:layout_rowWeight="1"
+                    android:layout_column="1"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:id="@+id/EXIT"
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="5dp"
+                            app:lottie_autoPlay="false"
+                            app:lottie_fileName="Exit.json"
+                            app:lottie_speed="5"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="9dp"
+                            android:text="@string/Exit"
+                            android:textColor="@color/blue_300"
+                            android:textStyle="bold">
+
+                        </TextView>
+
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+            </GridLayout>
+        </ScrollView>
+
 
     </LinearLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

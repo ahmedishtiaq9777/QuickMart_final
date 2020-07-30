@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,7 +35,6 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
     private Context mContext;
     private List<Prod> Data1;
     private List<Prod> Data1Full;
-
     private SharedPreferences cartpreferrence;
     private SharedPreferences.Editor cartprefEditor;
     private boolean isblack;
@@ -66,7 +66,6 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
-
         int ID=Data1.get(position).getId();
         String strID=String.valueOf(ID);
         isblack=cartpreferrence.getBoolean(strID,false);
@@ -79,14 +78,13 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
         holder.price.setText(Data1.get(position).getPrice());
        // holder.img_book_thumbnail.setImageResource(Data1.get(position).getThumbnail());
         Picasso.get().load(Data1.get(position).getThumbnail()).into(holder.img_book_thumbnail);
-
-
+        //For Rating Purposes
+        holder.mRatingBar.setRating(Data1.get(position).getRating());
+        //
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(mContext, Prod_Activity.class);
-
                 // passing data to the book activity
                 intent.putExtra("Title",Data1.get(position).getTitle());
                 intent.putExtra("Description",Data1.get(position).getDescription());
@@ -97,7 +95,6 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
                 intent.putExtra("proid",Data1.get(position).getId());
                 // start the activity
                 mContext.startActivity(intent);
-
             }
         });
         holder.heart.setOnClickListener(new View.OnClickListener(){
@@ -128,7 +125,6 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
                     Toast.makeText(mContext,"Error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
                 }
 
-
               /*  if (iscjd=false)
                 {
                     heart black
@@ -149,12 +145,8 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
                     cartprefEditor=
                 }*/
 
-
             }
         } );
-
-
-
 
     }
 
@@ -168,6 +160,7 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
         TextView tv_book_title,price;
         ImageView img_book_thumbnail,heart;
         CardView cardView ;
+        AppCompatRatingBar mRatingBar;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -177,8 +170,7 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
             img_book_thumbnail = itemView.findViewById(R.id.book_img_id);
             cardView = itemView.findViewById(R.id.cardview2);
             heart=itemView.findViewById(R.id.heart);
-
-
+            mRatingBar = itemView.findViewById(R.id.card_RatingBar);
         }
     }
 
