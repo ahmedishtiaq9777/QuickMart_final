@@ -27,11 +27,11 @@
         app:lazyloader_dotsDist="8dp"
         app:lazyloader_dotsRadius="10dp"
         app:lazyloader_firstDelayDur="150"
-        app:lazyloader_firstDotColor="@color/red"
+        app:lazyloader_firstDotColor="@color/blue_300"
         app:lazyloader_interpolator="@android:anim/decelerate_interpolator"
         app:lazyloader_secondDelayDur="300"
-        app:lazyloader_secondDotColor="@color/green"
-        app:lazyloader_thirdDotColor="@color/yellow2" />
+        app:lazyloader_secondDotColor="@color/blue_A400"
+        app:lazyloader_thirdDotColor="@color/blue_500" />
 
 
 </RelativeLayout>

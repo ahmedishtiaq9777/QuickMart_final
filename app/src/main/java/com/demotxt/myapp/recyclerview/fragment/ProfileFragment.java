@@ -121,7 +121,7 @@ public class ProfileFragment extends Fragment {
 //loadsubFragment(fragment);
        // sharedPref = new SharedPref(getActivity());
 
-      //  ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+       ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
         final View view = inflater.inflate(R.layout.profilefragment, container, false);
 

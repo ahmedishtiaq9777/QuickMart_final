@@ -27,6 +27,8 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
     private int Check;
+    public  BottomNavigationView navView;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,14 +54,6 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
 
         }
 
-
-
-
-           // Toast.makeText(getApplicationContext(),"error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
-
-
-
-
         try {
             Intent i = getIntent();
             int code = i.getExtras().getInt("code");
@@ -72,12 +66,14 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         }
 
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView = (BottomNavigationView) findViewById(R.id.nav_view);
 
 try {
     navView.setOnNavigationItemSelectedListener(this);
 
      loadFragment(new HomeFragment(),"homestack");
+
+
     // Passing each menu ID as a set of Ids because each
     // menu should be considered as top level destinations.
 }catch (Exception e)
@@ -100,6 +96,7 @@ try {
                 .beginTransaction()
                 .replace(R.id.fragmentcontainer, fragment)
                 .commit();
+
             return true;
         }
         return false;
@@ -114,19 +111,24 @@ String backstackname=null;
         Fragment fragment = null;
         switch (menuItem.getItemId()) {
             case R.id.nav_home:
+                navView.setBackgroundColor(getResources().getColor(R.color.blue_400));
                 fragment = new HomeFragment();
                 backstackname="homestack";
                 break;
             case R.id.nav_favourite:
+
+                navView.setBackgroundColor(getResources().getColor(R.color.blue_300));
                 fragment = new FavoriteFragment();
                 backstackname="favstack";
                 break;
             case R.id.nav_cart:
+                 navView.setBackgroundColor(getResources().getColor(R.color.blue_200));
                 fragment = new CartFragment();
                 backstackname="cartstack";
                 break;
 
             case R.id.nav_acc:
+                navView.setBackgroundColor(getResources().getColor(R.color.blue_100));
                 if (getloginprefference() == true) {
                     fragment = new ProfileFragment();
                     backstackname="profilestack";

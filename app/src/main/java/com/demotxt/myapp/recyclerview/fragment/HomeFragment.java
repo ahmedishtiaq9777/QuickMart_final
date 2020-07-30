@@ -19,6 +19,7 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -65,6 +66,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         setHasOptionsMenu(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
 
         view = inflater.inflate(R.layout.homefragment, container, false);
 
@@ -97,7 +99,7 @@ public class HomeFragment extends Fragment {
 
         getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getsellers/", 1);
 
-        getconnection("hhttp://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getrecommendedpro/", 2);
+        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getrecommendedpro/", 2);
 
         getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/gettrendingpro/", 3);
 
