@@ -18,6 +18,7 @@ import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.text.Html;
 import android.util.Base64;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,7 @@ import com.demotxt.myapp.recyclerview.activity.Login;
 import com.demotxt.myapp.recyclerview.activity.Signup;
 import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
 import com.demotxt.myapp.recyclerview.sharepref.SharedPref;
+import com.facebook.Profile;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
@@ -69,7 +71,7 @@ import java.util.Map;
 import butterknife.BindView;
 
 import static android.content.Context.MODE_PRIVATE;
-
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class ProfileFragment extends Fragment {
@@ -360,6 +362,11 @@ logout= view.findViewById(R.id.logout);
                 }
                 LayoutInflater inflater = getLayoutInflater();
                 final View layout = inflater.inflate(R.layout.toast, (ViewGroup) view.findViewById(R.id.toast_layout_root));
+                Toast toast = new Toast(getActivity());
+                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                toast.setDuration(Toast.LENGTH_SHORT);
+                toast.setView(layout);
+                toast.show();
 
 
             }
