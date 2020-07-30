@@ -25,19 +25,18 @@ import com.demotxt.myapp.recyclerview.utils.Tools;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity2 extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
-
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
     private int Check;
-    public  BottomNavigationView navView;
-
     private  FragmentManager fragmentmanager;
-
+    BottomNavigationView navView;
+    public static String hostinglink;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragmentmanager=getSupportFragmentManager();
+        hostinglink=getResources().getString(R.string.hosting);
         CheckConnection();
 
         //To Check Internet Connection
@@ -57,6 +56,14 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         {
 
         }
+
+
+
+
+           // Toast.makeText(getApplicationContext(),"error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+
+
+
 
         try {
             Intent i = getIntent();

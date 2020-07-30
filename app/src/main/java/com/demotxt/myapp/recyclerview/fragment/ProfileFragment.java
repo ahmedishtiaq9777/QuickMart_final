@@ -94,7 +94,6 @@ public class ProfileFragment extends Fragment {
     StringResponceFromWeb result;
     StringResponceFromWeb result2;
     String filename;
-
     public static final int PICK_PHOTO_FOR_AVATAR = 2;
     public static final int PIC_CROP = 1;
 
@@ -165,7 +164,7 @@ if(islogin)
     linearLayoutfornotlogin.setVisibility(View.GONE);
     linearLayoutforloggenin.setVisibility(View.VISIBLE);
     btn_order_history.setVisibility(View.VISIBLE);
-    GetProfile("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/GetProfile");
+    GetProfile(hostinglink +"/Home/GetProfile");
 
 }else {
     linearLayoutforloggenin.setVisibility(View.GONE);
@@ -474,7 +473,7 @@ public  void selectphoto(){
    phtotimage.setVisibility(View.VISIBLE);
    try {
        String bitMapToString = BitMapToString(bitmap);
-       UploadProfile("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/UploadProfile", bitMapToString, filename);
+       UploadProfile(hostinglink +"/Home/UploadProfile", bitMapToString, filename);
    }catch (Exception e)
    {
        Toast.makeText(getContext(),"error"+e.getMessage(),Toast.LENGTH_SHORT).show();
@@ -585,7 +584,7 @@ public  void selectphoto(){
 
 
                                   try{
-                                      GetProfile("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/GetProfile");
+                                      GetProfile(hostinglink +"/Home/GetProfile");
                                   }catch (Exception e)
                                   {
                                       Toast.makeText(getContext(),e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -680,7 +679,7 @@ public  void selectphoto(){
 
                                     username.setText(result.getUsername());
                                     String url=  result.getresult();
-                                    url="http://ahmedishtiaq1997-001-site1.ftempurl.com"+url;
+                                    url=hostinglink+url;
                                     Picasso.get().load(url).into(phtotimage);
                                 }catch (Exception e)
                                 {

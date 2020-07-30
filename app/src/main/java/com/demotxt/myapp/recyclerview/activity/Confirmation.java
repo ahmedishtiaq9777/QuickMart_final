@@ -37,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
 import static com.demotxt.myapp.recyclerview.fragment.CartFragment.list;
 
 
@@ -156,7 +157,7 @@ Gson gson=builder.create();
             public void onClick(View view) {
 
 
-SaveOrder("http://ahmedishtiaq1997-001-site1.ftempurl.com/home/SaveOrder",s);
+SaveOrder(hostinglink +"/home/SaveOrder",s);
 
 
             }

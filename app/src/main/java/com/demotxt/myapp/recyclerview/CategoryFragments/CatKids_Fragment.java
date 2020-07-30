@@ -38,6 +38,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
+
 public class CatKids_Fragment extends Fragment {
     private RecyclerView mRecyclerView;
     private CatKids_Adapter mAdapter;
@@ -74,7 +76,7 @@ public class CatKids_Fragment extends Fragment {
         TabsBasic activity = (TabsBasic) getActivity();// get acticity data
         int sid = activity.getuserid();
         String userid = String.valueOf(sid);
-        String url = "http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getprowithsellerid";
+        String url = hostinglink +"/Home/getprowithsellerid";
         getconnection(url, userid);
         //TODO Add Data in The Recycler Views;
 
@@ -148,7 +150,7 @@ public class CatKids_Fragment extends Fragment {
     private void setimageurl() {
         int n = 0;
         for (Catkids i : ProdKids) {
-            i.setThumbnail("http://ahmedishtiaq1997-001-site1.ftempurl.com" + i.getThumbnail());
+            i.setThumbnail(hostinglink  + i.getThumbnail());
             // list.remove(n);
             ProdKids.set(n, i);
             n++;

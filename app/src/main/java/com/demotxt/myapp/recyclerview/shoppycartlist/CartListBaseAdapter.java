@@ -43,6 +43,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 
@@ -301,7 +302,7 @@ public class CartListBaseAdapter extends BaseAdapter {
                     proid =     String.valueOf(bean.getId());
                     if(selectionid==1) {
 
-                        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/home/DeleteProductFromCart",proid);
+                        getconnection(hostinglink +"/home/DeleteProductFromCart",proid);
 
 
 
@@ -584,7 +585,7 @@ public  void  ChangeQuantityInCart(int user_quantity,CartListBeanlist clist,int 
     //   viewHolder.Quantity.setText(str_quntity_on_cart);
     Log.i("Quantity","Quantity:"+str_quntity_on_cart);
 
-    SaveQuantityInDb("http://ahmedishtiaq1997-001-site1.ftempurl.com/home/SaveQuantityInCart",str_quntity_on_cart,proid,message);/// Intent intent = new Intent("custom-message");
+    SaveQuantityInDb(hostinglink +"/home/SaveQuantityInCart",str_quntity_on_cart,proid,message);/// Intent intent = new Intent("custom-message");
 
 
 }

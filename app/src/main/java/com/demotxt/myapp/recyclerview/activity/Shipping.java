@@ -54,6 +54,7 @@ import butterknife.ButterKnife;
 import kotlin.text.Regex;
 
 import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
+import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
 
 public class Shipping extends AppCompatActivity {
 
@@ -121,7 +122,7 @@ Userid=String.valueOf(loginpref.getInt("userid",0));
                     GsonBuilder builder=new GsonBuilder();
                   Gson gson=builder.create();
                   String shipping_detail=gson.toJson(m);
-                  String url="http://ahmedishtiaq1997-001-site1.ftempurl.com/home/SaveShippingDetail";
+                  String url=hostinglink +"/home/SaveShippingDetail";
                   SaveShippingDetail(url,shipping_detail);
                     Intent i = new Intent(getBaseContext(), Confirmation.class);
                     i.putExtra("getname", name);

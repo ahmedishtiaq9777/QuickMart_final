@@ -38,6 +38,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
+
 public class CatMen_Fragment extends Fragment {
     private RecyclerView mRecyclerView;
     private CatMen_Adapter mAdapter;
@@ -74,7 +76,7 @@ public class CatMen_Fragment extends Fragment {
         int sid= activity.getuserid();
         Log.i("Seller id",  String.valueOf(sid));
         String userid=String.valueOf(sid);
-        String url="http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getprowithsellerid";
+        String url=hostinglink +"/Home/getprowithsellerid";
         getconnection(url,userid);
 
 

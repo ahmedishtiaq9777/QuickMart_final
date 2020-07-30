@@ -49,6 +49,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
+
 public class HomeFragment extends Fragment {
     // List<Book> lstBook2;
     List<Book> list;
@@ -61,6 +63,7 @@ public class HomeFragment extends Fragment {
     private RecyclerViewAdapter myAdapter;
     private RecyclerViewProdAdapter myAdapter1;
     private RecyclerView3 myAdapter2;
+
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -88,21 +91,22 @@ public class HomeFragment extends Fragment {
                 Book22 = new ArrayList<>();
                 mTrends = new ArrayList<>();
 
-                getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getsellers/", 1);
 
-                getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getrecommendedproduct/", 2);
+                getconnection(hostinglink+"/Home/getsellers/", 1);
 
-                getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/gettrendingpro/", 3);
+                getconnection(hostinglink+"/Home/getrecommendedproduct/", 2);
+
+                getconnection(hostinglink+"/Home/gettrendingpro/", 3);
 
 
             }
         });
 
-        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getsellers/", 1);
+        getconnection(hostinglink+"/Home/getsellers/", 1);
 
-        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getrecommendedproduct/", 2);
+        getconnection(hostinglink+"/Home/getrecommendedproduct/", 2);
 
-        getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/gettrendingpro/", 3);
+        getconnection(hostinglink+"/Home/gettrendingpro/", 3);
 
 
         v2 = inflater.inflate(R.layout.cardveiw_item_prod, null);
@@ -152,7 +156,7 @@ public class HomeFragment extends Fragment {
                                         list = Arrays.asList(gson.fromJson(response, Book[].class));
                                         int n = 0;
                                         for (Book i : list) {
-                                            i.setThumbnail("http://ahmedishtiaq1997-001-site1.ftempurl.com" + i.getThumbnail());
+                                            i.setThumbnail(hostinglink + i.getThumbnail());
                                             // list.remove(n);
                                             list.set(n, i);
                                             n++;
@@ -166,7 +170,7 @@ public class HomeFragment extends Fragment {
                                         Book22 = Arrays.asList(gson.fromJson(response, Prod[].class));
                                         int n = 0;
                                         for (Prod i : Book22) {
-                                            i.setThumbnail("http://ahmedishtiaq1997-001-site1.ftempurl.com" + i.getThumbnail());
+                                            i.setThumbnail(hostinglink + i.getThumbnail());
                                             // list.remove(n);
                                             Book22.set(n, i);
                                             n++;
@@ -180,7 +184,7 @@ public class HomeFragment extends Fragment {
                                         mTrends = Arrays.asList(gson.fromJson(response, r3[].class));
                                         int n = 0;
                                         for (r3 i : mTrends) {
-                                            i.setThumbnail("http://ahmedishtiaq1997-001-site1.ftempurl.com" + i.getThumbnail());
+                                            i.setThumbnail(hostinglink + i.getThumbnail());
                                             // list.remove(n);
                                             mTrends.set(n, i);
                                             n++;
@@ -270,6 +274,7 @@ try {
             }
             else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE){
                 Toast.makeText(getContext(),"Mobile Data On",Toast.LENGTH_SHORT).show();
+
             }
             else{
                 Intent intent = new Intent(getContext(), Error_Screen_Activity.class);
