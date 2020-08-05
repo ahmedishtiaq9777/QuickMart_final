@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.activity.Prod_Activity;
+import com.demotxt.myapp.recyclerview.ownmodels.Prod;
 import com.demotxt.myapp.recyclerview.ownmodels.r3;
 import com.squareup.picasso.Picasso;
 
@@ -30,8 +31,8 @@ import static android.content.Context.MODE_PRIVATE;
 public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHolder> implements Filterable {
 
     private Context mContext;
-    private List<r3> Data2;
-    private List<r3> Data2Full;
+    private List<Prod> Data2;
+    private List<Prod> Data2Full;
 
     private SharedPreferences cartpreferrence;
     private SharedPreferences.Editor cartprefEditor;
@@ -40,7 +41,7 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
     public Set<String> ids;
 
 
-    public RecyclerView3(Context mContext, List<r3> data) {
+    public RecyclerView3(Context mContext, List<Prod> data) {
         this.mContext = mContext;
         this.Data2 = data;
         Data2Full = new ArrayList<>(Data2);
@@ -72,7 +73,7 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
         }
 
         holder.tv_r3_title.setText(Data2.get(position).getTitle());
-        holder.r3_price.setText(Data2.get(position).getPrice());
+        holder.r3_price.setText(String.valueOf(Data2.get(position).getPrice()));
         // holder.img_book_thumbnail.setImageResource(Data2.get(position).getThumbnail());
         Picasso.get().load(Data2.get(position).getThumbnail()).into(holder.img_r3_thumbnail);
 
@@ -159,14 +160,14 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
     private Filter mDataFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<r3> filteredList = new ArrayList<>();
+            List<Prod> filteredList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
                 filteredList.addAll(Data2Full);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
-                for (r3 item : Data2Full) {
+                for (Prod item : Data2Full) {
                     if (item.getTitle().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }

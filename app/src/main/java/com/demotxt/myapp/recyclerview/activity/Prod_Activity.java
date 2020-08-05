@@ -77,6 +77,7 @@ public class Prod_Activity extends AppCompatActivity {
     private AppCompatRatingBar mRatingBar;
     public String rate;
     public String Feedback;
+     private View layout;
     //
 
     @Override
@@ -85,8 +86,16 @@ public class Prod_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_prod_);
         // For custom toast
         LayoutInflater inflater = getLayoutInflater();
-        final View layout = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toast_layout_root));//for product added :to make custom toast with tick mark
-        // Size Spinner
+        try{
+            layout = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toast_layout_root));//for product added :to make custom toast with tick mark
+
+        }catch (Exception e)
+        {
+            Toast.makeText(getApplicationContext(),"ERROR:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+            Log.i("Prodactivity","error"+e.getMessage());
+
+        }
+               // Size Spinner
              final Spinner spinner1 = (Spinner) findViewById(R.id.sizeSpinner);
         // Initializing a String Array
         String[] size = new String[]{
@@ -436,7 +445,7 @@ catch (Exception e)
                     final String strpid = String.valueOf(proid);
                     int userid = loginpref.getInt("userid", 0);
                     final String struserid = String.valueOf(userid);
-                    String url = "http://ahmedishtiaq1997-001-site1.ftempurl.com/home/SaveFeedback";
+                    String url = hostinglink+"/home/SaveFeedback";
                     //
                     try {
                         final RequestQueue request = Volley.newRequestQueue(getApplicationContext());

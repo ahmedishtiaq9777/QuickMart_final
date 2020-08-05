@@ -16,7 +16,7 @@ public class Prod {
     private float Price;
     @SerializedName("productId")
     private int Id;
-    @SerializedName("avgrating")
+    @SerializedName("avgRating")
     private float Rating;
 
     public Prod(String title, String category, String description, String thumbnail,float price,int id,double rating) {
@@ -24,7 +24,7 @@ public class Prod {
         Category = category;
         Description = description;
         Thumbnail = thumbnail;
-        Price=(float)price;
+        Price=price;
          Id=id;
          Rating = (float) rating;
     }
@@ -48,7 +48,7 @@ public class Prod {
         return Thumbnail;
     }
 
-    public String getPrice(){return  String.valueOf(Price);}
+    public float getPrice(){return  Price;}
 
     public float getRating() {
         return  Rating;
