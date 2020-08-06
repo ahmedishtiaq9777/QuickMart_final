@@ -126,14 +126,7 @@ public class ProfileFragment extends Fragment {
 
         final View view = inflater.inflate(R.layout.profilefragment, container, false);
 
-      //  sharedPref = new SharedPref(getActivity());
-/*
-        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();*/
 
-      //  lyt_root = view.findViewById(R.id.lyt_root);
-       // if (Config.ENABLE_RTL_MODE) {
-       //     lyt_root.setRotationY(180);
-       // }
         loginpref = getContext().getSharedPreferences("loginpref", MODE_PRIVATE);
         loginprefeditor=loginpref.edit();
         userid=String.valueOf(loginpref.getInt("userid",0));
