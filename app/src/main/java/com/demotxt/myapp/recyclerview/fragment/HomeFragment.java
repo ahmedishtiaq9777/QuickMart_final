@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
     // List<Book> lstBook2;
     List<Book> list;
     List<Prod> Book22;
-    List<r3> mTrends;
+    List<Prod> mTrends;
     View view;
     View v2;
     ViewFlipper viewFlipper;
@@ -179,9 +179,9 @@ public class HomeFragment extends Fragment {
                                     //For Trending Recycler View
                                     else if (val == 3) {
                                         //Array for r3 class
-                                        mTrends = Arrays.asList(gson.fromJson(response, r3[].class));
+                                        mTrends = Arrays.asList(gson.fromJson(response, Prod[].class));
                                         int n = 0;
-                                        for (r3 i : mTrends) {
+                                        for (Prod i : mTrends) {
                                             i.setThumbnail(hostinglink + i.getThumbnail());
                                             // list.remove(n);
                                             mTrends.set(n, i);

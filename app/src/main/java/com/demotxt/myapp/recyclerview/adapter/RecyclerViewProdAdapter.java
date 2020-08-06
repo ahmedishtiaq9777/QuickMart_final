@@ -75,7 +75,7 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
         }
 
         holder.tv_book_title.setText(Data1.get(position).getTitle());
-        holder.price.setText(Data1.get(position).getPrice());
+        holder.price.setText(String.valueOf(Data1.get(position).getPrice()));
        // holder.img_book_thumbnail.setImageResource(Data1.get(position).getThumbnail());
         Picasso.get().load(Data1.get(position).getThumbnail()).into(holder.img_book_thumbnail);
         //For Rating Purposes
@@ -91,7 +91,7 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
                 intent.putExtra("Thumbnail",Data1.get(position).getThumbnail());
                 intent.putExtra("price",Data1.get(position).getPrice());
 
-                Toast.makeText(mContext,"price:"+Data1.get(position).getPrice(),Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(mContext,"price:"+Data1.get(position).getPrice(),Toast.LENGTH_SHORT).show();
                 intent.putExtra("proid",Data1.get(position).getId());
                 // start the activity
                 mContext.startActivity(intent);

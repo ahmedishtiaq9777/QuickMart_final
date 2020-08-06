@@ -18,6 +18,7 @@ import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.text.Html;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +52,10 @@ import com.demotxt.myapp.recyclerview.R;
 
 import com.demotxt.myapp.recyclerview.activity.Login;
 import com.demotxt.myapp.recyclerview.activity.Signup;
+import com.demotxt.myapp.recyclerview.ownmodels.CustomDialoag;
+import com.demotxt.myapp.recyclerview.ownmodels.CustomInternetDialog;
 import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
+
 import com.demotxt.myapp.recyclerview.sharepref.SharedPref;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -347,6 +351,19 @@ logout= view.findViewById(R.id.logout);
             boolean isAnimated;
             @Override
             public void onClick(View v) {
+                Toast.makeText(getContext(),"onclick",Toast.LENGTH_SHORT).show();
+
+try{
+
+                    CustomDialoag dialoag = new CustomDialoag(getActivity());
+                    dialoag.showCustomDialog();
+                }catch (Exception e) {
+
+Toast.makeText(getContext(),"error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+Log.i("error in profile","error:"+e.getMessage());
+}
+/*
+
                 if (!isAnimated){
                     d.playAnimation();
                     isAnimated=true;}
@@ -357,6 +374,7 @@ logout= view.findViewById(R.id.logout);
                 LayoutInflater inflater = getLayoutInflater();
                 final View layout = inflater.inflate(R.layout.toast, (ViewGroup) view.findViewById(R.id.toast_layout_root));
 
+*/
 
             }
         });
