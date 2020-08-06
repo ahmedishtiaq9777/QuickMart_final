@@ -1,6 +1,7 @@
 package com.demotxt.myapp.recyclerview.fragment;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,20 +19,17 @@ import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.text.Html;
 import android.util.Base64;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.exifinterface.media.ExifInterface;
@@ -45,16 +43,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.balysv.materialripple.MaterialRippleLayout;
-import com.demotxt.myapp.recyclerview.Config;
 import com.demotxt.myapp.recyclerview.Order.Order_Activity;
 import com.demotxt.myapp.recyclerview.R;
-
-import com.demotxt.myapp.recyclerview.activity.Login;
 import com.demotxt.myapp.recyclerview.activity.Signup;
 import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
-import com.demotxt.myapp.recyclerview.sharepref.SharedPref;
-import com.facebook.Profile;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
@@ -69,10 +61,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import butterknife.BindView;
-
 import static android.content.Context.MODE_PRIVATE;
-import static com.facebook.FacebookSdk.getApplicationContext;
+import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
 
 
 public class ProfileFragment extends Fragment {
@@ -83,6 +73,7 @@ public class ProfileFragment extends Fragment {
     ImageView phtotimage;
     TextView login, signup;
     TextView logout;
+    Dialog popup;
     CardView btn_order_history, btn_privacy, dark, language,setting, fav,cart, exit;
     LinearLayout lyt_root;
    LinearLayout linearLayoutfornotlogin,linearLayoutforloggenin;
@@ -349,6 +340,7 @@ logout= view.findViewById(R.id.logout);
             }
         });
 
+
         //For Darkmode
         dark= view.findViewById(R.id.DarkModeCard);
         dark.setOnClickListener(new View.OnClickListener() {
@@ -362,13 +354,6 @@ logout= view.findViewById(R.id.logout);
                     d.cancelAnimation();
                     isAnimated=false;
                 }
-                LayoutInflater inflater = getLayoutInflater();
-                final View layout = inflater.inflate(R.layout.toast, (ViewGroup) view.findViewById(R.id.toast_layout_root));
-                Toast toast = new Toast(getActivity());
-                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-                toast.setDuration(Toast.LENGTH_SHORT);
-                toast.setView(layout);
-                toast.show();
 
 
             }
@@ -394,6 +379,10 @@ logout= view.findViewById(R.id.logout);
             }
         });
         return view;
+    }
+
+    private void showDarkModeDialog(){
+
     }
 
     private void showChangeLanguageDialog() {

@@ -251,7 +251,8 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="5dp"
                 app:cardCornerRadius="10dp"
-                app:cardElevation="8dp">
+                app:cardElevation="8dp"
+                android:onClick="ShowPopup">
 
                 <LinearLayout
                     android:layout_width="wrap_content"

@@ -152,11 +152,6 @@ public class CartListBaseAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        fonts1 =  Typeface.createFromAsset(context.getAssets(),
-                "fonts/MavenPro-Regular.ttf");
-
-        fonts2 = Typeface.createFromAsset(context.getAssets(),
-                "fonts/MavenPro-Regular.ttf");
 
         final ViewHolder viewHolder;
 
@@ -248,16 +243,6 @@ public class CartListBaseAdapter extends BaseAdapter {
 
                         SaveQuantityInDb("http://ahmedishtiaq1997-001-site1.ftempurl.com/home/SaveQuantityInCart",str_quntity_on_cart,proid);/// Intent intent = new Intent("custom-message");
                        */
-
-
-
-
-
-
-
-
-
-
 
 
 
