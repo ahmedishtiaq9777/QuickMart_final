@@ -15,7 +15,7 @@ public class CatWomen {
     @SerializedName("productId")
     private  int Id;
 
-    @SerializedName("avgrating")
+    @SerializedName("avgRating")
     private float Rating;
 
     public CatWomen(String title, String category, String description, String thumbnail, float price, int id,double rating) {

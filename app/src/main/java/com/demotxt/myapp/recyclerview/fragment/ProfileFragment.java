@@ -19,6 +19,7 @@ import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.text.Html;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,8 @@ import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.Order.Order_Activity;
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.activity.Signup;
+import com.demotxt.myapp.recyclerview.ownmodels.CustomDialoag;
+import com.demotxt.myapp.recyclerview.ownmodels.CustomInternetDialog;
 import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -340,13 +343,25 @@ logout= view.findViewById(R.id.logout);
             }
         });
 
-
         //For Darkmode
         dark= view.findViewById(R.id.DarkModeCard);
         dark.setOnClickListener(new View.OnClickListener() {
             boolean isAnimated;
             @Override
             public void onClick(View v) {
+                Toast.makeText(getContext(),"onclick",Toast.LENGTH_SHORT).show();
+
+try{
+
+                    CustomDialoag dialoag = new CustomDialoag(getActivity());
+                    dialoag.showCustomDialog();
+                }catch (Exception e) {
+
+Toast.makeText(getContext(),"error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+Log.i("error in profile","error:"+e.getMessage());
+}
+/*
+
                 if (!isAnimated){
                     d.playAnimation();
                     isAnimated=true;}
@@ -355,6 +370,7 @@ logout= view.findViewById(R.id.logout);
                     isAnimated=false;
                 }
 
+*/
 
             }
         });
@@ -379,10 +395,6 @@ logout= view.findViewById(R.id.logout);
             }
         });
         return view;
-    }
-
-    private void showDarkModeDialog(){
-
     }
 
     private void showChangeLanguageDialog() {

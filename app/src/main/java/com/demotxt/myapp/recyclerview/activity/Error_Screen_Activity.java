@@ -19,6 +19,7 @@ import com.demotxt.myapp.recyclerview.R;
 //import com.demotxt.myapp.recyclerview.fragment.FragmentConfirmation;
 import com.demotxt.myapp.recyclerview.fragment.HomeFragment;
 //import com.demotxt.myapp.recyclerview.ownmodels.CheckConnection;
+import com.demotxt.myapp.recyclerview.ownmodels.CustomDialoag;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomInternetDialog;
 
 public class Error_Screen_Activity extends AppCompatActivity {
@@ -32,8 +33,11 @@ public class Error_Screen_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_error__screen_);
         try{
+
             dialog=new CustomInternetDialog(Error_Screen_Activity.this);
             dialog.showCustomDialog();
+
+
         }catch (Exception e)
         {
             Toast.makeText(getApplicationContext(),"error:"+e.getMessage(),Toast.LENGTH_SHORT).show();

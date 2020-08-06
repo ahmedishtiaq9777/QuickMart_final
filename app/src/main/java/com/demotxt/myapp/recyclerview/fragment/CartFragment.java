@@ -246,9 +246,13 @@ int index=0;
 
 
     }
-
+try {
     Log.i("Been count", String.valueOf(Bean.size()));
     Toast.makeText(getContext(), "Beensize:" + Bean.size(), Toast.LENGTH_LONG).show();
+}catch (Exception e)
+{
+    Toast.makeText(getContext(),"errorr:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+}
                           /*  for (CartListBeanlist i:  list) {
                                 Log.i("oks", " "+i.getTitle());
 
