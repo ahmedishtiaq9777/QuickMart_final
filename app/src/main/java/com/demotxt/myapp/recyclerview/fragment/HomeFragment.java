@@ -19,6 +19,7 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -69,6 +70,7 @@ public class HomeFragment extends Fragment {
         ProfileFragment.loadLocale(getContext());
 
         setHasOptionsMenu(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
 
         view = inflater.inflate(R.layout.homefragment, container, false);
 

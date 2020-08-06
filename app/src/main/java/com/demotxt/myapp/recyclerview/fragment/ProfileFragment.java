@@ -1,6 +1,7 @@
 package com.demotxt.myapp.recyclerview.fragment;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,14 +25,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.exifinterface.media.ExifInterface;
@@ -45,12 +44,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.balysv.materialripple.MaterialRippleLayout;
-import com.demotxt.myapp.recyclerview.Config;
 import com.demotxt.myapp.recyclerview.Order.Order_Activity;
 import com.demotxt.myapp.recyclerview.R;
-
-import com.demotxt.myapp.recyclerview.activity.Login;
 import com.demotxt.myapp.recyclerview.activity.Signup;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomDialoag;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomInternetDialog;
@@ -71,8 +66,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import butterknife.BindView;
-
 import static android.content.Context.MODE_PRIVATE;
 import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
 
@@ -85,6 +78,7 @@ public class ProfileFragment extends Fragment {
     ImageView phtotimage;
     TextView login, signup;
     TextView logout;
+    Dialog popup;
     CardView btn_order_history, btn_privacy, dark, language,setting, fav,cart, exit;
     LinearLayout lyt_root;
    LinearLayout linearLayoutfornotlogin,linearLayoutforloggenin;
@@ -96,7 +90,6 @@ public class ProfileFragment extends Fragment {
     StringResponceFromWeb result;
     StringResponceFromWeb result2;
     String filename;
-
     public static final int PICK_PHOTO_FOR_AVATAR = 2;
     public static final int PIC_CROP = 1;
 
@@ -126,7 +119,7 @@ public class ProfileFragment extends Fragment {
 //loadsubFragment(fragment);
        // sharedPref = new SharedPref(getActivity());
 
-      //  ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+       ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
         final View view = inflater.inflate(R.layout.profilefragment, container, false);
 
@@ -345,6 +338,7 @@ logout= view.findViewById(R.id.logout);
             }
         });
 
+
         //For Darkmode
         dark= view.findViewById(R.id.DarkModeCard);
         dark.setOnClickListener(new View.OnClickListener() {
@@ -371,8 +365,6 @@ Log.i("error in profile","error:"+e.getMessage());
                     d.cancelAnimation();
                     isAnimated=false;
                 }
-                LayoutInflater inflater = getLayoutInflater();
-                final View layout = inflater.inflate(R.layout.toast, (ViewGroup) view.findViewById(R.id.toast_layout_root));
 
 */
 
@@ -399,6 +391,10 @@ Log.i("error in profile","error:"+e.getMessage());
             }
         });
         return view;
+    }
+
+    private void showDarkModeDialog(){
+
     }
 
     private void showChangeLanguageDialog() {

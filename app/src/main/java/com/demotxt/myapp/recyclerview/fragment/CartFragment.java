@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -129,6 +130,9 @@ Toast.makeText(getContext(),"error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_cart, container, false);
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+
         listview = (ListView) view.findViewById(R.id.listview);
 
       //  LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
