@@ -54,15 +54,22 @@
 
                 </TextView>
                 <TextView
-                    android:id="@+id/logout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|right"
                     android:layout_marginRight="8dp"
                     android:text="@string/logout"
-                    android:textColor="@color/blue_300"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="11sp"
+                    />
+                <ImageView
+                    android:id="@+id/logout"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal|right"
+                    android:layout_marginRight="8dp"
+                    android:src="@drawable/ic_exit"
+                     />
+
             </LinearLayout>
 
 

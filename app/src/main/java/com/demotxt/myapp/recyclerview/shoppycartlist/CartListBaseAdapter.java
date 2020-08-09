@@ -44,7 +44,6 @@ import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class CartListBaseAdapter extends BaseAdapter {
