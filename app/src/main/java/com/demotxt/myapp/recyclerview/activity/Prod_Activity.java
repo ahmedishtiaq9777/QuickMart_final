@@ -64,7 +64,6 @@ public class Prod_Activity extends AppCompatActivity {
     private ImageView img;
     private FloatingActionButton floatingActionButton;
     private SharedPreferences loginpref;
-
     private int proid;
     StringResponceFromWeb result;
     public Set<String> cartids;

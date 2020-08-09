@@ -316,7 +316,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
         //For Darkmode
         dark = view.findViewById(R.id.DarkModeCard);
         dark.setOnClickListener(new View.OnClickListener() {
@@ -360,10 +359,6 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    private void showDarkModeDialog() {
-
-    }
-
     private void showChangeLanguageDialog() {
 
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
@@ -386,7 +381,7 @@ public class ProfileFragment extends Fragment {
         mDialog.show();
     }
 
-    private static void setLocale(String lang, Context context) {
+    private  static void setLocale(String lang,Context context) {
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
