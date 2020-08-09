@@ -389,21 +389,6 @@ try{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         /// cartids.add(strpid);
         ///cartlistprefeditor.remove("cartids");
         ///cartlistprefeditor.commit();

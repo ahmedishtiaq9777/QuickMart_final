@@ -6,8 +6,12 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.demotxt.myapp.recyclerview.R;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class CustomDialoag {
   private   Context context;
@@ -41,6 +45,18 @@ public class CustomDialoag {
 
             }
         });
+       /* ((TextView) dialog.findViewById(R.id.title)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Toast.makeText(getApplicationContext(),  " Clicked", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        */
+
+
 
         dialog.show();
         dialog.getWindow().setAttributes(lp);

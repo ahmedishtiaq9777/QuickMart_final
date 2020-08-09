@@ -199,7 +199,7 @@ list=new ArrayList<CartListBeanlist>();
         return view;
     }
     public  void   getconnection(String url) {
-        final RequestQueue request = Volley.newRequestQueue(getContext());
+        final RequestQueue request = Volley.newRequestQueue(getActivity());
 
 
         StringRequest rRequest = new StringRequest(Request.Method.POST, url,
@@ -282,7 +282,7 @@ try {
 
 }
                         } catch (Exception e) {
-                            Toast.makeText(getContext(), "error"+e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "error"+e.getMessage(), Toast.LENGTH_LONG).show();
                         }
 
                         //  Toast.makeText(ShoppyProductListActivity.this, response, Toast.LENGTH_SHORT).show();

@@ -159,6 +159,8 @@ public class HomeFragment extends Fragment {
                                             list.set(n, i);
                                             n++;
                                         }
+                                        ///algo
+                                        //GetnearByAlgo(list)
                                         //Setting Recycler View 1
                                         setrecycleone();
                                     }
