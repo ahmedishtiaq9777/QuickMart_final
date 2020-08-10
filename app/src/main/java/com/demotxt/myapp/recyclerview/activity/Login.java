@@ -28,6 +28,9 @@ import com.android.volley.toolbox.Volley;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.demotxt.myapp.recyclerview.R;
+import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,6 +59,8 @@ public class Login extends AppCompatActivity {
     private SharedPreferences.Editor cartlistprefeditor;
     private int proid;
     public Set<String> cartids;
+    StringResponceFromWeb result;
+    View layout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -268,7 +273,7 @@ public class Login extends AppCompatActivity {
 
 
 
-    public void AddToCart(final String struserid, final String strpid )
+    public void AddToCart(final String struserid, final String strpid)
     {
         try{
 

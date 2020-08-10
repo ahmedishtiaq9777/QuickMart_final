@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.demotxt.myapp.recyclerview.R;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
+
 
 public class CustomDialoag {
   private   Context context;

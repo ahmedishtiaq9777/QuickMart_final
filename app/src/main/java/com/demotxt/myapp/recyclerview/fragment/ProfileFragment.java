@@ -79,7 +79,7 @@ import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
 
 public class ProfileFragment extends Fragment {
 
-   // private SharedPref sharedPref;
+    // private SharedPref sharedPref;
 
     TextView username;
     ImageView phtotimage;
@@ -97,8 +97,8 @@ public class ProfileFragment extends Fragment {
     StringResponceFromWeb result;
     StringResponceFromWeb result2;
     String filename;
-    public static boolean file_islarge ;
-    public    File file;
+    public static boolean file_islarge;
+    public File file;
 
     public static final int PICK_PHOTO_FOR_AVATAR = 2;
     public static final int PIC_CROP = 1;
@@ -123,7 +123,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //selectphoto();
-        file_islarge=false;
+        file_islarge = false;
         loadLocale(getContext());
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
 
@@ -150,39 +150,37 @@ public class ProfileFragment extends Fragment {
         phtotimage = view.findViewById(R.id.selectimage);
         signup = view.findViewById(R.id.signup);
         language = view.findViewById(R.id.LanguageCard);
-        linearLayoutfornotlogin=(LinearLayout) view.findViewById(R.id.fornotloggedin);
-        linearLayoutforloggenin=(LinearLayout) view.findViewById(R.id.forloggedin);
+        linearLayoutfornotlogin = (LinearLayout) view.findViewById(R.id.fornotloggedin);
+        linearLayoutforloggenin = (LinearLayout) view.findViewById(R.id.forloggedin);
 
-         islogin=loginpref.getBoolean("loggedin",false);
-if(islogin)
-{
-    linearLayoutfornotlogin.setVisibility(View.GONE);
-    linearLayoutforloggenin.setVisibility(View.VISIBLE);
-    btn_order_history.setVisibility(View.VISIBLE);
-    GetProfile(hostinglink +"/Home/GetProfile");
+        islogin = loginpref.getBoolean("loggedin", false);
+        if (islogin) {
+            linearLayoutfornotlogin.setVisibility(View.GONE);
+            linearLayoutforloggenin.setVisibility(View.VISIBLE);
+            btn_order_history.setVisibility(View.VISIBLE);
+            GetProfile(hostinglink + "/Home/GetProfile");
 
-}else {
-    linearLayoutforloggenin.setVisibility(View.GONE);
-    linearLayoutfornotlogin.setVisibility(View.VISIBLE);
-    btn_order_history.setVisibility(View.GONE);
-}
+        } else {
+            linearLayoutforloggenin.setVisibility(View.GONE);
+            linearLayoutfornotlogin.setVisibility(View.VISIBLE);
+            btn_order_history.setVisibility(View.GONE);
+        }
 
 
-signup.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        Intent intent = new Intent(getActivity(), Login.class);
-        intent.putExtra("loginfromprofile", true);
-        startActivity(intent);
-    }
-});
-phtotimage.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        selectphoto();
-    }
-});
-
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Login.class);
+                intent.putExtra("loginfromprofile", true);
+                startActivity(intent);
+            }
+        });
+        phtotimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectphoto();
+            }
+        });
 
 
         logout = view.findViewById(R.id.logout);
@@ -190,7 +188,7 @@ phtotimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loginprefeditor.putBoolean("loggedin", false);
-               // loginprefeditor.putInt("userid", uid);
+                // loginprefeditor.putInt("userid", uid);
 
                 loginprefeditor.remove("userid");
                 loginprefeditor.commit();
@@ -417,7 +415,6 @@ phtotimage.setOnClickListener(new View.OnClickListener() {
     }
 
 
-
     public String calculateFileSize(String pth) {
         //String filepathstr=filepath.toString();
 
@@ -425,10 +422,10 @@ phtotimage.setOnClickListener(new View.OnClickListener() {
 
         float fileSizeInKB = file.length() / 1024;
         // Convert the KB to MegaBytes (1 MB = 1024 KBytes)
-      //  float fileSizeInMB = fileSizeInKB / 1024;
+        //  float fileSizeInMB = fileSizeInKB / 1024;
 
         String calString = Float.toString(fileSizeInKB);
-        return  calString;
+        return calString;
     }
 
 
@@ -493,7 +490,7 @@ phtotimage.setOnClickListener(new View.OnClickListener() {
     public static int getOrientation(Context context, Uri photoUri) {
         /* it's on the external media. */
         Cursor cursor = context.getContentResolver().query(photoUri,
-                new String[] { MediaStore.Images.ImageColumns.ORIENTATION }, null, null, null);
+                new String[]{MediaStore.Images.ImageColumns.ORIENTATION}, null, null, null);
 
         if (cursor.getCount() != 1) {
             return -1;
@@ -503,7 +500,7 @@ phtotimage.setOnClickListener(new View.OnClickListener() {
         return cursor.getInt(0);
     }
 
-public  void selectphoto(){
+    public void selectphoto() {
 
 
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -516,7 +513,7 @@ public  void selectphoto(){
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         //   super.onActivityResult(requestCode, resultCode, data);
 
-       super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
 
 
         if (requestCode == PICK_PHOTO_FOR_AVATAR && resultCode == Activity.RESULT_OK) {
@@ -526,25 +523,25 @@ public  void selectphoto(){
             }
             try {
                 Uri uri = data.getData();
-         Bitmap bitmap3= scaleImage(getContext(),uri);
-              //  File dir = Environment.getExternalStorageDirectory();
+                Bitmap bitmap3 = scaleImage(getContext(), uri);
+                //  File dir = Environment.getExternalStorageDirectory();
                 //String path = dir.getAbsolutePath();
-                String   realPath = ImageFilePath.getPath(getActivity(), data.getData());
-               // Toast.makeText(getContext(),"Path:"+realPath,Toast.LENGTH_SHORT).show();
+                String realPath = ImageFilePath.getPath(getActivity(), data.getData());
+                // Toast.makeText(getContext(),"Path:"+realPath,Toast.LENGTH_SHORT).show();
 
-String size=calculateFileSize(realPath);
+                String size = calculateFileSize(realPath);
 //Toast.makeText(getContext(),"size:"+size,Toast.LENGTH_SHORT).show();
-Log.i("Profile fragment","size:"+size);
-double sizeinkb= Double.parseDouble(size);
-if(sizeinkb<600)
-    file_islarge=false;
-else
-    file_islarge=true;
-              //  String PATH=getImagePath(uri);
+                Log.i("Profile fragment", "size:" + size);
+                double sizeinkb = Double.parseDouble(size);
+                if (sizeinkb < 600)
+                    file_islarge = false;
+                else
+                    file_islarge = true;
+                //  String PATH=getImagePath(uri);
                 /* file = new File(realPath);
                 Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());*/   // way to get bitmap  from file
-               // Uri u=file.toURI(uri.toString());
-               // Toast.makeText(getActivity(),"sizeee: "+file.length(),Toast.LENGTH_SHORT).show();
+                // Uri u=file.toURI(uri.toString());
+                // Toast.makeText(getActivity(),"sizeee: "+file.length(),Toast.LENGTH_SHORT).show();
 
                /*Long flength = file.length();
                 if (flength < 1000000) {
@@ -553,105 +550,46 @@ else
                     file_islarge = false;
 */
                 filename = getFileName(uri);
-if(!file_islarge) {
+                if (!file_islarge) {
+
+
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+                    phtotimage.setImageBitmap(bitmap);
+
+                    phtotimage.setVisibility(View.VISIBLE);
+                    try {
+                        String bitMapToString = BitMapToString(bitmap);
+                        UploadProfile(hostinglink + "/Home/UploadProfile", bitMapToString, filename);
+                    } catch (Exception e) {
+                        Toast.makeText(getContext(), "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+
+                } else {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+                    file = new File(realPath);//
+
+
+                    phtotimage.setImageBitmap(bitmap3);
+                    // bitmap2.recycle();
+
+                    //  Bitmap resized = Bitmap.createScaledBitmap(bitmap, 600, 600, true);
+
+                    String bitMapToString = BitMapToString(bitmap3);
+                    UploadProfile(hostinglink + "/Home/UploadProfile", bitMapToString, filename);
 
 
 
 
-    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
-    phtotimage.setImageBitmap(bitmap);
-
-    phtotimage.setVisibility(View.VISIBLE);
-    try {
-        String bitMapToString = BitMapToString(bitmap);
-        UploadProfile(hostinglink + "/Home/UploadProfile", bitMapToString, filename);
-    } catch (Exception e) {
-        Toast.makeText(getContext(), "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
-    }
-//phtotimage.setImageURI(data.getData());
-
-
-    /*  InputStream inputStream = getActivity().getContentResolver().openInputStream(data.getData());*/
-
-    // BitmapFactory.Options options = new BitmapFactory.Options();
-    //options.inSampleSize = 2; //Scale it down
-    //options.inPreferredConfig = Bitmap.Config.RGB_565;
-    // Bitmap b = BitmapFactory.decodeStream( inputStream, null, options );
-
-                /* Bitmap binput = BitmapFactory.decodeStream(inputStream);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-
-
-                binput.compress(Bitmap.CompressFormat.JPEG,50,stream);
-                byte[] byteArray = stream.toByteArray();
-                Bitmap compressedBitmap = BitmapFactory.decodeByteArray(byteArray,0,byteArray.length);
-                String bitMapToString=BitMapToString(compressedBitmap);
-               */
-
-
-    //  getconnection("dsds",bitMapToString);
-    //phtotimage.setImageBitmap (compressedBitmap);
-
-
-    //   Uri uri= getImageUri(getContext(),binput);
-
-    //  Bitmap finalbitmap= handleSamplingAndRotationBitmap(getContext(),uri);
-    //  phtotimage.setImageBitmap(finalbitmap);
-    // calculateInSampleSize(getContext(),uri);
-
-
-    // FileOutputStream fos = openFileOutput("desiredFilename.png", Context.MODE_PRIVATE);
-    /* File pictureFile = getOutputMediaFile();*/
-    //  Bitmap bOutput;
-    //   Matrix matrix = new Matrix();
-    //   matrix.preScale(-0.5f, 1.0f);
-    //  bOutput = Bitmap.createBitmap(binput, 0, 0, binput.getWidth(), binput.getHeight(), matrix, true);*/
-    /*  Drawable drawable=new BitmapDrawable(this.getResources(),binput);*/
-    //   phtotimage.setImageDrawable(drawable);
-
-    //  phtotimage.setScaleType(ImageView.ScaleType.valueOf("fitXY"));
-    /*   phtotimage.setImageBitmap(binput);*/
-
-    //  phtotimage.setImageBitmap((decodeImage(R.drawable.justry)));
-    // phtotimage.setImageBitmap (bitmap);
-
-}else {
-    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
-    file = new File(realPath);//
-
-
-phtotimage.setImageBitmap(bitmap3);
-   // bitmap2.recycle();
-
-  //  Bitmap resized = Bitmap.createScaledBitmap(bitmap, 600, 600, true);
-
-    String bitMapToString = BitMapToString(bitmap3);
-    UploadProfile(hostinglink + "/Home/UploadProfile", bitMapToString, filename);
-
-   /* Uri turl=getImageUri(getContext(),resized);
-    //check size again
-   // Uri turl=Uri.parse(realPath);
-    String tpath=ImageFilePath.getPath(getActivity(), turl);
-    Toast.makeText(getContext(),"...tpath:"+tpath,Toast.LENGTH_SHORT).show();
-    String tsize=calculateFileSize(tpath);
-    Toast.makeText(getContext(),"...Size: "+tsize,Toast.LENGTH_SHORT).show();
-//Uri u=getImageUri(getContext(),resized);
-
-    Toast.makeText(getContext(),"Please select picture less then 1 mb",Toast.LENGTH_SHORT).show();;
-
-*/
-}
-                }catch(Exception e)
-                {
-                    Toast.makeText(getContext(), "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-                //Now you can do whatever you want with your inpustream, save it as file, upload to a server, decode a bitmap...
+            } catch (Exception e) {
+                Toast.makeText(getContext(), "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
-
+            //Now you can do whatever you want with your inpustream, save it as file, upload to a server, decode a bitmap...
         }
 
-
     }
+
 
     public String getFileName(Uri uri) {
         String result = null;
@@ -675,7 +613,7 @@ phtotimage.setImageBitmap(bitmap3);
         return result;
     }
 
-    public  void    UploadProfile(String url, final String bitmapstr, final String filename) {
+    public void UploadProfile(String url, final String bitmapstr, final String filename) {
         final RequestQueue request = Volley.newRequestQueue(getContext());
 
 
@@ -684,19 +622,18 @@ phtotimage.setImageBitmap(bitmap3);
                     @Override
                     public void onResponse(String response) {
 
-                         Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
                         try {
 
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
-                            result2=gson.fromJson(response, StringResponceFromWeb.class);
-                              Toast.makeText(getContext(),"Responce:"+result2.getresult(),Toast.LENGTH_SHORT).show();
-                              if(result2.getresult().equals("updated"))
-                              {
+                            result2 = gson.fromJson(response, StringResponceFromWeb.class);
+                            Toast.makeText(getContext(), "Responce:" + result2.getresult(), Toast.LENGTH_SHORT).show();
+                            if (result2.getresult().equals("updated")) {
 
-                                  String url=  result2.getLogo();
-                                  url=hostinglink+url;
-                                  Picasso.get().load(url).into(phtotimage);
+                                String url = result2.getLogo();
+                                url = hostinglink + url;
+                                Picasso.get().load(url).into(phtotimage);
 
                                 /*  try{
                                       GetProfile(hostinglink +"/Home/GetProfile");
@@ -755,7 +692,7 @@ phtotimage.setImageBitmap(bitmap3);
     }
 
 
-    public  void    GetProfile(String url) {
+    public void GetProfile(String url) {
         final RequestQueue request = Volley.newRequestQueue(getContext());
 
 
@@ -767,29 +704,25 @@ phtotimage.setImageBitmap(bitmap3);
                         // Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
                         try {
 
-                           // Toast.makeText(getContext(),"Responce:"+response,Toast.LENGTH_SHORT).show();
+                            // Toast.makeText(getContext(),"Responce:"+response,Toast.LENGTH_SHORT).show();
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
-                            result=gson.fromJson(response, StringResponceFromWeb.class);
+                            result = gson.fromJson(response, StringResponceFromWeb.class);
 
-                            if(result.getresult().equals("error"))
-                            {
-                                Toast.makeText(getContext(),"error:"+result.getErrorResult(),Toast.LENGTH_SHORT).show();
-                            }else if(!result.getUsername().equals(null)){
-                                try{
+                            if (result.getresult().equals("error")) {
+                                Toast.makeText(getContext(), "error:" + result.getErrorResult(), Toast.LENGTH_SHORT).show();
+                            } else if (!result.getUsername().equals(null)) {
+                                try {
 
                                     username.setText(result.getUsername());
-                                    String url=  result.getresult();
-                                    url=hostinglink+url;
+                                    String url = result.getresult();
+                                    url = hostinglink + url;
                                     Picasso.get().load(url).into(phtotimage);
-                                }catch (Exception e)
-                                {
+                                } catch (Exception e) {
                                     Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                                 }
 
-                               // Bitmap bitmap=StringToBitMap(strbitmap);
 
-                              //  phtotimage.setImageBitmap(bitmap);
                             }
 
 
@@ -813,7 +746,7 @@ phtotimage.setImageBitmap(bitmap3);
                         error.printStackTrace();
                     }
                 }
-        )  {
+        ) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
@@ -843,7 +776,7 @@ phtotimage.setImageBitmap(bitmap3);
     }
 
 
-    private  File getOutputMediaFile(){
+    private File getOutputMediaFile() {
         // To be safe, you should check that the SDCard is mounted
         // using Environment.getExternalStorageState() before doing this.
         File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
@@ -855,32 +788,33 @@ phtotimage.setImageBitmap(bitmap3);
         // between applications and persist after your app has been uninstalled.
 
         // Create the storage directory if it does not exist
-        if (! mediaStorageDir.exists()){
-            if (! mediaStorageDir.mkdirs()){
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
                 return null;
             }
         }
         // Create a media file name
         String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
         File mediaFile;
-        String mImageName="MI_"+ timeStamp +".jpg";
+        String mImageName = "MI_" + timeStamp + ".jpg";
         mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
         return mediaFile;
     }
-    public String BitMapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b=baos.toByteArray();
-        String temp= Base64.encodeToString(b, Base64.DEFAULT);
+
+    public String BitMapToString(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String temp = Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
     }
-    public Bitmap StringToBitMap(String encodedString){
-        try{
-            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
+
+    public Bitmap StringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
             return bitmap;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.getMessage();
             return null;
         }
@@ -970,6 +904,7 @@ phtotimage.setImageBitmap(bitmap3);
         }
         return inSampleSize;
     }
+
     private static Bitmap rotateImageIfRequired(Context context, Bitmap img, Uri selectedImage) throws IOException {
 
         InputStream input = context.getContentResolver().openInputStream(selectedImage);
