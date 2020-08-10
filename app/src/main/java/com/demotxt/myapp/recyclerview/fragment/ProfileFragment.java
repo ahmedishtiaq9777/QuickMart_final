@@ -34,6 +34,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.Fragment;
@@ -86,9 +87,12 @@ public class ProfileFragment extends Fragment {
     TextView login, signup;
     ImageView logout;
     Dialog popup;
-    CardView btn_order_history, btn_privacy, dark, language, setting, fav, cart, exit;
+    CardView btn_order_history,notification, btn_privacy, dark, language, setting, fav, cart, exit;
     LinearLayout lyt_root;
-    LinearLayout linearLayoutfornotlogin, linearLayoutforloggenin;
+    LinearLayout linearLayoutfornotlogin;
+    ConstraintLayout linearLayoutforloggenin;
+
+
     private SharedPreferences loginpref;
     SharedPreferences.Editor loginprefeditor;
     LottieAnimationView o, s, l, d, f, c, p, e;
@@ -138,32 +142,36 @@ public class ProfileFragment extends Fragment {
         //txt_user_phone = view.findViewById(R.id.txt_user_phone);
         //txt_user_address = view.findViewById(R.id.txt_user_address);
         username = view.findViewById(R.id.username);
+
         o = view.findViewById(R.id.ORDER);
-        s = view.findViewById(R.id.SETTING);
+        s = view.findViewById(R.id.NOTIY);
         l = view.findViewById(R.id.LANGUAGE);
         d = view.findViewById(R.id.DARKMODE);
         f = view.findViewById(R.id.FAVOURITE);
         c = view.findViewById(R.id.CART);
         p = view.findViewById(R.id.PRIVACY);
         e = view.findViewById(R.id.EXIT);
+        notification= view.findViewById(R.id.NotificationCard);
         btn_order_history = view.findViewById(R.id.OrderHistoryCard);
         phtotimage = view.findViewById(R.id.selectimage);
         signup = view.findViewById(R.id.signup);
         language = view.findViewById(R.id.LanguageCard);
         linearLayoutfornotlogin = (LinearLayout) view.findViewById(R.id.fornotloggedin);
-        linearLayoutforloggenin = (LinearLayout) view.findViewById(R.id.forloggedin);
+        linearLayoutforloggenin = (ConstraintLayout) view.findViewById(R.id.forloggedin);
 
         islogin = loginpref.getBoolean("loggedin", false);
         if (islogin) {
             linearLayoutfornotlogin.setVisibility(View.GONE);
             linearLayoutforloggenin.setVisibility(View.VISIBLE);
             btn_order_history.setVisibility(View.VISIBLE);
+            notification.setVisibility(View.VISIBLE);
             GetProfile(hostinglink + "/Home/GetProfile");
 
         } else {
             linearLayoutforloggenin.setVisibility(View.GONE);
             linearLayoutfornotlogin.setVisibility(View.VISIBLE);
             btn_order_history.setVisibility(View.GONE);
+            notification.setVisibility(View.GONE);
         }
 
 
@@ -195,6 +203,7 @@ public class ProfileFragment extends Fragment {
                 linearLayoutforloggenin.setVisibility(View.GONE);
                 linearLayoutfornotlogin.setVisibility(View.VISIBLE);
                 btn_order_history.setVisibility(View.GONE);
+                notification.setVisibility(View.GONE);
 
             }
         });
@@ -247,7 +256,7 @@ public class ProfileFragment extends Fragment {
 
 
         //For  settings
-        setting = view.findViewById(R.id.SettingCard);
+        setting = view.findViewById(R.id.NotificationCard);
         setting.setOnClickListener(new View.OnClickListener() {
             boolean isAnimated;
 
