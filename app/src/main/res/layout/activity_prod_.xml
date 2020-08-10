@@ -29,7 +29,6 @@
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
                 android:src="@drawable/image_shop_10"
-
                 app:layout_collapseMode="parallax" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -48,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@color/colorPrimary"
+            android:background="@color/buttonbg"
             app:contentInsetStartWithNavigation="0dp"
             app:layout_collapseMode="pin"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
@@ -68,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:text="Roll-Up Neocity Backpack"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@color/navbartext" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -76,7 +75,7 @@
                     android:layout_marginTop="@dimen/spacing_medium"
                     android:text="Shop Adidas"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/grey_10" />
+                    android:textColor="@color/navbartext" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -89,14 +88,14 @@
                         android:id="@+id/colorSpinner"
                         android:layout_width="125dp"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="@color/white"
+                        android:backgroundTint="@color/navbartext"
                         />
 
                     <Spinner
                         android:id="@+id/sizeSpinner"
                         android:layout_width="125dp"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="@color/white"
+                        android:backgroundTint="@color/navbartext"
 
                         />
 
@@ -111,7 +110,7 @@
                         android:layout_height="wrap_content"
                         android:text="$ 80.00"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                        android:textColor="@android:color/white"
+                        android:textColor="@color/navbartext"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -127,12 +126,14 @@
             android:clipToPadding="false"
             android:scrollbars="none"
             android:scrollingCache="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:background="@color/background">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@color/background">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -145,7 +146,7 @@
                         android:layout_width="?attr/actionBarSize"
                         android:layout_height="?attr/actionBarSize"
                         android:background="@android:color/transparent"
-                        android:tint="@color/grey_60"
+                        android:tint="@color/profiletext"
                         android:src="@drawable/ic_error_outline" />
 
                     <TextView
@@ -156,7 +157,7 @@
                         android:fontFamily="monospace"
                         android:text="Description"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/grey_80" />
+                        android:textColor="@color/profiletext" />
 
                     <View
                         android:layout_width="@dimen/spacing_large"
@@ -167,7 +168,7 @@
                         android:layout_width="?attr/actionBarSize"
                         android:layout_height="?attr/actionBarSize"
                         android:background="?attr/selectableItemBackgroundBorderless"
-                        android:tint="@color/grey_60"
+                        android:tint="@color/profiletext"
                        android:src="@drawable/ic_arrow_drop" />
 
                 </LinearLayout>
@@ -193,7 +194,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/lorem_ipsum"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@color/profiletext"/>
 
                 </LinearLayout>
 
@@ -213,7 +215,7 @@
                         android:layout_width="?attr/actionBarSize"
                         android:layout_height="?attr/actionBarSize"
                         android:background="@android:color/transparent"
-                        android:tint="@color/grey_60"
+                        android:tint="@color/profiletext"
                         android:src="@drawable/ic_chat" />
 
                     <TextView
@@ -222,7 +224,7 @@
                         android:layout_weight="1"
                         android:text="Reviews"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/grey_80" />
+                        android:textColor="@color/profiletext" />
 
                     <View
                         android:layout_width="@dimen/spacing_smlarge"
@@ -233,7 +235,7 @@
                         android:layout_width="?attr/actionBarSize"
                         android:layout_height="?attr/actionBarSize"
                         android:background="?attr/selectableItemBackgroundBorderless"
-                        android:tint="@color/grey_60"
+                        android:tint="@color/profiletext"
                         android:src="@drawable/ic_arrow_drop" />
 
                 </LinearLayout>
@@ -246,7 +248,7 @@
                     android:orientation="vertical"
                     android:layout_margin="4dp"
                     android:padding="4dp"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <androidx.appcompat.widget.AppCompatRatingBar
                         android:id="@+id/AppCompact_RatingBar"
@@ -257,7 +259,8 @@
                         android:layout_marginTop="6dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:progressBackgroundTint="@color/star" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/txt_input_lyt"
@@ -266,13 +269,14 @@
                         android:layout_marginTop="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/AppCompact_RatingBar">
+                        app:layout_constraintTop_toBottomOf="@+id/AppCompact_RatingBar"
+                        android:textColorHint="@color/profiletext">
 
                         <EditText
                             android:id="@+id/txt_feedback"
                             android:gravity="start"
                             android:hint="Give Feedback"
-                            android:textColor="@color/blue_grey_900"
+                            android:textColor="@color/profiletext"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
@@ -280,11 +284,14 @@
 
                     <Button
                         android:id="@+id/Submit_Btn"
-                        style="@style/TextAppearance.MaterialComponents.Button"
+                        style="@style/com_facebook_button"
+                        android:background="@drawable/button_border"
+                        android:backgroundTint="@color/buttonbg"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
                         android:text="@string/SubmitBtn"
+                        android:textColor="@color/navbartext"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -295,7 +302,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
-                    android:background="@color/grey_20" />
+                    android:background="@color/background" />
 
 
                 <LinearLayout
@@ -334,8 +341,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_large"
         android:clickable="true"
-        android:tint="@android:color/white"
-        app:backgroundTint="@color/blue_600"
+        android:tint="@color/white"
+        app:backgroundTint="@color/buttonbg"
         app:fabSize="normal"
         app:layout_anchor="@id/app_bar_layout"
         app:layout_anchorGravity="bottom|right|end"

@@ -64,7 +64,7 @@ Userid=String.valueOf(loginpref.getInt("userid",0));
 
 
         awesomeValidation.addValidation(Shipping.this, R.id.nameShip, "[a-zA-Z\\s]+", R.string.error_name);
-        awesomeValidation.addValidation(Shipping.this, R.id.contactShip, "^((\\+92)|(0092))-{0,1}\\d{3}-{0,1}\\d{7}$|^\\d{11}$|^\\d{4}-\\d{7}$", R.string.error_contact);
+        awesomeValidation.addValidation(Shipping.this, R.id.contactShip, "^0(?=3)[0-9]{10}$", R.string.error_contact);
         awesomeValidation.addValidation(Shipping.this, R.id.emailShip, android.util.Patterns.EMAIL_ADDRESS.toString(), R.string.error_email);
         awesomeValidation.addValidation(Shipping.this, R.id.contactShip, "^[0-9]{11}", R.string.error_contact);
         awesomeValidation.addValidation(Shipping.this, R.id.addShip, RegexTemplate.NOT_EMPTY, R.string.error_address);

@@ -175,24 +175,24 @@ String backstackname=null;
         Fragment fragment = null;
         switch (menuItem.getItemId()) {
             case R.id.nav_home:
-                navView.setBackgroundColor(getResources().getColor(R.color.blue_400));
+                navView.setBackgroundColor(getResources().getColor(R.color.navhome));
                 fragment = new HomeFragment();
                 backstackname="homestack";
                 break;
             case R.id.nav_favourite:
 
-                navView.setBackgroundColor(getResources().getColor(R.color.blue_300));
+                navView.setBackgroundColor(getResources().getColor(R.color.navfav));
                 fragment = new FavoriteFragment();
                 backstackname="favstack";
                 break;
             case R.id.nav_cart:
-                 navView.setBackgroundColor(getResources().getColor(R.color.blue_200));
+                 navView.setBackgroundColor(getResources().getColor(R.color.navcart));
                 fragment = new CartFragment();
                 backstackname="cartstack";
                 break;
 
             case R.id.nav_acc:
-                navView.setBackgroundColor(getResources().getColor(R.color.blue_100));
+                navView.setBackgroundColor(getResources().getColor(R.color.navprof));
                 if (getloginprefference() == true) {
                     fragment = new ProfileFragment();
                     backstackname="profilestack";
