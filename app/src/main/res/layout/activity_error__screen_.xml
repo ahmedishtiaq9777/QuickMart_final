@@ -24,7 +24,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@drawable/ic_cloud_off"
-            android:tint="@android:color/white" />
+            android:tint="@color/navbartext" />
 
         <TextView
             android:id="@+id/title"
@@ -33,7 +33,7 @@
             android:layout_marginTop="@dimen/spacing_middle"
             android:text="No internet !"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@android:color/white"
+            android:textColor="@color/navbartext"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -46,7 +46,7 @@
         android:text="@string/short_lorem_ipsum"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-        android:textColor="@color/grey_60"
+        android:textColor="@color/text"
         android:textSize="25dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/Reload_button"
@@ -58,6 +58,7 @@
     <Button
         android:id="@+id/Reload_button"
         android:background="@drawable/button_border"
+        android:backgroundTint="@color/buttonbg"
         android:layout_width="195dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"

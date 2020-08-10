@@ -23,7 +23,7 @@
         android:text="We Will contact you soon! for confirmation."
         android:textSize="30sp"
         android:gravity="center"
-        android:textColor="@color/white"
+        android:textColor="@color/navbartext"
         android:textAllCaps="true"
         android:textStyle="bold"/>
 
