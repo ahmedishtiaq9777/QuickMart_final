@@ -2,6 +2,7 @@ package com.demotxt.myapp.recyclerview.fragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,14 +26,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
@@ -47,11 +46,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.balysv.materialripple.MaterialRippleLayout;
-import com.demotxt.myapp.recyclerview.Config;
 import com.demotxt.myapp.recyclerview.Order.Order_Activity;
 import com.demotxt.myapp.recyclerview.R;
-
 import com.demotxt.myapp.recyclerview.activity.Login;
 import com.demotxt.myapp.recyclerview.activity.Signup;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomDialoag;
@@ -88,13 +84,14 @@ public class ProfileFragment extends Fragment {
     TextView username;
     ImageView phtotimage;
     TextView login, signup;
-    TextView logout;
-    CardView btn_order_history, btn_privacy, dark, language,setting, fav,cart, exit;
+    ImageView logout;
+    Dialog popup;
+    CardView btn_order_history, btn_privacy, dark, language, setting, fav, cart, exit;
     LinearLayout lyt_root;
-   LinearLayout linearLayoutfornotlogin,linearLayoutforloggenin;
-    private SharedPreferences  loginpref;
-    SharedPreferences.Editor  loginprefeditor;
-    LottieAnimationView o,s,l,d,f,c,p,e;
+    LinearLayout linearLayoutfornotlogin, linearLayoutforloggenin;
+    private SharedPreferences loginpref;
+    SharedPreferences.Editor loginprefeditor;
+    LottieAnimationView o, s, l, d, f, c, p, e;
     private String userid;
     private boolean islogin;
     StringResponceFromWeb result;
@@ -128,31 +125,19 @@ public class ProfileFragment extends Fragment {
 //selectphoto();
         file_islarge=false;
         loadLocale(getContext());
-       // Fragment fragment=null;
-           //  fragment=   new ProfileSubFragment();
-//loadsubFragment(fragment);
-       // sharedPref = new SharedPref(getActivity());
-
-      //  ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
 
         final View view = inflater.inflate(R.layout.profilefragment, container, false);
 
-      //  sharedPref = new SharedPref(getActivity());
-/*
-        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();*/
 
-      //  lyt_root = view.findViewById(R.id.lyt_root);
-       // if (Config.ENABLE_RTL_MODE) {
-       //     lyt_root.setRotationY(180);
-       // }
         loginpref = getContext().getSharedPreferences("loginpref", MODE_PRIVATE);
-        loginprefeditor=loginpref.edit();
-        userid=String.valueOf(loginpref.getInt("userid",0));
+        loginprefeditor = loginpref.edit();
+        userid = String.valueOf(loginpref.getInt("userid", 0));
         //txt_user_name = view.findViewById(R.id.txt_user_name);
         //txt_user_email = view.findViewById(R.id.txt_user_email);
         //txt_user_phone = view.findViewById(R.id.txt_user_phone);
         //txt_user_address = view.findViewById(R.id.txt_user_address);
-        username=view.findViewById(R.id.username);
+        username = view.findViewById(R.id.username);
         o = view.findViewById(R.id.ORDER);
         s = view.findViewById(R.id.SETTING);
         l = view.findViewById(R.id.LANGUAGE);
@@ -162,8 +147,8 @@ public class ProfileFragment extends Fragment {
         p = view.findViewById(R.id.PRIVACY);
         e = view.findViewById(R.id.EXIT);
         btn_order_history = view.findViewById(R.id.OrderHistoryCard);
-        phtotimage=view.findViewById(R.id.selectimage);
-        signup=view.findViewById(R.id.signup);
+        phtotimage = view.findViewById(R.id.selectimage);
+        signup = view.findViewById(R.id.signup);
         language = view.findViewById(R.id.LanguageCard);
         linearLayoutfornotlogin=(LinearLayout) view.findViewById(R.id.fornotloggedin);
         linearLayoutforloggenin=(LinearLayout) view.findViewById(R.id.forloggedin);
@@ -183,21 +168,6 @@ if(islogin)
 }
 
 
-
-
-      //  txt_user_name.setText(sharedPref.getYourName());
-       // txt_user_email.setText(sharedPref.getYourEmail());
-        //txt_user_address.setText(sharedPref.getYourAddress());
-        //txt_user_phone.setText(sharedPref.getYourPhone());
-
-    /*    login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), Login.class);
-                intent.putExtra("loginfromprofile",true);
-                startActivity(intent);
-            }
-        });*/
 signup.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
@@ -213,7 +183,9 @@ phtotimage.setOnClickListener(new View.OnClickListener() {
     }
 });
 
-logout= view.findViewById(R.id.logout);
+
+
+        logout = view.findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -226,26 +198,22 @@ logout= view.findViewById(R.id.logout);
                 linearLayoutfornotlogin.setVisibility(View.VISIBLE);
                 btn_order_history.setVisibility(View.GONE);
 
-               /* Intent intent = new Intent(getActivity(), UsersettingFragment.class);
-                startActivity(intent);*/
-                ///FragmentTransaction ft=getChildFragmentManager().beginTransaction();
-                // UsersettingFragment user=new UsersettingFragment();
-                // ft.replace(R.id.lyt_root,user);
             }
         });
 
         //For Order history
         btn_order_history.setOnClickListener(new View.OnClickListener() {
             boolean isAnimated;
+
             @Override
             public void onClick(View view) {
-                if (!isAnimated){
+                if (!isAnimated) {
                     p.playAnimation();
                     p.setSpeed(5);
-                    isAnimated=true;}
-                else {
+                    isAnimated = true;
+                } else {
                     p.cancelAnimation();
-                    isAnimated=false;
+                    isAnimated = false;
                 }
                 Intent intent = new Intent(getActivity(), Order_Activity.class);
                 startActivity(intent);
@@ -255,21 +223,20 @@ logout= view.findViewById(R.id.logout);
         });
 
 
-
-
         //For Privacy Policy
         btn_privacy = view.findViewById(R.id.PrivacyCard);
         btn_privacy.setOnClickListener(new View.OnClickListener() {
             boolean isAnimated;
+
             @Override
             public void onClick(View view) {
-                if (!isAnimated){
+                if (!isAnimated) {
                     p.playAnimation();
                     p.setSpeed(6);
-                    isAnimated=true;}
-                else {
+                    isAnimated = true;
+                } else {
                     p.cancelAnimation();
-                    isAnimated=false;
+                    isAnimated = false;
                 }
                 String share_text = Html.fromHtml(getResources().getString(R.string.Privacy_Policy)).toString();
                 Intent intent = new Intent();
@@ -285,14 +252,15 @@ logout= view.findViewById(R.id.logout);
         setting = view.findViewById(R.id.SettingCard);
         setting.setOnClickListener(new View.OnClickListener() {
             boolean isAnimated;
+
             @Override
             public void onClick(View v) {
-                if (!isAnimated){
+                if (!isAnimated) {
                     s.playAnimation();
-                    isAnimated=true;}
-                else {
+                    isAnimated = true;
+                } else {
                     s.cancelAnimation();
-                    isAnimated=false;
+                    isAnimated = false;
                 }
 
             }
@@ -302,15 +270,16 @@ logout= view.findViewById(R.id.logout);
         language = view.findViewById(R.id.LanguageCard);
         language.setOnClickListener(new View.OnClickListener() {
             boolean isAnimated;
+
             @Override
             public void onClick(View v) {
-                if (!isAnimated){
+                if (!isAnimated) {
                     l.playAnimation();
                     l.setSpeed(9);
-                    isAnimated=true;}
-                else {
+                    isAnimated = true;
+                } else {
                     l.cancelAnimation();
-                    isAnimated=false;
+                    isAnimated = false;
                 }
 
                 showChangeLanguageDialog();
@@ -321,16 +290,16 @@ logout= view.findViewById(R.id.logout);
         fav = view.findViewById(R.id.FavouriteCard);
         fav.setOnClickListener(new View.OnClickListener() {
             boolean isAnimated;
+
             @Override
 
             public void onClick(View v) {
-                if (!isAnimated){
+                if (!isAnimated) {
                     f.playAnimation();
-                    isAnimated=true;
-                }
-                else {
+                    isAnimated = true;
+                } else {
                     f.cancelAnimation();
-                    isAnimated=false;
+                    isAnimated = false;
                 }
 
                 Fragment fragment = null;
@@ -344,14 +313,15 @@ logout= view.findViewById(R.id.logout);
         cart = view.findViewById(R.id.CartCard);
         cart.setOnClickListener(new View.OnClickListener() {
             boolean isAnimated;
+
             @Override
             public void onClick(View v) {
-                if (!isAnimated){
+                if (!isAnimated) {
                     c.playAnimation();
-                    isAnimated=true;}
-                else {
+                    isAnimated = true;
+                } else {
                     c.cancelAnimation();
-                    isAnimated=false;
+                    isAnimated = false;
                 }
                 Fragment fragment = null;
                 fragment = new CartFragment();
@@ -360,37 +330,25 @@ logout= view.findViewById(R.id.logout);
             }
         });
 
+
         //For Darkmode
-        dark= view.findViewById(R.id.DarkModeCard);
+        dark = view.findViewById(R.id.DarkModeCard);
         dark.setOnClickListener(new View.OnClickListener() {
             boolean isAnimated;
+
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"onclick",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "onclick", Toast.LENGTH_SHORT).show();
 
-try{
+                try {
 
                     CustomDialoag dialoag = new CustomDialoag(getActivity());
                     dialoag.showCustomDialog();
-                }catch (Exception e) {
+                } catch (Exception e) {
 
-Toast.makeText(getContext(),"error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
-Log.i("error in profile","error:"+e.getMessage());
-}
-/*
-
-                if (!isAnimated){
-                    d.playAnimation();
-                    isAnimated=true;}
-                else {
-                    d.cancelAnimation();
-                    isAnimated=false;
+                    Toast.makeText(getContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.i("error in profile", "error:" + e.getMessage());
                 }
-                LayoutInflater inflater = getLayoutInflater();
-                final View layout = inflater.inflate(R.layout.toast, (ViewGroup) view.findViewById(R.id.toast_layout_root));
-
-*/
-
             }
         });
 
@@ -398,19 +356,19 @@ Log.i("error in profile","error:"+e.getMessage());
         exit = view.findViewById(R.id.ExitCard);
         exit.setOnClickListener(new View.OnClickListener() {
             boolean isAnimated;
+
             @Override
             public void onClick(View v) {
-                if (!isAnimated){
+                if (!isAnimated) {
                     e.playAnimation();
                     e.setSpeed(22);
-                    isAnimated=true;}
-                else {
+                    isAnimated = true;
+                } else {
                     e.cancelAnimation();
-                    isAnimated=false;
+                    isAnimated = false;
                 }
 
                 System.exit(0);
-
             }
         });
         return view;
@@ -424,10 +382,10 @@ Log.i("error in profile","error:"+e.getMessage());
             @Override
             public void onClick(DialogInterface dialog, int i) {
                 if (i == 0) {
-                    setLocale("en",getContext());
+                    setLocale("en", getContext());
                     getActivity().recreate();
                 } else if (i == 1) {
-                    setLocale("ur",getContext());
+                    setLocale("ur", getContext());
                     getActivity().recreate();
                 }
                 dialog.dismiss();
@@ -438,7 +396,7 @@ Log.i("error in profile","error:"+e.getMessage());
         mDialog.show();
     }
 
-    private  static void setLocale(String lang,Context context) {
+    private static void setLocale(String lang, Context context) {
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
@@ -455,8 +413,9 @@ Log.i("error in profile","error:"+e.getMessage());
 
         SharedPreferences pref = cX.getSharedPreferences("Settings", MODE_PRIVATE);
         String lan = pref.getString("My_Lang", "");
-        setLocale(lan,cX);
+        setLocale(lan, cX);
     }
+
 
 
     public String calculateFileSize(String pth) {
@@ -547,17 +506,17 @@ Log.i("error in profile","error:"+e.getMessage());
 public  void selectphoto(){
 
 
-   Intent intent = new Intent(Intent.ACTION_GET_CONTENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-   // Intent intent = new Intent(Intent.ACTION_PICK);
-    intent.setType("image/*");
-    startActivityForResult(intent, PICK_PHOTO_FOR_AVATAR);
-}
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        // Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, PICK_PHOTO_FOR_AVATAR);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         //   super.onActivityResult(requestCode, resultCode, data);
 
-        super.onActivityResult(requestCode, resultCode, data);
+       super.onActivityResult(requestCode, resultCode, data);
 
 
         if (requestCode == PICK_PHOTO_FOR_AVATAR && resultCode == Activity.RESULT_OK) {
@@ -692,25 +651,7 @@ phtotimage.setImageBitmap(bitmap3);
         }
 
 
-
-
-   /* public  boolean isStoragePermissionGranted() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == getActivity().PackageManager.PERMISSION_GRANTED) {
-                Log.v(TAG,"Permission is granted");
-                return true;
-            } else {
-
-                Log.v(TAG,"Permission is revoked");
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                return false;
-            }
-        }
-        else { //permission is automatically granted on sdk<23 upon installation
-            Log.v(TAG,"Permission is granted");
-            return true;
-        }
-    }*/
+    }
 
     public String getFileName(Uri uri) {
         String result = null;
@@ -767,22 +708,12 @@ phtotimage.setImageBitmap(bitmap3);
                                   }*/
 
 
-
-                              }
-
-
-
+                            }
 
 
                         } catch (Exception e) {
-                             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                         }
-
-                        //  Toast.makeText(ShoppyProductListActivity.this, response, Toast.LENGTH_SHORT).show();
-
-
-                        // response
-                        //  Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
 
                     }
                 },
@@ -794,7 +725,7 @@ phtotimage.setImageBitmap(bitmap3);
                         error.printStackTrace();
                     }
                 }
-        )  {
+        ) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
@@ -802,9 +733,9 @@ phtotimage.setImageBitmap(bitmap3);
                 for (String  i:cartids) {
                     jsonArray.put(i);
                 }*/
-                params.put("userid",userid);
-                params.put("bitmapstr",bitmapstr);
-                params.put("filename",filename);
+                params.put("userid", userid);
+                params.put("bitmapstr", bitmapstr);
+                params.put("filename", filename);
 
                 //  params.p
 
@@ -819,15 +750,9 @@ phtotimage.setImageBitmap(bitmap3);
         };
 
 
-
-
-
         request.add(rRequest);
 
-
     }
-
-
 
 
     public  void    GetProfile(String url) {
@@ -868,13 +793,8 @@ phtotimage.setImageBitmap(bitmap3);
                             }
 
 
-
-
-
-
-
                         } catch (Exception e) {
-                             Toast.makeText(getContext(), "excaption:"+e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "excaption:" + e.getMessage(), Toast.LENGTH_LONG).show();
                         }
 
                         //  Toast.makeText(ShoppyProductListActivity.this, response, Toast.LENGTH_SHORT).show();
@@ -901,8 +821,7 @@ phtotimage.setImageBitmap(bitmap3);
                 for (String  i:cartids) {
                     jsonArray.put(i);
                 }*/
-                params.put("userid",userid);
-
+                params.put("userid", userid);
 
 
                 //  params.p
@@ -916,9 +835,6 @@ phtotimage.setImageBitmap(bitmap3);
                 return params;
             }
         };
-
-
-
 
 
         request.add(rRequest);
@@ -969,6 +885,7 @@ phtotimage.setImageBitmap(bitmap3);
             return null;
         }
     }
+
     public Bitmap decodeImage(int resourceId) {
         try {
             // Decode image size
@@ -1018,6 +935,7 @@ phtotimage.setImageBitmap(bitmap3);
         img = rotateImageIfRequired(context, img, selectedImage);
         return img;
     }
+
     private static int calculateInSampleSize(BitmapFactory.Options options,
                                              int reqWidth, int reqHeight) {
         // Raw height and width of image

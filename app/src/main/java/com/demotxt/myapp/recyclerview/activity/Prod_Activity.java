@@ -492,7 +492,6 @@ catch (Exception e)
             ViewAnimation.collapse(lyt);
         }
     }
-
     public boolean toggleArrow(View view) {
         if (view.getRotation() == 0) {
             view.animate().setDuration(200).rotation(180);

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -31,18 +32,8 @@ import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
-import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -55,18 +46,13 @@ import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
 
 public class Signup extends AppCompatActivity {
 
-    TextView signin, signup;
+    TextView signin;
+    Button signup;
     EditText email, password, userName;
     AwesomeValidation awesomeValidation;
-    Spinner spiner;
-    public String selectedaccount;
-    //facebook
-    private LoginButton mLoginButton;
-    private CallbackManager mCallbackManager;
     private SharedPreferences  loginpref;
-    private  StringResponceFromWeb result;
+    private StringResponceFromWeb result;
     private View layout;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +61,6 @@ public class Signup extends AppCompatActivity {
         result=new StringResponceFromWeb();
         loginpref = getSharedPreferences("loginpref", MODE_PRIVATE);
         awesomeValidation = new AwesomeValidation(BASIC);
-
         awesomeValidation.addValidation(Signup.this, R.id.usernamee, "[a-zA-Z\\s]+", R.string.error_name);
         awesomeValidation.addValidation(Signup.this, R.id.emaill, android.util.Patterns.EMAIL_ADDRESS, R.string.error_email);
         awesomeValidation.addValidation(Signup.this, R.id.passwordd, RegexTemplate.NOT_EMPTY, R.string.error_password);
@@ -94,45 +79,19 @@ public class Signup extends AppCompatActivity {
 
 
         signin = (TextView) findViewById(R.id.signin);
-        signup = (TextView) findViewById(R.id.signin1);
-        userName= (EditText) findViewById(R.id.usernamee);
+        signup = (Button) findViewById(R.id.signin1);
+        userName = (EditText) findViewById(R.id.usernamee);
         email = (EditText) findViewById(R.id.emaill);
         password = (EditText) findViewById(R.id.passwordd);
-        //facebook
-        mLoginButton = findViewById(R.id.login_button);
-        mCallbackManager = CallbackManager.Factory.create();
-        mLoginButton.setPermissions(Arrays.asList("email", "public_profile"));
-
-        mLoginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-
-            }
-        });
-
         //
-
-
-
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-
                     final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
                     // String url = "http:// 192.168.10.13:64077/api/login";
                     //String url="https://api.myjson.com/bins/kp9wz";
-                    String url = hostinglink +"/Home/signup";
+                    String url = hostinglink + "/Home/signup";
 
                     StringRequest rRequest = new StringRequest(Request.Method.POST, url,
                             new Response.Listener<String>() {
@@ -304,45 +263,7 @@ public class Signup extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        mCallbackManager.onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
-    AccessTokenTracker mTokenTracker = new AccessTokenTracker() {
-        @Override
-        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
 
-            loadUserProfile(currentAccessToken);
-        }
-    };
-
-    private void loadUserProfile(AccessToken newAccessToken) {
-        GraphRequest request = GraphRequest.newMeRequest(newAccessToken, new GraphRequest.GraphJSONObjectCallback() {
-            @Override
-            public void onCompleted(JSONObject object, GraphResponse response) {
-
-                try {
-                    String first_name = object.getString("first_name");
-                    String last_name = object.getString("last_name");
-                    String email = object.getString("email");
-                    String id = object.getString("id");
-                    String image_url = "https://graph.facebook.com/" + id + "/picture?type=normal";
-
-                    //
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "first_name,last_name,email,id");
-        request.setParameters(parameters);
-        request.executeAsync();
-    }
 }
 

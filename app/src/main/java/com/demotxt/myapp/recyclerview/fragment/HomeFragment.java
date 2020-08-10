@@ -1,10 +1,19 @@
 package com.demotxt.myapp.recyclerview.fragment;
 
+import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,25 +22,29 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.demotxt.myapp.recyclerview.MainActivity;
 import com.demotxt.myapp.recyclerview.activity.Error_Screen_Activity;
 import com.demotxt.myapp.recyclerview.ownmodels.Book;
 import com.demotxt.myapp.recyclerview.ownmodels.Prod;
@@ -40,13 +53,20 @@ import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.adapter.RecyclerView3;
 import com.demotxt.myapp.recyclerview.adapter.RecyclerViewAdapter;
 import com.demotxt.myapp.recyclerview.adapter.RecyclerViewProdAdapter;
-import com.demotxt.myapp.recyclerview.ownmodels.r3;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
 
@@ -62,6 +82,12 @@ public class HomeFragment extends Fragment {
     private RecyclerViewAdapter myAdapter;
     private RecyclerViewProdAdapter myAdapter1;
     private RecyclerView3 myAdapter2;
+    //loc
+    public String Latitude, Longitude;
+    FusedLocationProviderClient mLocationProviderClient;
+    LocationManager mLocationManager;
+    boolean gps_enabled = false;
+
 
 
 
@@ -69,11 +95,29 @@ public class HomeFragment extends Fragment {
         ProfileFragment.loadLocale(getContext());
 
         setHasOptionsMenu(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
 
         view = inflater.inflate(R.layout.homefragment, container, false);
 
         //Connection Check
         CheckConnection();
+        CheckGps();
+
+        mLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+
+        if (ActivityCompat.checkSelfPermission(getContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+
+            getlocation();
+
+        }else {
+
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},44);
+        }
+
+
+        //
 
         list = new ArrayList<>();
         Book22 = new ArrayList<>();
@@ -90,21 +134,22 @@ public class HomeFragment extends Fragment {
                 mTrends = new ArrayList<>();
 
 
-                getconnection(hostinglink+"/Home/getsellers/", 1);
+                getSeller(hostinglink + "/Home/getsellers/");
 
-                getconnection(hostinglink+"/Home/getrecommendedproduct/", 2);
+                getconnection(hostinglink + "/Home/getrecommendedproduct/", 2);
 
-                getconnection(hostinglink+"/Home/gettrendingpro/", 3);
+                getconnection(hostinglink + "/Home/gettrendingpro/", 3);
 
 
             }
         });
 
-        getconnection(hostinglink+"/Home/getsellers/", 1);
 
-        getconnection(hostinglink+"/Home/getrecommendedproduct/", 2);
+        getSeller(hostinglink + "/Home/getsellers/");
 
-        getconnection(hostinglink+"/Home/gettrendingpro/", 3);
+        getconnection(hostinglink + "/Home/getrecommendedproduct/", 2);
+
+        getconnection(hostinglink + "/Home/gettrendingpro/", 3);
 
 
         v2 = inflater.inflate(R.layout.cardveiw_item_prod, null);
@@ -133,6 +178,7 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    //For Trending and Recommended
     public void getconnection(String url, final int val) {
 
         RefreshLayout.setRefreshing(false);
@@ -213,6 +259,70 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    //For Seller
+    public void getSeller(String url) {
+        try {
+            final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+
+            StringRequest rRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                GsonBuilder builder = new GsonBuilder();
+                                Gson gson = builder.create();
+                                //For Seller Recycler View
+                                //Array for Book Class
+                                list = Arrays.asList(gson.fromJson(response, Book[].class));
+                                int n = 0;
+                                for (Book i : list) {
+                                    i.setThumbnail(hostinglink + i.getThumbnail());
+                                    // list.remove(n);
+                                    list.set(n, i);
+                                    n++;
+                                }
+                                //Setting Recycler View 1
+                                setrecycleone();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Toast.makeText(getContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // error
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+
+                    params.put("latitude", Latitude);
+                    params.put("longitude", Longitude);
+
+                    //  params.p
+
+                    return params;
+                }
+
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Content-Type", "application/x-www-form-urlencoded");
+                    return params;
+                }
+            };
+            requestQueue.add(rRequest);
+        } catch (
+                Exception E) {
+            RefreshLayout.setRefreshing(false);
+            Toast.makeText(getContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
     public void flipperimages(int image) {
         try {
             ImageView imageView = new ImageView(getContext());
@@ -233,18 +343,15 @@ public class HomeFragment extends Fragment {
         RecyclerView myrv = (RecyclerView) view.findViewById(R.id.recyclerview_id);
         myAdapter = new RecyclerViewAdapter(getActivity(), list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        //  myrv.setLayoutManager(new LinearLayoutManager(getActivity()));
-try {
-    myrv.setLayoutManager(layoutManager);
+        try {
+            myrv.setLayoutManager(layoutManager);
 
-    myrv.setAdapter(myAdapter);
+            myrv.setAdapter(myAdapter);
 
-  //  myrv.wait();
 
-}catch (Exception e)
-{
-    Log.e("Error", " "+e.getMessage());
-}
+        } catch (Exception e) {
+            Log.e("Error", " " + e.getMessage());
+        }
     }
 
     public void setrecycletwo() {
@@ -263,39 +370,40 @@ try {
         myrv3.setAdapter(myAdapter2);
     }
 
-    public void CheckConnection(){
+    public void CheckConnection() {
 
         ConnectivityManager manager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
 
-        if (null != activeNetwork){
-            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI){
-                Toast.makeText(getContext(),"Wifi On",Toast.LENGTH_SHORT).show();
-            }
-            else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE){
-                Toast.makeText(getContext(),"Mobile Data On",Toast.LENGTH_SHORT).show();
+        if (null != activeNetwork) {
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
+                Toast.makeText(getContext(), "Wifi On", Toast.LENGTH_SHORT).show();
+            } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
+                Toast.makeText(getContext(), "Mobile Data On", Toast.LENGTH_SHORT).show();
 
-            }
-            else{
+            } else {
                 Intent intent = new Intent(getContext(), Error_Screen_Activity.class);
                 startActivity(intent);
-                Toast.makeText(getContext(),"No Internet Connection",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
             }
 
         }
 
     }
 
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
         inflater = getActivity().getMenuInflater();
-        inflater.inflate(R.menu.menu_search_setting,menu);
+        inflater.inflate(R.menu.menu_search_setting, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
 
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        try{
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -305,15 +413,69 @@ try {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+
                 myAdapter.getFilter().filter(newText);
                 myAdapter1.getFilter().filter(newText);
                 myAdapter2.getFilter().filter(newText);
+
                 return false;
             }
         });
+        }
+        catch (Exception E) {
+            Toast.makeText(getContext(),E.getMessage(),Toast.LENGTH_LONG).show();
+        }
+
     }
 
+    //To get User Location and Coordinates
+    public void getlocation() {
+        mLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
 
+                Location location = task.getResult();
+                if (location != null){
+                    Geocoder geocoder = new Geocoder(getContext(),
+                            Locale.getDefault());
+                    try {
+                        List<Address> addresses = geocoder.getFromLocation(
+                                location.getLatitude(),location.getLongitude(),1
+
+                        );
+
+                        Latitude = String.valueOf(addresses.get(0).getLatitude());
+                        Longitude = String.valueOf(addresses.get(0).getLongitude());
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+    //To check if GPS is enabled
+    public void CheckGps(){
+
+        mLocationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+
+        try {
+            gps_enabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch(Exception ex) {}
+
+
+        if(!gps_enabled) {
+            // notify user
+
+            Toast.makeText(getContext(), "GPS IS NOT ENABLED", Toast.LENGTH_LONG).show();
+
+        }
+        else{
+            Toast.makeText(getContext(), "GPS IS ENABLED", Toast.LENGTH_SHORT).show();
+        }
+
+    }
 
 
 }

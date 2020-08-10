@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,20 +28,6 @@ import com.android.volley.toolbox.Volley;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.demotxt.myapp.recyclerview.R;
-import com.demotxt.myapp.recyclerview.ownmodels.Book;
-import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
-import com.demotxt.myapp.recyclerview.productlist.ShoppyProductListActivity;
-import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,7 +43,8 @@ import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
 
 
 public class Login extends AppCompatActivity {
-    TextView signup, signin;
+    TextView signup;
+    Button signin;
     private EditText email, pass;
     AwesomeValidation awesomeValidation;
 
@@ -68,11 +56,6 @@ public class Login extends AppCompatActivity {
     private SharedPreferences.Editor cartlistprefeditor;
     private int proid;
     public Set<String> cartids;
-    //facebook
-    private LoginButton mLoginButton;
-    private CallbackManager mCallbackManager;
-    private  StringResponceFromWeb result;
-    private View layout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -94,7 +77,7 @@ public class Login extends AppCompatActivity {
 
         cartids = new HashSet<String>();
 
-        signin = (TextView) findViewById(R.id.signin1);
+        signin = (Button) findViewById(R.id.signin1);
 
         signup = (TextView) findViewById(R.id.signup);
 
@@ -102,31 +85,6 @@ public class Login extends AppCompatActivity {
 
         pass = (EditText) findViewById(R.id.passwordd);
         checkBoxremember = (CheckBox) findViewById(R.id.checkboxremember);
-
-        //facebook
-        mLoginButton = findViewById(R.id.login_button);
-
-        mCallbackManager = CallbackManager.Factory.create();
-        mLoginButton.setPermissions(Arrays.asList("email", "public_profile"));
-
-        mLoginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-
-            }
-        });
-
-        //
 
         cartlistpref = getSharedPreferences("cartprefs", MODE_PRIVATE);//get cartpreferences that contains cartitemlist
 
@@ -430,44 +388,5 @@ public class Login extends AppCompatActivity {
             rememberMePrefsEditor.commit();
         }
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        mCallbackManager.onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
-    AccessTokenTracker mTokenTracker = new AccessTokenTracker() {
-        @Override
-        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-
-            loadUserProfile(currentAccessToken);
-        }
-    };
-
-    private void loadUserProfile(AccessToken newAccessToken) {
-        GraphRequest request = GraphRequest.newMeRequest(newAccessToken, new GraphRequest.GraphJSONObjectCallback() {
-            @Override
-            public void onCompleted(JSONObject object, GraphResponse response) {
-
-                try {
-                    String first_name = object.getString("first_name");
-                    String last_name = object.getString("last_name");
-                    String email = object.getString("email");
-                    String id = object.getString("id");
-                    String image_url = "https://graph.facebook.com/" + id + "/picture?type=normal";
-
-                    //
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "first_name,last_name,email,id");
-        request.setParameters(parameters);
-        request.executeAsync();
-    }
 }

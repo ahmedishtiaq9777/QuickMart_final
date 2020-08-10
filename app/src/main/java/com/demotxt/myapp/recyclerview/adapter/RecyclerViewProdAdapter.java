@@ -71,7 +71,7 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
         isblack=cartpreferrence.getBoolean(strID,false);
         if(isblack==true)
         {
-            holder.heart.setImageResource(R.drawable.ic_favorite_black_24dp);
+            holder.heart.setImageResource(R.drawable.ic_favorite_fill_24dp);
         }
 
         holder.tv_book_title.setText(Data1.get(position).getTitle());
@@ -113,7 +113,7 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
 
 
                     }else {
-                        holder.heart.setImageResource(R.drawable.ic_favorite_black_24dp);
+                        holder.heart.setImageResource(R.drawable.ic_favorite_fill_24dp);
                         cartprefEditor.putBoolean(strID,true);
                         ids.add(strID);
 

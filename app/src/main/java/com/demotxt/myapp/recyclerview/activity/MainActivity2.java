@@ -29,7 +29,6 @@ import com.demotxt.myapp.recyclerview.utils.Tools;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity2 extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
-
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
     private int Check;
@@ -95,7 +94,7 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         }
 
 
-        navView = findViewById(R.id.nav_view);
+        navView = (BottomNavigationView) findViewById(R.id.nav_view);
 
 try {
     navView.setOnNavigationItemSelectedListener(this);
@@ -176,19 +175,24 @@ String backstackname=null;
         Fragment fragment = null;
         switch (menuItem.getItemId()) {
             case R.id.nav_home:
+                navView.setBackgroundColor(getResources().getColor(R.color.blue_400));
                 fragment = new HomeFragment();
                 backstackname="homestack";
                 break;
             case R.id.nav_favourite:
+
+                navView.setBackgroundColor(getResources().getColor(R.color.blue_300));
                 fragment = new FavoriteFragment();
                 backstackname="favstack";
                 break;
             case R.id.nav_cart:
+                 navView.setBackgroundColor(getResources().getColor(R.color.blue_200));
                 fragment = new CartFragment();
                 backstackname="cartstack";
                 break;
 
             case R.id.nav_acc:
+                navView.setBackgroundColor(getResources().getColor(R.color.blue_100));
                 if (getloginprefference() == true) {
                     fragment = new ProfileFragment();
                     backstackname="profilestack";

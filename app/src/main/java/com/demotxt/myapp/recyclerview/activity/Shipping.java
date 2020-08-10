@@ -3,20 +3,14 @@ package com.demotxt.myapp.recyclerview.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -27,31 +21,17 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
-import com.demotxt.myapp.recyclerview.MainActivity;
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.ownmodels.ShippingModel;
 import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
 import com.demotxt.myapp.recyclerview.shoppycartlist.CartListBeanlist;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import kotlin.text.Regex;
 
 import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
 import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
@@ -84,7 +64,7 @@ Userid=String.valueOf(loginpref.getInt("userid",0));
 
 
         awesomeValidation.addValidation(Shipping.this, R.id.nameShip, "[a-zA-Z\\s]+", R.string.error_name);
-        awesomeValidation.addValidation(Shipping.this, R.id.contactShip, "^[0-9]{11}", R.string.error_contact);
+        awesomeValidation.addValidation(Shipping.this, R.id.contactShip, "^((\\+92)|(0092))-{0,1}\\d{3}-{0,1}\\d{7}$|^\\d{11}$|^\\d{4}-\\d{7}$", R.string.error_contact);
         awesomeValidation.addValidation(Shipping.this, R.id.emailShip, android.util.Patterns.EMAIL_ADDRESS.toString(), R.string.error_email);
         awesomeValidation.addValidation(Shipping.this, R.id.contactShip, "^[0-9]{11}", R.string.error_contact);
         awesomeValidation.addValidation(Shipping.this, R.id.addShip, RegexTemplate.NOT_EMPTY, R.string.error_address);
@@ -98,7 +78,7 @@ Userid=String.valueOf(loginpref.getInt("userid",0));
         t3=(EditText) findViewById(R.id.contactShip);
         t4=(EditText) findViewById(R.id.addShip);
         t5=(EditText) findViewById(R.id.zipShip);
-        city=(Spinner) findViewById(R.id.city);
+
 
 
 
