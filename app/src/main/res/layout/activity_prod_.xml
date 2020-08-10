@@ -284,7 +284,6 @@
 
                     <Button
                         android:id="@+id/Submit_Btn"
-                        style="@style/com_facebook_button"
                         android:background="@drawable/button_border"
                         android:backgroundTint="@color/buttonbg"
                         android:layout_width="wrap_content"
