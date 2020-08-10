@@ -67,7 +67,7 @@ public class CatMen_Adapter extends RecyclerView.Adapter<CatMen_Adapter.CatMenVi
         String strID = String.valueOf(ID);
         isblack = cartpreferrence.getBoolean(strID, false);
         if (isblack == true) {
-            holder.heart.setImageResource(R.drawable.ic_favorite_black_24dp);
+            holder.heart.setImageResource(R.drawable.ic_favorite_fill_24dp);
         }
 
         holder.tv_men_title.setText(mData.get(position).getTitle());
@@ -111,7 +111,7 @@ public class CatMen_Adapter extends RecyclerView.Adapter<CatMen_Adapter.CatMenVi
 
 
                     } else {
-                        holder.heart.setImageResource(R.drawable.ic_favorite_black_24dp);
+                        holder.heart.setImageResource(R.drawable.ic_favorite_fill_24dp);
                         cartprefEditor.putBoolean(strID, true);
                         ids.add(strID);
                         //  Log.i("message", "length: " +ids.size());

@@ -69,7 +69,7 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
         String strID = String.valueOf(ID);
         isblack = cartpreferrence.getBoolean(strID, false);
         if (isblack == true) {
-            holder.heart.setImageResource(R.drawable.ic_favorite_black_24dp);
+            holder.heart.setImageResource(R.drawable.ic_favorite_fill_24dp);
         }
 
         holder.tv_r3_title.setText(Data2.get(position).getTitle());
@@ -109,7 +109,7 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
 
 
                     } else {
-                        holder.heart.setImageResource(R.drawable.ic_favorite_black_24dp);
+                        holder.heart.setImageResource(R.drawable.ic_favorite_fill_24dp);
                         cartprefEditor.putBoolean(strID, true);
                         ids.add(strID);
                         //  Log.i("message", "length: " +ids.size());

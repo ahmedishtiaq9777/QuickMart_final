@@ -9,12 +9,15 @@ public class Book {
     private String Thumbnail;
     @SerializedName("userId")
     private int id;
+    @SerializedName("d_kilometers")
+    private String Distance;
 
 
-    public Book(String title, String thumbnail,int uid) {
+    public Book(String title, String thumbnail,int uid,float dist) {
         Title = title;
         Thumbnail = thumbnail;
         id=uid;
+        Distance = String.valueOf(dist);
 
     }
 
@@ -36,6 +39,14 @@ public class Book {
 
     public void setThumbnail(String thumbnail) {
         Thumbnail = thumbnail;
+    }
+
+    public String getDistance() {
+        return Distance;
+    }
+
+    public void setDistance(String distance) {
+       Distance = distance;
     }
 
 }

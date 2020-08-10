@@ -1,10 +1,15 @@
 package com.demotxt.myapp.recyclerview.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -23,17 +28,9 @@ import com.android.volley.toolbox.Volley;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.demotxt.myapp.recyclerview.R;
-import com.demotxt.myapp.recyclerview.ownmodels.Book;
-import com.demotxt.myapp.recyclerview.productlist.ShoppyProductListActivity;
-import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
+import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,7 +46,8 @@ import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
 
 
 public class Login extends AppCompatActivity {
-    TextView signup, signin;
+    TextView signup;
+    Button signin;
     private EditText email, pass;
     AwesomeValidation awesomeValidation;
 
@@ -61,17 +59,30 @@ public class Login extends AppCompatActivity {
     private SharedPreferences.Editor cartlistprefeditor;
     private int proid;
     public Set<String> cartids;
-    //facebook
-    private LoginButton mLoginButton;
-    private CallbackManager mCallbackManager;
+    StringResponceFromWeb result;
+    View layout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitylogin);
+        result=new StringResponceFromWeb();
+
+        LayoutInflater inflater = getLayoutInflater();
+        try{
+            layout = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toast_layout_root));//for product added :to make custom toast with tick mark
+
+        }catch (Exception e)
+        {
+            Toast.makeText(getApplicationContext(),"ERROR:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+            Log.i("Loginactivity","error"+e.getMessage());
+
+        }
+
+
         cartids = new HashSet<String>();
 
-        signin = (TextView) findViewById(R.id.signin1);
+        signin = (Button) findViewById(R.id.signin1);
 
         signup = (TextView) findViewById(R.id.signup);
 
@@ -79,31 +90,6 @@ public class Login extends AppCompatActivity {
 
         pass = (EditText) findViewById(R.id.passwordd);
         checkBoxremember = (CheckBox) findViewById(R.id.checkboxremember);
-
-        //facebook
-        mLoginButton = findViewById(R.id.login_button);
-
-        mCallbackManager = CallbackManager.Factory.create();
-        mLoginButton.setPermissions(Arrays.asList("email", "public_profile"));
-
-        mLoginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-
-            }
-        });
-
-        //
 
         cartlistpref = getSharedPreferences("cartprefs", MODE_PRIVATE);//get cartpreferences that contains cartitemlist
 
@@ -184,10 +170,12 @@ public class Login extends AppCompatActivity {
                                             }
 
                                             if (pid != -1) {
-                                                AddToCart(pid);
+                                                String struserid=String.valueOf(loginpref.getInt("userid",0));
+                                                String  strpid=String.valueOf(pid);
+                                                AddToCart(struserid,strpid);
                                                 // finish();
                                                 Intent mainactivity2 = new Intent(Login.this, MainActivity2.class);
-                                                mainactivity2.putExtra("code", 5);
+                                              //  mainactivity2.putExtra("code", 5);
                                                 startActivity(mainactivity2);
                                             }else if(login_from_profile)
                                             { Intent mainactivity2 = new Intent(Login.this, MainActivity2.class);
@@ -266,6 +254,15 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent it = new Intent(Login.this, Signup.class);
+                try {
+                    Intent i = getIntent();
+                    int pid = i.getExtras().getInt("proid");
+                    it.putExtra("proid", pid);
+                }catch (Exception e)
+                {
+
+                    Log.i("Signupfromprofile","intent in login for proid:"+e.getMessage());
+                }
                 startActivity(it);
 
             }
@@ -273,6 +270,106 @@ public class Login extends AppCompatActivity {
 
     }
 
+
+
+
+    public void AddToCart(final String struserid, final String strpid)
+    {
+        try{
+
+            final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+            // String url = "http:// 192.168.10.13:64077/api/login";
+            //String url="https://api.myjson.com/bins/kp9wz";
+            String url = hostinglink +"/Home/AddtoCart";
+
+            StringRequest rRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                            GsonBuilder builder = new GsonBuilder();
+                            Gson gson = builder.create();
+                            result=gson.fromJson(response, StringResponceFromWeb.class);
+                            if(result.getresult().equals("Added"))
+                            {
+
+
+                                Toast toast = new Toast(getApplicationContext());
+                                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                                toast.setDuration(Toast.LENGTH_SHORT);
+                                toast.setView(layout);
+                                toast.show();
+
+
+                                // Toast.makeText(getApplicationContext(), "Product Added to Cart" , Toast.LENGTH_SHORT).show();
+
+
+                            } else if (result.getresult().equals("AllreadyAdded")) {
+                                // Toast.makeText(getApplicationContext(), "Product is Already Added", Toast.LENGTH_LONG).show();
+                                // response
+                                try {
+                                    AlertDialog.Builder builder1 = new AlertDialog.Builder(Login.this);
+                                    builder1.setTitle("Already Added");
+                                    builder1.setMessage("Your product is Already Added to Cart!");
+
+                                    builder1 .setIcon(R.drawable.exclamationmarkresize);
+                                    // builder1.show();
+                                    AlertDialog alert11 = builder1.create();
+
+                                    alert11.show();
+                                    Thread.sleep(3000);
+                               //   Intent main=new Intent(Login.this,MainActivity2.class);
+                                 // startActivity(main);
+
+                                } catch (Exception e) {
+                                    Log.i("error:", e.getMessage());
+                                    Toast.makeText(getApplicationContext(), "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                }
+
+
+
+
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // error
+                            Log.i("APIERROR", error.getMessage());
+                            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            ) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+
+                    params.put("productId", strpid);
+                    params.put("userId", struserid);
+
+                    return params;
+                }
+
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Content-Type", "application/x-www-form-urlencoded");
+                    return params;
+                }
+            };
+
+            requestQueue.add(rRequest);
+
+
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(), "Error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
+/*
     public void AddToCart(int id) {
         String strid = String.valueOf(id);
         cartids.add(strid);
@@ -280,7 +377,7 @@ public class Login extends AppCompatActivity {
         cartlistprefeditor.commit();
         cartlistprefeditor.putStringSet("cartids", cartids);
         cartlistprefeditor.commit();
-    }
+    }*/
 
     public void saveloginPrefference(int uid) {
 
@@ -296,44 +393,5 @@ public class Login extends AppCompatActivity {
             rememberMePrefsEditor.commit();
         }
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        mCallbackManager.onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
-    AccessTokenTracker mTokenTracker = new AccessTokenTracker() {
-        @Override
-        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-
-            loadUserProfile(currentAccessToken);
-        }
-    };
-
-    private void loadUserProfile(AccessToken newAccessToken) {
-        GraphRequest request = GraphRequest.newMeRequest(newAccessToken, new GraphRequest.GraphJSONObjectCallback() {
-            @Override
-            public void onCompleted(JSONObject object, GraphResponse response) {
-
-                try {
-                    String first_name = object.getString("first_name");
-                    String last_name = object.getString("last_name");
-                    String email = object.getString("email");
-                    String id = object.getString("id");
-                    String image_url = "https://graph.facebook.com/" + id + "/picture?type=normal";
-
-                    //
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "first_name,last_name,email,id");
-        request.setParameters(parameters);
-        request.executeAsync();
-    }
 }

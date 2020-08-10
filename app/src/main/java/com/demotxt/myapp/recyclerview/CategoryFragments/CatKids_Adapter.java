@@ -66,7 +66,7 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
         String strID = String.valueOf(ID);
         isblack = cartpreferrence.getBoolean(strID, false);
         if (isblack == true) {
-            holder.heart.setImageResource(R.drawable.ic_favorite_black_24dp);
+            holder.heart.setImageResource(R.drawable.ic_favorite_fill_24dp);
         }
 
         holder.tv_kids_title.setText(mData.get(position).getTitle());
@@ -113,7 +113,7 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
 
 
                     } else {
-                        holder.heart.setImageResource(R.drawable.ic_favorite_black_24dp);
+                        holder.heart.setImageResource(R.drawable.ic_favorite_fill_24dp);
                         cartprefEditor.putBoolean(strID, true);
                         ids.add(strID);
                         //  Log.i("message", "length: " +ids.size());

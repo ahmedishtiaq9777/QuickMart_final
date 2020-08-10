@@ -1,6 +1,8 @@
 package com.demotxt.myapp.recyclerview.fragment;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,6 +35,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.Fragment;
 
@@ -46,9 +49,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.Order.Order_Activity;
 import com.demotxt.myapp.recyclerview.R;
+import com.demotxt.myapp.recyclerview.activity.Login;
 import com.demotxt.myapp.recyclerview.activity.Signup;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomDialoag;
+import com.demotxt.myapp.recyclerview.ownmodels.CustomInternetDialog;
+import com.demotxt.myapp.recyclerview.ownmodels.ImageFilePath;
 import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
+
+import com.demotxt.myapp.recyclerview.sharepref.SharedPref;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
@@ -63,35 +71,39 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import butterknife.BindView;
+
+import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
 import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
 
 
 public class ProfileFragment extends Fragment {
 
-   // private SharedPref sharedPref;
+    // private SharedPref sharedPref;
 
     TextView username;
     ImageView phtotimage;
     TextView login, signup;
-    TextView logout;
-    CardView btn_order_history,btn_notification, btn_privacy, dark, language,setting, fav,cart, exit;
+    ImageView logout;
+    Dialog popup;
+    CardView btn_order_history,notification, btn_privacy, dark, language, setting, fav, cart, exit;
+    LinearLayout lyt_root;
     LinearLayout linearLayoutfornotlogin;
-    ConstraintLayout  linearLayoutforloggenin;
-    private SharedPreferences  loginpref;
-    SharedPreferences.Editor  loginprefeditor;
-    LottieAnimationView o,s,l,d,f,c,p,e;
+    ConstraintLayout linearLayoutforloggenin;
 
 
-
-
+    private SharedPreferences loginpref;
+    SharedPreferences.Editor loginprefeditor;
+    LottieAnimationView o, s, l, d, f, c, p, e;
     private String userid;
     private boolean islogin;
-    public boolean isAnimated = false;
-    public boolean isSwitchOn = false;
     StringResponceFromWeb result;
     StringResponceFromWeb result2;
     String filename;
+    public static boolean file_islarge;
+    public File file;
+
     public static final int PICK_PHOTO_FOR_AVATAR = 2;
     public static final int PIC_CROP = 1;
 
@@ -115,36 +127,22 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //selectphoto();
+        file_islarge = false;
         loadLocale(getContext());
-
-
-
-        // Fragment fragment=null;
-           //  fragment=   new ProfileSubFragment();
-//loadsubFragment(fragment);
-       // sharedPref = new SharedPref(getActivity());
-
-       ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
 
         final View view = inflater.inflate(R.layout.profilefragment, container, false);
 
 
-        //  sharedPref = new SharedPref(getActivity());
-/*
-        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();*/
-
-      //  lyt_root = view.findViewById(R.id.lyt_root);
-       // if (Config.ENABLE_RTL_MODE) {
-       //     lyt_root.setRotationY(180);
-       // }
         loginpref = getContext().getSharedPreferences("loginpref", MODE_PRIVATE);
-        loginprefeditor=loginpref.edit();
-        userid=String.valueOf(loginpref.getInt("userid",0));
+        loginprefeditor = loginpref.edit();
+        userid = String.valueOf(loginpref.getInt("userid", 0));
         //txt_user_name = view.findViewById(R.id.txt_user_name);
         //txt_user_email = view.findViewById(R.id.txt_user_email);
         //txt_user_phone = view.findViewById(R.id.txt_user_phone);
         //txt_user_address = view.findViewById(R.id.txt_user_address);
-        username=view.findViewById(R.id.username);
+        username = view.findViewById(R.id.username);
+
         o = view.findViewById(R.id.ORDER);
         s = view.findViewById(R.id.NOTIY);
         l = view.findViewById(R.id.LANGUAGE);
@@ -153,92 +151,76 @@ public class ProfileFragment extends Fragment {
         c = view.findViewById(R.id.CART);
         p = view.findViewById(R.id.PRIVACY);
         e = view.findViewById(R.id.EXIT);
-
-
+        notification= view.findViewById(R.id.NotificationCard);
         btn_order_history = view.findViewById(R.id.OrderHistoryCard);
-        btn_notification = view.findViewById(R.id.NotificationCard);
-        phtotimage=view.findViewById(R.id.selectimage);
-        signup=view.findViewById(R.id.signup);
+        phtotimage = view.findViewById(R.id.selectimage);
+        signup = view.findViewById(R.id.signup);
         language = view.findViewById(R.id.LanguageCard);
-        linearLayoutfornotlogin=(LinearLayout) view.findViewById(R.id.fornotloggedin);
-        linearLayoutforloggenin=(ConstraintLayout) view.findViewById(R.id.forloggedin);
+        linearLayoutfornotlogin = (LinearLayout) view.findViewById(R.id.fornotloggedin);
+        linearLayoutforloggenin = (ConstraintLayout) view.findViewById(R.id.forloggedin);
 
-         islogin=loginpref.getBoolean("loggedin",false);
-         if(islogin)
-         {
-           linearLayoutfornotlogin.setVisibility(View.GONE);
-           linearLayoutforloggenin.setVisibility(View.VISIBLE);
-           btn_order_history.setVisibility(View.VISIBLE);
-           btn_notification.setVisibility(View.VISIBLE);
-           GetProfile(hostinglink +"/Home/GetProfile");
-         }
-         else
-         {
-             linearLayoutforloggenin.setVisibility(View.GONE);
-             linearLayoutfornotlogin.setVisibility(View.VISIBLE);
-             btn_order_history.setVisibility(View.GONE);
-             btn_notification.setVisibility(View.GONE);
-         }
-       //  txt_user_name.setText(sharedPref.getYourName());
-       // txt_user_email.setText(sharedPref.getYourEmail());
-        //txt_user_address.setText(sharedPref.getYourAddress());
-        //txt_user_phone.setText(sharedPref.getYourPhone());
+        islogin = loginpref.getBoolean("loggedin", false);
+        if (islogin) {
+            linearLayoutfornotlogin.setVisibility(View.GONE);
+            linearLayoutforloggenin.setVisibility(View.VISIBLE);
+            btn_order_history.setVisibility(View.VISIBLE);
+            notification.setVisibility(View.VISIBLE);
+            GetProfile(hostinglink + "/Home/GetProfile");
 
-    /*    login.setOnClickListener(new View.OnClickListener() {
+        } else {
+            linearLayoutforloggenin.setVisibility(View.GONE);
+            linearLayoutfornotlogin.setVisibility(View.VISIBLE);
+            btn_order_history.setVisibility(View.GONE);
+            notification.setVisibility(View.GONE);
+        }
+
+
+        signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), Login.class);
-                intent.putExtra("loginfromprofile",true);
+                Intent intent = new Intent(getActivity(), Login.class);
+                intent.putExtra("loginfromprofile", true);
                 startActivity(intent);
             }
-        });*/
-        signup.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        Intent intent=new Intent(getActivity(), Signup.class);
-        startActivity(intent);
-             }
         });
         phtotimage.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        selectphoto();
-    }
-});
+            @Override
+            public void onClick(View v) {
+                selectphoto();
+            }
+        });
 
-        logout= view.findViewById(R.id.logout);
+
+        logout = view.findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loginprefeditor.putBoolean("loggedin", false);
-               // loginprefeditor.putInt("userid", uid);
+                // loginprefeditor.putInt("userid", uid);
 
                 loginprefeditor.remove("userid");
                 loginprefeditor.commit();
                 linearLayoutforloggenin.setVisibility(View.GONE);
                 linearLayoutfornotlogin.setVisibility(View.VISIBLE);
                 btn_order_history.setVisibility(View.GONE);
+                notification.setVisibility(View.GONE);
 
-               /* Intent intent = new Intent(getActivity(), UsersettingFragment.class);
-                startActivity(intent);*/
-                ///FragmentTransaction ft=getChildFragmentManager().beginTransaction();
-                // UsersettingFragment user=new UsersettingFragment();
-                // ft.replace(R.id.lyt_root,user);
             }
         });
 
         //For Order history
         btn_order_history.setOnClickListener(new View.OnClickListener() {
+            boolean isAnimated;
 
             @Override
             public void onClick(View view) {
-                if (!isAnimated){
+                if (!isAnimated) {
                     p.playAnimation();
-                    p.setSpeed(3f);
-                    isAnimated=true;}
-                else {
+                    p.setSpeed(5);
+                    isAnimated = true;
+                } else {
                     p.cancelAnimation();
-                    isAnimated=false;
+                    isAnimated = false;
                 }
                 Intent intent = new Intent(getActivity(), Order_Activity.class);
                 startActivity(intent);
@@ -248,21 +230,20 @@ public class ProfileFragment extends Fragment {
         });
 
 
-
-
         //For Privacy Policy
         btn_privacy = view.findViewById(R.id.PrivacyCard);
         btn_privacy.setOnClickListener(new View.OnClickListener() {
+            boolean isAnimated;
 
             @Override
             public void onClick(View view) {
-                if (!isAnimated){
+                if (!isAnimated) {
                     p.playAnimation();
-                    p.setSpeed(3f);
-                    isAnimated=true;}
-                else {
+                    p.setSpeed(6);
+                    isAnimated = true;
+                } else {
                     p.cancelAnimation();
-                    isAnimated=false;
+                    isAnimated = false;
                 }
                 String share_text = Html.fromHtml(getResources().getString(R.string.Privacy_Policy)).toString();
                 Intent intent = new Intent();
@@ -274,18 +255,19 @@ public class ProfileFragment extends Fragment {
         });
 
 
-        //For  Notification
+        //For  settings
         setting = view.findViewById(R.id.NotificationCard);
         setting.setOnClickListener(new View.OnClickListener() {
+            boolean isAnimated;
 
             @Override
             public void onClick(View v) {
-                if (!isAnimated){
+                if (!isAnimated) {
                     s.playAnimation();
-                    isAnimated=true;}
-                else {
+                    isAnimated = true;
+                } else {
                     s.cancelAnimation();
-                    isAnimated=false;
+                    isAnimated = false;
                 }
 
             }
@@ -294,16 +276,17 @@ public class ProfileFragment extends Fragment {
         //For Language settings
         language = view.findViewById(R.id.LanguageCard);
         language.setOnClickListener(new View.OnClickListener() {
+            boolean isAnimated;
 
             @Override
             public void onClick(View v) {
-                if (!isAnimated){
+                if (!isAnimated) {
                     l.playAnimation();
                     l.setSpeed(9);
-                    isAnimated=true;}
-                else {
+                    isAnimated = true;
+                } else {
                     l.cancelAnimation();
-                    isAnimated=false;
+                    isAnimated = false;
                 }
 
                 showChangeLanguageDialog();
@@ -313,17 +296,17 @@ public class ProfileFragment extends Fragment {
         //For Favourite
         fav = view.findViewById(R.id.FavouriteCard);
         fav.setOnClickListener(new View.OnClickListener() {
+            boolean isAnimated;
 
             @Override
 
             public void onClick(View v) {
-                if (!isAnimated){
+                if (!isAnimated) {
                     f.playAnimation();
-                    isAnimated=true;
-                }
-                else {
+                    isAnimated = true;
+                } else {
                     f.cancelAnimation();
-                    isAnimated=false;
+                    isAnimated = false;
                 }
 
                 Fragment fragment = null;
@@ -336,15 +319,16 @@ public class ProfileFragment extends Fragment {
         //For Cart
         cart = view.findViewById(R.id.CartCard);
         cart.setOnClickListener(new View.OnClickListener() {
+            boolean isAnimated;
 
             @Override
             public void onClick(View v) {
-                if (!isAnimated){
+                if (!isAnimated) {
                     c.playAnimation();
-                    isAnimated=true;}
-                else {
+                    isAnimated = true;
+                } else {
                     c.cancelAnimation();
-                    isAnimated=false;
+                    isAnimated = false;
                 }
                 Fragment fragment = null;
                 fragment = new CartFragment();
@@ -353,59 +337,49 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+
         //For Darkmode
-        dark= view.findViewById(R.id.DarkModeCard);
+        dark = view.findViewById(R.id.DarkModeCard);
         dark.setOnClickListener(new View.OnClickListener() {
+            boolean isAnimated;
 
             @Override
             public void onClick(View v) {
-                if (!isAnimated){
-                    d.playAnimation();
-                    isAnimated=true;}
-                else {
-                    d.cancelAnimation();
-                    isAnimated=false;
-                }
+                Toast.makeText(getContext(), "onclick", Toast.LENGTH_SHORT).show();
 
-               try
-                {
+                try {
+
                     CustomDialoag dialoag = new CustomDialoag(getActivity());
                     dialoag.showCustomDialog();
-                }
-                catch (Exception e)
-                {
-                    Toast.makeText(getContext(),"error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
-                    Log.i("error in profile","error:"+e.getMessage());
-                }
+                } catch (Exception e) {
 
+                    Toast.makeText(getContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.i("error in profile", "error:" + e.getMessage());
+                }
             }
         });
-
 
         //For Exiting the App
         exit = view.findViewById(R.id.ExitCard);
         exit.setOnClickListener(new View.OnClickListener() {
             boolean isAnimated;
+
             @Override
             public void onClick(View v) {
-                if (!isAnimated){
+                if (!isAnimated) {
                     e.playAnimation();
                     e.setSpeed(22);
-                    isAnimated=true;}
-                else {
+                    isAnimated = true;
+                } else {
                     e.cancelAnimation();
-                    isAnimated=false;
+                    isAnimated = false;
                 }
 
                 System.exit(0);
-
             }
         });
         return view;
     }
-
-
-
 
     private void showChangeLanguageDialog() {
 
@@ -415,10 +389,10 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int i) {
                 if (i == 0) {
-                    setLocale("en",getContext());
+                    setLocale("en", getContext());
                     getActivity().recreate();
                 } else if (i == 1) {
-                    setLocale("ur",getContext());
+                    setLocale("ur", getContext());
                     getActivity().recreate();
                 }
                 dialog.dismiss();
@@ -429,7 +403,7 @@ public class ProfileFragment extends Fragment {
         mDialog.show();
     }
 
-    private  static void setLocale(String lang,Context context) {
+    private static void setLocale(String lang, Context context) {
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
@@ -446,26 +420,109 @@ public class ProfileFragment extends Fragment {
 
         SharedPreferences pref = cX.getSharedPreferences("Settings", MODE_PRIVATE);
         String lan = pref.getString("My_Lang", "");
-        setLocale(lan,cX);
+        setLocale(lan, cX);
     }
 
 
+    public String calculateFileSize(String pth) {
+        //String filepathstr=filepath.toString();
+
+        File file = new File(pth);
+
+        float fileSizeInKB = file.length() / 1024;
+        // Convert the KB to MegaBytes (1 MB = 1024 KBytes)
+        //  float fileSizeInMB = fileSizeInKB / 1024;
+
+        String calString = Float.toString(fileSizeInKB);
+        return calString;
+    }
 
 
-public  void selectphoto(){
+    public static Bitmap scaleImage(Context context, Uri photoUri) throws IOException {
+        InputStream is = context.getContentResolver().openInputStream(photoUri);
+        BitmapFactory.Options dbo = new BitmapFactory.Options();
+        dbo.inJustDecodeBounds = true;
+        BitmapFactory.decodeStream(is, null, dbo);
+        is.close();
+
+        int rotatedWidth, rotatedHeight;
+        int orientation = getOrientation(context, photoUri);
+
+        if (orientation == 90 || orientation == 270) {
+            rotatedWidth = dbo.outHeight;
+            rotatedHeight = dbo.outWidth;
+        } else {
+            rotatedWidth = dbo.outWidth;
+            rotatedHeight = dbo.outHeight;
+        }
+
+        Bitmap srcBitmap;
+        is = context.getContentResolver().openInputStream(photoUri);
+        if (rotatedWidth > 600 || rotatedHeight > 600) {
+            float widthRatio = ((float) rotatedWidth) / ((float) 600);
+            float heightRatio = ((float) rotatedHeight) / ((float) 600);
+            float maxRatio = Math.max(widthRatio, heightRatio);
+
+            // Create the bitmap from file
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = (int) maxRatio;
+            srcBitmap = BitmapFactory.decodeStream(is, null, options);
+        } else {
+            srcBitmap = BitmapFactory.decodeStream(is);
+        }
+        is.close();
+
+        /*
+         * if the orientation is not 0 (or -1, which means we don't know), we
+         * have to do a rotation.
+         */
+        if (orientation > 0) {
+            Matrix matrix = new Matrix();
+            matrix.postRotate(orientation);
+
+            srcBitmap = Bitmap.createBitmap(srcBitmap, 0, 0, srcBitmap.getWidth(),
+                    srcBitmap.getHeight(), matrix, true);
+        }
+
+        String type = context.getContentResolver().getType(photoUri);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        if (type.equals("image/png")) {
+            srcBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        } else if (type.equals("image/jpg") || type.equals("image/jpeg")) {
+            srcBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        }
+        byte[] bMapArray = baos.toByteArray();
+        baos.close();
+        return BitmapFactory.decodeByteArray(bMapArray, 0, bMapArray.length);
+    }
+
+    public static int getOrientation(Context context, Uri photoUri) {
+        /* it's on the external media. */
+        Cursor cursor = context.getContentResolver().query(photoUri,
+                new String[]{MediaStore.Images.ImageColumns.ORIENTATION}, null, null, null);
+
+        if (cursor.getCount() != 1) {
+            return -1;
+        }
+
+        cursor.moveToFirst();
+        return cursor.getInt(0);
+    }
+
+    public void selectphoto() {
 
 
-   Intent intent = new Intent(Intent.ACTION_GET_CONTENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-   // Intent intent = new Intent(Intent.ACTION_PICK);
-    intent.setType("image/*");
-    startActivityForResult(intent, PICK_PHOTO_FOR_AVATAR);
-}
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        // Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, PICK_PHOTO_FOR_AVATAR);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-     //   super.onActivityResult(requestCode, resultCode, data);
+        //   super.onActivityResult(requestCode, resultCode, data);
 
-       super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
 
 
         if (requestCode == PICK_PHOTO_FOR_AVATAR && resultCode == Activity.RESULT_OK) {
@@ -474,82 +531,74 @@ public  void selectphoto(){
                 return;
             }
             try {
-                Uri uri=data.getData();
-                filename=getFileName(uri);
+                Uri uri = data.getData();
+                Bitmap bitmap3 = scaleImage(getContext(), uri);
+                //  File dir = Environment.getExternalStorageDirectory();
+                //String path = dir.getAbsolutePath();
+                String realPath = ImageFilePath.getPath(getActivity(), data.getData());
+                // Toast.makeText(getContext(),"Path:"+realPath,Toast.LENGTH_SHORT).show();
+
+                String size = calculateFileSize(realPath);
+//Toast.makeText(getContext(),"size:"+size,Toast.LENGTH_SHORT).show();
+                Log.i("Profile fragment", "size:" + size);
+                double sizeinkb = Double.parseDouble(size);
+                if (sizeinkb < 600)
+                    file_islarge = false;
+                else
+                    file_islarge = true;
+                //  String PATH=getImagePath(uri);
+                /* file = new File(realPath);
+                Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());*/   // way to get bitmap  from file
+                // Uri u=file.toURI(uri.toString());
+                // Toast.makeText(getActivity(),"sizeee: "+file.length(),Toast.LENGTH_SHORT).show();
+
+               /*Long flength = file.length();
+                if (flength < 1000000) {
+                    file_islarge = true;
+                } else
+                    file_islarge = false;
+*/
+                filename = getFileName(uri);
+                if (!file_islarge) {
+
+
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+                    phtotimage.setImageBitmap(bitmap);
+
+                    phtotimage.setVisibility(View.VISIBLE);
+                    try {
+                        String bitMapToString = BitMapToString(bitmap);
+                        UploadProfile(hostinglink + "/Home/UploadProfile", bitMapToString, filename);
+                    } catch (Exception e) {
+                        Toast.makeText(getContext(), "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+
+                } else {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+                    file = new File(realPath);//
+
+
+                    phtotimage.setImageBitmap(bitmap3);
+                    // bitmap2.recycle();
+
+                    //  Bitmap resized = Bitmap.createScaledBitmap(bitmap, 600, 600, true);
+
+                    String bitMapToString = BitMapToString(bitmap3);
+                    UploadProfile(hostinglink + "/Home/UploadProfile", bitMapToString, filename);
 
 
 
-   Bitmap bitmap=MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),uri);
-   phtotimage.setImageBitmap(bitmap);
-   phtotimage.setVisibility(View.VISIBLE);
-   try {
-       String bitMapToString = BitMapToString(bitmap);
-       UploadProfile(hostinglink +"/Home/UploadProfile", bitMapToString, filename);
-   }catch (Exception e)
-   {
-       Toast.makeText(getContext(),"error"+e.getMessage(),Toast.LENGTH_SHORT).show();
-   }
-//phtotimage.setImageURI(data.getData());
 
-
-            /*  InputStream inputStream = getActivity().getContentResolver().openInputStream(data.getData());*/
-
-               // BitmapFactory.Options options = new BitmapFactory.Options();
-                //options.inSampleSize = 2; //Scale it down
-                //options.inPreferredConfig = Bitmap.Config.RGB_565;
-               // Bitmap b = BitmapFactory.decodeStream( inputStream, null, options );
-
-                /* Bitmap binput = BitmapFactory.decodeStream(inputStream);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-
-
-                binput.compress(Bitmap.CompressFormat.JPEG,50,stream);
-                byte[] byteArray = stream.toByteArray();
-                Bitmap compressedBitmap = BitmapFactory.decodeByteArray(byteArray,0,byteArray.length);
-                String bitMapToString=BitMapToString(compressedBitmap);
-               */
-
-
-              //  getconnection("dsds",bitMapToString);
-                //phtotimage.setImageBitmap (compressedBitmap);
-
-
-                //   Uri uri= getImageUri(getContext(),binput);
-
-            //  Bitmap finalbitmap= handleSamplingAndRotationBitmap(getContext(),uri);
-              //  phtotimage.setImageBitmap(finalbitmap);
-            // calculateInSampleSize(getContext(),uri);
-
-
-
-
-
-
-               // FileOutputStream fos = openFileOutput("desiredFilename.png", Context.MODE_PRIVATE);
-               /* File pictureFile = getOutputMediaFile();*/
-              //  Bitmap bOutput;
-             //   Matrix matrix = new Matrix();
-             //   matrix.preScale(-0.5f, 1.0f);
-              //  bOutput = Bitmap.createBitmap(binput, 0, 0, binput.getWidth(), binput.getHeight(), matrix, true);*/
-              /*  Drawable drawable=new BitmapDrawable(this.getResources(),binput);*/
-             //   phtotimage.setImageDrawable(drawable);
-
-              //  phtotimage.setScaleType(ImageView.ScaleType.valueOf("fitXY"));
-       /*   phtotimage.setImageBitmap(binput);*/
-
-              //  phtotimage.setImageBitmap((decodeImage(R.drawable.justry)));
-               // phtotimage.setImageBitmap (bitmap);
-
-            }catch (Exception e)
-            {
-              Toast.makeText(getContext(),"error"+e.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                Toast.makeText(getContext(), "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
             //Now you can do whatever you want with your inpustream, save it as file, upload to a server, decode a bitmap...
-
         }
 
-
     }
+
 
     public String getFileName(Uri uri) {
         String result = null;
@@ -573,7 +622,7 @@ public  void selectphoto(){
         return result;
     }
 
-    public  void    UploadProfile(String url, final String bitmapstr, final String filename) {
+    public void UploadProfile(String url, final String bitmapstr, final String filename) {
         final RequestQueue request = Volley.newRequestQueue(getContext());
 
 
@@ -582,42 +631,35 @@ public  void selectphoto(){
                     @Override
                     public void onResponse(String response) {
 
-                         Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
                         try {
 
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
-                            result2=gson.fromJson(response, StringResponceFromWeb.class);
-                              Toast.makeText(getContext(),"Responce:"+result2.getresult(),Toast.LENGTH_SHORT).show();
-                              if(result2.getresult().equals("updated"))
-                              {
+                            result2 = gson.fromJson(response, StringResponceFromWeb.class);
+                            Toast.makeText(getContext(), "Responce:" + result2.getresult(), Toast.LENGTH_SHORT).show();
+                            if (result2.getresult().equals("updated")) {
 
+                                String url = result2.getLogo();
+                                url = hostinglink + url;
+                                Picasso.get().load(url).into(phtotimage);
 
-
-                                  try{
+                                /*  try{
                                       GetProfile(hostinglink +"/Home/GetProfile");
                                   }catch (Exception e)
+
+
                                   {
                                       Toast.makeText(getContext(),e.getMessage(), Toast.LENGTH_SHORT).show();
-                                  }
+                                  }*/
 
 
-
-                              }
-
-
-
+                            }
 
 
                         } catch (Exception e) {
-                             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                         }
-
-                        //  Toast.makeText(ShoppyProductListActivity.this, response, Toast.LENGTH_SHORT).show();
-
-
-                        // response
-                        //  Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
 
                     }
                 },
@@ -629,7 +671,7 @@ public  void selectphoto(){
                         error.printStackTrace();
                     }
                 }
-        )  {
+        ) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
@@ -637,9 +679,9 @@ public  void selectphoto(){
                 for (String  i:cartids) {
                     jsonArray.put(i);
                 }*/
-                params.put("userid",userid);
-                params.put("bitmapstr",bitmapstr);
-                params.put("filename",filename);
+                params.put("userid", userid);
+                params.put("bitmapstr", bitmapstr);
+                params.put("filename", filename);
 
                 //  params.p
 
@@ -654,18 +696,12 @@ public  void selectphoto(){
         };
 
 
-
-
-
         request.add(rRequest);
-
 
     }
 
 
-
-
-    public  void    GetProfile(String url) {
+    public void GetProfile(String url) {
         final RequestQueue request = Volley.newRequestQueue(getContext());
 
 
@@ -677,39 +713,30 @@ public  void selectphoto(){
                         // Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
                         try {
 
-                           // Toast.makeText(getContext(),"Responce:"+response,Toast.LENGTH_SHORT).show();
+                            // Toast.makeText(getContext(),"Responce:"+response,Toast.LENGTH_SHORT).show();
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
-                            result=gson.fromJson(response, StringResponceFromWeb.class);
+                            result = gson.fromJson(response, StringResponceFromWeb.class);
 
-                            if(result.getresult().equals("error"))
-                            {
-                                Toast.makeText(getContext(),"error:"+result.getErrorResult(),Toast.LENGTH_SHORT).show();
-                            }else if(!result.getUsername().equals(null)){
-                                try{
+                            if (result.getresult().equals("error")) {
+                                Toast.makeText(getContext(), "error:" + result.getErrorResult(), Toast.LENGTH_SHORT).show();
+                            } else if (!result.getUsername().equals(null)) {
+                                try {
 
                                     username.setText(result.getUsername());
-                                    String url=  result.getresult();
-                                    url=hostinglink+url;
+                                    String url = result.getresult();
+                                    url = hostinglink + url;
                                     Picasso.get().load(url).into(phtotimage);
-                                }catch (Exception e)
-                                {
+                                } catch (Exception e) {
                                     Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                                 }
 
-                               // Bitmap bitmap=StringToBitMap(strbitmap);
 
-                              //  phtotimage.setImageBitmap(bitmap);
                             }
 
 
-
-
-
-
-
                         } catch (Exception e) {
-                             Toast.makeText(getContext(), "excaption:"+e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "excaption:" + e.getMessage(), Toast.LENGTH_LONG).show();
                         }
 
                         //  Toast.makeText(ShoppyProductListActivity.this, response, Toast.LENGTH_SHORT).show();
@@ -728,7 +755,7 @@ public  void selectphoto(){
                         error.printStackTrace();
                     }
                 }
-        )  {
+        ) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
@@ -736,8 +763,7 @@ public  void selectphoto(){
                 for (String  i:cartids) {
                     jsonArray.put(i);
                 }*/
-                params.put("userid",userid);
-
+                params.put("userid", userid);
 
 
                 //  params.p
@@ -753,15 +779,13 @@ public  void selectphoto(){
         };
 
 
-
-
-
         request.add(rRequest);
 
 
     }
 
-    private  File getOutputMediaFile(){
+
+    private File getOutputMediaFile() {
         // To be safe, you should check that the SDCard is mounted
         // using Environment.getExternalStorageState() before doing this.
         File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
@@ -773,36 +797,38 @@ public  void selectphoto(){
         // between applications and persist after your app has been uninstalled.
 
         // Create the storage directory if it does not exist
-        if (! mediaStorageDir.exists()){
-            if (! mediaStorageDir.mkdirs()){
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
                 return null;
             }
         }
         // Create a media file name
         String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
         File mediaFile;
-        String mImageName="MI_"+ timeStamp +".jpg";
+        String mImageName = "MI_" + timeStamp + ".jpg";
         mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
         return mediaFile;
     }
-    public String BitMapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b=baos.toByteArray();
-        String temp= Base64.encodeToString(b, Base64.DEFAULT);
+
+    public String BitMapToString(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String temp = Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
     }
-    public Bitmap StringToBitMap(String encodedString){
-        try{
-            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
+
+    public Bitmap StringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
             return bitmap;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.getMessage();
             return null;
         }
     }
+
     public Bitmap decodeImage(int resourceId) {
         try {
             // Decode image size
@@ -827,12 +853,7 @@ public  void selectphoto(){
         return null;
 
     }
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }
+
 
     public static Bitmap handleSamplingAndRotationBitmap(Context context, Uri selectedImage)
             throws IOException {
@@ -857,6 +878,7 @@ public  void selectphoto(){
         img = rotateImageIfRequired(context, img, selectedImage);
         return img;
     }
+
     private static int calculateInSampleSize(BitmapFactory.Options options,
                                              int reqWidth, int reqHeight) {
         // Raw height and width of image
@@ -891,6 +913,7 @@ public  void selectphoto(){
         }
         return inSampleSize;
     }
+
     private static Bitmap rotateImageIfRequired(Context context, Bitmap img, Uri selectedImage) throws IOException {
 
         InputStream input = context.getContentResolver().openInputStream(selectedImage);

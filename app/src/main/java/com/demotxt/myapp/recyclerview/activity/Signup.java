@@ -1,16 +1,23 @@
 package com.demotxt.myapp.recyclerview.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,16 +31,9 @@ import com.android.volley.toolbox.Volley;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.demotxt.myapp.recyclerview.R;
-import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-
+import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,86 +46,95 @@ import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
 
 public class Signup extends AppCompatActivity {
 
-    TextView signin, signup;
+    TextView signin;
+    Button signup;
     EditText email, password, userName;
     AwesomeValidation awesomeValidation;
-    Spinner spiner;
-    public String selectedaccount;
-    //facebook
-    private LoginButton mLoginButton;
-    private CallbackManager mCallbackManager;
-
+    private SharedPreferences  loginpref;
+    private StringResponceFromWeb result;
+    private View layout;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitysignup);
         //INIT
-
+        result=new StringResponceFromWeb();
+        loginpref = getSharedPreferences("loginpref", MODE_PRIVATE);
         awesomeValidation = new AwesomeValidation(BASIC);
-
         awesomeValidation.addValidation(Signup.this, R.id.usernamee, "[a-zA-Z\\s]+", R.string.error_name);
         awesomeValidation.addValidation(Signup.this, R.id.emaill, android.util.Patterns.EMAIL_ADDRESS, R.string.error_email);
         awesomeValidation.addValidation(Signup.this, R.id.passwordd, RegexTemplate.NOT_EMPTY, R.string.error_password);
 
 //INITIALLIZE
+        LayoutInflater inflater = getLayoutInflater();
+        try{
+            layout = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toast_layout_root));//for product added :to make custom toast with tick mark
+
+        }catch (Exception e)
+        {
+            Toast.makeText(getApplicationContext(),"ERROR:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+            Log.i("Loginactivity","error"+e.getMessage());
+
+        }
+
+
         signin = (TextView) findViewById(R.id.signin);
-        signup = (TextView) findViewById(R.id.signin1);
-        userName= (EditText) findViewById(R.id.usernamee);
+        signup = (Button) findViewById(R.id.signin1);
+        userName = (EditText) findViewById(R.id.usernamee);
         email = (EditText) findViewById(R.id.emaill);
         password = (EditText) findViewById(R.id.passwordd);
-        //facebook
-        mLoginButton = findViewById(R.id.login_button);
-
-        mCallbackManager = CallbackManager.Factory.create();
-        mLoginButton.setPermissions(Arrays.asList("email", "public_profile"));
-
-        mLoginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-
-            }
-        });
-
         //
-
-
-
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-
                     final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
                     // String url = "http:// 192.168.10.13:64077/api/login";
                     //String url="https://api.myjson.com/bins/kp9wz";
-                    String url = hostinglink +"/Home/signup";
+                    String url = hostinglink + "/Home/signup";
 
                     StringRequest rRequest = new StringRequest(Request.Method.POST, url,
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
+                                    String struserid;
                                     // response
-                                    int size = response.toString().length();
+                                    //int size = response.toString().length();
 
-                                    String result = response.toString().substring(1, size - 1);
+                                  //  String result = response.toString().substring(1, size - 1);
 
-                                    if (result.toString().equals("registered")) {
-                                        finish();
-                                        Intent intent = new Intent(Signup.this, MainActivity2.class);
+                                    GsonBuilder builder = new GsonBuilder();
+                                    Gson gson = builder.create();
+                                    result=gson.fromJson(response, StringResponceFromWeb.class);
+                                    if (result.getresult().equals("registered")) {
+                                        struserid= String.valueOf(result.getUserid());
 
-                                        startActivity(intent);
-                                    }
-                                    if (result.toString().equals("alreadyregistered")) {
+                                        int pid=0;
+                                            Intent j=getIntent();
+                                            try {
+                                                pid = j.getExtras().getInt("proid");
+                                            }catch (Exception e)
+                                            {
+
+                                            }
+                                            if(pid!=0) {
+                                                String strpid = String.valueOf(pid);
+                                                AddToCart(struserid, strpid);
+                                            }else {
+                                                Intent i =new Intent(Signup.this,MainActivity2.class);
+                                                startActivity(i);
+                                            }
+
+
+
+
+
+
+
+
+
+
+                                    }else if (result.getresult().equals("alreadyregistered")) {
                                         Toast.makeText(getApplicationContext(), "This Email is Already Registered", Toast.LENGTH_SHORT).show();
                                     } else {
                                         Log.i("API-ERROR", "error");
@@ -148,6 +157,7 @@ public class Signup extends AppCompatActivity {
 
                             params.put("email", email.getText().toString());
                             params.put("password", password.getText().toString());
+                            params.put("userType","C");
                             return params;
                         }
 
@@ -181,45 +191,79 @@ public class Signup extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        mCallbackManager.onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
-    AccessTokenTracker mTokenTracker = new AccessTokenTracker() {
-        @Override
-        protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+    public void AddToCart(final String struserid, final String strpid )
+    {
+        try{
 
-            loadUserProfile(currentAccessToken);
-        }
-    };
+            final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+            // String url = "http:// 192.168.10.13:64077/api/login";
+            //String url="https://api.myjson.com/bins/kp9wz";
+            String url = hostinglink +"/Home/AddtoCart";
 
-    private void loadUserProfile(AccessToken newAccessToken) {
-        GraphRequest request = GraphRequest.newMeRequest(newAccessToken, new GraphRequest.GraphJSONObjectCallback() {
-            @Override
-            public void onCompleted(JSONObject object, GraphResponse response) {
+            StringRequest rRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                            GsonBuilder builder = new GsonBuilder();
+                            Gson gson = builder.create();
+                            result=gson.fromJson(response, StringResponceFromWeb.class);
+                            if(result.getresult().equals("Added"))
+                            {
 
-                try {
-                    String first_name = object.getString("first_name");
-                    String last_name = object.getString("last_name");
-                    String email = object.getString("email");
-                    String id = object.getString("id");
-                    String image_url = "https://graph.facebook.com/" + id + "/picture?type=normal";
 
-                    //
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+
+                                finish();
+                                  Intent main =new Intent(Signup.this,MainActivity2.class);
+
+                                  main.putExtra("proid",Integer.parseInt(strpid));
+                                  startActivity(main);
+
+
+                                // Toast.makeText(getApplicationContext(), "Product Added to Cart" , Toast.LENGTH_SHORT).show();
+
+
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // error
+                            Log.i("APIERROR", error.getMessage());
+                            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            ) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+
+                    params.put("productId", strpid);
+                    params.put("userId", struserid);
+
+                    return params;
                 }
 
-            }
-        });
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Content-Type", "application/x-www-form-urlencoded");
+                    return params;
+                }
+            };
 
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "first_name,last_name,email,id");
-        request.setParameters(parameters);
-        request.executeAsync();
+            requestQueue.add(rRequest);
+
+
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(), "Error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
     }
+
+
+
 }
 

@@ -70,6 +70,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
         holder.tv_book_title.setText(mData.get(position).getTitle());
+        holder.tv_book_dist.setText(mData.get(position).getDistance());
         //holder.img_book_thumbnail.setImageResource(mData.get(position).getThumbnail());
         Picasso.get().load(mData.get(position).getThumbnail()).into(holder.img_book_thumbnail);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +105,7 @@ Toast.makeText(mContext.getApplicationContext(),"seller id:"+userid,Toast.LENGTH
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_book_title;
+        TextView tv_book_title,tv_book_dist;
         ImageView img_book_thumbnail;
         CardView cardView;
 
@@ -113,6 +114,7 @@ Toast.makeText(mContext.getApplicationContext(),"seller id:"+userid,Toast.LENGTH
 
             tv_book_title = itemView.findViewById(R.id.book_title_id);
             img_book_thumbnail = itemView.findViewById(R.id.book_img_id);
+            tv_book_dist = itemView.findViewById(R.id.book_distance);
             cardView = itemView.findViewById(R.id.cardview_id);
 
 
