@@ -53,13 +53,16 @@ public class Signup extends AppCompatActivity {
     private SharedPreferences  loginpref;
     private StringResponceFromWeb result;
     private View layout;
+    private SharedPreferences.Editor  loginprefeditor;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitysignup);
+
         //INIT
         result=new StringResponceFromWeb();
         loginpref = getSharedPreferences("loginpref", MODE_PRIVATE);
+        loginprefeditor = loginpref.edit();
         awesomeValidation = new AwesomeValidation(BASIC);
         awesomeValidation.addValidation(Signup.this, R.id.usernamee, "[a-zA-Z\\s]+", R.string.error_name);
         awesomeValidation.addValidation(Signup.this, R.id.emaill, android.util.Patterns.EMAIL_ADDRESS, R.string.error_email);
@@ -121,7 +124,11 @@ public class Signup extends AppCompatActivity {
                                                 String strpid = String.valueOf(pid);
                                                 AddToCart(struserid, strpid);
                                             }else {
+
                                                 Intent i =new Intent(Signup.this,MainActivity2.class);
+                                                loginprefeditor.putBoolean("loggedin", true);
+                                                loginprefeditor.putInt("userid",Integer.parseInt(struserid));
+                                                loginprefeditor.commit();
                                                 startActivity(i);
                                             }
 
