@@ -1,18 +1,8 @@
 package com.demotxt.myapp.recyclerview.fragment;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -29,8 +22,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.R;
-import com.demotxt.myapp.recyclerview.activity.Login;
-import com.demotxt.myapp.recyclerview.activity.Prod_Activity;
 import com.demotxt.myapp.recyclerview.activity.Shipping;
 import com.demotxt.myapp.recyclerview.ownmodels.CheckConnection;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomInternetDialog;
@@ -40,21 +31,13 @@ import com.demotxt.myapp.recyclerview.shoppycartlist.CartListBeanlist;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONArray;
 
 import java.io.Serializable;
-
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
@@ -66,9 +49,7 @@ public class CartFragment extends Fragment {
 
     private ListView listview;
 
-    Typeface fonts1, fonts2;
-
-    public List<CartListBeanlist> Bean;
+  public    List<CartListBeanlist> Bean;
     private CartListBaseAdapter baseAdapter;
     private Button pay;
     private CheckConnection connection;

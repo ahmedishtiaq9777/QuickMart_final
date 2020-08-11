@@ -2,7 +2,8 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
 
     <LinearLayout
@@ -12,14 +13,15 @@
         android:layout_centerInParent="true"
         android:orientation="vertical"
         android:padding="@dimen/spacing_large"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:background="@color/background">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/contactDetail"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            android:textColor="@color/grey_40"
+            android:textColor="@color/profiletext"
             android:textStyle="bold"
             app:fontFamily="sans-serif-medium" />
 
@@ -63,7 +65,7 @@
             android:layout_marginTop="@dimen/spacing_large"
             android:text="@string/shippingAdd"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            android:textColor="@color/grey_40"
+            android:textColor="@color/profiletext"
             android:textStyle="bold"
             app:fontFamily="sans-serif-medium" />
 
@@ -135,13 +137,15 @@
 
             android:text="@string/cash_on_dilivery"
             android:textSize="15dp"
-            android:checked="true"/>
+            android:checked="true"
+            android:textColor="@color/profiletext"/>
         <RadioButton
             android:id="@+id/radioButton2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pay_with_card"
             android:textSize="15dp"
+            android:textColor="@color/disabletext"
             android:enabled="false"/>
 
 
@@ -154,7 +158,8 @@
 
             android:text="@string/Done"
             android:background="@drawable/button_border"
-            android:textColor="@color/white"
+            android:backgroundTint="@color/buttonbg"
+            android:textColor="@color/navbartext"
             android:textSize="25dp" />
 
     </LinearLayout>

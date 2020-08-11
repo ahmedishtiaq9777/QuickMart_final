@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#ffffff"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:backgroundTint="@color/background">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -19,7 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:background="@drawable/gradient"
+            android:background="@color/buttonbg"
             android:padding="3dp">
 
 

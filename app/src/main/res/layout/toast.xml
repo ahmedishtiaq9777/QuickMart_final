@@ -2,10 +2,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toast_layout_root"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="250dp"
+    android:layout_height="250dp"
     android:padding="10dp"
-    android:background="@color/white">
+    android:background="@color/cardbg">
 
 
     <com.airbnb.lottie.LottieAnimationView
@@ -27,7 +27,7 @@
         android:layout_height="12dp"
         android:gravity="center"
         android:text="Added to Cart!"
-        android:textColor="@color/blue_400"
+        android:textColor="@color/profiletext"
         android:textSize="12dp" />
 
 

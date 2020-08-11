@@ -1,7 +1,6 @@
 package com.demotxt.myapp.recyclerview.fragment;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,6 +32,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.Fragment;
 
@@ -49,7 +49,6 @@ import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.activity.Login;
 import com.demotxt.myapp.recyclerview.activity.Signup;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomDialoag;
-import com.demotxt.myapp.recyclerview.ownmodels.CustomInternetDialog;
 import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
 
 import com.demotxt.myapp.recyclerview.sharepref.SharedPref;
@@ -78,16 +77,21 @@ public class ProfileFragment extends Fragment {
     TextView username;
     ImageView phtotimage;
     TextView login, signup;
-    ImageView logout;
-    Dialog popup;
-    CardView btn_order_history, btn_privacy, dark, language, setting, fav, cart, exit;
-    LinearLayout lyt_root;
-    LinearLayout linearLayoutfornotlogin, linearLayoutforloggenin;
-    private SharedPreferences loginpref;
-    SharedPreferences.Editor loginprefeditor;
-    LottieAnimationView o, s, l, d, f, c, p, e;
+    TextView logout;
+    CardView btn_order_history,btn_notification, btn_privacy, dark, language,setting, fav,cart, exit;
+    LinearLayout linearLayoutfornotlogin;
+    ConstraintLayout  linearLayoutforloggenin;
+    private SharedPreferences  loginpref;
+    SharedPreferences.Editor  loginprefeditor;
+    LottieAnimationView o,s,l,d,f,c,p,e;
+
+
+
+
     private String userid;
     private boolean islogin;
+    public boolean isAnimated = false;
+    public boolean isSwitchOn = false;
     StringResponceFromWeb result;
     StringResponceFromWeb result2;
     String filename;
@@ -115,7 +119,15 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 //selectphoto();
         loadLocale(getContext());
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+
+
+
+        // Fragment fragment=null;
+           //  fragment=   new ProfileSubFragment();
+//loadsubFragment(fragment);
+       // sharedPref = new SharedPref(getActivity());
+
+       ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
 
         final View view = inflater.inflate(R.layout.profilefragment, container, false);
 
@@ -129,49 +141,69 @@ public class ProfileFragment extends Fragment {
         //txt_user_address = view.findViewById(R.id.txt_user_address);
         username = view.findViewById(R.id.username);
         o = view.findViewById(R.id.ORDER);
-        s = view.findViewById(R.id.SETTING);
+        s = view.findViewById(R.id.NOTIY);
         l = view.findViewById(R.id.LANGUAGE);
         d = view.findViewById(R.id.DARKMODE);
         f = view.findViewById(R.id.FAVOURITE);
         c = view.findViewById(R.id.CART);
         p = view.findViewById(R.id.PRIVACY);
         e = view.findViewById(R.id.EXIT);
+
+
         btn_order_history = view.findViewById(R.id.OrderHistoryCard);
-        phtotimage = view.findViewById(R.id.selectimage);
-        signup = view.findViewById(R.id.signup);
+        btn_notification = view.findViewById(R.id.NotificationCard);
+        phtotimage=view.findViewById(R.id.selectimage);
+        signup=view.findViewById(R.id.signup);
         language = view.findViewById(R.id.LanguageCard);
-        linearLayoutfornotlogin = (LinearLayout) view.findViewById(R.id.fornotloggedin);
-        linearLayoutforloggenin = (LinearLayout) view.findViewById(R.id.forloggedin);
+        linearLayoutfornotlogin=(LinearLayout) view.findViewById(R.id.fornotloggedin);
+        linearLayoutforloggenin=(ConstraintLayout) view.findViewById(R.id.forloggedin);
 
-        islogin = loginpref.getBoolean("loggedin", false);
-        if (islogin) {
-            linearLayoutfornotlogin.setVisibility(View.GONE);
-            linearLayoutforloggenin.setVisibility(View.VISIBLE);
-            btn_order_history.setVisibility(View.VISIBLE);
-            GetProfile(hostinglink + "/Home/GetProfile");
+         islogin=loginpref.getBoolean("loggedin",false);
+         if(islogin)
+         {
+           linearLayoutfornotlogin.setVisibility(View.GONE);
+           linearLayoutforloggenin.setVisibility(View.VISIBLE);
+           btn_order_history.setVisibility(View.VISIBLE);
+           btn_notification.setVisibility(View.VISIBLE);
+           GetProfile(hostinglink +"/Home/GetProfile");
+         }
+         else
+         {
+             linearLayoutforloggenin.setVisibility(View.GONE);
+             linearLayoutfornotlogin.setVisibility(View.VISIBLE);
+             btn_order_history.setVisibility(View.GONE);
+             btn_notification.setVisibility(View.GONE);
+         }
+       //  txt_user_name.setText(sharedPref.getYourName());
+       // txt_user_email.setText(sharedPref.getYourEmail());
+        //txt_user_address.setText(sharedPref.getYourAddress());
+        //txt_user_phone.setText(sharedPref.getYourPhone());
 
-        } else {
-            linearLayoutforloggenin.setVisibility(View.GONE);
-            linearLayoutfornotlogin.setVisibility(View.VISIBLE);
-            btn_order_history.setVisibility(View.GONE);
-        }
-
-        signup.setOnClickListener(new View.OnClickListener() {
+    /*    login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), Login.class);
                 intent.putExtra("loginfromprofile", true);
                 startActivity(intent);
             }
+        });*/
+        signup.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Intent intent=new Intent(getActivity(), Login.class);
+        intent.putExtra("loginfromprofile", true);
+        startActivity(intent);
+             }
         });
         phtotimage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectphoto();
-            }
-        });
+    @Override
+    public void onClick(View v) {
+        selectphoto();
+    }
+});
 
         logout = view.findViewById(R.id.logout);
+        logout= view.findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,15 +221,14 @@ public class ProfileFragment extends Fragment {
 
         //For Order history
         btn_order_history.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
             public void onClick(View view) {
                 if (!isAnimated) {
                     p.playAnimation();
-                    p.setSpeed(5);
-                    isAnimated = true;
-                } else {
+                    p.setSpeed(3f);
+                    isAnimated=true;}
+                else {
                     p.cancelAnimation();
                     isAnimated = false;
                 }
@@ -212,15 +243,14 @@ public class ProfileFragment extends Fragment {
         //For Privacy Policy
         btn_privacy = view.findViewById(R.id.PrivacyCard);
         btn_privacy.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
             public void onClick(View view) {
                 if (!isAnimated) {
                     p.playAnimation();
-                    p.setSpeed(6);
-                    isAnimated = true;
-                } else {
+                    p.setSpeed(3f);
+                    isAnimated=true;}
+                else {
                     p.cancelAnimation();
                     isAnimated = false;
                 }
@@ -234,10 +264,9 @@ public class ProfileFragment extends Fragment {
         });
 
 
-        //For  settings
-        setting = view.findViewById(R.id.SettingCard);
+        //For  Notification
+        setting = view.findViewById(R.id.NotificationCard);
         setting.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
             public void onClick(View v) {
@@ -255,7 +284,6 @@ public class ProfileFragment extends Fragment {
         //For Language settings
         language = view.findViewById(R.id.LanguageCard);
         language.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
             public void onClick(View v) {
@@ -275,7 +303,6 @@ public class ProfileFragment extends Fragment {
         //For Favourite
         fav = view.findViewById(R.id.FavouriteCard);
         fav.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
 
@@ -298,7 +325,6 @@ public class ProfileFragment extends Fragment {
         //For Cart
         cart = view.findViewById(R.id.CartCard);
         cart.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
             public void onClick(View v) {
@@ -319,23 +345,31 @@ public class ProfileFragment extends Fragment {
         //For Darkmode
         dark = view.findViewById(R.id.DarkModeCard);
         dark.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "onclick", Toast.LENGTH_SHORT).show();
+                if (!isAnimated){
+                    d.playAnimation();
+                    isAnimated=true;}
+                else {
+                    d.cancelAnimation();
+                    isAnimated=false;
+                }
 
-                try {
-
+               try
+                {
                     CustomDialoag dialoag = new CustomDialoag(getActivity());
                     dialoag.showCustomDialog();
-                } catch (Exception e) {
-
-                    Toast.makeText(getContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.i("error in profile", "error:" + e.getMessage());
                 }
+                catch (Exception e)
+                {
+                    Toast.makeText(getContext(),"error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+                    Log.i("error in profile","error:"+e.getMessage());
+                }
+
             }
         });
+
 
         //For Exiting the App
         exit = view.findViewById(R.id.ExitCard);
@@ -358,6 +392,9 @@ public class ProfileFragment extends Fragment {
         });
         return view;
     }
+
+
+
 
     private void showChangeLanguageDialog() {
 
