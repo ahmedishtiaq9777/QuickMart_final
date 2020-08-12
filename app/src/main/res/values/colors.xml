@@ -20,6 +20,14 @@
     <color name="navcart">#90CAF9</color>
     <color name="navprof">#BBDEFB</color>
     <color name="star">#a9aaac</color>
+    <color name="loginbg">#ffffff</color>
+    <color name="logintxt">#B3000000</color>
+    <color name="txtcolor">#ffffff</color>
+    <color name="searchbar">#56cfe1</color>
+    <color name="category">#48bfe3</color>
+
+
+
 
 
 

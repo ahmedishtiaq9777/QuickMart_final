@@ -71,6 +71,7 @@
                     android:layout_marginEnd="5dp"
                     android:text="@string/logout"
                     android:textSize="11sp"
+                    android:textColor="@color/profiletext"
                     app:layout_constraintBottom_toTopOf="@+id/logout"
                     app:layout_constraintEnd_toEndOf="@+id/logout" />
 
@@ -164,9 +165,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:text="Order History"
+                            android:text="@string/Orderhistory"
                             android:textColor="@color/profiletext"
                             android:textStyle="bold"
+                            android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
@@ -214,11 +216,12 @@
 
                         <TextView
                             android:id="@+id/textView2"
-                            android:layout_width="79dp"
-                            android:layout_height="18dp"
+                            android:layout_width="95dp"
+                            android:layout_height="23dp"
                             android:layout_marginStart="10dp"
                             android:text="@string/Notification"
                             android:textColor="@color/profiletext"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -264,15 +267,18 @@
                             app:layout_constraintStart_toStartOf="@+id/textView4"
                             app:layout_constraintTop_toTopOf="parent"
                             app:lottie_autoPlay="false"
-                            app:lottie_fileName="Language.json"></com.airbnb.lottie.LottieAnimationView>
+                            app:lottie_fileName="Language.json">
+
+                        </com.airbnb.lottie.LottieAnimationView>
 
                         <TextView
                             android:id="@+id/textView4"
                             android:layout_width="79dp"
-                            android:layout_height="16dp"
+                            android:layout_height="23dp"
                             android:layout_marginStart="10dp"
                             android:text="@string/Language"
                             android:textColor="@color/profiletext"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -327,9 +333,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:text="Dark Mode"
+                            android:text="@string/Darkmode"
                             android:textColor="@color/profiletext"
                             android:textStyle="bold"
+                            android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
@@ -380,11 +387,12 @@
 
                         <TextView
                             android:id="@+id/textView6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="77dp"
+                            android:layout_height="23dp"
                             android:layout_marginStart="10dp"
                             android:text="@string/Favourite"
                             android:textColor="@color/profiletext"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -435,11 +443,12 @@
 
                         <TextView
                             android:id="@+id/textView7"
-                            android:layout_width="38dp"
-                            android:layout_height="17dp"
+                            android:layout_width="41dp"
+                            android:layout_height="21dp"
                             android:layout_marginStart="10dp"
                             android:text="@string/Cart"
                             android:textColor="@color/profiletext"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -493,6 +502,7 @@
                             android:text="@string/Privacy_Policy"
                             android:textColor="@color/profiletext"
                             android:textStyle="bold"
+                            android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
@@ -537,15 +547,18 @@
                             app:layout_constraintStart_toStartOf="@+id/textView9"
                             app:lottie_autoPlay="false"
                             app:lottie_fileName="Exit.json"
-                            app:lottie_speed="5"></com.airbnb.lottie.LottieAnimationView>
+                            app:lottie_speed="5">
+
+                        </com.airbnb.lottie.LottieAnimationView>
 
                         <TextView
                             android:id="@+id/textView9"
-                            android:layout_width="54dp"
-                            android:layout_height="15dp"
+                            android:layout_width="57dp"
+                            android:layout_height="22dp"
                             android:layout_marginStart="10dp"
                             android:text="@string/Exit"
                             android:textColor="@color/profiletext"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
