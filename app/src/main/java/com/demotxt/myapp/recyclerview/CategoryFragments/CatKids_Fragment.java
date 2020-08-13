@@ -61,15 +61,6 @@ public class CatKids_Fragment extends Fragment {
       //  connection=new CheckConnection(getActivity());
         dialog=new CustomInternetDialog(getActivity());
 
-    /*    boolean is_connected=connection.CheckConnection();
-        if(!is_connected)
-        {
-            dialog.showCustomDialog();
-        }
-*/
-
-
-
         ProdKids = new ArrayList<>();
 
         //int   sid=getArguments().getInt("user_id");
@@ -78,9 +69,6 @@ public class CatKids_Fragment extends Fragment {
         String userid = String.valueOf(sid);
         String url = hostinglink +"/Home/getprowithsellerid";
         getconnection(url, userid);
-        //TODO Add Data in The Recycler Views;
-
-        //
 
 
         return rootview;

@@ -77,17 +77,13 @@ public class ProfileFragment extends Fragment {
     TextView username;
     ImageView phtotimage;
     TextView login, signup;
-    TextView logout;
+    ImageView logout;
     CardView btn_order_history,btn_notification, btn_privacy, dark, language,setting, fav,cart, exit;
     LinearLayout linearLayoutfornotlogin;
     ConstraintLayout  linearLayoutforloggenin;
     private SharedPreferences  loginpref;
     SharedPreferences.Editor  loginprefeditor;
     LottieAnimationView o,s,l,d,f,c,p,e;
-
-
-
-
     private String userid;
     private boolean islogin;
     public boolean isAnimated = false;
@@ -202,14 +198,12 @@ public class ProfileFragment extends Fragment {
     }
 });
 
-        logout = view.findViewById(R.id.logout);
         logout= view.findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loginprefeditor.putBoolean("loggedin", false);
                 // loginprefeditor.putInt("userid", uid);
-
                 loginprefeditor.remove("userid");
                 loginprefeditor.commit();
                 linearLayoutforloggenin.setVisibility(View.GONE);
