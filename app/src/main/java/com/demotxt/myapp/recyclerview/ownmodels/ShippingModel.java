@@ -15,6 +15,8 @@ public class ShippingModel {
     String email;
     String contact;
     String address;
+    String code;
+    String  city;
 
     public String getName() {
         return name;
@@ -64,8 +66,7 @@ public class ShippingModel {
         this.city = city;
     }
 
-    String code;
-    String  city;
+
 
 
 }

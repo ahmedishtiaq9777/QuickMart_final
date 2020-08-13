@@ -46,12 +46,14 @@ public class Shipping extends AppCompatActivity {
     SharedPreferences loginpref;
     String Userid;
 
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shipping);
         loginpref = getSharedPreferences("loginpref", MODE_PRIVATE);
 Userid=String.valueOf(loginpref.getInt("userid",0));
         Intent intent = getIntent();
+        city=findViewById(R.id.city);
        // String s=intent.getExtras().getString("cartlist");
         //GsonBuilder builder=new GsonBuilder();
         //Gson gson=builder.create();

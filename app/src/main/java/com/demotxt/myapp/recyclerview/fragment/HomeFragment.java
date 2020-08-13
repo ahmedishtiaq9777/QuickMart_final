@@ -103,12 +103,14 @@ public class HomeFragment extends Fragment {
         CheckConnection();
         CheckGps();
 
+
         mLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
 
         if (ActivityCompat.checkSelfPermission(getContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
 
             getlocation();
+
 
         }else {
 
@@ -205,6 +207,8 @@ public class HomeFragment extends Fragment {
                                             list.set(n, i);
                                             n++;
                                         }
+                                        ///algo
+                                        //GetnearByAlgo(list)
                                         //Setting Recycler View 1
                                         setrecycleone();
                                     }
@@ -444,6 +448,9 @@ public class HomeFragment extends Fragment {
 
                         Latitude = String.valueOf(addresses.get(0).getLatitude());
                         Longitude = String.valueOf(addresses.get(0).getLongitude());
+
+
+                        Toast.makeText(getContext(), "latitude:"+Latitude+",Longitude:"+Longitude, Toast.LENGTH_SHORT).show();
 
                     } catch (IOException e) {
                         e.printStackTrace();

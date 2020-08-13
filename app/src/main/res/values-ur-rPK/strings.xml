@@ -28,6 +28,10 @@
     <string name="Exit">باہر نکلیں</string>
     <string name="Favourite">پسندیدہ</string>
     <string name="Notification">اطلاع</string>
+    <string name="Orderhistory">پچھلے آرڈرز</string>
+    <string name="Darkmode">سیاہ موڈ</string>
+    <string name="Registershop">دکان رجسٹر کریں</string>
+    <string name="Contactus">ہم سے رابطہ کریں</string>
     <string name="Profile">پروفائل</string>
     <string name="Productlist">مصنوع کی فہرست</string>
     <string name="Order">آرڈر</string>

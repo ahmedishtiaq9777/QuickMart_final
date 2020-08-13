@@ -7,7 +7,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,24 +33,26 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
     private int Check;
-    private FragmentManager fragmentmanager;
+    private  FragmentManager fragmentmanager;
     BottomNavigationView navView;
     public static String hostinglink;
-
+    private View layout;
+    int proid;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fragmentmanager = getSupportFragmentManager();
-        hostinglink = getResources().getString(R.string.hosting);
+        fragmentmanager=getSupportFragmentManager();
+        hostinglink=getResources().getString(R.string.hosting);
         CheckConnection();
 
-        //To Check Internet Connection
-        if (Check == 1) {
-            setContentView(R.layout.activitymain2);
-        } else {
+ proid=0;       //To Check Internet Connection
+        if (Check == 1){
+        setContentView(R.layout.activitymain2);
+        }
+        else {
             finish();
-            // Intent intent = new Intent(getApplicationContext(),Error_Screen_Activity.class);
-            Intent intent = new Intent(MainActivity2.this, Error_Screen_Activity.class);
+           // Intent intent = new Intent(getApplicationContext(),Error_Screen_Activity.class);
+            Intent intent = new Intent(MainActivity2.this,Error_Screen_Activity.class);
             startActivity(intent);
         }
 
@@ -55,23 +61,35 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         } catch (Exception e) {
         }
 
-        //state check
-        CustomDialoag d = new CustomDialoag(getApplicationContext());
-        d.CheckState(getApplicationContext());
+        LayoutInflater inflater = getLayoutInflater();
+        try{
+            layout = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toast_layout_root));//for product added :to make custom toast with tick mark
+
+        }catch (Exception e)
+        {
+            Toast.makeText(getApplicationContext(),"ERROR:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+            Log.i("Loginactivity","error"+e.getMessage());
+
+        }
+
+           // Toast.makeText(getApplicationContext(),"error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
 
 
-        // Toast.makeText(getApplicationContext(),"error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
 
 
         try {
             Intent i = getIntent();
-            int code = i.getExtras().getInt("code");
-            if (code == 5) {
-                Toast.makeText(getApplicationContext(), "Product Added to Cart", Toast.LENGTH_SHORT).show();
+            proid = i.getExtras().getInt("proid");
+            if (proid!=0) {
+                Toast toast = new Toast(getApplicationContext());
+                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                toast.setDuration(Toast.LENGTH_SHORT);
+                toast.setView(layout);
+                toast.show();
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.i("ExceptionMainActivity2", e.getMessage());
+            Log.i("In MainActivity:",e.getMessage());
         }
 
 
@@ -110,7 +128,7 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         if (fragment != null && !stackname.equals("homestack")) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragmentcontainer, fragment)
+                    .replace(R.id.fragmentcontainer, fragment).addToBackStack(stackname)
                     .commit();
             return true;
         } else if (stackname.equals("homestack")) {
@@ -130,16 +148,20 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
 
             if (fragment instanceof FavoriteFragment || fragment instanceof CartFragment || fragment instanceof ProfileFragment) {
                 navView.getMenu().getItem(0).setChecked(true);
-
+                Fragment Homefragment=new HomeFragment();
+                loadFragment(Homefragment,"homestack");
+            }else if(fragment instanceof HomeFragment)
+            {
+                MainActivity2.this.moveTaskToBack(true);
             }
-            Fragment Homefragment = new HomeFragment();
-            loadFragment(Homefragment, "homestack");
+            //super.onBackPressed();
+
 
         }
 
-        // super.onBackPressed();
 
-        // Fragment fragment= FragmentManager.
+
+       // Fragment fragment= FragmentManager.
     }
 
     @Override

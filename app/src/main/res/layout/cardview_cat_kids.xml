@@ -3,8 +3,8 @@
     android:id="@+id/cardview_kids"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    android:layout_width="170dp"
-    android:layout_height="230dp"
+    android:layout_width="160dp"
+    android:layout_height="220dp"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:layout_margin="10dp"
     cardview:cardCornerRadius="4dp">
@@ -21,7 +21,7 @@
             <ImageView
                 android:id="@+id/kids_img_id"
                 android:layout_width="match_parent"
-                android:layout_height="190dp"
+                android:layout_height="180dp"
                 android:scaleType="centerCrop"
                 android:background="#2d2d2d"/>
             <ImageView
@@ -41,7 +41,7 @@
 
             <TextView
                 android:id="@+id/kids_title_id"
-                android:layout_width="110dp"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="P_Name"

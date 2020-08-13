@@ -1,34 +1,30 @@
 package com.demotxt.myapp.recyclerview.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.Menu;
 import android.view.animation.LinearInterpolator;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.agrawalsuneet.dotsloader.loaders.LazyLoader;
-import com.demotxt.myapp.recyclerview.MainActivity;
 import com.demotxt.myapp.recyclerview.R;
-import com.demotxt.myapp.recyclerview.fragment.FavoriteFragment;
-import com.demotxt.myapp.recyclerview.fragment.HomeFragment;
 import com.demotxt.myapp.recyclerview.ownmodels.CheckConnection;
+
+import pl.droidsonroids.gif.GifImageView;
 
 public class Splash_Activity extends AppCompatActivity {
 
     LazyLoader mLoader;
+    GifImageView gif;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_);
+
+        gif = findViewById(R.id.logo);
 
 
         mLoader =findViewById(R.id.Progressloader);
@@ -42,10 +38,14 @@ public class Splash_Activity extends AppCompatActivity {
    Boolean  is_connected=connection.CheckConnection();
 
 
+
+
+
                if(is_connected){
                     Intent start = new Intent(Splash_Activity.this, MainActivity2.class);
                     startActivity(start);
                     finish();
+
                 }else {
 
                         Intent intent = new Intent(Splash_Activity.this,Error_Screen_Activity.class);
@@ -56,7 +56,7 @@ public class Splash_Activity extends AppCompatActivity {
 
 
             }
-        }, 4000);
+        }, 2000);
 
         //for loading animation
         LazyLoader loader = new LazyLoader(this, 30, 20, ContextCompat.getColor(this, R.color.loader_selected),

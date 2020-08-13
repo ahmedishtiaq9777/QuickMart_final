@@ -6,12 +6,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +29,9 @@ import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.demotxt.myapp.recyclerview.MainActivity;
 import com.demotxt.myapp.recyclerview.R;
+import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,18 +62,39 @@ public class Signup extends AppCompatActivity {
     int userPin;
     Button AuthSubmit_Btn;
     Boolean isOTPSuccess = false;
+    private SharedPreferences  loginpref;
+    private StringResponceFromWeb result;
+    private View layout;
+    private SharedPreferences.Editor  loginprefeditor;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitysignup);
+        loginpref = getSharedPreferences("loginpref", MODE_PRIVATE);
+        loginprefeditor = loginpref.edit();
         //INIT
+        result=new StringResponceFromWeb();
+        loginpref = getSharedPreferences("loginpref", MODE_PRIVATE);
         awesomeValidation = new AwesomeValidation(BASIC);
         awesomeValidation.addValidation(Signup.this, R.id.usernamee, "[a-zA-Z\\s]+", R.string.error_name);
         awesomeValidation.addValidation(Signup.this, R.id.emaill, android.util.Patterns.EMAIL_ADDRESS, R.string.error_email);
         awesomeValidation.addValidation(Signup.this, R.id.passwordd, RegexTemplate.NOT_EMPTY, R.string.error_password);
 
-        //INITIALIZE
+//INITIALLIZE
+        LayoutInflater inflater = getLayoutInflater();
+        try{
+            layout = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toast_layout_root));//for product added :to make custom toast with tick mark
+
+        }catch (Exception e)
+        {
+            Toast.makeText(getApplicationContext(),"ERROR:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+            Log.i("Loginactivity","error"+e.getMessage());
+
+        }
+
+
         signin = (TextView) findViewById(R.id.signin);
         signup = (Button) findViewById(R.id.signin1);
         userName = (EditText) findViewById(R.id.usernamee);
@@ -104,10 +127,17 @@ public class Signup extends AppCompatActivity {
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
+                                    String struserid;
                                     // response
-                                    int size = response.toString().length();
+                                    //int size = response.toString().length();
 
-                                    String result = response.toString().substring(1, size - 1);
+                                  //  String result = response.toString().substring(1, size - 1);
+
+                                    GsonBuilder builder = new GsonBuilder();
+                                    Gson gson = builder.create();
+                                    result=gson.fromJson(response, StringResponceFromWeb.class);
+                                    if (result.getresult().equals("registered")) {
+                                        struserid= String.valueOf(result.getUserid());
 
                                     if (isOTPSuccess = true) {
 
@@ -143,6 +173,7 @@ public class Signup extends AppCompatActivity {
 
                             params.put("email", phone.getText().toString());
                             params.put("password", password.getText().toString());
+                            params.put("userType","C");
                             return params;
                         }
 

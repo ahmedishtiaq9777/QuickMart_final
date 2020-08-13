@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
-    android:background="@drawable/gradient2"
+    android:background="@color/background"
     tools:context=".Order.Order_Detail_Activity">
 
     <include
@@ -20,7 +20,7 @@
         android:id="@+id/lyt_progress_detail"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@drawable/gradient2"
+        android:background="@color/category"
         android:padding="8dp"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -118,7 +118,7 @@
         android:id="@+id/lyt_order_detail_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradient2"
+        android:background="@color/category"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -212,7 +212,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="4dp"
-                />
+                android:background="@color/searchbar"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
