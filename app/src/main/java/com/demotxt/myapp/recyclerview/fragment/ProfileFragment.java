@@ -48,6 +48,7 @@ import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.Order.Order_Activity;
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.activity.Login;
+import com.demotxt.myapp.recyclerview.activity.Web_Activity;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomDialoag;
 import com.demotxt.myapp.recyclerview.ownmodels.ImageFilePath;
 import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
@@ -355,12 +356,15 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 if (!isAnimated) {
                     sh.playAnimation();
-                    sh.setSpeed(3f);
+                    sh.setSpeed(4f);
                     isAnimated = true;
                 } else {
                     sh.cancelAnimation();
                     isAnimated = false;
                 }
+
+                Intent intent = new Intent(getContext(), Web_Activity.class);
+                startActivity(intent);
 
 
             }
@@ -374,7 +378,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 if (!isAnimated) {
                     con.playAnimation();
-                    con.setSpeed(3f);
+                    con.setSpeed(4f);
                     isAnimated = true;
                 } else {
                     con.cancelAnimation();
