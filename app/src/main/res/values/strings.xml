@@ -41,6 +41,8 @@
     <string name="Productlist">Product list</string>
     <string name="Order">Order</string>
     <string name="Orderhistory">Order History</string>
+    <string name="Registershop">Register Shop</string>
+    <string name="Contactus">Contact Us</string>
     <string name="Darkmode">Darke Mode</string>
     <string name="PlaceOrder">Place the Order</string>
     <string name="Cart">Cart</string>

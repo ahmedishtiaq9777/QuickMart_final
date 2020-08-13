@@ -1,6 +1,5 @@
 package com.demotxt.myapp.recyclerview.fragment;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -35,7 +34,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
 import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.Fragment;
 
@@ -50,13 +48,9 @@ import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.Order.Order_Activity;
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.activity.Login;
-import com.demotxt.myapp.recyclerview.activity.Signup;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomDialoag;
-import com.demotxt.myapp.recyclerview.ownmodels.CustomInternetDialog;
 import com.demotxt.myapp.recyclerview.ownmodels.ImageFilePath;
 import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
-
-import com.demotxt.myapp.recyclerview.sharepref.SharedPref;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
@@ -71,9 +65,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import butterknife.BindView;
-
-import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
 import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
 
@@ -87,15 +78,16 @@ public class ProfileFragment extends Fragment {
     TextView login, signup;
     ImageView logout;
     Dialog popup;
-    CardView btn_order_history,notification, btn_privacy, dark, language, setting, fav, cart, exit;
+    CardView btn_order_history,notification, btn_privacy, dark, language, setting, fav, cart, shop,contact,exit;
     LinearLayout lyt_root;
     LinearLayout linearLayoutfornotlogin;
     ConstraintLayout linearLayoutforloggenin;
+    boolean isAnimated;
 
 
     private SharedPreferences loginpref;
     SharedPreferences.Editor loginprefeditor;
-    LottieAnimationView o, s, l, d, f, c, p, e;
+    LottieAnimationView o, s, l, d, f, c, p, e, sh, con;
     private String userid;
     private boolean islogin;
     StringResponceFromWeb result;
@@ -149,7 +141,9 @@ public class ProfileFragment extends Fragment {
         d = view.findViewById(R.id.DARKMODE);
         f = view.findViewById(R.id.FAVOURITE);
         c = view.findViewById(R.id.CART);
+        sh = view.findViewById(R.id.SHOP);
         p = view.findViewById(R.id.PRIVACY);
+        con = view.findViewById(R.id.CONTACT);
         e = view.findViewById(R.id.EXIT);
         notification= view.findViewById(R.id.NotificationCard);
         btn_order_history = view.findViewById(R.id.OrderHistoryCard);
@@ -210,7 +204,6 @@ public class ProfileFragment extends Fragment {
 
         //For Order history
         btn_order_history.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
             public void onClick(View view) {
@@ -233,7 +226,6 @@ public class ProfileFragment extends Fragment {
         //For Privacy Policy
         btn_privacy = view.findViewById(R.id.PrivacyCard);
         btn_privacy.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
             public void onClick(View view) {
@@ -258,7 +250,6 @@ public class ProfileFragment extends Fragment {
         //For  settings
         setting = view.findViewById(R.id.NotificationCard);
         setting.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
             public void onClick(View v) {
@@ -276,7 +267,6 @@ public class ProfileFragment extends Fragment {
         //For Language settings
         language = view.findViewById(R.id.LanguageCard);
         language.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
             public void onClick(View v) {
@@ -296,7 +286,6 @@ public class ProfileFragment extends Fragment {
         //For Favourite
         fav = view.findViewById(R.id.FavouriteCard);
         fav.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
 
@@ -319,7 +308,6 @@ public class ProfileFragment extends Fragment {
         //For Cart
         cart = view.findViewById(R.id.CartCard);
         cart.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
             public void onClick(View v) {
@@ -341,7 +329,6 @@ public class ProfileFragment extends Fragment {
         //For Darkmode
         dark = view.findViewById(R.id.DarkModeCard);
         dark.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
             public void onClick(View v) {
@@ -359,10 +346,48 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+
+        //For Shop Registeration
+        shop = view.findViewById(R.id.ShopCard);
+        shop.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (!isAnimated) {
+                    sh.playAnimation();
+                    sh.setSpeed(3f);
+                    isAnimated = true;
+                } else {
+                    sh.cancelAnimation();
+                    isAnimated = false;
+                }
+
+
+            }
+        });
+
+        //For Contact us
+        contact = view.findViewById(R.id.ContactCard);
+        contact.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (!isAnimated) {
+                    con.playAnimation();
+                    con.setSpeed(3f);
+                    isAnimated = true;
+                } else {
+                    con.cancelAnimation();
+                    isAnimated = false;
+                }
+
+
+            }
+        });
+
         //For Exiting the App
         exit = view.findViewById(R.id.ExitCard);
         exit.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
             public void onClick(View v) {
