@@ -36,8 +36,6 @@ public class Web_Activity extends AppCompatActivity {
         });
         webViewurl.loadUrl("http://ahmedishtiaq165-001-site1.ftempurl.com/Seller/index");
 
-
-
     }
 
 
