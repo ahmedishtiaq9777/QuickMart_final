@@ -248,7 +248,7 @@
                     android:orientation="vertical"
                     android:layout_margin="4dp"
                     android:padding="4dp"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <androidx.appcompat.widget.AppCompatRatingBar
                         android:id="@+id/AppCompact_RatingBar"

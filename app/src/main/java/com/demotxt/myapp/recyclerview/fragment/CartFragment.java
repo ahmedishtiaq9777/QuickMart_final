@@ -66,8 +66,6 @@ public class CartFragment extends Fragment  {
 
     private ListView listview;
 
-    Typeface fonts1, fonts2;
-
   public    List<CartListBeanlist> Bean;
     private CartListBaseAdapter baseAdapter;
     private Button pay;

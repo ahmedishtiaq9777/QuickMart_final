@@ -95,7 +95,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/edit_text_round_bg_outline"
                 android:minHeight="@dimen/spacing_xmlarge"
-                android:text="PAKISTAN"
+                android:text="@string/pakistan"
                 android:textColor="@color/Tex" />
 
             <View
@@ -115,15 +115,14 @@
 
         </LinearLayout>
 
-        <Spinner
+        <TextView
             android:id="@+id/city"
             style="@style/EditText.Flat.Grey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_middle"
             android:background="@drawable/edit_text_round_bg_outline"
-            android:minHeight="@dimen/spacing_xmlarge"
-            android:entries="@array/city"/>
+            android:text="@string/sialkot"/>
 
 
         <TextView

@@ -34,14 +34,14 @@
                 android:layout_width="190dp"
                 android:layout_height="40dp"
                 android:orientation="vertical">
-            <TextView
-                android:id="@+id/book_title_id"
-                android:textColor="#2d2d2d"
-                android:textSize="13sp"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:text="P_Name"/>
+                <TextView
+                    android:id="@+id/book_title_id"
+                    android:textColor="#2d2d2d"
+                    android:textSize="13sp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:text="P_Name"/>
 
                 <androidx.appcompat.widget.AppCompatRatingBar
                     android:id="@+id/shop_RatingBar"
@@ -55,10 +55,14 @@
 
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_location_on_black_24dp"/>
+            <TextView
+            android:layout_width="40dp"
+            android:paddingTop="10dp"
+            android:paddingStart="2dp"
+            android:layout_height="match_parent"
+            android:text="@string/km"
+            />
+
             <TextView
                 android:id="@+id/book_distance"
                 android:layout_width="wrap_content"
@@ -67,13 +71,10 @@
                 android:layout_height="match_parent"
                 android:text="2"
                 />
-            <TextView
-                android:layout_width="30dp"
-                android:paddingTop="10dp"
-                android:paddingStart="2dp"
+            <ImageView
+                android:layout_width="20dp"
                 android:layout_height="match_parent"
-                android:text="@string/km"
-                />
+                android:src="@drawable/ic_location_on_black_24dp"/>
 
         </LinearLayout>
 

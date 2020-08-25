@@ -3,6 +3,7 @@ package com.demotxt.myapp.recyclerview.adapter;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -73,6 +74,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.tv_book_dist.setText(mData.get(position).getDistance());
         //holder.img_book_thumbnail.setImageResource(mData.get(position).getThumbnail());
         Picasso.get().load(mData.get(position).getThumbnail()).into(holder.img_book_thumbnail);
+        holder.mRatingBar.setRating(mData.get(position).getRating());
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,6 +111,7 @@ Toast.makeText(mContext.getApplicationContext(),"seller id:"+userid,Toast.LENGTH
         TextView tv_book_title,tv_book_dist;
         ImageView img_book_thumbnail;
         CardView cardView;
+        AppCompatRatingBar mRatingBar;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -116,7 +120,7 @@ Toast.makeText(mContext.getApplicationContext(),"seller id:"+userid,Toast.LENGTH
             img_book_thumbnail = itemView.findViewById(R.id.book_img_id);
             tv_book_dist = itemView.findViewById(R.id.book_distance);
             cardView = itemView.findViewById(R.id.cardview_id);
-
+            mRatingBar = itemView.findViewById(R.id.shop_RatingBar);
 
         }
     }

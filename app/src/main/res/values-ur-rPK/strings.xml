@@ -66,5 +66,16 @@
 
 
     <string name="short_lorem_ipsum">براہ کرم اپنا انٹرنیٹ کنکشن چیک کریں</string>
+    <string name="pakistan">پاکستان</string>
+    <string name="sialkot">سیالکوٹ</string>
+    <string name="km">کلومیٹر</string>
+    <string name="qty">مقدار</string>
+    <string name="price">قیمت</string>
+    <string name="Ordstatus">حالت</string>
+    <string name="date">تاریخ</string>
+    <string name="Ordprice">آرڈر کی قیمت</string>
+    <string name="Orddetail">آرڈر تفصیل</string>
+    <string name="OrdId">آرڈر کی شناخت</string>
+    <string name="CartITem">کارٹ آئٹم</string>
 
 </resources>

@@ -52,6 +52,8 @@ import com.demotxt.myapp.recyclerview.activity.Web_Activity;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomDialoag;
 import com.demotxt.myapp.recyclerview.ownmodels.ImageFilePath;
 import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
+
+import com.demotxt.myapp.recyclerview.sharepref.SharedPref;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
@@ -170,7 +172,7 @@ public class ProfileFragment extends Fragment {
         }
 
 
-        signup.setOnClickListener(new View.OnClickListener() {
+       signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), Login.class);
@@ -192,7 +194,6 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 loginprefeditor.putBoolean("loggedin", false);
                 // loginprefeditor.putInt("userid", uid);
-
                 loginprefeditor.remove("userid");
                 loginprefeditor.commit();
                 linearLayoutforloggenin.setVisibility(View.GONE);
@@ -337,7 +338,7 @@ public class ProfileFragment extends Fragment {
 
                 try {
 
-                    CustomDialoag dialoag = new CustomDialoag(getActivity());
+                    CustomDialoag dialoag = new CustomDialoag(getContext());
                     dialoag.showCustomDialog();
                 } catch (Exception e) {
 
@@ -407,6 +408,25 @@ public class ProfileFragment extends Fragment {
                 System.exit(0);
             }
         });
+
+        //For Notification Card
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent notifyInt = new Intent(getContext(), Notification_Activity.class);
+                startActivity(notifyInt);
+            }
+        });
+
+        //For Contact us Card
+        contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
         return view;
     }
 
@@ -432,7 +452,7 @@ public class ProfileFragment extends Fragment {
         mDialog.show();
     }
 
-    private static void setLocale(String lang, Context context) {
+    private  static void setLocale(String lang,Context context) {
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
