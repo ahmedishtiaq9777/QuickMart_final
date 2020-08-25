@@ -6,6 +6,7 @@
 
     <!--Color Selected for Night Mode-->
     <color name="background">#212121</color>
+    <color name="profilebackground">#212121</color>
     <color name="buttonbg">#999999</color>
     <color name="text">#03A9F4</color>
     <color name="disabletext">#76818a</color>

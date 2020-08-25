@@ -35,7 +35,6 @@ import com.google.gson.GsonBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -113,19 +112,15 @@ public class Login extends AppCompatActivity {
 
 
 
-        awesomeValidation = new AwesomeValidation(BASIC);
-        awesomeValidation.addValidation(Login.this, R.id.emaill, android.util.Patterns.EMAIL_ADDRESS, R.string.error_email);
-        awesomeValidation.addValidation(Login.this, R.id.passwordd, RegexTemplate.NOT_EMPTY, R.string.error_password);
 
 
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (email.getText().toString() == null || pass.getText().toString() == null){
-                    Toast.makeText(getApplicationContext(),"Fields can't be empty",Toast.LENGTH_SHORT).show();
-                }
-                else {
+                awesomeValidation = new AwesomeValidation(BASIC);
+                awesomeValidation.addValidation(Login.this, R.id.emaill, android.util.Patterns.EMAIL_ADDRESS, R.string.error_email);
+                awesomeValidation.addValidation(Login.this, R.id.passwordd, RegexTemplate.NOT_EMPTY, R.string.error_password);
 
                 try {
 
