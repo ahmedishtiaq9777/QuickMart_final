@@ -9,8 +9,6 @@
     </string-array>
 
 
-    <string name="facebook_app_id" translatable="false">720309855414019</string>
-    <string name="fb_login_protocol_scheme" translatable="false">fb720309855414019</string>
 
     <string name="SubmitBtn" translatable="false">Submit</string>
 

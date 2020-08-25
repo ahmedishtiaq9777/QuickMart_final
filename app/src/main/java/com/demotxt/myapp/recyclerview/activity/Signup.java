@@ -75,22 +75,22 @@ public class Signup extends AppCompatActivity {
         loginpref = getSharedPreferences("loginpref", MODE_PRIVATE);
         loginprefeditor = loginpref.edit();
         //INIT
-        result=new StringResponceFromWeb();
+        result = new StringResponceFromWeb();
         loginpref = getSharedPreferences("loginpref", MODE_PRIVATE);
+
         awesomeValidation = new AwesomeValidation(BASIC);
         awesomeValidation.addValidation(Signup.this, R.id.usernamee, "[a-zA-Z\\s]+", R.string.error_name);
         awesomeValidation.addValidation(Signup.this, R.id.emaill, android.util.Patterns.EMAIL_ADDRESS, R.string.error_email);
         awesomeValidation.addValidation(Signup.this, R.id.passwordd, RegexTemplate.NOT_EMPTY, R.string.error_password);
 
-//INITIALLIZE
+        //INITIALLIZE
         LayoutInflater inflater = getLayoutInflater();
-        try{
+        try {
             layout = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toast_layout_root));//for product added :to make custom toast with tick mark
 
-        }catch (Exception e)
-        {
-            Toast.makeText(getApplicationContext(),"ERROR:"+e.getMessage(),Toast.LENGTH_SHORT).show();
-            Log.i("Loginactivity","error"+e.getMessage());
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "ERROR:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.i("Loginactivity", "error" + e.getMessage());
 
         }
 
@@ -105,23 +105,26 @@ public class Signup extends AppCompatActivity {
         AuthSubmit_Btn = findViewById(R.id.Submit_Auth);
         OTP_Txt = findViewById(R.id.Txt_Pin);
 
+
+
         //
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-
+                    final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                    // String url = "http:// 192.168.10.13:64077/api/login";
+                    //String url="https://api.myjson.com/bins/kp9wz";
+                    String url = hostinglink + "/Home/signup";
+                    //
                     //To Generate random no.
                     lyt_SignUP.setVisibility(View.GONE);
                     lyt_Auth.setVisibility(View.VISIBLE);
                     generateRandomNumber();
 
                     //Check Pin
-                    AuthCheck();
-
-                    final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-
-                    String url = hostinglink + "/Home/signup";
+                    // AuthCheck();
+                    //
 
                     StringRequest rRequest = new StringRequest(Request.Method.POST, url,
                             new Response.Listener<String>() {
@@ -131,30 +134,47 @@ public class Signup extends AppCompatActivity {
                                     // response
                                     //int size = response.toString().length();
 
-                                  //  String result = response.toString().substring(1, size - 1);
+                                    //  String result = response.toString().substring(1, size - 1);
 
                                     GsonBuilder builder = new GsonBuilder();
                                     Gson gson = builder.create();
-                                    result=gson.fromJson(response, StringResponceFromWeb.class);
+                                    result = gson.fromJson(response, StringResponceFromWeb.class);
                                     if (result.getresult().equals("registered")) {
-                                        struserid= String.valueOf(result.getUserid());
+                                        struserid = String.valueOf(result.getUserid());
 
-                                    if (isOTPSuccess = true) {
+                                        int pid = 0;
+                                        Intent j = getIntent();
+                                        try {
+                                            pid = j.getExtras().getInt("proid");
+                                        } catch (Exception e) {
 
-                                        if (result.toString().equals("registered")) {
-                                            finish();
-
-                                            Intent intent = new Intent(Signup.this, MainActivity2.class);
-                                            startActivity(intent);
                                         }
-                                        if (result.toString().equals("alreadyregistered")) {
-                                            Toast.makeText(getApplicationContext(), "This Email is Already Registered", Toast.LENGTH_SHORT).show();
+                                        if (pid != 0) {
+                                            String strpid = String.valueOf(pid);
+                                            AddToCart(struserid, strpid);
                                         } else {
-                                            Log.i("API-ERROR", "error");
-                                            Toast.makeText(getApplicationContext(), "error" + response.toString(), Toast.LENGTH_SHORT).show();
+                                            if (AuthCheck()) {
+                                                //
+
+                                            Intent i = new Intent(Signup.this, MainActivity2.class);
+                                            loginprefeditor.putBoolean("loggedin", true);
+                                            loginprefeditor.putInt("userid", Integer.parseInt(struserid));
+                                            loginprefeditor.commit();
+                                            startActivity(i);
+                                        }else {
+                                                Toast.makeText(Signup.this, "Wrong OTP PIN", Toast.LENGTH_SHORT).show();
+                                                lyt_Auth.setVisibility(View.GONE);
+                                                lyt_SignUP.setVisibility(View.VISIBLE);
+                                            }
+
                                         }
+
+
+                                    } else if (result.getresult().equals("alreadyregistered")) {
+                                        Toast.makeText(getApplicationContext(), "This Email is Already Registered", Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(Signup.this, "OTP Error", Toast.LENGTH_SHORT).show();
+                                        Log.i("API-ERROR", "error");
+                                        Toast.makeText(getApplicationContext(), "error" + response.toString(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             },
@@ -173,7 +193,7 @@ public class Signup extends AppCompatActivity {
 
                             params.put("email", phone.getText().toString());
                             params.put("password", password.getText().toString());
-                            params.put("userType","C");
+                            params.put("userType", "C");
                             return params;
                         }
 
@@ -195,20 +215,84 @@ public class Signup extends AppCompatActivity {
 
             }
         });
-        signin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent it = new Intent(Signup.this, Login.class);
-                startActivity(it);
-
-            }
-        });
 
     }
+    //
+    public void AddToCart(final String struserid, final String strpid )
+    {
+        try{
 
-    public void AuthCheck() {
-        userPin = Integer.parseInt(OTP_Txt.getText().toString());
+            final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+            // String url = "http:// 192.168.10.13:64077/api/login";
+            //String url="https://api.myjson.com/bins/kp9wz";
+            String url = hostinglink +"/Home/AddtoCart";
+
+            StringRequest rRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                            GsonBuilder builder = new GsonBuilder();
+                            Gson gson = builder.create();
+                            result=gson.fromJson(response, StringResponceFromWeb.class);
+                            if(result.getresult().equals("Added"))
+                            {
+
+
+
+
+                                finish();
+                                Intent main =new Intent(Signup.this,MainActivity2.class);
+
+                                main.putExtra("proid",Integer.parseInt(strpid));
+                                startActivity(main);
+
+
+                                // Toast.makeText(getApplicationContext(), "Product Added to Cart" , Toast.LENGTH_SHORT).show();
+
+
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // error
+                            Log.i("APIERROR", error.getMessage());
+                            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            ) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+
+                    params.put("productId", strpid);
+                    params.put("userId", struserid);
+
+                    return params;
+                }
+
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Content-Type", "application/x-www-form-urlencoded");
+                    return params;
+                }
+            };
+
+            requestQueue.add(rRequest);
+
+
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(), "Error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+    }
+    //To Check Auth
+    public boolean AuthCheck() {
+
+        String pin = OTP_Txt.getText().toString();
+        userPin = Integer.parseInt(pin);
 
         AuthSubmit_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -223,12 +307,14 @@ public class Signup extends AppCompatActivity {
 
                     } else {
                         Toast.makeText(getApplicationContext(), "You Entered the Wrong Pin", Toast.LENGTH_SHORT).show();
+                        isOTPSuccess = false;
                         lyt_Auth.setVisibility(View.GONE);
                         lyt_SignUP.setVisibility(View.VISIBLE);
                     }
                 }
             }
         });
+        return isOTPSuccess;
     }
 
     //To Generate a Random 4 Digit PIN
@@ -261,13 +347,15 @@ public class Signup extends AppCompatActivity {
     public void SendOTP_PIN() {
 
         String msg = "OTP Code " + randomNumber;
+        String ph = phone.getText().toString();
 
         String url = "http://sendpk.com" +
                 "/api/sms.php?" +
-                "username=" + "923338767324" +
-                "&password=" + "Ahmadbutt321" +
+                "username=" + "923101767079" +
+                "&password=" + "awais121" +
                 "&sender=" + "QuickMart" +
-                "&mobile=" + phone + "&message=" + msg;
+                "&mobile=" + ph + "&message=" + msg;
+       // 03338767324
 
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
@@ -289,4 +377,6 @@ public class Signup extends AppCompatActivity {
     }
 
 }
+
+
 

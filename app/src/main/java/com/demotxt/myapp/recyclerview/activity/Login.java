@@ -122,6 +122,11 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                if (email.getText().toString() == null || pass.getText().toString() == null){
+                    Toast.makeText(getApplicationContext(),"Fields can't be empty",Toast.LENGTH_SHORT).show();
+                }
+                else {
+
                 try {
 
                     final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -243,6 +248,7 @@ public class Login extends AppCompatActivity {
 
                 } catch (Exception E) {
                     Toast.makeText(getApplicationContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
+                }
                 }
 
 

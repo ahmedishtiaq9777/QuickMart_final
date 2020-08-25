@@ -16,6 +16,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -40,14 +44,16 @@ import java.util.Map;
 
 import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
 
-public class CatKids_Fragment extends Fragment {
+public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSelectedListener {
     private RecyclerView mRecyclerView;
     private CatKids_Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    Spinner mSpinner;
 
     List<Catkids> ProdKids;
     //CheckConnection connection;
     CustomInternetDialog dialog;
+    String[] SubCats = {};
 
     // private int sid;
 
@@ -58,8 +64,17 @@ public class CatKids_Fragment extends Fragment {
         // Inflate the layout for this fragment
         View rootview = inflater.inflate(R.layout.fragment_cat_kids_, container, false);
         mRecyclerView = rootview.findViewById(R.id.Rv_CatKids);
+        mSpinner = rootview.findViewById(R.id.kidCategory);
       //  connection=new CheckConnection(getActivity());
         dialog=new CustomInternetDialog(getActivity());
+        //
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),R.array.Accounttypes,
+                android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinner.setAdapter(adapter);
+
+        mSpinner.setOnItemSelectedListener(this);
+
 
         ProdKids = new ArrayList<>();
 
@@ -171,6 +186,28 @@ public class CatKids_Fragment extends Fragment {
                 return false;
             }
         });
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        String val = parent.getItemAtPosition(position).toString();
+
+        if (val.equals("shirt")){
+            mAdapter.getFilter().filter(val);
+        }
+        else if (val.equals("Pant")){
+            mAdapter.getFilter().filter(val);
+        }
+        else if (val.equals("Shoes")){
+            mAdapter.getFilter().filter(val);
+        }
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 
 

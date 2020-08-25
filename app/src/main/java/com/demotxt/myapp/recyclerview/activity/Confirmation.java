@@ -262,8 +262,8 @@ SaveOrder(hostinglink +"/home/SaveOrder",s);
     public void SetNotification(){
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this,CHANNEL_ID);
         builder.setSmallIcon(R.drawable.logo);
-        builder.setContentTitle("Confirmation");
-        builder.setContentText("Your Order has benn Confirmed..");
+        builder.setContentTitle("Order");
+        builder.setContentText("We've Got Your Order Please Wait For Confirmation ..");
         builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);

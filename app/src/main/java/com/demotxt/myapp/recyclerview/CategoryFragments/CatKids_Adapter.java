@@ -202,7 +202,12 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
                     if (item.getTitle().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
+                    else if (item.getCategory().toLowerCase().contains(filterPattern)){
+                        filteredList.add(item);
+                    }
+
                 }
+
             }
 
             FilterResults results = new FilterResults();

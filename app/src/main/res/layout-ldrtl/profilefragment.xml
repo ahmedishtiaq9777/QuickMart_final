@@ -9,8 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/background"
-        >
+        android:background="@color/background">
 
 
         <androidx.cardview.widget.CardView
@@ -144,15 +143,15 @@
                     android:layout_column="0"
                     android:layout_columnWeight="1"
                     android:layout_gravity="fill"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="20dp"
                     app:cardBackgroundColor="@color/cardbg"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="8dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/orderlayout"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="69dp"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
@@ -199,14 +198,14 @@
                     android:layout_column="1"
                     android:layout_columnWeight="1"
                     android:layout_gravity="fill"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="5dp"
                     app:cardBackgroundColor="@color/cardbg"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="8dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="69dp"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
@@ -217,6 +216,7 @@
                             android:layout_height="40dp"
                             app:layout_constraintBottom_toTopOf="@+id/textView2"
                             app:layout_constraintStart_toStartOf="@+id/textView2"
+                            app:layout_constraintTop_toTopOf="parent"
                             app:lottie_autoPlay="false"
                             app:lottie_fileName="Notification.json"
                             app:lottie_speed="7">
@@ -254,15 +254,15 @@
                     android:layout_column="0"
                     android:layout_columnWeight="1"
                     android:layout_gravity="fill"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="20dp"
                     app:cardBackgroundColor="@color/cardbg"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="8dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="91dp"
+                        android:layout_width="match_parent"
                         android:layout_height="69dp"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
@@ -311,16 +311,16 @@
                     android:layout_column="1"
                     android:layout_columnWeight="1"
                     android:layout_gravity="fill"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="5dp"
                     android:onClick="ShowPopup"
                     app:cardBackgroundColor="@color/cardbg"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="8dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="69dp"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
@@ -331,6 +331,7 @@
                             android:layout_height="40dp"
                             app:layout_constraintBottom_toTopOf="@+id/textView5"
                             app:layout_constraintStart_toStartOf="@+id/textView5"
+                            app:layout_constraintTop_toTopOf="parent"
                             app:lottie_autoPlay="false"
                             app:lottie_fileName="DarkMode.json"
                             app:lottie_speed="6">
@@ -368,16 +369,16 @@
                     android:layout_column="0"
                     android:layout_columnWeight="1"
                     android:layout_gravity="fill"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="20dp"
                     android:clickable="true"
                     app:cardBackgroundColor="@color/cardbg"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="8dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="69dp"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
@@ -425,15 +426,15 @@
                     android:layout_column="1"
                     android:layout_columnWeight="1"
                     android:layout_gravity="fill"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="5dp"
                     app:cardBackgroundColor="@color/cardbg"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="8dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="69dp"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
@@ -443,17 +444,18 @@
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             app:layout_constraintBottom_toTopOf="@+id/textView7"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
                             app:lottie_autoPlay="true"
                             app:lottie_fileName="Cart1.json"
                             app:lottie_speed="7"
-                            tools:ignore="MissingConstraints"
-                            tools:layout_editor_absoluteX="0dp">
+                            tools:ignore="MissingConstraints">
 
                         </com.airbnb.lottie.LottieAnimationView>
 
                         <TextView
                             android:id="@+id/textView7"
-                            android:layout_width="41dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="21dp"
                             android:layout_marginStart="10dp"
                             android:text="@string/Cart"
@@ -482,16 +484,16 @@
                     android:layout_column="0"
                     android:layout_columnWeight="1"
                     android:layout_gravity="fill"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="20dp"
                     android:background="@color/text"
                     app:cardBackgroundColor="@color/cardbg"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="8dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="69dp"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
@@ -536,15 +538,15 @@
                     android:layout_column="1"
                     android:layout_columnWeight="1"
                     android:layout_gravity="fill"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="5dp"
                     app:cardBackgroundColor="@color/cardbg"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="8dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="69dp"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
@@ -555,6 +557,7 @@
                             android:layout_height="40dp"
                             app:layout_constraintBottom_toTopOf="@+id/textView8"
                             app:layout_constraintStart_toStartOf="@+id/textView8"
+                            app:layout_constraintTop_toTopOf="parent"
                             app:lottie_autoPlay="false"
                             app:lottie_fileName="PrivacyPolicy.json">
 
@@ -593,16 +596,17 @@
                     android:layout_column="0"
                     android:layout_columnWeight="1"
                     android:layout_gravity="fill"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@color/text"
                     app:cardBackgroundColor="@color/cardbg"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="8dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="69dp"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
@@ -647,16 +651,17 @@
                     android:layout_column="1"
                     android:layout_columnWeight="1"
                     android:layout_gravity="fill"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="5dp"
                     android:background="@color/text"
+                    android:layout_marginBottom="10dp"
                     app:cardBackgroundColor="@color/cardbg"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="8dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="69dp"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
@@ -666,8 +671,6 @@
                             android:layout_width="30dp"
                             android:layout_height="40dp"
                             app:layout_constraintBottom_toTopOf="@+id/textView9"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="@+id/textView9"
                             app:lottie_autoPlay="false"
                             app:lottie_fileName="Exit.json"
@@ -678,7 +681,7 @@
 
                         <TextView
                             android:id="@+id/textView9"
-                            android:layout_width="47dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="24dp"
                             android:layout_marginStart="10dp"
                             android:text="@string/Exit"

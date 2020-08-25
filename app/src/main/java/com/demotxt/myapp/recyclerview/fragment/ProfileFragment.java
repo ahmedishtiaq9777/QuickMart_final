@@ -48,6 +48,7 @@ import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.Order.Order_Activity;
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.activity.Login;
+import com.demotxt.myapp.recyclerview.activity.Notification_Activity;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomDialoag;
 import com.demotxt.myapp.recyclerview.ownmodels.ImageFilePath;
 import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
@@ -171,7 +172,7 @@ public class ProfileFragment extends Fragment {
         }
 
 
-       login.setOnClickListener(new View.OnClickListener() {
+       signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), Login.class);
@@ -337,7 +338,7 @@ public class ProfileFragment extends Fragment {
 
                 try {
 
-                    CustomDialoag dialoag = new CustomDialoag(getActivity());
+                    CustomDialoag dialoag = new CustomDialoag(getContext());
                     dialoag.showCustomDialog();
                 } catch (Exception e) {
 
@@ -404,6 +405,25 @@ public class ProfileFragment extends Fragment {
                 System.exit(0);
             }
         });
+
+        //For Notification Card
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent notifyInt = new Intent(getContext(), Notification_Activity.class);
+                startActivity(notifyInt);
+            }
+        });
+
+        //For Contact us Card
+        contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
         return view;
     }
 
