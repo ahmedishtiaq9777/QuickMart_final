@@ -9,9 +9,6 @@
     </string-array>
 
 
-    <string name="facebook_app_id" translatable="false">720309855414019</string>
-    <string name="fb_login_protocol_scheme" translatable="false">fb720309855414019</string>
-
     <string name="SubmitBtn" translatable="false">Submit</string>
 
     <string name="invoice_address" translatable="false">
@@ -40,6 +37,10 @@
     <string name="Profile">Profile</string>
     <string name="Productlist">Product list</string>
     <string name="Order">Order</string>
+    <string name="Orderhistory">Order History</string>
+    <string name="Registershop">Register Shop</string>
+    <string name="Contactus">Contact Us</string>
+    <string name="Darkmode">Dark Mode</string>
     <string name="PlaceOrder">Place the Order</string>
     <string name="Cart">Cart</string>
     <string name="Checkout">Checkout</string>
@@ -113,5 +114,28 @@
 
     </string-array>
 
+    <string-array name="MenCategory">
+        <item>Shirts</item>
+        <item>Jeans</item>
+        <item>Watches</item>
+        <item>Shoes</item>
+
+    </string-array>
+
+    <string name="pakistan">Pakistan</string>
+    <string name="sialkot">Sialkot</string>
+    <string name="km">Km</string>
+    <string name="qty">Qty</string>
+    <string name="price">Price</string>
     <string name="hosting" translatable="false">http://ahmedishtiaq165-001-site1.ftempurl.com</string>
+
+    <string name="date">Date</string>
+    <string name="Ordstatus">Status</string>
+
+    <string name="Ordprice">Order Price</string>
+    <string name="Orddetail">Order Detail</string>
+    <string name="OrdId">Order Id</string>
+
+    <string name="CartITem">Cart Items</string>
+
 </resources>

@@ -5,14 +5,17 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,10 +26,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -47,6 +52,7 @@ import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.MainActivity;
 import com.demotxt.myapp.recyclerview.activity.Error_Screen_Activity;
 import com.demotxt.myapp.recyclerview.ownmodels.Book;
+import com.demotxt.myapp.recyclerview.ownmodels.CustomDialoag;
 import com.demotxt.myapp.recyclerview.ownmodels.Prod;
 import com.demotxt.myapp.recyclerview.activity.Prod_Activity;
 import com.demotxt.myapp.recyclerview.R;
@@ -55,6 +61,7 @@ import com.demotxt.myapp.recyclerview.adapter.RecyclerViewAdapter;
 import com.demotxt.myapp.recyclerview.adapter.RecyclerViewProdAdapter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
@@ -67,63 +74,65 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements LocationListener {
     // List<Book> lstBook2;
     List<Book> list;
     List<Prod> Book22;
     List<Prod> mTrends;
     View view;
     View v2;
+    String la = "32.488037";
+    String lo = "74.509068";
     ViewFlipper viewFlipper;
     SwipeRefreshLayout RefreshLayout;
     private RecyclerViewAdapter myAdapter;
     private RecyclerViewProdAdapter myAdapter1;
     private RecyclerView3 myAdapter2;
+    TextView shop, rec, trend;
     //loc
     public String Latitude, Longitude;
     FusedLocationProviderClient mLocationProviderClient;
     LocationManager mLocationManager;
     boolean gps_enabled = false;
-
-
+    SharedPreferences mPreferences;
+    SharedPreferences.Editor mEditor;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ProfileFragment.loadLocale(getContext());
-
         setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+        //
 
         view = inflater.inflate(R.layout.homefragment, container, false);
 
         //Connection Check
         CheckConnection();
         CheckGps();
+        //
+            mLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
 
+            if (ActivityCompat.checkSelfPermission(getContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
-        mLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+                // getlocation();
+                loc();
 
-        if (ActivityCompat.checkSelfPermission(getContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            } else {
 
-            getlocation();
-
-
-        }else {
-
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},44);
-        }
-
-
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+            }
         //
 
         list = new ArrayList<>();
         Book22 = new ArrayList<>();
         mTrends = new ArrayList<>();
+
 
         RefreshLayout = view.findViewById(R.id.SwipeRefresh);
         RefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -170,6 +179,9 @@ public class HomeFragment extends Fragment {
 
         //flipper
         viewFlipper = (ViewFlipper) view.findViewById(R.id.flipper);
+        shop = view.findViewById(R.id.textRecommend);
+        rec = view.findViewById(R.id.textNew);
+        trend = view.findViewById(R.id.textTrending);
 
 
         int images[] = {R.drawable.ac_banner, R.drawable.cloth_banner, R.drawable.sale1, R.drawable.mobile_banner};
@@ -405,52 +417,58 @@ public class HomeFragment extends Fragment {
 
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
-        try{
+        try {
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
+                @Override
+                public boolean onQueryTextChange(String newText) {
 
-                myAdapter.getFilter().filter(newText);
-                myAdapter1.getFilter().filter(newText);
-                myAdapter2.getFilter().filter(newText);
+                    shop.setVisibility(View.GONE);
+                    rec.setVisibility(View.GONE);
+                    trend.setVisibility(View.GONE);
 
-                return false;
-            }
-        });
-        }
-        catch (Exception E) {
-            Toast.makeText(getContext(),E.getMessage(),Toast.LENGTH_LONG).show();
+                    myAdapter.getFilter().filter(newText);
+                    myAdapter1.getFilter().filter(newText);
+                    myAdapter2.getFilter().filter(newText);
+
+
+                    return false;
+                }
+
+            });
+
+        } catch (Exception E) {
+            Toast.makeText(getContext(), E.getMessage(), Toast.LENGTH_LONG).show();
         }
 
     }
 
     //To get User Location and Coordinates
-    public void getlocation() {
+    /*public void getlocation() {
         mLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
             @Override
             public void onComplete(@NonNull Task<Location> task) {
 
                 Location location = task.getResult();
-                if (location != null){
+                if (location != null) {
                     Geocoder geocoder = new Geocoder(getContext(),
                             Locale.getDefault());
                     try {
                         List<Address> addresses = geocoder.getFromLocation(
-                                location.getLatitude(),location.getLongitude(),1
-
+                                location.getLatitude(), location.getLongitude(), 1
                         );
 
                         Latitude = String.valueOf(addresses.get(0).getLatitude());
                         Longitude = String.valueOf(addresses.get(0).getLongitude());
-
-
-                        Toast.makeText(getContext(), "latitude:"+Latitude+",Longitude:"+Longitude, Toast.LENGTH_SHORT).show();
+                        //
+                        SaveLatLong();
+                        //
+                        Toast.makeText(getContext(), "latitude:" + Latitude + ",Longitude:" + Longitude, Toast.LENGTH_SHORT).show();
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -458,29 +476,95 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
-    }
+
+    }*/
+
     //To check if GPS is enabled
-    public void CheckGps(){
+    public void CheckGps() {
 
-        mLocationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
-
+        mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
         try {
             gps_enabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        } catch(Exception ex) {}
 
-
-        if(!gps_enabled) {
-            // notify user
-
-            Toast.makeText(getContext(), "GPS IS NOT ENABLED", Toast.LENGTH_LONG).show();
-
+        } catch (Exception ex) {
         }
-        else{
-            Toast.makeText(getContext(), "GPS IS ENABLED", Toast.LENGTH_SHORT).show();
+
+        if (!gps_enabled) {
+            // notify user
+            Toast.makeText(getContext(), "GPS IS NOT ENABLED USING PREVIOUS LOCATION", Toast.LENGTH_SHORT).show();
+
+            LoadLatLong();
+        } else {
+            loc();
+        }
+    }
+
+    //To save latlong in sharedpref in case of no gps
+    public void SaveLatLong() {
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        mEditor = mPreferences.edit();
+        mEditor.putString("Latitude", Latitude);
+        mEditor.putString("Longitude", Longitude);
+        mEditor.apply();
+    }
+
+    // to load latlong from sharedpref
+    public void LoadLatLong() {
+
+        mPreferences = getContext().getSharedPreferences("LatLongPreF", Context.MODE_PRIVATE);
+        Latitude = mPreferences.getString("Latitude", "");
+        Longitude = mPreferences.getString("Longitude", "");
+
+    }
+
+    public void loc() {
+
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+            Location location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if(location != null){
+
+            Latitude = String.valueOf(location.getLatitude());
+            Longitude = String.valueOf(location.getLongitude());
+
+            SaveLatLong();
+                Toast.makeText(getContext(), Latitude+""+Longitude, Toast.LENGTH_SHORT).show();
+        }else {
+                mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,0,this);
+
+            }
+        }
+        else {
+
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
 
     }
 
 
+    @Override
+    public void onLocationChanged(Location location)
+    {
+        mLocationManager.removeUpdates(this);
+        //
+        Latitude = String.valueOf(location.getLatitude());
+        Longitude = String.valueOf(location.getLongitude());
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
 }

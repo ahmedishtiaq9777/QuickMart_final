@@ -12,6 +12,7 @@ android {
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
     buildTypes {
         release {
@@ -51,6 +52,9 @@ dependencies {
     implementation 'com.mikhaellopez:circularimageview:4.2.0'
     implementation "com.airbnb.android:lottie:3.4.1"
     implementation 'com.mikhaellopez:circularimageview:4.2.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.8.1'
+
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
 
 
 }

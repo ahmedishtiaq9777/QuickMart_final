@@ -11,14 +11,16 @@ public class Book {
     private int id;
     @SerializedName("d_kilometers")
     private String Distance;
+    @SerializedName("")
+    private float Rating;
 
 
-    public Book(String title, String thumbnail,int uid,float dist) {
+    public Book(String title, String thumbnail,int uid,float dist,double rating) {
         Title = title;
         Thumbnail = thumbnail;
         id=uid;
         Distance = String.valueOf(dist);
-
+        Rating = (float) rating;
     }
 
     public String getTitle() {
@@ -47,6 +49,14 @@ public class Book {
 
     public void setDistance(String distance) {
        Distance = distance;
+    }
+
+    public float getRating() {
+        return  Rating;
+    }
+
+    public void setRating(float rating) {
+        Rating = rating;
     }
 
 }

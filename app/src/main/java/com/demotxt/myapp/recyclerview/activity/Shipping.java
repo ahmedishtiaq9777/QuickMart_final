@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,7 +40,7 @@ import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
 public class Shipping extends AppCompatActivity {
 
     EditText t1,t2,t3,t4,t5;
-    Spinner city;
+    TextView city;
     Button ship;
     AwesomeValidation awesomeValidation;
     ArrayList<CartListBeanlist> list;
@@ -98,7 +99,7 @@ Userid=String.valueOf(loginpref.getInt("userid",0));
                     String contact = t3.getText().toString();
                     String address = t4.getText().toString();
                     String code = t5.getText().toString();
-                    String cty=String.valueOf(city.getSelectedItem());
+                    String cty= city.getText().toString();
                     ShippingModel m=new ShippingModel(name,email,contact,address,code,cty);
 
                     GsonBuilder builder=new GsonBuilder();

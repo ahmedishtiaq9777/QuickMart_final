@@ -1,6 +1,5 @@
 package com.demotxt.myapp.recyclerview.fragment;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -35,7 +34,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
 import androidx.exifinterface.media.ExifInterface;
 import androidx.fragment.app.Fragment;
 
@@ -50,9 +48,10 @@ import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.Order.Order_Activity;
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.activity.Login;
-import com.demotxt.myapp.recyclerview.activity.Signup;
+import com.demotxt.myapp.recyclerview.activity.Notification_Activity;
+import com.demotxt.myapp.recyclerview.activity.Splash_Activity;
+import com.demotxt.myapp.recyclerview.activity.Web_Activity;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomDialoag;
-import com.demotxt.myapp.recyclerview.ownmodels.CustomInternetDialog;
 import com.demotxt.myapp.recyclerview.ownmodels.ImageFilePath;
 import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
 
@@ -71,9 +70,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import butterknife.BindView;
-
-import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
 import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
 
@@ -87,15 +83,16 @@ public class ProfileFragment extends Fragment {
     TextView login, signup;
     ImageView logout;
     Dialog popup;
-    CardView btn_order_history,notification, btn_privacy, dark, language, setting, fav, cart, exit;
+    CardView btn_order_history,notification, btn_privacy, dark, language, setting, fav, cart, shop,contact,exit;
     LinearLayout lyt_root;
     LinearLayout linearLayoutfornotlogin;
     ConstraintLayout linearLayoutforloggenin;
+    boolean isAnimated;
 
 
     private SharedPreferences loginpref;
     SharedPreferences.Editor loginprefeditor;
-    LottieAnimationView o, s, l, d, f, c, p, e;
+    LottieAnimationView o, s, l, d, f, c, p, e, sh, con;
     private String userid;
     private boolean islogin;
     StringResponceFromWeb result;
@@ -125,7 +122,7 @@ public class ProfileFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
 //selectphoto();
         file_islarge = false;
         loadLocale(getContext());
@@ -149,7 +146,9 @@ public class ProfileFragment extends Fragment {
         d = view.findViewById(R.id.DARKMODE);
         f = view.findViewById(R.id.FAVOURITE);
         c = view.findViewById(R.id.CART);
+        sh = view.findViewById(R.id.SHOP);
         p = view.findViewById(R.id.PRIVACY);
+        con = view.findViewById(R.id.CONTACT);
         e = view.findViewById(R.id.EXIT);
         notification= view.findViewById(R.id.NotificationCard);
         btn_order_history = view.findViewById(R.id.OrderHistoryCard);
@@ -175,7 +174,7 @@ public class ProfileFragment extends Fragment {
         }
 
 
-        signup.setOnClickListener(new View.OnClickListener() {
+       signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), Login.class);
@@ -197,7 +196,6 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 loginprefeditor.putBoolean("loggedin", false);
                 // loginprefeditor.putInt("userid", uid);
-
                 loginprefeditor.remove("userid");
                 loginprefeditor.commit();
                 linearLayoutforloggenin.setVisibility(View.GONE);
@@ -210,7 +208,6 @@ public class ProfileFragment extends Fragment {
 
         //For Order history
         btn_order_history.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
             public void onClick(View view) {
@@ -233,7 +230,6 @@ public class ProfileFragment extends Fragment {
         //For Privacy Policy
         btn_privacy = view.findViewById(R.id.PrivacyCard);
         btn_privacy.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
             public void onClick(View view) {
@@ -258,7 +254,6 @@ public class ProfileFragment extends Fragment {
         //For  settings
         setting = view.findViewById(R.id.NotificationCard);
         setting.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
             public void onClick(View v) {
@@ -276,7 +271,6 @@ public class ProfileFragment extends Fragment {
         //For Language settings
         language = view.findViewById(R.id.LanguageCard);
         language.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
             public void onClick(View v) {
@@ -296,7 +290,6 @@ public class ProfileFragment extends Fragment {
         //For Favourite
         fav = view.findViewById(R.id.FavouriteCard);
         fav.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
 
@@ -319,7 +312,6 @@ public class ProfileFragment extends Fragment {
         //For Cart
         cart = view.findViewById(R.id.CartCard);
         cart.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
             public void onClick(View v) {
@@ -341,7 +333,6 @@ public class ProfileFragment extends Fragment {
         //For Darkmode
         dark = view.findViewById(R.id.DarkModeCard);
         dark.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
             public void onClick(View v) {
@@ -349,7 +340,7 @@ public class ProfileFragment extends Fragment {
 
                 try {
 
-                    CustomDialoag dialoag = new CustomDialoag(getActivity());
+                    CustomDialoag dialoag = new CustomDialoag(getContext());
                     dialoag.showCustomDialog();
                 } catch (Exception e) {
 
@@ -359,10 +350,51 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+
+        //For Shop Registeration
+        shop = view.findViewById(R.id.ShopCard);
+        shop.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (!isAnimated) {
+                    sh.playAnimation();
+                    sh.setSpeed(4f);
+                    isAnimated = true;
+                } else {
+                    sh.cancelAnimation();
+                    isAnimated = false;
+                }
+
+                Intent intent = new Intent(getContext(), Web_Activity.class);
+                startActivity(intent);
+
+
+            }
+        });
+
+        //For Contact us
+        contact = view.findViewById(R.id.ContactCard);
+        contact.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (!isAnimated) {
+                    con.playAnimation();
+                    con.setSpeed(4f);
+                    isAnimated = true;
+                } else {
+                    con.cancelAnimation();
+                    isAnimated = false;
+                }
+
+
+            }
+        });
+
         //For Exiting the App
         exit = view.findViewById(R.id.ExitCard);
         exit.setOnClickListener(new View.OnClickListener() {
-            boolean isAnimated;
 
             @Override
             public void onClick(View v) {
@@ -378,6 +410,16 @@ public class ProfileFragment extends Fragment {
                 System.exit(0);
             }
         });
+
+        //For Notification Card
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent notifyInt = new Intent(getContext(), Notification_Activity.class);
+                startActivity(notifyInt);
+            }
+        });
+
         return view;
     }
 
@@ -390,9 +432,14 @@ public class ProfileFragment extends Fragment {
             public void onClick(DialogInterface dialog, int i) {
                 if (i == 0) {
                     setLocale("en", getContext());
+                    Intent intent = new Intent(getContext(), Splash_Activity.class);
+                    startActivity(intent);
                     getActivity().recreate();
+
                 } else if (i == 1) {
                     setLocale("ur", getContext());
+                    Intent intent = new Intent(getContext(), Splash_Activity.class);
+                    startActivity(intent);
                     getActivity().recreate();
                 }
                 dialog.dismiss();
@@ -403,7 +450,7 @@ public class ProfileFragment extends Fragment {
         mDialog.show();
     }
 
-    private static void setLocale(String lang, Context context) {
+    private  static void setLocale(String lang,Context context) {
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
@@ -784,32 +831,6 @@ public class ProfileFragment extends Fragment {
 
     }
 
-
-    private File getOutputMediaFile() {
-        // To be safe, you should check that the SDCard is mounted
-        // using Environment.getExternalStorageState() before doing this.
-        File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
-                + "/Android/data/"
-                + getContext().getPackageName()
-                + "/Files");
-
-        // This location works best if you want the created images to be shared
-        // between applications and persist after your app has been uninstalled.
-
-        // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists()) {
-            if (!mediaStorageDir.mkdirs()) {
-                return null;
-            }
-        }
-        // Create a media file name
-        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
-        File mediaFile;
-        String mImageName = "MI_" + timeStamp + ".jpg";
-        mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
-        return mediaFile;
-    }
-
     public String BitMapToString(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
@@ -818,135 +839,4 @@ public class ProfileFragment extends Fragment {
         return temp;
     }
 
-    public Bitmap StringToBitMap(String encodedString) {
-        try {
-            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        } catch (Exception e) {
-            e.getMessage();
-            return null;
-        }
-    }
-
-    public Bitmap decodeImage(int resourceId) {
-        try {
-            // Decode image size
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
-            BitmapFactory.decodeResource(getResources(), resourceId, o);
-            // The new size we want to scale to
-            final int REQUIRED_SIZE = 100; // you are free to modify size as your requirement
-
-            // Find the correct scale value. It should be the power of 2.
-            int scale = 1;
-            while (o.outWidth / scale / 2 >= REQUIRED_SIZE && o.outHeight / scale / 2 >= REQUIRED_SIZE)
-                scale *= 2;
-
-            // Decode with inSampleSize
-            BitmapFactory.Options o2 = new BitmapFactory.Options();
-            o2.inSampleSize = scale;
-            return BitmapFactory.decodeResource(getResources(), resourceId, o2);
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
-        return null;
-
-    }
-
-
-    public static Bitmap handleSamplingAndRotationBitmap(Context context, Uri selectedImage)
-            throws IOException {
-        int MAX_HEIGHT = 1024;
-        int MAX_WIDTH = 1024;
-
-        // First decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        InputStream imageStream = context.getContentResolver().openInputStream(selectedImage);
-        BitmapFactory.decodeStream(imageStream, null, options);
-        imageStream.close();
-
-        // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, MAX_WIDTH, MAX_HEIGHT);
-
-        // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        imageStream = context.getContentResolver().openInputStream(selectedImage);
-        Bitmap img = BitmapFactory.decodeStream(imageStream, null, options);
-
-        img = rotateImageIfRequired(context, img, selectedImage);
-        return img;
-    }
-
-    private static int calculateInSampleSize(BitmapFactory.Options options,
-                                             int reqWidth, int reqHeight) {
-        // Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-
-            // Calculate ratios of height and width to requested height and width
-            final int heightRatio = Math.round((float) height / (float) reqHeight);
-            final int widthRatio = Math.round((float) width / (float) reqWidth);
-
-            // Choose the smallest ratio as inSampleSize value, this will guarantee a final image
-            // with both dimensions larger than or equal to the requested height and width.
-            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
-
-            // This offers some additional logic in case the image has a strange
-            // aspect ratio. For example, a panorama may have a much larger
-            // width than height. In these cases the total pixels might still
-            // end up being too large to fit comfortably in memory, so we should
-            // be more aggressive with sample down the image (=larger inSampleSize).
-
-            final float totalPixels = width * height;
-
-            // Anything more than 2x the requested pixels we'll sample down further
-            final float totalReqPixelsCap = reqWidth * reqHeight * 2;
-
-            while (totalPixels / (inSampleSize * inSampleSize) > totalReqPixelsCap) {
-                inSampleSize++;
-            }
-        }
-        return inSampleSize;
-    }
-
-    private static Bitmap rotateImageIfRequired(Context context, Bitmap img, Uri selectedImage) throws IOException {
-
-        InputStream input = context.getContentResolver().openInputStream(selectedImage);
-        ExifInterface ei;
-        if (Build.VERSION.SDK_INT > 23)
-            ei = new ExifInterface(input);
-        else
-            ei = new ExifInterface(selectedImage.getPath());
-
-        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-
-        switch (orientation) {
-            case ExifInterface.ORIENTATION_ROTATE_90:
-                return rotateImage(img, 90);
-            case ExifInterface.ORIENTATION_ROTATE_180:
-                return rotateImage(img, 180);
-            case ExifInterface.ORIENTATION_ROTATE_270:
-                return rotateImage(img, 270);
-            default:
-                return img;
-        }
-    }
-
-    private static Bitmap rotateImage(Bitmap img, int degree) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(degree);
-        Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
-        img.recycle();
-        return rotatedImg;
-    }
 }
-
-
-
-
-

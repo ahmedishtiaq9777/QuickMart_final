@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.KeyboardShortcutGroup;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -27,14 +28,15 @@ public class CustomDialoag extends AppCompatActivity {
     public CustomDialoag(Context cntx) {
         context = cntx;
         sharedPreferences = context.getSharedPreferences(MYPREFRENCES,context.MODE_PRIVATE);
+        loadPref();
     }
-
-
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
     }
 
@@ -58,13 +60,6 @@ public class CustomDialoag extends AppCompatActivity {
                     isChecked=false;
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     //  Toast.makeText(context,"Disabled",Toast.LENGTH_SHORT).show();
-                    saveNightModeState(false);
-
-
-
-                    // editor.putBoolean("isDarkModeOn", false);
-                    //  editor.apply();
-
                 }
                 else{
                     lav.setMinAndMaxProgress(0.0f,0.5f);
@@ -72,15 +67,13 @@ public class CustomDialoag extends AppCompatActivity {
                     isChecked=true;
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     // Toast.makeText(context,"Enabled",Toast.LENGTH_SHORT).show();
-                    saveNightModeState(true);
-
-
-
-                    // editor.putBoolean("isDarkModeOn", true);
-                    // editor.apply();
                 }
             }
         });
+        //save value
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(KEY_ISNIGHTMODE, isChecked);
+        editor.apply();
 
         buttonCheck();
 
@@ -95,30 +88,18 @@ public class CustomDialoag extends AppCompatActivity {
 
     }
 
-
-    public void saveNightModeState(boolean nightMode){
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(KEY_ISNIGHTMODE, nightMode);
-        editor.apply();
-
-    }
-
-
     public void buttonCheck(){
         if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
             lav.setMinAndMaxProgress(0.0f,0.5f);
             lav.playAnimation();
             isChecked=true;
         }
-
-
     }
 
-
-
-
-
+    public void loadPref(){
+        sharedPreferences = context.getSharedPreferences(MYPREFRENCES,MODE_PRIVATE);
+        isChecked = sharedPreferences.getBoolean(KEY_ISNIGHTMODE,true);
+    }
 
 
 }

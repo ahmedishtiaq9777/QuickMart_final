@@ -6,6 +6,7 @@
 
     <!--Color Selected for Night Mode-->
     <color name="background">#212121</color>
+    <color name="profilebackground">#212121</color>
     <color name="buttonbg">#999999</color>
     <color name="text">#03A9F4</color>
     <color name="disabletext">#76818a</color>
@@ -18,7 +19,11 @@
     <color name="navfav">#5c5e5a</color>
     <color name="navcart">#666864</color>
     <color name="navprof">#70726e</color>
-    <color name="star">#ffffff</color>
+    <color name="loginbg">#B3000000</color>
+    <color name="logintxt">#ffffff</color>
+    <color name="txtcolor">#212121</color>
+    <color name="searchbar">#ced4da</color>
+    <color name="category">#adb5bd</color>
 
 
 

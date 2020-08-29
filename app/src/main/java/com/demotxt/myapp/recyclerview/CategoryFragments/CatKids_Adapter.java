@@ -1,5 +1,6 @@
 package com.demotxt.myapp.recyclerview.CategoryFragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.demotxt.myapp.recyclerview.R;
@@ -89,8 +92,12 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
                 intent.putExtra("price",mData.get(position).getPrice());
                 intent.putExtra("proid",mData.get(position).getId());
                 intent.putExtra("sellerid",mData.get(position).getUserId());
+                //Transition Test
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,
+                        holder.img_kids_thumbnail, ViewCompat.getTransitionName(holder.img_kids_thumbnail));
+
                 // start the activity
-                mContext.startActivity(intent);
+                mContext.startActivity(intent,optionsCompat.toBundle());
 
 
 
@@ -203,7 +210,12 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
                     if (item.getTitle().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
+                    else if (item.getCategory().toLowerCase().contains(filterPattern)){
+                        filteredList.add(item);
+                    }
+
                 }
+
             }
 
             FilterResults results = new FilterResults();

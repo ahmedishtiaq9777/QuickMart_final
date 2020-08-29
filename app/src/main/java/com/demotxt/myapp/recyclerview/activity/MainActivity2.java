@@ -25,6 +25,7 @@ import com.demotxt.myapp.recyclerview.fragment.CartFragment;
 import com.demotxt.myapp.recyclerview.fragment.FavoriteFragment;
 import com.demotxt.myapp.recyclerview.fragment.HomeFragment;
 import com.demotxt.myapp.recyclerview.fragment.ProfileFragment;
+import com.demotxt.myapp.recyclerview.ownmodels.CustomDialoag;
 import com.demotxt.myapp.recyclerview.utils.Tools;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -57,9 +58,7 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
 
         try {
             initToolbar();
-        }catch (Exception e)
-        {
-
+        } catch (Exception e) {
         }
 
         LayoutInflater inflater = getLayoutInflater();
@@ -96,50 +95,47 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
 
         navView = (BottomNavigationView) findViewById(R.id.nav_view);
 
-try {
-    navView.setOnNavigationItemSelectedListener(this);
+        try {
+            navView.setOnNavigationItemSelectedListener(this);
 
-     loadFragment(new HomeFragment(),"homestack");
-    // Passing each menu ID as a set of Ids because each
-    // menu should be considered as top level destinations.
-}catch (Exception e)
-{
-    Toast.makeText(getApplicationContext(),"Error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
-}
+            loadFragment(new HomeFragment(), "homestack");
+            // Passing each menu ID as a set of Ids because each
+            // menu should be considered as top level destinations.
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
 
 
         fragmentmanager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-    @Override
-    public void onBackStackChanged() {
-        StringBuffer messege=null;
-        messege=new StringBuffer("current status of fragment back stack:"+fragmentmanager.getBackStackEntryCount()+"\n");
-        for(int index=(fragmentmanager.getBackStackEntryCount()-1);index>=0;index--)
-        {
+            @Override
+            public void onBackStackChanged() {
+                StringBuffer messege = null;
+                messege = new StringBuffer("current status of fragment back stack:" + fragmentmanager.getBackStackEntryCount() + "\n");
+                for (int index = (fragmentmanager.getBackStackEntryCount() - 1); index >= 0; index--) {
 
-            FragmentManager.BackStackEntry entry=fragmentmanager.getBackStackEntryAt(index);
-            messege.append(entry.getName()+"\n");
+                    FragmentManager.BackStackEntry entry = fragmentmanager.getBackStackEntryAt(index);
+                    messege.append(entry.getName() + "\n");
 
 
-        }
-        Log.i("CALLBACKS",messege.toString());
+                }
+                Log.i("CALLBACKS", messege.toString());
+            }
+        });
     }
-});
-    }
 
 
-
-    public boolean loadFragment(Fragment fragment,String stackname) {
+    public boolean loadFragment(Fragment fragment, String stackname) {
         if (fragment != null && !stackname.equals("homestack")) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragmentcontainer, fragment).addToBackStack(stackname)
                     .commit();
             return true;
-        }else if(stackname.equals("homestack"))
-        {  getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragmentcontainer, fragment)
-                .commit();
+        } else if (stackname.equals("homestack")) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragmentcontainer, fragment)
+                    .commit();
             return true;
         }
         return false;
@@ -147,10 +143,10 @@ try {
 
     @Override
     public void onBackPressed() {
-        Fragment fragment=fragmentmanager.findFragmentById(R.id.fragmentcontainer);
+        Fragment fragment = fragmentmanager.findFragmentById(R.id.fragmentcontainer);
         if (fragment != null) {
 
-            if(fragment instanceof FavoriteFragment || fragment instanceof CartFragment || fragment instanceof  ProfileFragment) {
+            if (fragment instanceof FavoriteFragment || fragment instanceof CartFragment || fragment instanceof ProfileFragment) {
                 navView.getMenu().getItem(0).setChecked(true);
                 Fragment Homefragment=new HomeFragment();
                 loadFragment(Homefragment,"homestack");
@@ -171,31 +167,31 @@ try {
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int op = 0;
-String backstackname=null;
+        String backstackname = null;
         Fragment fragment = null;
         switch (menuItem.getItemId()) {
             case R.id.nav_home:
                 navView.setBackgroundColor(getResources().getColor(R.color.navhome));
                 fragment = new HomeFragment();
-                backstackname="homestack";
+                backstackname = "homestack";
                 break;
             case R.id.nav_favourite:
 
                 navView.setBackgroundColor(getResources().getColor(R.color.navfav));
                 fragment = new FavoriteFragment();
-                backstackname="favstack";
+                backstackname = "favstack";
                 break;
             case R.id.nav_cart:
-                 navView.setBackgroundColor(getResources().getColor(R.color.navcart));
+                navView.setBackgroundColor(getResources().getColor(R.color.navcart));
                 fragment = new CartFragment();
-                backstackname="cartstack";
+                backstackname = "cartstack";
                 break;
 
             case R.id.nav_acc:
                 navView.setBackgroundColor(getResources().getColor(R.color.navprof));
                 if (getloginprefference() == true) {
                     fragment = new ProfileFragment();
-                    backstackname="profilestack";
+                    backstackname = "profilestack";
                     break;
                 } else {
 
@@ -205,7 +201,7 @@ String backstackname=null;
         }
 
         if (op != 1)
-            return loadFragment(fragment,backstackname);
+            return loadFragment(fragment, backstackname);
         return false;
     }
 
@@ -225,35 +221,34 @@ String backstackname=null;
     }
 
     //Internet Connection Check
-    public void CheckConnection(){
-try {
-    ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-    NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
+    public void CheckConnection() {
+        try {
+            ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
 
-    if (null != activeNetwork) {
-        if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
-            Toast.makeText(this, "Wifi On", Toast.LENGTH_SHORT).show();
-            Check = 1;
-        } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
-            Toast.makeText(this, "Mobile Data On", Toast.LENGTH_SHORT).show();
-            Check = 1;
-        } else {
-            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
-            Check = 0;
+            if (null != activeNetwork) {
+                if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
+                    Toast.makeText(this, "Wifi On", Toast.LENGTH_SHORT).show();
+                    Check = 1;
+                } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
+                    Toast.makeText(this, "Mobile Data On", Toast.LENGTH_SHORT).show();
+                    Check = 1;
+                } else {
+                    Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                    Check = 0;
+                }
+
+            }
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
-    }
-}catch (Exception e)
-{
-    Toast.makeText(getApplicationContext(), "error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
-}
     }
 
     private void initToolbar() {
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-      //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Tools.setSystemBarColor(this);
     }
 

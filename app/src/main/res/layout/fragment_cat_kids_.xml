@@ -10,6 +10,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/kidCategory"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/customborder"
+            android:entries="@array/MenCategory"
+            android:gravity="center"
+            android:overlapAnchor="false"
+            android:popupBackground="@drawable/spinnerborder"
+            android:spinnerMode="dropdown"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </androidx.appcompat.widget.AppCompatSpinner>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/Rv_CatKids"
@@ -21,8 +42,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/kidCategory"
+            app:layout_constraintVertical_bias="0.050000012" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -4,7 +4,7 @@
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     android:layout_width="260dp"
-    android:layout_height="200dp"
+    android:layout_height="210dp"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:layout_margin="6dp"
     cardview:cardCornerRadius="4dp">
@@ -26,18 +26,34 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="40dp"
             android:orientation="horizontal"
             cardview:layout_constraintTop_toBottomOf="@id/book_img_id">
 
+            <LinearLayout
+                android:layout_width="190dp"
+                android:layout_height="40dp"
+                android:orientation="vertical">
             <TextView
                 android:id="@+id/book_title_id"
                 android:textColor="#2d2d2d"
                 android:textSize="13sp"
                 android:gravity="center"
-                android:layout_width="190dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
                 android:text="P_Name"/>
+
+                <androidx.appcompat.widget.AppCompatRatingBar
+                    android:id="@+id/shop_RatingBar"
+                    style="@style/Widget.AppCompat.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:numStars="5"
+                    android:paddingStart="4dp"
+                    android:layout_marginStart="8dp"/>
+
+
+            </LinearLayout>
 
             <ImageView
                 android:layout_width="20dp"
@@ -46,17 +62,17 @@
             <TextView
                 android:id="@+id/book_distance"
                 android:layout_width="wrap_content"
-                android:paddingTop="5dp"
+                android:paddingTop="10dp"
                 android:paddingEnd="2dp"
                 android:layout_height="match_parent"
                 android:text="2"
                 />
             <TextView
                 android:layout_width="30dp"
-                android:paddingTop="6dp"
+                android:paddingTop="10dp"
                 android:paddingStart="2dp"
                 android:layout_height="match_parent"
-                android:text="Km"
+                android:text="@string/km"
                 />
 
         </LinearLayout>

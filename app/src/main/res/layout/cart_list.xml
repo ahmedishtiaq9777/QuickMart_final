@@ -72,6 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:baselineAligned="false"
                 android:text="$ 250.00"
                 android:textColor="@color/navbartext"
                 android:textSize="@dimen/textsub" />
