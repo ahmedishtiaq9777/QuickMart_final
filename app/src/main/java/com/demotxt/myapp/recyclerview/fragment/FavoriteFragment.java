@@ -44,6 +44,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
 
 public class FavoriteFragment extends Fragment {
     private ListView listview;
@@ -73,7 +74,7 @@ public class FavoriteFragment extends Fragment {
        ids=cartpreferrence.getStringSet("ids",ids);
 
 
-       getconnection("http://ahmedishtiaq1997-001-site1.ftempurl.com/Home/getproductswithproId");
+       getconnection(hostinglink+"/Home/getproductswithproId");
         //
       /*  Bean = new ArrayList<CartListBeanlist>();
 
@@ -182,7 +183,7 @@ public class FavoriteFragment extends Fragment {
     private  void setimageurl(){
         int n = 0;
         for (CartListBeanlist i : Bean) {
-            i.setImage("http://ahmedishtiaq1997-001-site1.ftempurl.com" + i.getImage());
+            i.setImage(hostinglink + i.getImage());
             // list.remove(n);
             Bean.set(n,i);
             n++;

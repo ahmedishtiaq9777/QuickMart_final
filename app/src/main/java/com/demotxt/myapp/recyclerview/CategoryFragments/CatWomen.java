@@ -17,8 +17,9 @@ public class CatWomen {
 
     @SerializedName("avgRating")
     private float Rating;
-
-    public CatWomen(String title, String category, String description, String thumbnail, float price, int id,double rating) {
+    @SerializedName("userId")
+    private  int UserId;
+    public CatWomen(String title, String category, String description, String thumbnail, float price, int id,double rating,int userId) {
         Title = title;
         Category = category;
         Description = description;
@@ -26,6 +27,7 @@ public class CatWomen {
         Price= price;
         Id=id;
         Rating = (float) rating;
+        UserId=userId;
 
     }
 
@@ -49,6 +51,10 @@ public class CatWomen {
     public  float getPrice(){return Price;}
     public float getRating() {
         return  Rating;
+    }
+
+    public int getUserId() {
+        return UserId;
     }
 
     public void setRating(float rating) {

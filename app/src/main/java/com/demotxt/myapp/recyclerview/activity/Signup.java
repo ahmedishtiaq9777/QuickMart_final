@@ -69,8 +69,6 @@ public class Signup extends AppCompatActivity {
     private StringResponceFromWeb result;
     private View layout;
     private SharedPreferences.Editor  loginprefeditor;
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

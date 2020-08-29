@@ -172,7 +172,7 @@ public class CatMen_Fragment extends Fragment {
     private  void setimageurl(){
         int n = 0;
         for (CatMen i : ProdMen) {
-            i.setThumbnail("http://ahmedishtiaq1997-001-site1.ftempurl.com" + i.getThumbnail());
+            i.setThumbnail(hostinglink + i.getThumbnail());
             // list.remove(n);
             ProdMen.set(n,i);
             n++;
