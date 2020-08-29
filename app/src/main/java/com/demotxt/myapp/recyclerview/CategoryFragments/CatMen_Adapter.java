@@ -90,6 +90,7 @@ public class CatMen_Adapter extends RecyclerView.Adapter<CatMen_Adapter.CatMenVi
                 intent.putExtra("Thumbnail",mData.get(position).getThumbnail());
                 intent.putExtra("price",mData.get(position).getPrice());
                 intent.putExtra("proid",mData.get(position).getId());
+                intent.putExtra("sellerid",mData.get(position).getUserId());
                 // start the activity
                 mContext.startActivity(intent);
 

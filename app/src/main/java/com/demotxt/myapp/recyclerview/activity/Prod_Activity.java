@@ -65,6 +65,7 @@ public class Prod_Activity extends AppCompatActivity {
     private FloatingActionButton floatingActionButton;
     private SharedPreferences loginpref;
     private int proid;
+    private int sellerid;
     StringResponceFromWeb result;
     public Set<String> cartids;
     private ImageButton bt_toggle_reviews, bt_toggle_description;
@@ -84,7 +85,7 @@ public class Prod_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prod_);
         // For custom toast
-        LayoutInflater inflater = getLayoutInflater();
+        final LayoutInflater inflater = getLayoutInflater();
         try{
             layout = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toast_layout_root));//for product added :to make custom toast with tick mark
 
@@ -279,9 +280,11 @@ try {
     if(is_logedin.equals(true))
     {
         proid= intent.getExtras().getInt("proid");
+     sellerid  = intent.getExtras().getInt("sellerid");
+       final  String  strsellerid=String.valueOf(sellerid);
         final String strpid=String.valueOf(proid);//
           int userid =loginpref.getInt("userid",0);
-          final String struserid=String.valueOf(userid);//
+          final String struserid=String.valueOf(userid);
 
 
 
@@ -359,7 +362,7 @@ try{
 
             params.put("productId", strpid);
             params.put("userId", struserid);
-
+            params.put("sellerid",strsellerid);
             return params;
         }
 
