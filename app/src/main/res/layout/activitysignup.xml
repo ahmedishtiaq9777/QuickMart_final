@@ -115,7 +115,7 @@
                     android:id="@+id/passwordd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/logintxt"
+                    android:background="@color/blue_grey_900"
                     android:drawableLeft="@drawable/pass"
                     android:drawableTint="@color/txtcolor"
                     android:drawablePadding="19dp"

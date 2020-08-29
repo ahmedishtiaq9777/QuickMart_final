@@ -118,10 +118,9 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (email.getText().toString() == null || pass.getText().toString() == null){
-                    Toast.makeText(getApplicationContext(),"Fields can't be empty",Toast.LENGTH_SHORT).show();
-                }
-                else {
+                awesomeValidation = new AwesomeValidation(BASIC);
+                awesomeValidation.addValidation(Login.this, R.id.emaill, android.util.Patterns.EMAIL_ADDRESS, R.string.error_email);
+                awesomeValidation.addValidation(Login.this, R.id.passwordd, RegexTemplate.NOT_EMPTY, R.string.error_password);
 
                 try {
 
@@ -246,9 +245,6 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 }
-
-
-            }
         });
 
         signup.setOnClickListener(new View.OnClickListener() {

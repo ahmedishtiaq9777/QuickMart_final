@@ -1,5 +1,6 @@
 package com.demotxt.myapp.recyclerview.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.demotxt.myapp.recyclerview.R;
@@ -89,8 +92,13 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
                 intent.putExtra("Thumbnail", Data2.get(position).getThumbnail());
                 intent.putExtra("price", Data2.get(position).getPrice());
                 intent.putExtra("proid", Data2.get(position).getId());
+
+                //Transition Test
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,
+                        holder.img_r3_thumbnail, ViewCompat.getTransitionName(holder.img_r3_thumbnail));
+
                 // start the activity
-                mContext.startActivity(intent);
+                mContext.startActivity(intent,optionsCompat.toBundle());
 
             }
         });

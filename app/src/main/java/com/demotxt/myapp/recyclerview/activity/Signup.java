@@ -57,11 +57,14 @@ public class Signup extends AppCompatActivity {
     int randomNumber;
     int range = 9;  // to generate a single number with this range, by default its 0..9
     int length = 4;
+    int val;
     ConstraintLayout lyt_SignUP, lyt_Auth;
     EditText OTP_Txt;
     int userPin;
     Button AuthSubmit_Btn;
     Boolean isOTPSuccess = false;
+    SharedPreferences mPreferences;
+    SharedPreferences.Editor mEditor;
     private SharedPreferences  loginpref;
     private StringResponceFromWeb result;
     private View layout;
@@ -76,7 +79,9 @@ public class Signup extends AppCompatActivity {
         loginprefeditor = loginpref.edit();
         //INIT
         result = new StringResponceFromWeb();
-        loginpref = getSharedPreferences("loginpref", MODE_PRIVATE);
+
+        mPreferences = getApplicationContext().getSharedPreferences("OTPPREF",MODE_PRIVATE);
+        mEditor = mPreferences.edit();
 
         awesomeValidation = new AwesomeValidation(BASIC);
         awesomeValidation.addValidation(Signup.this, R.id.usernamee, "[a-zA-Z\\s]+", R.string.error_name);
@@ -107,116 +112,130 @@ public class Signup extends AppCompatActivity {
 
 
 
-        //
+        //Sign Up Button
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                generateRandomNumber();
+                lyt_SignUP.setVisibility(View.GONE);
+                lyt_Auth.setVisibility(View.VISIBLE);
+            }
+        });
+        //
+
+        //Auth Submit button
+        AuthSubmit_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //getting pin
                 try {
-                    final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-                    // String url = "http:// 192.168.10.13:64077/api/login";
-                    //String url="https://api.myjson.com/bins/kp9wz";
-                    String url = hostinglink + "/Home/signup";
-                    //
-                    //To Generate random no.
-                    lyt_SignUP.setVisibility(View.GONE);
-                    lyt_Auth.setVisibility(View.VISIBLE);
-                    generateRandomNumber();
+                String pin = OTP_Txt.getText().toString();
+                userPin = Integer.parseInt(pin);
+                }catch (Exception e){
+                    Toast.makeText(Signup.this, "UserPin Empty", Toast.LENGTH_SHORT).show(); }
 
-                    //Check Pin
-                    // AuthCheck();
-                    //
+                //Shared Pref for OTP PIN
+                try {
+                    val = mPreferences.getInt("OTP_PIN",0);
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show(); }
 
-                    StringRequest rRequest = new StringRequest(Request.Method.POST, url,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    String struserid;
-                                    // response
-                                    //int size = response.toString().length();
-
-                                    //  String result = response.toString().substring(1, size - 1);
-
-                                    GsonBuilder builder = new GsonBuilder();
-                                    Gson gson = builder.create();
-                                    result = gson.fromJson(response, StringResponceFromWeb.class);
-                                    if (result.getresult().equals("registered")) {
-                                        struserid = String.valueOf(result.getUserid());
-
-                                        int pid = 0;
-                                        Intent j = getIntent();
-                                        try {
-                                            pid = j.getExtras().getInt("proid");
-                                        } catch (Exception e) {
-
-                                        }
-                                        if (pid != 0) {
-                                            String strpid = String.valueOf(pid);
-                                            AddToCart(struserid, strpid);
-                                        } else {
-                                            if (AuthCheck()) {
-                                                //
-
-                                            Intent i = new Intent(Signup.this, MainActivity2.class);
-                                            loginprefeditor.putBoolean("loggedin", true);
-                                            loginprefeditor.putInt("userid", Integer.parseInt(struserid));
-                                            loginprefeditor.commit();
-                                            startActivity(i);
-                                        }else {
-                                                Toast.makeText(Signup.this, "Wrong OTP PIN", Toast.LENGTH_SHORT).show();
-                                                lyt_Auth.setVisibility(View.GONE);
-                                                lyt_SignUP.setVisibility(View.VISIBLE);
-                                            }
-
-                                        }
-
-
-                                    } else if (result.getresult().equals("alreadyregistered")) {
-                                        Toast.makeText(getApplicationContext(), "This Email is Already Registered", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Log.i("API-ERROR", "error");
-                                        Toast.makeText(getApplicationContext(), "error" + response.toString(), Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    // error
-                                    Log.i("API-ERROR", error.getMessage());
-                                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                    ) {
-                        @Override
-                        protected Map<String, String> getParams() {
-                            Map<String, String> params = new HashMap<String, String>();
-
-                            params.put("email", phone.getText().toString());
-                            params.put("password", password.getText().toString());
-                            params.put("userType", "C");
-                            return params;
-                        }
-
-                        public Map<String, String> getHeaders() throws AuthFailureError {
-                            Map<String, String> params = new HashMap<String, String>();
-                            params.put("Content-Type", "application/x-www-form-urlencoded");
-                            return params;
-                        }
-                    };
-
-                    requestQueue.add(rRequest);
-
-
-                } catch (Exception E) {
-                    Toast.makeText(getApplicationContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.i("error", E.getMessage());
+                if (userPin == val){
+                    isOTPSuccess = true;
+                    AddUserSign();
                 }
-
-
+                else {
+                    isOTPSuccess = false;
+                    lyt_Auth.setVisibility(View.GONE);
+                    lyt_SignUP.setVisibility(View.VISIBLE);
+                }
             }
         });
 
+
     }
+    //
+    public void AddUserSign(){
+        try {
+            final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+            String url = hostinglink + "/Home/signup";
+
+            StringRequest rRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            String struserid;
+
+                            GsonBuilder builder = new GsonBuilder();
+                            Gson gson = builder.create();
+                            result = gson.fromJson(response, StringResponceFromWeb.class);
+                            if (result.getresult().equals("registered")) {
+                                struserid = String.valueOf(result.getUserid());
+
+                                int pid = 0;
+                                Intent j = getIntent();
+                                try {
+                                    pid = j.getExtras().getInt("proid");
+                                } catch (Exception e) {
+
+                                }
+                                if (pid != 0) {
+                                    String strpid = String.valueOf(pid);
+                                    AddToCart(struserid, strpid);
+                                } else {
+                                    Intent i = new Intent(Signup.this, MainActivity2.class);
+                                    loginprefeditor.putBoolean("loggedin", true);
+                                    loginprefeditor.putInt("userid", Integer.parseInt(struserid));
+                                    loginprefeditor.commit();
+                                    startActivity(i);
+                                }
+
+                            } else if (result.getresult().equals("alreadyregistered")) {
+                                Toast.makeText(getApplicationContext(), "This Email is Already Registered", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.i("API-ERROR", "error");
+                                Toast.makeText(getApplicationContext(), "error" + response.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // error
+                            Log.i("API-ERROR", error.getMessage());
+                            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            ) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+
+
+
+                    params.put("phoneNo",phone.getText().toString());
+                    params.put("password", password.getText().toString());
+                    params.put("userType", "C");
+                    return params;
+                }
+
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Content-Type", "application/x-www-form-urlencoded");
+                    return params;
+                }
+            };
+
+            requestQueue.add(rRequest);
+
+
+        } catch (Exception E) {
+            Toast.makeText(getApplicationContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.i("error", E.getMessage());
+        }
+    }
+
     //
     public void AddToCart(final String struserid, final String strpid )
     {
@@ -237,20 +256,13 @@ public class Signup extends AppCompatActivity {
                             result=gson.fromJson(response, StringResponceFromWeb.class);
                             if(result.getresult().equals("Added"))
                             {
-
-
-
-
                                 finish();
                                 Intent main =new Intent(Signup.this,MainActivity2.class);
 
                                 main.putExtra("proid",Integer.parseInt(strpid));
                                 startActivity(main);
 
-
                                 // Toast.makeText(getApplicationContext(), "Product Added to Cart" , Toast.LENGTH_SHORT).show();
-
-
                             }
                         }
                     },
@@ -288,34 +300,6 @@ public class Signup extends AppCompatActivity {
         }
 
     }
-    //To Check Auth
-    public boolean AuthCheck() {
-
-        String pin = OTP_Txt.getText().toString();
-        userPin = Integer.parseInt(pin);
-
-        AuthSubmit_Btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (userPin == 0) {
-                    Toast.makeText(Signup.this, "Please Enter OTP Code In InputField", Toast.LENGTH_SHORT).show();
-
-                } else {
-
-                    if (userPin == randomNumber) {
-                        isOTPSuccess = true;
-
-                    } else {
-                        Toast.makeText(getApplicationContext(), "You Entered the Wrong Pin", Toast.LENGTH_SHORT).show();
-                        isOTPSuccess = false;
-                        lyt_Auth.setVisibility(View.GONE);
-                        lyt_SignUP.setVisibility(View.VISIBLE);
-                    }
-                }
-            }
-        });
-        return isOTPSuccess;
-    }
 
     //To Generate a Random 4 Digit PIN
     public int generateRandomNumber() {
@@ -335,15 +319,13 @@ public class Signup extends AppCompatActivity {
         return randomNumber;
     }
 
-    //To save OTP Pin in Shared Pred
-    public void OTPPref() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt("OTP_PIN", randomNumber);
-        editor.commit();
+    //To save OTP Pin in Shared Pref
+    public void OTPPref() {;
+        mEditor.putInt("OTP_PIN", randomNumber);
+        mEditor.commit();
     }
 
-    //To Send Msg to User
+    //To Send OTP Msg to User
     public void SendOTP_PIN() {
 
         String msg = "OTP Code " + randomNumber;
@@ -355,7 +337,7 @@ public class Signup extends AppCompatActivity {
                 "&password=" + "awais121" +
                 "&sender=" + "QuickMart" +
                 "&mobile=" + ph + "&message=" + msg;
-       // 03338767324
+       //
 
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
@@ -363,7 +345,7 @@ public class Signup extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(getApplicationContext(), "Success in Volley", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -372,7 +354,6 @@ public class Signup extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Error in Volley", Toast.LENGTH_SHORT).show();
             }
         });
-
         queue.add(stringRequest);
     }
 

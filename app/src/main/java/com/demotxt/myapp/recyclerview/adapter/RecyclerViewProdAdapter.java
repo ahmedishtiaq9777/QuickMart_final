@@ -1,5 +1,6 @@
 package com.demotxt.myapp.recyclerview.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,8 +16,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.demotxt.myapp.recyclerview.activity.MainActivity2;
+import com.demotxt.myapp.recyclerview.fragment.HomeFragment;
 import com.demotxt.myapp.recyclerview.ownmodels.Prod;
 import com.demotxt.myapp.recyclerview.activity.Prod_Activity;
 import com.demotxt.myapp.recyclerview.R;
@@ -84,17 +89,21 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 Intent intent = new Intent(mContext, Prod_Activity.class);
                 // passing data to the book activity
                 intent.putExtra("Title",Data1.get(position).getTitle());
                 intent.putExtra("Description",Data1.get(position).getDescription());
                 intent.putExtra("Thumbnail",Data1.get(position).getThumbnail());
                 intent.putExtra("price",Data1.get(position).getPrice());
-
-              //  Toast.makeText(mContext,"price:"+Data1.get(position).getPrice(),Toast.LENGTH_SHORT).show();
                 intent.putExtra("proid",Data1.get(position).getId());
+                //Transition Test
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,
+                        holder.img_book_thumbnail, ViewCompat.getTransitionName(holder.img_book_thumbnail));
+
                 // start the activity
-                mContext.startActivity(intent);
+                mContext.startActivity(intent,optionsCompat.toBundle());
             }
         });
         holder.heart.setOnClickListener(new View.OnClickListener(){

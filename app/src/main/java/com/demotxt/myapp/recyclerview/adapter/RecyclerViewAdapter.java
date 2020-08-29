@@ -95,6 +95,8 @@ Toast.makeText(mContext.getApplicationContext(),"seller id:"+userid,Toast.LENGTH
                 //Starting Activity To show Category Activity
                 Intent intent = new Intent(mContext, TabsBasic.class);
                 intent.putExtra("sellerid",userid);
+
+
                 mContext.startActivity(intent);
 
             }
