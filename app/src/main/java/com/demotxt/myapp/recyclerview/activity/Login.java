@@ -245,9 +245,6 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 }
-
-
-            }
         });
 
         signup.setOnClickListener(new View.OnClickListener() {

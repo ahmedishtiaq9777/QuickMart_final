@@ -23,7 +23,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="190dp"
                 android:scaleType="centerCrop"
-                android:background="#2d2d2d"/>
+                android:background="#2d2d2d"
+                android:transitionName="test"/>
 
             <ImageView
                 android:layout_width="wrap_content"

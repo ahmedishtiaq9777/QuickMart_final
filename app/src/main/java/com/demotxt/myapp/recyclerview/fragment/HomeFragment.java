@@ -104,9 +104,6 @@ public class HomeFragment extends Fragment implements LocationListener {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ProfileFragment.loadLocale(getContext());
-        CustomDialoag customDialoag = new CustomDialoag(getContext());
-        customDialoag.loadPref();
-
         setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
         //

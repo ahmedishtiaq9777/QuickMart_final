@@ -1,6 +1,7 @@
 package com.demotxt.myapp.recyclerview.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -27,14 +28,13 @@ public class Web_Activity extends AppCompatActivity {
         webViewurl.getSettings().setBuiltInZoomControls(true);
         final Activity activity = this;
 
+            webViewurl.setWebViewClient(new WebViewClient() {
+                public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                    Toast.makeText(activity, description, Toast.LENGTH_SHORT).show();
+                }
+            });
+            webViewurl.loadUrl("http://ahmedishtiaq165-001-site1.ftempurl.com/Seller/index");
 
-
-        webViewurl.setWebViewClient(new WebViewClient() {
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                Toast.makeText(activity, description, Toast.LENGTH_SHORT).show();
-            }
-        });
-        webViewurl.loadUrl("http://ahmedishtiaq165-001-site1.ftempurl.com/Seller/index");
 
     }
 
