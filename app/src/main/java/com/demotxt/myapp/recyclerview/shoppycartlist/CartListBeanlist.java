@@ -23,17 +23,26 @@ public class CartListBeanlist implements Serializable {
     private int Quantity;
     @SerializedName("sellerQuantity")
     private int sellerQuantity;
+    @SerializedName("sellerId")
+    private  int Sellerid;
 
 
 
-    public CartListBeanlist(String image, String title, double price,int id,int quantity,int  sellerQuantity) {
+    public CartListBeanlist(String image, String title, double price,int id,int quantity,int  sellerQuantity,int sellerid) {
         this.image = image;
         this.title = title;
         this.price = price;
         this.Id=id;
         this.Quantity=quantity;
         this.sellerQuantity=sellerQuantity;
+        this.Sellerid=sellerid;
     }
+
+    public int getSellerid() {
+        return Sellerid;
+    }
+
+
 
     public int getSellerQuantity() {
         return sellerQuantity;

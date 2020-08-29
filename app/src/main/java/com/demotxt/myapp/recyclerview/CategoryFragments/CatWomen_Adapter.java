@@ -91,10 +91,7 @@ public class CatWomen_Adapter extends RecyclerView.Adapter<CatWomen_Adapter.CatW
                 intent.putExtra("Thumbnail", mData.get(position).getThumbnail());
                 intent.putExtra("price", mData.get(position).getPrice());
                 intent.putExtra("proid", mData.get(position).getId());
-                //Transition Test
-                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,
-                        holder.img_women_thumbnail, ViewCompat.getTransitionName(holder.img_women_thumbnail));
-
+                intent.putExtra("sellerid",mData.get(position).getUserId());
                 // start the activity
                 mContext.startActivity(intent,optionsCompat.toBundle());
 
