@@ -34,7 +34,7 @@ public class Web_Activity extends AppCompatActivity {
                 Toast.makeText(activity, description, Toast.LENGTH_SHORT).show();
             }
         });
-        webViewurl.loadUrl("http://ahmedishtiaq165-001-site1.ftempurl.com/Seller/index");
+        webViewurl.loadUrl("http://ahmedishtiaq165-001-site1.ftempurl.com/");
 
     }
 

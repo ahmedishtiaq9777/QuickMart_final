@@ -48,12 +48,11 @@ import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.Order.Order_Activity;
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.activity.Login;
+import com.demotxt.myapp.recyclerview.activity.Notification_Activity;
 import com.demotxt.myapp.recyclerview.activity.Web_Activity;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomDialoag;
 import com.demotxt.myapp.recyclerview.ownmodels.ImageFilePath;
 import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
-
-import com.demotxt.myapp.recyclerview.sharepref.SharedPref;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;

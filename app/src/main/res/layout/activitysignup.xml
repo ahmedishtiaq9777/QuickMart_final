@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/loginbg"
     android:padding="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,15 +53,16 @@
                     android:id="@+id/usernamee"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/blue_grey_900"
+                    android:background="@color/logintxt"
                     android:drawableLeft="@drawable/user"
                     android:drawablePadding="17dp"
+                    android:drawableTint="@color/txtcolor"
                     android:gravity="left"
                     android:hint="Username"
                     android:lines="1"
                     android:padding="14dp"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white"
+                    android:textColor="@color/txtcolor"
+                    android:textColorHint="@color/txtcolor"
                     android:textSize="@dimen/text" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -69,7 +70,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
-                android:background="@color/white" />
+                android:background="@color/grey_40" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/email1"
@@ -82,16 +83,17 @@
                     android:id="@+id/emaill"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/blue_grey_900"
+                    android:background="@color/logintxt"
                     android:drawableLeft="@drawable/user"
+                    android:drawableTint="@color/txtcolor"
                     android:drawablePadding="12dp"
                     android:gravity="left"
                     android:hint="Phone No."
                     android:inputType="numberSigned"
                     android:lines="1"
                     android:padding="14dp"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white"
+                    android:textColor="@color/txtcolor"
+                    android:textColorHint="@color/txtcolor"
                     android:textSize="@dimen/text" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -99,7 +101,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
-                android:background="@color/white" />
+                android:background="@color/grey_40" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/password"
@@ -113,14 +115,15 @@
                     android:id="@+id/passwordd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/blue_grey_900"
+                    android:background="@color/logintxt"
                     android:drawableLeft="@drawable/pass"
+                    android:drawableTint="@color/txtcolor"
                     android:drawablePadding="19dp"
                     android:hint="Password"
                     android:inputType="textPassword"
                     android:padding="14dp"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white"
+                    android:textColor="@color/txtcolor"
+                    android:textColorHint="@color/txtcolor"
                     android:textSize="@dimen/text"
 
 
@@ -130,7 +133,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
-                android:background="@color/white" />
+                android:background="@color/grey_40" />
 
             <LinearLayout
 
@@ -152,7 +155,7 @@
                         android:id="@+id/checkbocremember"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:buttonTint="@color/blue_grey_900"
+                        android:buttonTint="@color/logintxt"
                         android:checked="false" />
 
                     <TextView
@@ -162,7 +165,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="Agree to the"
-                        android:textColor="@color/blue_grey_900"
+                        android:textColor="@color/logintxt"
                         android:textSize="16sp"
                         />
                 </LinearLayout>
@@ -193,11 +196,12 @@
             android:layout_marginStart="60dp"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="60dp"
-            android:background="@color/blue_grey_900"
+            android:background="@drawable/button_border"
+            android:backgroundTint="@color/logintxt"
             android:gravity="center"
             android:padding="10dp"
             android:text="Create Account"
-            android:textColor="#fff"
+            android:textColor="@color/txtcolor"
             android:textSize="@dimen/text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -221,7 +225,7 @@
                 android:layout_marginRight="3dp"
                 android:gravity="center"
                 android:text="Have an account ?"
-                android:textColor="@color/blue_grey_900"
+                android:textColor="@color/logintxt"
                 android:textSize="18sp"
 
                 />
