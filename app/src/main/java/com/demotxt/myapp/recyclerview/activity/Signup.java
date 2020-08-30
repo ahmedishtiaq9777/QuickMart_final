@@ -62,7 +62,6 @@ public class Signup extends AppCompatActivity {
     EditText OTP_Txt;
     int userPin;
     Button AuthSubmit_Btn;
-    Boolean isOTPSuccess = false;
     SharedPreferences mPreferences;
     SharedPreferences.Editor mEditor;
     private SharedPreferences  loginpref;
@@ -121,6 +120,8 @@ public class Signup extends AppCompatActivity {
         });
         //
 
+        loginprefeditor.putString("Name",userName.getText().toString());
+
         //Auth Submit button
         AuthSubmit_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,11 +140,9 @@ public class Signup extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show(); }
 
                 if (userPin == val){
-                    isOTPSuccess = true;
                     AddUserSign();
                 }
                 else {
-                    isOTPSuccess = false;
                     lyt_Auth.setVisibility(View.GONE);
                     lyt_SignUP.setVisibility(View.VISIBLE);
                 }
@@ -331,8 +330,8 @@ public class Signup extends AppCompatActivity {
 
         String url = "http://sendpk.com" +
                 "/api/sms.php?" +
-                "username=" + "923101767079" +
-                "&password=" + "awais121" +
+                "username=" + "923456378753" +
+                "&password=" + "Ibrar125" +
                 "&sender=" + "QuickMart" +
                 "&mobile=" + ph + "&message=" + msg;
        //

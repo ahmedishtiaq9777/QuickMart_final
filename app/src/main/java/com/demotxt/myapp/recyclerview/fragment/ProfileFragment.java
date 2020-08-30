@@ -157,6 +157,8 @@ public class ProfileFragment extends Fragment {
         language = view.findViewById(R.id.LanguageCard);
         linearLayoutfornotlogin = (LinearLayout) view.findViewById(R.id.fornotloggedin);
         linearLayoutforloggenin = (ConstraintLayout) view.findViewById(R.id.forloggedin);
+        //
+
 
         islogin = loginpref.getBoolean("loggedin", false);
         if (islogin) {
@@ -165,6 +167,8 @@ public class ProfileFragment extends Fragment {
             btn_order_history.setVisibility(View.VISIBLE);
             notification.setVisibility(View.VISIBLE);
             GetProfile(hostinglink + "/Home/GetProfile");
+            String name =  loginpref.getString("Name","");
+            username.setText(name);
 
         } else {
             linearLayoutforloggenin.setVisibility(View.GONE);
@@ -342,6 +346,7 @@ public class ProfileFragment extends Fragment {
 
                     CustomDialoag dialoag = new CustomDialoag(getContext());
                     dialoag.showCustomDialog();
+
                 } catch (Exception e) {
 
                     Toast.makeText(getContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -387,7 +392,8 @@ public class ProfileFragment extends Fragment {
                     con.cancelAnimation();
                     isAnimated = false;
                 }
-
+                Intent intent = new Intent(getContext(), Web_Activity.class);
+                startActivity(intent);
 
             }
         });

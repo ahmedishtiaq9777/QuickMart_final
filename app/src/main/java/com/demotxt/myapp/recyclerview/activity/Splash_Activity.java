@@ -42,6 +42,7 @@ public class Splash_Activity extends AppCompatActivity {
 
 
                if(is_connected){
+                    //
                     Intent start = new Intent(Splash_Activity.this, MainActivity2.class);
                     startActivity(start);
                     finish();
