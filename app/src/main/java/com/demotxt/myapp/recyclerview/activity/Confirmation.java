@@ -31,8 +31,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,7 +48,7 @@ public class Confirmation extends AppCompatActivity {
     private OrderViewAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     Button confirm;
-    TextView t1,t2;
+    TextView t1,t2, p;
     List<OrderViewImg> orderViewImgs;
     ArrayList<CartListBeanlist> prolist;
     SharedPreferences loginpref;
@@ -67,6 +65,7 @@ public class Confirmation extends AppCompatActivity {
         confirm=(Button)findViewById(R.id.button3);
         t1 = (TextView)findViewById(R.id.getname);
         t2 = (TextView)findViewById(R.id.getaddress);
+        p = (TextView)findViewById(R.id.TOTAL);
 
         Bundle bn = getIntent().getExtras();
         String name = bn.getString("getname");
@@ -91,19 +90,8 @@ public class Confirmation extends AppCompatActivity {
             double oneproducttotal=0.0;
          oneproducttotal = i.getQuantity()*i.getPrice();
          total=total+oneproducttotal;
-
-
         }
-        Toast.makeText(getApplicationContext(),"Total:"+total,Toast.LENGTH_LONG).show();
-
-
-/*
-        List<OrderViewImg> orderViewImgs = new ArrayList<>();
-       orderViewImgs.add(new OrderViewImg(R.drawable.shoes,"SHirt",2,1000));
-        orderViewImgs.add(new OrderViewImg(R.drawable.shoes,"SHirt",2,1000));
-        orderViewImgs.add(new OrderViewImg(R.drawable.shoes,"SHirt",2,1000));
-        orderViewImgs.add(new OrderViewImg(R.drawable.shoes,"SHirt",2,1000));
-*/
+        p.setText(String.valueOf(total));
 
         recyclerView = findViewById(R.id.recyclerViewOrder);
         recyclerView.setHasFixedSize(true);
@@ -112,44 +100,15 @@ public class Confirmation extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-
         confirm=(Button)findViewById(R.id.button3);
         t1 = (TextView)findViewById(R.id.getname);
         t2 = (TextView)findViewById(R.id.getaddress);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-GsonBuilder builder=new GsonBuilder();
-Gson gson=builder.create();
+        GsonBuilder builder=new GsonBuilder();
+        Gson gson=builder.create();
         Type listOfTestObject = new TypeToken<List<CartListBeanlist>>(){}.getType();
-           final String s = gson.toJson(list, listOfTestObject);
+        final String s = gson.toJson(list, listOfTestObject);
 
-
-       /* JSONArray jsonArray= new JSONArray();
-        for (OrderViewImg  i:orderViewImgs) {
-            jsonArray.put(i);
-        }*/
         try {
             Log.i("Product Arraylist:",s);
         }catch (Exception e)
@@ -159,23 +118,15 @@ Gson gson=builder.create();
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-SaveOrder(hostinglink +"/home/SaveOrder",s);
-
-
+                SaveOrder(hostinglink +"/home/SaveOrder",s);
             }
         });
     }
     public void SaveOrder(String Url, final String productsarray){
         try {
-
             final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
             // String url = "http:// 192.168.10.13:64077/api/login";
             //String url="https://api.myjson.com/bins/kp9wz";
-
-
-
             StringRequest rRequest = new StringRequest(Request.Method.POST, Url,
                     new Response.Listener<String>() {
                         @Override
@@ -186,13 +137,10 @@ SaveOrder(hostinglink +"/home/SaveOrder",s);
                                 Gson gson=builder.create();
                                 StringResponceFromWeb result=gson.fromJson(response,StringResponceFromWeb.class);
                                // Toast.makeText(getApplicationContext(),result.getresult(),Toast.LENGTH_SHORT).show();
-
-
                                 try{
                                     String error=result.getErrorResult();
                                     Toast.makeText(getApplicationContext(),error,Toast.LENGTH_SHORT).show();
                                     Log.i("Error In Shipping :",error);
-
                                 }catch (NullPointerException E)
                                 {
                                     Log.i("Orderconformed ..","Order is Conformed");
@@ -200,20 +148,12 @@ SaveOrder(hostinglink +"/home/SaveOrder",s);
                                     startActivity(i);
                                     //notification function
                                     SetNotification();
-
                                 }
-
-
-
-
                             } catch (Exception e) {
                                 e.printStackTrace();
 
                                 Toast.makeText(getApplicationContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
-
-
-
                         }
                     },
                     new Response.ErrorListener() {
@@ -236,8 +176,6 @@ SaveOrder(hostinglink +"/home/SaveOrder",s);
                   // jsonArray.put(productsarray);
                     params.put("orderedproducts",productsarray);
                     params.put("total",String.valueOf(total));
-
-
                     return params;
                 }
 
@@ -247,21 +185,16 @@ SaveOrder(hostinglink +"/home/SaveOrder",s);
                     return params;
                 }
             };
-
             requestQueue.add(rRequest);
-
-
         } catch (Exception E) {
             Toast.makeText(getApplicationContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
     //setting notification
     public void SetNotification(){
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this,CHANNEL_ID);
-        builder.setSmallIcon(R.drawable.logo);
+        builder.setSmallIcon(R.drawable.logo3);
         builder.setContentTitle("Order");
         builder.setContentText("We've Got Your Order Please Wait For Confirmation ..");
         builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);

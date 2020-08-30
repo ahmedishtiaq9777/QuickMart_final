@@ -34,14 +34,14 @@ public class Splash_Activity extends AppCompatActivity {
             public void run() {
 
 
-    CheckConnection connection=new CheckConnection(getApplicationContext());
-   Boolean  is_connected=connection.CheckConnection();
+                CheckConnection connection=new CheckConnection(getApplicationContext());
+                Boolean  is_connected=connection.CheckConnection();
 
 
 
 
 
-               if(is_connected){
+                if(is_connected){
                     //
                     Intent start = new Intent(Splash_Activity.this, MainActivity2.class);
                     startActivity(start);
@@ -49,8 +49,8 @@ public class Splash_Activity extends AppCompatActivity {
 
                 }else {
 
-                        Intent intent = new Intent(Splash_Activity.this,Error_Screen_Activity.class);
-                        startActivity(intent);
+                    Intent intent = new Intent(Splash_Activity.this,Error_Screen_Activity.class);
+                    startActivity(intent);
 
 
                 }

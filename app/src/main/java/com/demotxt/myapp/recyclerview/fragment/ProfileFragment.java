@@ -51,6 +51,7 @@ import com.demotxt.myapp.recyclerview.activity.Login;
 import com.demotxt.myapp.recyclerview.activity.Notification_Activity;
 import com.demotxt.myapp.recyclerview.activity.Splash_Activity;
 import com.demotxt.myapp.recyclerview.activity.Web_Activity;
+import com.demotxt.myapp.recyclerview.ownmodels.ContactDialog;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomDialoag;
 import com.demotxt.myapp.recyclerview.ownmodels.ImageFilePath;
 import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
@@ -346,7 +347,6 @@ public class ProfileFragment extends Fragment {
 
                     CustomDialoag dialoag = new CustomDialoag(getContext());
                     dialoag.showCustomDialog();
-
                 } catch (Exception e) {
 
                     Toast.makeText(getContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -392,8 +392,10 @@ public class ProfileFragment extends Fragment {
                     con.cancelAnimation();
                     isAnimated = false;
                 }
-                Intent intent = new Intent(getContext(), Web_Activity.class);
-                startActivity(intent);
+
+                ContactDialog d = new ContactDialog(getContext());
+                d.showContactDialog();
+
 
             }
         });

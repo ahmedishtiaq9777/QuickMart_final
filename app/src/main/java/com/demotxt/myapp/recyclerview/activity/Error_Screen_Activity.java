@@ -1,26 +1,21 @@
 package com.demotxt.myapp.recyclerview.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.demotxt.myapp.recyclerview.R;
-//import com.demotxt.myapp.recyclerview.fragment.FragmentConfirmation;
-import com.demotxt.myapp.recyclerview.fragment.HomeFragment;
-//import com.demotxt.myapp.recyclerview.ownmodels.CheckConnection;
-import com.demotxt.myapp.recyclerview.ownmodels.CustomDialoag;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomInternetDialog;
+
+//import com.demotxt.myapp.recyclerview.fragment.FragmentConfirmation;
+//import com.demotxt.myapp.recyclerview.ownmodels.CheckConnection;
 
 public class Error_Screen_Activity extends AppCompatActivity {
 
@@ -67,10 +62,10 @@ public class Error_Screen_Activity extends AppCompatActivity {
                 }
                 else if (Check == 0){
 
-                     dialog.showCustomDialog();
+                    dialog.showCustomDialog();
 
                     //Toast.makeText(getApplicationContext(),"No Internet",Toast.LENGTH_SHORT).show();
-                   // recreate();
+                    // recreate();
                 }
 
             }
@@ -89,7 +84,7 @@ public class Error_Screen_Activity extends AppCompatActivity {
         if (null != activeNetwork){
             if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI){
                 Toast.makeText(this,"Wifi On",Toast.LENGTH_SHORT).show();
-                 Check = 1;
+                Check = 1;
             }
             else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE){
                 Toast.makeText(this,"Mobile Data On",Toast.LENGTH_SHORT).show();
