@@ -19,8 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.activity.Prod_Activity;
-import com.demotxt.myapp.recyclerview.activity.TabsBasic;
-import com.demotxt.myapp.recyclerview.ownmodels.Book;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -90,7 +88,7 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
                 intent.putExtra("proid",mData.get(position).getId());
                 intent.putExtra("sellerid",mData.get(position).getUserId());
                 // start the activity
-                mContext.startActivity(intent,optionsCompat.toBundle());
+                mContext.startActivity(intent);
 
 
 

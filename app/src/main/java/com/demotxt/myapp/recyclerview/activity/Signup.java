@@ -1,10 +1,8 @@
 package com.demotxt.myapp.recyclerview.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,20 +25,13 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
-import com.demotxt.myapp.recyclerview.MainActivity;
 import com.demotxt.myapp.recyclerview.R;
+import com.demotxt.myapp.recyclerview.ownmodels.SignUpModel;
 import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.security.SecureRandom;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -84,9 +75,9 @@ public class Signup extends AppCompatActivity {
         mEditor = mPreferences.edit();
 
         awesomeValidation = new AwesomeValidation(BASIC);
-        awesomeValidation.addValidation(Signup.this, R.id.usernamee, "[a-zA-Z\\s]+", R.string.error_name);
-        awesomeValidation.addValidation(Signup.this, R.id.emaill, android.util.Patterns.EMAIL_ADDRESS, R.string.error_email);
-        awesomeValidation.addValidation(Signup.this, R.id.passwordd, RegexTemplate.NOT_EMPTY, R.string.error_password);
+        awesomeValidation.addValidation(Signup.this, R.id.USERNAME, "[a-zA-Z\\s]+", R.string.error_name);
+        awesomeValidation.addValidation(Signup.this, R.id.PHONE, "^0(?=3)[0-9]{10}$", R.string.error_contact);
+        awesomeValidation.addValidation(Signup.this, R.id.PASSWORD, RegexTemplate.NOT_EMPTY, R.string.error_password);
 
         //INITIALLIZE
         LayoutInflater inflater = getLayoutInflater();
@@ -102,9 +93,9 @@ public class Signup extends AppCompatActivity {
 
         signin = (TextView) findViewById(R.id.signin);
         signup = (Button) findViewById(R.id.signin1);
-        userName = (EditText) findViewById(R.id.usernamee);
-        phone = (EditText) findViewById(R.id.emaill);
-        password = (EditText) findViewById(R.id.passwordd);
+        userName = (EditText) findViewById(R.id.USERNAME);
+        phone = (EditText) findViewById(R.id.PHONE);
+        password = (EditText) findViewById(R.id.PASSWORD);
         lyt_Auth = findViewById(R.id.lyt_Auth);
         lyt_SignUP = findViewById(R.id.lyt_SignUp);
         AuthSubmit_Btn = findViewById(R.id.Submit_Auth);
@@ -116,9 +107,15 @@ public class Signup extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                generateRandomNumber();
+                if(awesomeValidation.validate()){
+                    String name = userName.getText().toString();
+                    String pass = password.getText().toString();
+                    String contact = phone.getText().toString();
+                    SignUpModel m = new SignUpModel(name,contact,pass);
+                    generateRandomNumber();
                 lyt_SignUP.setVisibility(View.GONE);
                 lyt_Auth.setVisibility(View.VISIBLE);
+                }
             }
         });
         //
@@ -127,32 +124,29 @@ public class Signup extends AppCompatActivity {
         AuthSubmit_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //getting pin
-                try {
-                String pin = OTP_Txt.getText().toString();
-                userPin = Integer.parseInt(pin);
-                }catch (Exception e){
-                    Toast.makeText(Signup.this, "UserPin Empty", Toast.LENGTH_SHORT).show(); }
-
-                //Shared Pref for OTP PIN
-                try {
-                    val = mPreferences.getInt("OTP_PIN",0);
-                }catch (Exception e){
-                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show(); }
-
-                if (userPin == val){
-                    isOTPSuccess = true;
-                    AddUserSign();
-                }
-                else {
-                    isOTPSuccess = false;
-                    lyt_Auth.setVisibility(View.GONE);
-                    lyt_SignUP.setVisibility(View.VISIBLE);
-                }
+                    //getting pin
+                    try {
+                        String pin = OTP_Txt.getText().toString();
+                        userPin = Integer.parseInt(pin);
+                    } catch (Exception e) {
+                        Toast.makeText(Signup.this, "UserPin Empty", Toast.LENGTH_SHORT).show();
+                    }
+                    //Shared Pref for OTP PIN
+                    try {
+                        val = mPreferences.getInt("OTP_PIN", 0);
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                    if (userPin == val) {
+                        isOTPSuccess = true;
+                        AddUserSign();
+                    } else {
+                        isOTPSuccess = false;
+                        lyt_Auth.setVisibility(View.GONE);
+                        lyt_SignUP.setVisibility(View.VISIBLE);
+                    }
             }
         });
-
-
     }
     //
     public void AddUserSign(){
@@ -160,7 +154,6 @@ public class Signup extends AppCompatActivity {
             final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 
             String url = hostinglink + "/Home/signup";
-
             StringRequest rRequest = new StringRequest(Request.Method.POST, url,
                     new Response.Listener<String>() {
                         @Override
@@ -172,7 +165,6 @@ public class Signup extends AppCompatActivity {
                             result = gson.fromJson(response, StringResponceFromWeb.class);
                             if (result.getresult().equals("registered")) {
                                 struserid = String.valueOf(result.getUserid());
-
                                 int pid = 0;
                                 Intent j = getIntent();
                                 try {
@@ -212,8 +204,6 @@ public class Signup extends AppCompatActivity {
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
 
-
-
                     params.put("phoneNo",phone.getText().toString());
                     params.put("password", password.getText().toString());
                     params.put("userType", "C");
@@ -228,8 +218,6 @@ public class Signup extends AppCompatActivity {
             };
 
             requestQueue.add(rRequest);
-
-
         } catch (Exception E) {
             Toast.makeText(getApplicationContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
             Log.i("error", E.getMessage());

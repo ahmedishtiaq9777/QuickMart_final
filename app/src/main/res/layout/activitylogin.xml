@@ -40,7 +40,7 @@
             android:textColorHint="@color/txtcolor">
 
             <EditText
-                android:id="@+id/emaill"
+                android:id="@+id/PH"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/logintxt"
@@ -72,7 +72,7 @@
 
 
             <EditText
-                android:id="@+id/passwordd"
+                android:id="@+id/PASS"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/logintxt"

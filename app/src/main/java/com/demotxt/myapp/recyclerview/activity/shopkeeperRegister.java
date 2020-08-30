@@ -1,12 +1,11 @@
 package com.demotxt.myapp.recyclerview.activity;
 
+import android.os.Bundle;
+
 import androidx.annotation.Nullable;
-//import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.AppComponentFactory;
 
-
-import android.os.Build;
-import android.os.Bundle;
+//import androidx.appcompat.app.AppCompatActivity;
 
 
 public class shopkeeperRegister extends AppComponentFactory {

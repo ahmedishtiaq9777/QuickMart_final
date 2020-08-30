@@ -1,10 +1,10 @@
 package com.demotxt.myapp.recyclerview.activity;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
 
 import com.demotxt.myapp.recyclerview.R;
 import com.demotxt.myapp.recyclerview.adapter.Notify_Adapter;

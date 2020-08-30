@@ -3,7 +3,6 @@ package com.demotxt.myapp.recyclerview.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import com.demotxt.myapp.recyclerview.CategoryFragments.CatKids_Fragment;
 import com.demotxt.myapp.recyclerview.CategoryFragments.CatMen_Fragment;
 import com.demotxt.myapp.recyclerview.CategoryFragments.CatWomen_Fragment;
 import com.demotxt.myapp.recyclerview.R;
-//import com.demotxt.myapp.recyclerview.ownmodels.CheckConnection;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomInternetDialog;
 import com.demotxt.myapp.recyclerview.utils.Tools;
 import com.google.android.material.tabs.TabLayout;
@@ -27,13 +25,15 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+//import com.demotxt.myapp.recyclerview.ownmodels.CheckConnection;
+
 public class TabsBasic extends AppCompatActivity {
 
     private ViewPager view_pager;
     private TabLayout tab_layout;
     private int userid;
     CustomInternetDialog dialog;
-   // CheckConnection connection;
+    // CheckConnection connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +47,6 @@ public class TabsBasic extends AppCompatActivity {
         if(!is_connected)
         {
             dialog.showCustomDialog();
-
-
-
-
         }*/
 
         Intent i = getIntent();
