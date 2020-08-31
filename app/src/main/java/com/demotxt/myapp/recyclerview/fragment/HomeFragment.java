@@ -192,6 +192,12 @@ public class HomeFragment extends Fragment implements LocationListener {
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        CheckGps();
+    }
+
     //For Trending and Recommended
     public void getconnection(String url, final int val) {
 
@@ -436,7 +442,6 @@ public class HomeFragment extends Fragment implements LocationListener {
                     myAdapter1.getFilter().filter(newText);
                     myAdapter2.getFilter().filter(newText);
 
-
                     return false;
                 }
 
@@ -500,15 +505,6 @@ public class HomeFragment extends Fragment implements LocationListener {
         }
     }
 
-    //To save latlong in sharedpref in case of no gps
-    public void SaveLatLong() {
-        mPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        mEditor = mPreferences.edit();
-        mEditor.putString("Latitude", Latitude);
-        mEditor.putString("Longitude", Longitude);
-        mEditor.apply();
-    }
-
     // to load latlong from sharedpref
     public void LoadLatLong() {
 
@@ -527,9 +523,14 @@ public class HomeFragment extends Fragment implements LocationListener {
 
             Latitude = String.valueOf(location.getLatitude());
             Longitude = String.valueOf(location.getLongitude());
+            //Saving Lat Long
+            mPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            mEditor = mPreferences.edit();
+            mEditor.putString("Latitude", Latitude);
+            mEditor.putString("Longitude", Longitude);
+            mEditor.apply();
 
-            SaveLatLong();
-                Toast.makeText(getContext(), Latitude+""+Longitude, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), Latitude+""+Longitude, Toast.LENGTH_SHORT).show();
         }else {
                 mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,0,this);
 
