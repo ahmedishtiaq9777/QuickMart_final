@@ -15,7 +15,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
-import android.text.Html;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,6 +50,7 @@ import com.demotxt.myapp.recyclerview.activity.Web_Activity;
 import com.demotxt.myapp.recyclerview.ownmodels.ContactDialog;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomDialoag;
 import com.demotxt.myapp.recyclerview.ownmodels.ImageFilePath;
+import com.demotxt.myapp.recyclerview.ownmodels.PrivacyDialog;
 import com.demotxt.myapp.recyclerview.ownmodels.StringResponceFromWeb;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -235,12 +235,8 @@ public class ProfileFragment extends Fragment {
                     p.cancelAnimation();
                     isAnimated = false;
                 }
-                String share_text = Html.fromHtml(getResources().getString(R.string.Privacy_Policy)).toString();
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_TEXT, share_text + "\n\n" + "https://play.google.com/store/apps/details?id=" + getActivity().getPackageName());
-                intent.setType("text/plain");
-                startActivity(intent);
+                PrivacyDialog dialog = new PrivacyDialog(getContext());
+                dialog.showPrivacyDialog();
             }
         });
 
