@@ -45,6 +45,8 @@ public class Notify_Adapter extends RecyclerView.Adapter<Notify_Adapter.OrderVie
     public void onBindViewHolder(@NonNull final OrderViewHolder holder, final int position) {
 
         holder.Detail.setText(mData.get(position).getText());
+
+
         holder.cross.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

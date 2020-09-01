@@ -50,6 +50,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.recyclerview.MainActivity;
+import com.demotxt.myapp.recyclerview.MyLocation;
 import com.demotxt.myapp.recyclerview.activity.Error_Screen_Activity;
 import com.demotxt.myapp.recyclerview.ownmodels.Book;
 import com.demotxt.myapp.recyclerview.ownmodels.CustomDialoag;
@@ -78,15 +79,13 @@ import java.util.Set;
 
 import static com.demotxt.myapp.recyclerview.activity.MainActivity2.hostinglink;
 
-public class HomeFragment extends Fragment implements LocationListener {
+public class HomeFragment extends Fragment {
     // List<Book> lstBook2;
     List<Book> list;
     List<Prod> Book22;
     List<Prod> mTrends;
     View view;
     View v2;
-    String la = "32.488037";
-    String lo = "74.509068";
     ViewFlipper viewFlipper;
     SwipeRefreshLayout RefreshLayout;
     private RecyclerViewAdapter myAdapter;
@@ -95,11 +94,7 @@ public class HomeFragment extends Fragment implements LocationListener {
     TextView shop, rec, trend;
     //loc
     public String Latitude, Longitude;
-    FusedLocationProviderClient mLocationProviderClient;
-    LocationManager mLocationManager;
-    boolean gps_enabled = false;
-    SharedPreferences mPreferences;
-    SharedPreferences.Editor mEditor;
+    public static Location loc;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -112,8 +107,24 @@ public class HomeFragment extends Fragment implements LocationListener {
 
         //Connection Check
         CheckConnection();
-        CheckGps();
-        //
+
+        // to Find the Location
+        MyLocation.LocationResult locationResult = new MyLocation.LocationResult(){
+            @Override
+            public void gotLocation(final Location location){
+                loc=location;
+                System.out.println("Latitude: "+loc.getLatitude());
+                System.out.println("Longitude: "+loc.getLongitude());
+                Latitude = String.valueOf(loc.getLatitude());
+                Longitude = String.valueOf(loc.getLongitude());
+            }
+        };
+
+        MyLocation myLocation = new MyLocation();
+        myLocation.getLocation(getActivity(), locationResult);
+
+
+       /* //
             mLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
 
             if (ActivityCompat.checkSelfPermission(getContext(),
@@ -127,7 +138,7 @@ public class HomeFragment extends Fragment implements LocationListener {
                 ActivityCompat.requestPermissions(getActivity(),
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
             }
-        //
+        //*/
 
         list = new ArrayList<>();
         Book22 = new ArrayList<>();
@@ -145,7 +156,7 @@ public class HomeFragment extends Fragment implements LocationListener {
                 mTrends = new ArrayList<>();
 
 
-                getSeller(hostinglink + "/Home/getsellers/");
+                getSeller(hostinglink + "/Home/getsellers/",Latitude,Longitude);
 
                 getconnection(hostinglink + "/Home/getrecommendedproduct/", 2);
 
@@ -155,8 +166,7 @@ public class HomeFragment extends Fragment implements LocationListener {
             }
         });
 
-
-        getSeller(hostinglink + "/Home/getsellers/");
+        getSeller(hostinglink + "/Home/getsellers/",Latitude,Longitude);
 
         getconnection(hostinglink + "/Home/getrecommendedproduct/", 2);
 
@@ -184,18 +194,12 @@ public class HomeFragment extends Fragment implements LocationListener {
         trend = view.findViewById(R.id.textTrending);
 
 
-        int images[] = {R.drawable.ac_banner, R.drawable.cloth_banner, R.drawable.sale1, R.drawable.mobile_banner};
+        int images[] = {R.drawable.cloth_banner, R.drawable.sale1, R.drawable.offer_img1,R.drawable.offer_img2,R.drawable.offer_img3};
 
         for (int image : images) {
             flipperimages(image);
         }
         return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        CheckGps();
     }
 
     //For Trending and Recommended
@@ -280,7 +284,7 @@ public class HomeFragment extends Fragment implements LocationListener {
     }
 
     //For Seller
-    public void getSeller(String url) {
+    public void getSeller(String url, final String la, final String lo) {
         try {
             final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
 
@@ -319,8 +323,8 @@ public class HomeFragment extends Fragment implements LocationListener {
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
 
-                    params.put("latitude", Latitude);
-                    params.put("longitude", Longitude);
+                    params.put("latitude", la);
+                    params.put("longitude", lo);
 
                     //  params.p
 
@@ -453,37 +457,7 @@ public class HomeFragment extends Fragment implements LocationListener {
 
     }
 
-    //To get User Location and Coordinates
-    /*public void getlocation() {
-        mLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
-            @Override
-            public void onComplete(@NonNull Task<Location> task) {
-
-                Location location = task.getResult();
-                if (location != null) {
-                    Geocoder geocoder = new Geocoder(getContext(),
-                            Locale.getDefault());
-                    try {
-                        List<Address> addresses = geocoder.getFromLocation(
-                                location.getLatitude(), location.getLongitude(), 1
-                        );
-
-                        Latitude = String.valueOf(addresses.get(0).getLatitude());
-                        Longitude = String.valueOf(addresses.get(0).getLongitude());
-                        //
-                        SaveLatLong();
-                        //
-                        Toast.makeText(getContext(), "latitude:" + Latitude + ",Longitude:" + Longitude, Toast.LENGTH_SHORT).show();
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-
-    }*/
-
+/*
     //To check if GPS is enabled
     public void CheckGps() {
 
@@ -513,7 +487,8 @@ public class HomeFragment extends Fragment implements LocationListener {
         Longitude = mPreferences.getString("Longitude", "");
 
     }
-
+*/
+/*
     public void loc() {
 
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -568,4 +543,6 @@ public class HomeFragment extends Fragment implements LocationListener {
     public void onProviderDisabled(String provider) {
 
     }
+
+    */
 }

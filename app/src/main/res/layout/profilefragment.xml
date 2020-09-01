@@ -37,7 +37,7 @@
                     android:layout_height="96dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="3dp"
-                    android:src="@drawable/ic_photo_camera_black_24dp"
+                    android:src="@drawable/ic_account_box_black_24dp"
                     android:visibility="visible"
                     app:civ_border_color="@color/buttonbg"
                     app:civ_border_width="4dp"
