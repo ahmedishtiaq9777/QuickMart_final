@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.Error_Screen_Activity">
+    tools:context="com.demotxt.myapp.Quickmart.activity.Error_Screen_Activity">
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
