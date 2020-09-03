@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="8dp"
     android:background="@color/background"
-    tools:context=".Order.Order_Detail_Activity">
+    tools:context="com.demotxt.myapp.Quickmart.Order.Order_Detail_Activity">
 
     <include
         android:id="@+id/toolbar"
