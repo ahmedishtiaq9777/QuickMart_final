@@ -51,7 +51,7 @@ import java.util.Set;
 
 public class Prod_Activity extends AppCompatActivity {
 
-    private TextView tvtitle,tvdescription,price;
+    private TextView tvtitle, tvdescription, price;
     private ImageView img;
     private FloatingActionButton floatingActionButton;
     private SharedPreferences loginpref;
@@ -68,7 +68,8 @@ public class Prod_Activity extends AppCompatActivity {
     private AppCompatRatingBar mRatingBar;
     public String rate;
     public String Feedback;
-     private View layout;
+    private View layout;
+    private Spinner spinner1, spinner2;
     //
 
     @Override
@@ -77,17 +78,16 @@ public class Prod_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_prod_);
         // For custom toast
         final LayoutInflater inflater = getLayoutInflater();
-        try{
+        try {
             layout = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toast_layout_root));//for product added :to make custom toast with tick mark
 
-        }catch (Exception e)
-        {
-            Toast.makeText(getApplicationContext(),"ERROR:"+e.getMessage(),Toast.LENGTH_SHORT).show();
-            Log.i("Prodactivity","error"+e.getMessage());
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "ERROR:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.i("Prodactivity", "error" + e.getMessage());
 
         }
-               // Size Spinner
-             final Spinner spinner1 = (Spinner) findViewById(R.id.sizeSpinner);
+        // Size Spinner
+        spinner1 = (Spinner) findViewById(R.id.sizeSpinner);
         // Initializing a String Array
         String[] size = new String[]{
                 "Size",
@@ -98,28 +98,25 @@ public class Prod_Activity extends AppCompatActivity {
         };
         final List<String> SizeList = new ArrayList<>(Arrays.asList(size));
         final ArrayAdapter<String> Sizespinner = new ArrayAdapter<String>(
-                this,R.layout.item_spinner,SizeList){
+                this, R.layout.item_spinner, SizeList) {
             @Override
-            public boolean isEnabled(int position){
-                if(position == 0)
-                {
+            public boolean isEnabled(int position) {
+                if (position == 0) {
                     return false;
-                }
-                else
-                {
+                } else {
                     return true;
                 }
             }
+
             @Override
             public View getDropDownView(int position, View convertView,
                                         ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
-                if(position == 0){
+                if (position == 0) {
                     // Set the hint text color gray
                     tv.setTextColor(Color.GRAY);
-                }
-                else {
+                } else {
                     tv.setTextColor(Color.BLACK);
                 }
                 return view;
@@ -132,20 +129,21 @@ public class Prod_Activity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItemText = (String) parent.getItemAtPosition(position);
 
-                if(position > 0){
+                if (position > 0) {
                     // Notify the selected item text
                     Toast.makeText
                             (getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT)
                             .show();
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
 
         // Color Spinner
-            final Spinner spinner2 = (Spinner) findViewById(R.id.colorSpinner);
+        spinner2 = (Spinner) findViewById(R.id.colorSpinner);
         // Initializing a String Array
         String[] color = new String[]{
                 "Color",
@@ -156,28 +154,25 @@ public class Prod_Activity extends AppCompatActivity {
         };
         final List<String> colorList = new ArrayList<>(Arrays.asList(color));
         final ArrayAdapter<String> Colorspinner = new ArrayAdapter<String>(
-                this,R.layout.item_spinner,colorList){
+                this, R.layout.item_spinner, colorList) {
             @Override
-            public boolean isEnabled(int position){
-                if(position == 0)
-                {
+            public boolean isEnabled(int position) {
+                if (position == 0) {
                     return false;
-                }
-                else
-                {
+                } else {
                     return true;
                 }
             }
+
             @Override
             public View getDropDownView(int position, View convertView,
                                         ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
-                if(position == 0){
+                if (position == 0) {
                     // Set the hint text color gray
                     tv.setTextColor(Color.GRAY);
-                }
-                else {
+                } else {
                     tv.setTextColor(Color.BLACK);
                 }
                 return view;
@@ -190,13 +185,14 @@ public class Prod_Activity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItemText = (String) parent.getItemAtPosition(position);
 
-                if(position > 0){
+                if (position > 0) {
                     // Notify the selected item text
                     Toast.makeText
                             (getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT)
                             .show();
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -206,12 +202,12 @@ public class Prod_Activity extends AppCompatActivity {
 
         loginpref = getSharedPreferences("loginpref", MODE_PRIVATE);// get login preferences which contains information like "userid" and login status
 
-    //    cartids=cartlistpref.getStringSet("cartids",cartids);//get current product ids in cartprefferences
+        //    cartids=cartlistpref.getStringSet("cartids",cartids);//get current product ids in cartprefferences
         //Toast.makeText(getApplicationContext(), "length:" + cartids.size(), Toast.LENGTH_SHORT).show();
         tvtitle = (TextView) findViewById(R.id.txttitle);
-    //    tvdescription = (TextView) findViewById(R.id.txtDesc);
+        //    tvdescription = (TextView) findViewById(R.id.txtDesc);
         tvdescription = (TextView) findViewById(R.id.textdesciption);
-       // tvcategory = (TextView) findViewById(R.id.txtCat);
+        // tvcategory = (TextView) findViewById(R.id.txtCat);
         img = (ImageView) findViewById(R.id.bookthumbnail);
         price = (TextView) findViewById(R.id.price);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
@@ -260,151 +256,151 @@ public class Prod_Activity extends AppCompatActivity {
         tvtitle.setText(Title);
         tvdescription.setText(Description);
         price.setText(strprice);
-      //  img.setImageResource(image);
+        //  img.setImageResource(image);
         Picasso.get().load(image).into(img);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-try {
-    Boolean is_logedin=loginpref.getBoolean("loggedin",false);
-    if(is_logedin.equals(true))
-    {
-        proid= intent.getExtras().getInt("proid");
-     sellerid  = intent.getExtras().getInt("sellerid");
-       final  String  strsellerid=String.valueOf(sellerid);
-        final String strpid=String.valueOf(proid);//
-          int userid =loginpref.getInt("userid",0);
-          final String struserid=String.valueOf(userid);
+                try {
+                    Boolean is_logedin = loginpref.getBoolean("loggedin", false);
+                    if (is_logedin.equals(true)) {
+                        proid = intent.getExtras().getInt("proid");
+                        sellerid = intent.getExtras().getInt("sellerid");
+                        final String strsellerid = String.valueOf(sellerid);
+                        final String strpid = String.valueOf(proid);//
+                        int userid = loginpref.getInt("userid", 0);
+                        final String struserid = String.valueOf(userid);
 
 
+                        try {
+                            if (validateSpinner(spinner2, "Choose Color", "Color") == false) {
+                                AlertDialog.Builder build = new AlertDialog.Builder(Prod_Activity.this);
+                                build.setTitle("Choose Color");
+                                build.setMessage("Please Select a Color");
+                                build.setIcon(R.drawable.exclamationmarkresize);
+                                // builder1.show();
+                                AlertDialog alert = build.create();
+                                alert.show();
+                            } else {
+                                if (validateSpinner(spinner1, "Choose Size", "Size") == false) {
+                                    AlertDialog.Builder build = new AlertDialog.Builder(Prod_Activity.this);
+                                    build.setTitle("Choose Size");
+                                    build.setMessage("Please Select a Size");
+                                    build.setIcon(R.drawable.exclamationmarkresize);
+                                    // builder1.show();
+                                    AlertDialog alert = build.create();
+                                    alert.show();
+                                } else {
+
+                                    final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                                    // String url = "http:// 192.168.10.13:64077/api/login";
+                                    //String url="https://api.myjson.com/bins/kp9wz";
+                                    String url = MainActivity2.hostinglink + "/Home/AddtoCart";
+
+                                    StringRequest rRequest = new StringRequest(Request.Method.POST, url,
+                                            new Response.Listener<String>() {
+                                                @Override
+                                                public void onResponse(String response) {
+                                                    //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                                                    GsonBuilder builder = new GsonBuilder();
+                                                    Gson gson = builder.create();
+                                                    result = gson.fromJson(response, StringResponceFromWeb.class);
+                                                    if (result.getresult().equals("Added")) {
 
 
+                                                        Toast toast = new Toast(getApplicationContext());
+                                                        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                                                        toast.setDuration(Toast.LENGTH_SHORT);
+                                                        toast.setView(layout);
+                                                        toast.show();
 
 
-try{
-
-    final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-    // String url = "http:// 192.168.10.13:64077/api/login";
-    //String url="https://api.myjson.com/bins/kp9wz";
-    String url = MainActivity2.hostinglink +"/Home/AddtoCart";
-
-    StringRequest rRequest = new StringRequest(Request.Method.POST, url,
-            new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
-                    GsonBuilder builder = new GsonBuilder();
-                    Gson gson = builder.create();
-                    result=gson.fromJson(response, StringResponceFromWeb.class);
-                    if(result.getresult().equals("Added"))
-                    {
+                                                        // Toast.makeText(getApplicationContext(), "Product Added to Cart" , Toast.LENGTH_SHORT).show();
 
 
-                        Toast toast = new Toast(getApplicationContext());
-                        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-                        toast.setDuration(Toast.LENGTH_SHORT);
-                        toast.setView(layout);
-                        toast.show();
+                                                    } else if (result.getresult().equals("AllreadyAdded")) {
+                                                        // Toast.makeText(getApplicationContext(), "Product is Already Added", Toast.LENGTH_LONG).show();
+                                                        // response
+                                                        try {
+                                                            AlertDialog.Builder builder1 = new AlertDialog.Builder(Prod_Activity.this);
+                                                            builder1.setTitle("Already Added");
+                                                            builder1.setMessage("Your product is Already Added to Cart!");
+
+                                                            builder1.setIcon(R.drawable.exclamationmarkresize);
+                                                            // builder1.show();
+                                                            AlertDialog alert11 = builder1.create();
+
+                                                            alert11.show();
 
 
-                       // Toast.makeText(getApplicationContext(), "Product Added to Cart" , Toast.LENGTH_SHORT).show();
+                                                        } catch (Exception e) {
+                                                            Log.i("error:", e.getMessage());
+                                                            Toast.makeText(getApplicationContext(), "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                                        }
 
 
-                                            } else if (result.getresult().equals("AllreadyAdded")) {
-                                                // Toast.makeText(getApplicationContext(), "Product is Already Added", Toast.LENGTH_LONG).show();
-                                                // response
-                                                try {
-                                                    AlertDialog.Builder builder1 = new AlertDialog.Builder(Prod_Activity.this);
-                                                    builder1.setTitle("Already Added");
-                                                    builder1.setMessage("Your product is Already Added to Cart!");
+                                                    }
+                                                }
+                                            },
+                                            new Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+                                                    // error
+                                                    Log.i("APIERROR", error.getMessage());
+                                                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                    ) {
+                                        @Override
+                                        protected Map<String, String> getParams() {
+                                            Map<String, String> params = new HashMap<String, String>();
 
-                            builder1 .setIcon(R.drawable.exclamationmarkresize);
-                            // builder1.show();
-                            AlertDialog alert11 = builder1.create();
+                                            params.put("productId", strpid);
+                                            params.put("userId", struserid);
+                                            params.put("sellerid", strsellerid);
+                                            return params;
+                                        }
 
-                                                    alert11.show();
+                                        public Map<String, String> getHeaders() throws AuthFailureError {
+                                            Map<String, String> params = new HashMap<String, String>();
+                                            params.put("Content-Type", "application/x-www-form-urlencoded");
+                                            return params;
+                                        }
+                                    };
+
+                                    requestQueue.add(rRequest);
 
 
-                                                } catch (Exception e) {
-                                                    Log.i("error:", e.getMessage());
-                                                    Toast.makeText(getApplicationContext(), "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
-
+                                }
+                            }
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), "Error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
 
 
+                        /// cartids.add(strpid);
+                        ///cartlistprefeditor.remove("cartids");
+                        ///cartlistprefeditor.commit();
+                        //cartlistprefeditor.putStringSet("cartids",cartids);
+                        //cartlistprefeditor.commit();
+                        // Toast.makeText(getApplicationContext(), "Product Added to Cart" , Toast.LENGTH_SHORT).show();
 
+                        //  int userid=loginpref.getInt("userid",-1);
+                        //
+
+                        //  getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/AddToCart",userid,proid);
+                    } else {
+                        proid = intent.getExtras().getInt("proid");
+                        Intent login = new Intent(Prod_Activity.this, Login.class);
+                        login.putExtra("proid", proid);
+                        startActivity(login);
 
                     }
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-            },
-            new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    // error
-                    Log.i("APIERROR", error.getMessage());
-                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-                }
-            }
-    ) {
-        @Override
-        protected Map<String, String> getParams() {
-            Map<String, String> params = new HashMap<String, String>();
-
-            params.put("productId", strpid);
-            params.put("userId", struserid);
-            params.put("sellerid",strsellerid);
-            return params;
-        }
-
-        public Map<String, String> getHeaders() throws AuthFailureError {
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("Content-Type", "application/x-www-form-urlencoded");
-            return params;
-        }
-    };
-
-    requestQueue.add(rRequest);
-
-
-}catch (Exception e){
-    Toast.makeText(getApplicationContext(), "Error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
-}
-
-
-
-
-
-
-
-
-
-
-
-
-        /// cartids.add(strpid);
-        ///cartlistprefeditor.remove("cartids");
-        ///cartlistprefeditor.commit();
-        //cartlistprefeditor.putStringSet("cartids",cartids);
-        //cartlistprefeditor.commit();
-       // Toast.makeText(getApplicationContext(), "Product Added to Cart" , Toast.LENGTH_SHORT).show();
-
-        //  int userid=loginpref.getInt("userid",-1);
-        //
-
-        //  getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/AddToCart",userid,proid);
-    }else {
-        proid= intent.getExtras().getInt("proid");
-        Intent login=new Intent(Prod_Activity.this,Login.class);
-        login.putExtra("proid",proid);
-        startActivity(login);
-
-    }
-}
-catch (Exception e)
-{
-    Toast.makeText(getApplicationContext(), "Error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
-}
 
             }
         });
@@ -415,7 +411,7 @@ catch (Exception e)
             public void onClick(View v) {
                 //Checking if user is logged in
                 Boolean Check_login = loginpref.getBoolean("loggedin", false);
-                if(Check_login.equals(true)) {
+                if (Check_login.equals(true)) {
                     //Values
                     rate = String.valueOf(mRatingBar.getRating());
                     Feedback = Feedback_TXT.getText().toString();
@@ -423,7 +419,7 @@ catch (Exception e)
                     final String strpid = String.valueOf(proid);
                     int userid = loginpref.getInt("userid", 0);
                     final String struserid = String.valueOf(userid);
-                    String url = MainActivity2.hostinglink+"/home/SaveFeedback";
+                    String url = MainActivity2.hostinglink + "/home/SaveFeedback";
                     //
                     try {
                         final RequestQueue request = Volley.newRequestQueue(getApplicationContext());
@@ -432,7 +428,7 @@ catch (Exception e)
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
-                                        Toast.makeText(getApplicationContext(),"ON-Response",Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), "ON-Response", Toast.LENGTH_LONG).show();
                                     }
                                 },
                                 new Response.ErrorListener() {
@@ -445,12 +441,13 @@ catch (Exception e)
                             @Override
                             protected Map<String, String> getParams() {
                                 Map<String, String> params = new HashMap<String, String>();
-                                params.put("userid",struserid);
-                                params.put("proid",strpid);
-                                params.put("rating",rate);
-                                params.put("feedback",Feedback);
+                                params.put("userid", struserid);
+                                params.put("proid", strpid);
+                                params.put("rating", rate);
+                                params.put("feedback", Feedback);
                                 return params;
                             }
+
                             public Map<String, String> getHeaders() throws AuthFailureError {
                                 Map<String, String> params = new HashMap<String, String>();
                                 params.put("Content-Type", "application/x-www-form-urlencoded");
@@ -459,12 +456,11 @@ catch (Exception e)
                         };
                         request.add(rRequest);
 
-                    }catch (Exception e){
-                        Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                }
-                else {
-                    Intent intent = new Intent(getApplicationContext(),Login.class);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), Login.class);
                     startActivity(intent);
                 }
             }
@@ -485,6 +481,7 @@ catch (Exception e)
             ViewAnimation.collapse(lyt);
         }
     }
+
     public boolean toggleArrow(View view) {
         if (view.getRotation() == 0) {
             view.animate().setDuration(200).rotation(180);
@@ -495,6 +492,19 @@ catch (Exception e)
         }
     }
 
+    boolean validateSpinner(Spinner spinner, String error, String msg) {
+
+        View selectedView = spinner.getSelectedView();
+        if (selectedView != null && selectedView instanceof TextView) {
+            TextView selectedTextView = (TextView) selectedView;
+            if (selectedTextView.getText().equals(msg)) {
+                selectedTextView.setError(error);
+                Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }
+        return true;
+    }
 
 
 }
