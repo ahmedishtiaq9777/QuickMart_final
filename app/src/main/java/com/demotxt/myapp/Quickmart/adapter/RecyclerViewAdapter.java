@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.demotxt.myapp.Quickmart.activity.AboutSeller_Activity;
 import com.demotxt.myapp.Quickmart.activity.TabsBasic;
 import com.demotxt.myapp.Quickmart.ownmodels.Book;
 import com.demotxt.myapp.Quickmart.R;
@@ -27,6 +28,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static android.content.Context.BIND_NOT_FOREGROUND;
 import static android.content.Context.MODE_PRIVATE;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> implements Filterable {
@@ -34,6 +36,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private Context mContext;
     private List<Book> mData;
     private List<Book> mDataFull;
+    int userid;
+    String img;
+    String name,add,contact;
     //
     private SharedPreferences cartpreferrence;
     private SharedPreferences.Editor cartprefEditor;
@@ -68,35 +73,40 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         holder.tv_book_title.setText(mData.get(position).getTitle());
         holder.tv_book_dist.setText(mData.get(position).getDistance());
-        //holder.img_book_thumbnail.setImageResource(mData.get(position).getThumbnail());
         Picasso.get().load(mData.get(position).getThumbnail()).into(holder.img_book_thumbnail);
         holder.mRatingBar.setRating(mData.get(position).getRating());
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //To send data to next frag
-              //  Fragment fragment = new Fragment();
-                //Bundle b = new Bundle();
-int userid= mData.get(position).getUserId();
-Toast.makeText(mContext.getApplicationContext(),"seller id:"+userid,Toast.LENGTH_LONG).show();
-         // String T= mData.get(position).getTitle();
-               /* if(ShopID == "Outfitter") {
-                  //  b.putInt("", );
-                    fragment.setArguments(b);
-                }
 
-*/
-
+                Toast.makeText(mContext.getApplicationContext(),"seller id:"+userid,Toast.LENGTH_LONG).show();
                 //Starting Activity To show Category Activity
                 Intent intent = new Intent(mContext, TabsBasic.class);
                 intent.putExtra("sellerid",userid);
-
-
                 mContext.startActivity(intent);
 
             }
         });
+        // To show Seller Information
+        holder.Info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent infoIntent = new Intent(mContext, AboutSeller_Activity.class);
+                infoIntent.putExtra("sellerid",mData.get(position).getUserId());
+                infoIntent.putExtra("ShopName",mData.get(position).getTitle());
+                infoIntent.putExtra("ShopImg",mData.get(position).getThumbnail());
+                infoIntent.putExtra("Contact",mData.get(position).getContact());
+                infoIntent.putExtra("address",mData.get(position).getAddress());
+                infoIntent.putExtra("rating",mData.get(position).getRating());
+
+                mContext.startActivity(infoIntent);
+
+            }
+        });
+
+
     }
 
     @Override
@@ -107,7 +117,7 @@ Toast.makeText(mContext.getApplicationContext(),"seller id:"+userid,Toast.LENGTH
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView tv_book_title,tv_book_dist;
-        ImageView img_book_thumbnail;
+        ImageView img_book_thumbnail,Info;
         CardView cardView;
         AppCompatRatingBar mRatingBar;
 
@@ -119,6 +129,7 @@ Toast.makeText(mContext.getApplicationContext(),"seller id:"+userid,Toast.LENGTH
             tv_book_dist = itemView.findViewById(R.id.book_distance);
             cardView = itemView.findViewById(R.id.cardview_id);
             mRatingBar = itemView.findViewById(R.id.shop_RatingBar);
+            Info = itemView.findViewById(R.id.info_Btn);
 
         }
     }

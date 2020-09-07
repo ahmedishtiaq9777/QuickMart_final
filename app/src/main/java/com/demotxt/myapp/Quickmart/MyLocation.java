@@ -2,26 +2,40 @@ package com.demotxt.myapp.Quickmart;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
-public class MyLocation {
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+
+public class MyLocation extends AppCompatActivity {
     Timer timer1;
     LocationManager lm;
     LocationResult locationResult;
     boolean gps_enabled=false;
     boolean network_enabled=false;
+    Context mContext;
 
     public boolean getLocation(Context context, LocationResult result)
     {
         //I use LocationResult callback class to pass location value from MyLocation to user code.
         locationResult=result;
+        //
+        mContext = context;
+        //
         if(lm==null)
             lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-
         //exceptions will be thrown if provider is not permitted.
         try
         {
@@ -39,18 +53,57 @@ public class MyLocation {
         {
             ex.printStackTrace();
         }
-
         //don't start listeners if no provider is enabled
         if(!gps_enabled && !network_enabled)
             return false;
 
+        //permission for GPS
         if(gps_enabled)
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListenerGps);
+            if (ContextCompat.checkSelfPermission(context,Manifest.permission.ACCESS_FINE_LOCATION) !=
+                    PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions((Activity) context,new String[]{Manifest.permission.ACCESS_FINE_LOCATION
+                },1);
+            }else {
+                Toast.makeText(context, "Location Permission Granted", Toast.LENGTH_SHORT).show();
+                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListenerGps);
+            }
+
+        //permission for Network
         if(network_enabled)
-            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListenerNetwork);
+            if (ContextCompat.checkSelfPermission(context,Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                    PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions((Activity) context,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION
+                },2);
+            }else {
+                Toast.makeText(context, "Location Permission Granted", Toast.LENGTH_SHORT).show();
+                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListenerNetwork);;
+            }
+
+
+
+
+
         timer1=new Timer();
         timer1.schedule(new GetLastLocation(), 20000);
         return true;
+    }
+    //
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 1){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                Toast.makeText(this, "Location Permission Granted", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(this, "Error Permission", Toast.LENGTH_SHORT).show();
+        }
+        else if (requestCode == 2){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                Toast.makeText(this, "Location Permission Granted", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(this, "Error Permission", Toast.LENGTH_SHORT).show();
+        }
     }
 
     LocationListener locationListenerGps = new LocationListener()
@@ -60,8 +113,8 @@ public class MyLocation {
             timer1.cancel();
             locationResult.gotLocation(location);
 
-            //  lm.removeUpdates(this);
-            //lm.removeUpdates(locationListenerNetwork);
+            lm.removeUpdates(this);
+            lm.removeUpdates(locationListenerNetwork);
         }
         public void onProviderDisabled(String provider) {}
         public void onProviderEnabled(String provider) {}
@@ -74,8 +127,8 @@ public class MyLocation {
         {
             timer1.cancel();
             locationResult.gotLocation(location);
-            // lm.removeUpdates(this);
-            //   lm.removeUpdates(locationListenerGps);
+            lm.removeUpdates(this);
+            lm.removeUpdates(locationListenerGps);
         }
         public void onProviderDisabled(String provider) {}
         public void onProviderEnabled(String provider) {}
@@ -86,17 +139,30 @@ public class MyLocation {
     {
         @Override
         public void run() {
-            //lm.removeUpdates(locationListenerGps);
-            //lm.removeUpdates(locationListenerNetwork);
+            lm.removeUpdates(locationListenerGps);
+            lm.removeUpdates(locationListenerNetwork);
 
             Location net_loc=null, gps_loc=null;
+
+            //permission for GPS
             if(gps_enabled)
+                if (ContextCompat.checkSelfPermission(mContext,Manifest.permission.ACCESS_FINE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions((Activity) mContext,new String[]{Manifest.permission.ACCESS_FINE_LOCATION
+                    },1);
+                }else {
+                    gps_loc=lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                }
 
-                gps_loc=lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
+            //permission for Network
             if(network_enabled)
-
-                net_loc=lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                if (ContextCompat.checkSelfPermission(mContext,Manifest.permission.ACCESS_FINE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions((Activity) mContext,new String[]{Manifest.permission.ACCESS_FINE_LOCATION
+                    },2);
+                }else {
+                    net_loc=lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                }
 
             //if there are both values use the latest one
             if(gps_loc!=null && net_loc!=null){
@@ -124,3 +190,5 @@ public class MyLocation {
         public abstract void gotLocation(Location location);
     }
 }
+
+

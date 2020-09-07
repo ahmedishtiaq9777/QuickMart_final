@@ -69,8 +69,6 @@ public class CatMen_Fragment extends Fragment {
         ProdMen = new ArrayList<>();
 
 
-        //TODO Add Data in The Recycler Views;
-
         TabsBasic activity=(TabsBasic) getActivity();  // get activity data
         int sid= activity.getuserid();
         Log.i("Seller id",  String.valueOf(sid));

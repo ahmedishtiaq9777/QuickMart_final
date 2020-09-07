@@ -102,7 +102,6 @@
                 "If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at quickmartapp@gmail.com."
     </string>
 
- <!-- TODO: Remove or change this placeholder text -->
  <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
  <string name="NEXT" translatable="false" />
  <string name="Privacy_Policy" translatable="false">Privacy Policy</string>
@@ -141,5 +140,6 @@
  <string name="OrdId">Order Id</string>
 
  <string name="CartITem">Cart Items</string>
+
 
 </resources>

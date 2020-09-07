@@ -46,7 +46,7 @@ import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
 
 public class Login extends AppCompatActivity {
-    TextView signup;
+    TextView signup,ForgotPass;
     Button signin;
     private EditText phone, pass;
     AwesomeValidation awesomeValidation;
@@ -92,6 +92,17 @@ public class Login extends AppCompatActivity {
         phone = (EditText) findViewById(R.id.PH);
         pass = (EditText) findViewById(R.id.PASS);
         checkBoxremember = (CheckBox) findViewById(R.id.checkboxremember);
+        ForgotPass = findViewById(R.id.forgotpass);
+
+        //Forget Password
+        ForgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO Forgot Password Work
+                Intent forgetIntent = new Intent(Login.this,Forgot_Pass_Activity.class);
+                startActivity(forgetIntent);
+            }
+        });
 
         cartlistpref = getSharedPreferences("cartprefs", MODE_PRIVATE);//get cartpreferences that contains cartitemlist
 

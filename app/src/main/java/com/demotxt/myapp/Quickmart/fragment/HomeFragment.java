@@ -52,6 +52,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import kotlin.collections.LongIterator;
+
+import static android.content.Context.LAUNCHER_APPS_SERVICE;
 import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
 public class HomeFragment extends Fragment {
@@ -67,7 +70,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView3 myAdapter2;
     TextView shop, rec, trend;
     //loc
-    public String Latitude, Longitude;
+    public String Latitude,Longitude;
     public static Location loc;
 
 
@@ -78,8 +81,17 @@ public class HomeFragment extends Fragment {
         //
         view = inflater.inflate(R.layout.homefragment, container, false);
 
+        viewFlipper = (ViewFlipper) view.findViewById(R.id.flipper);
+        shop = view.findViewById(R.id.textRecommend);
+        rec = view.findViewById(R.id.textNew);
+        trend = view.findViewById(R.id.textTrending);
+
         //Connection Check
         CheckConnection();
+
+        list = new ArrayList<>();
+        Book22 = new ArrayList<>();
+        mTrends = new ArrayList<>();
 
         // to Find the Location
         MyLocation.LocationResult locationResult = new MyLocation.LocationResult() {
@@ -90,15 +102,13 @@ public class HomeFragment extends Fragment {
                 System.out.println("Longitude: " + loc.getLongitude());
                 Latitude = String.valueOf(loc.getLatitude());
                 Longitude = String.valueOf(loc.getLongitude());
+                getSeller(hostinglink + "/Home/getsellers/",Latitude,Longitude);
             }
         };
-
         MyLocation myLocation = new MyLocation();
         myLocation.getLocation(getActivity(), locationResult);
 
-        list = new ArrayList<>();
-        Book22 = new ArrayList<>();
-        mTrends = new ArrayList<>();
+
 
 
         RefreshLayout = view.findViewById(R.id.SwipeRefresh);
@@ -111,7 +121,7 @@ public class HomeFragment extends Fragment {
                 Book22 = new ArrayList<>();
                 mTrends = new ArrayList<>();
 
-                getSeller(hostinglink + "/Home/getsellers/", Latitude, Longitude);
+                getSeller(hostinglink + "/Home/getsellers/",Latitude,Longitude);
 
                 getconnection(hostinglink + "/Home/getrecommendedproduct/", 2);
 
@@ -121,18 +131,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
-        getSeller(hostinglink + "/Home/getsellers/", Latitude, Longitude);
-
         getconnection(hostinglink + "/Home/getrecommendedproduct/", 2);
 
         getconnection(hostinglink + "/Home/gettrendingpro/", 3);
-
-        //flipper
-        viewFlipper = (ViewFlipper) view.findViewById(R.id.flipper);
-        shop = view.findViewById(R.id.textRecommend);
-        rec = view.findViewById(R.id.textNew);
-        trend = view.findViewById(R.id.textTrending);
 
 
         int images[] = {R.drawable.cloth_banner, R.drawable.sale1, R.drawable.offer_img1, R.drawable.offer_img2, R.drawable.offer_img3};
