@@ -2,6 +2,8 @@ package com.demotxt.myapp.Quickmart;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -84,6 +86,7 @@ public class MyLocation {
 
     class GetLastLocation extends TimerTask
     {
+        @SuppressLint("MissingPermission")
         @Override
         public void run() {
             //lm.removeUpdates(locationListenerGps);

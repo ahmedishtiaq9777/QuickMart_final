@@ -81,8 +81,8 @@
 
                 <TextView
                     android:id="@+id/textView12"
-                    android:layout_width="111dp"
-                    android:layout_height="24dp"
+                    android:layout_width="127dp"
+                    android:layout_height="23dp"
                     android:text="Ahmed Ishtiaq"
                     android:textColor="@color/profiletext"
                     android:textSize="18sp"
@@ -96,8 +96,8 @@
 
                 <TextView
                     android:id="@+id/textView13"
-                    android:layout_width="132dp"
-                    android:layout_height="24dp"
+                    android:layout_width="143dp"
+                    android:layout_height="25dp"
                     android:text="Software Engineer"
                     android:textColor="@color/profiletext"
                     android:textSize="16sp"
@@ -109,11 +109,11 @@
                     app:layout_constraintVertical_bias="0.060000002" />
 
                 <TextView
-                    android:layout_width="172dp"
-                    android:layout_height="22dp"
+                    android:layout_width="185dp"
+                    android:layout_height="21dp"
                     android:text="ahmedishtiaq97@gmail.com"
                     android:textColor="@color/profiletext"
-                    android:textSize="14sp"
+                    android:textSize="13sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -170,8 +170,8 @@
 
                 <TextView
                     android:id="@+id/textView2"
-                    android:layout_width="113dp"
-                    android:layout_height="26dp"
+                    android:layout_width="123dp"
+                    android:layout_height="22dp"
                     android:text="Abrar Hussain"
                     android:textColor="@color/profiletext"
                     android:textSize="18sp"
@@ -185,8 +185,8 @@
 
                 <TextView
                     android:id="@+id/textView3"
-                    android:layout_width="129dp"
-                    android:layout_height="24dp"
+                    android:layout_width="138dp"
+                    android:layout_height="25dp"
                     android:text="Software Engineer"
                     android:textColor="@color/profiletext"
                     android:textSize="16sp"
@@ -198,11 +198,11 @@
                     app:layout_constraintVertical_bias="0.060000002" />
 
                 <TextView
-                    android:layout_width="190dp"
-                    android:layout_height="27dp"
+                    android:layout_width="200dp"
+                    android:layout_height="26dp"
                     android:text="ibrarhussain25692@gmail.com"
                     android:textColor="@color/profiletext"
-                    android:textSize="14sp"
+                    android:textSize="13sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -258,8 +258,8 @@
 
                 <TextView
                     android:id="@+id/textView4"
-                    android:layout_width="147dp"
-                    android:layout_height="27dp"
+                    android:layout_width="159dp"
+                    android:layout_height="24dp"
                     android:text="Muhammad Awais"
                     android:textColor="@color/profiletext"
                     android:textSize="18sp"
@@ -273,8 +273,8 @@
 
                 <TextView
                     android:id="@+id/textView6"
-                    android:layout_width="129dp"
-                    android:layout_height="24dp"
+                    android:layout_width="140dp"
+                    android:layout_height="28dp"
                     android:text="Software Engineer"
                     android:textColor="@color/profiletext"
                     android:textSize="16sp"
@@ -286,11 +286,11 @@
                     app:layout_constraintVertical_bias="0.060000002" />
 
                 <TextView
-                    android:layout_width="166dp"
-                    android:layout_height="31dp"
+                    android:layout_width="171dp"
+                    android:layout_height="25dp"
                     android:text="m.awais44551@gmail.com "
                     android:textColor="@color/profiletext"
-                    android:textSize="14sp"
+                    android:textSize="13sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -361,8 +361,8 @@
 
                 <TextView
                     android:id="@+id/textView9"
-                    android:layout_width="129dp"
-                    android:layout_height="24dp"
+                    android:layout_width="152dp"
+                    android:layout_height="34dp"
                     android:text="Software Engineer"
                     android:textColor="@color/profiletext"
                     android:textSize="16sp"
@@ -374,11 +374,11 @@
                     app:layout_constraintVertical_bias="0.060000002" />
 
                 <TextView
-                    android:layout_width="166dp"
-                    android:layout_height="31dp"
+                    android:layout_width="176dp"
+                    android:layout_height="50dp"
                     android:text="umairsajjad139@gmail.com"
                     android:textColor="@color/profiletext"
-                    android:textSize="14sp"
+                    android:textSize="13sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

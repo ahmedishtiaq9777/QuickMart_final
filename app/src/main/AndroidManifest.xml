@@ -17,33 +17,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.demotxt.myapp.Quickmart.activity.Notification_Activity" />
-        <activity android:name="com.demotxt.myapp.Quickmart.activity.Web_Activity" />
-        <activity android:name="com.demotxt.myapp.Quickmart.Order.Order_Detail_Activity" />
-        <activity android:name="com.demotxt.myapp.Quickmart.Order.Order_Activity" />
-        <activity android:name="com.demotxt.myapp.Quickmart.activity.AnimationOrder" />
+        <activity android:name=".activity.editDetails"></activity>
+        <activity android:name=".activity.Notification_Activity" />
+        <activity android:name=".activity.Web_Activity" />
+        <activity android:name=".Order.Order_Detail_Activity" />
+        <activity android:name=".Order.Order_Activity" />
+        <activity android:name=".activity.AnimationOrder" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name="com.demotxt.myapp.Quickmart.activity.Splash_Activity">
+        <activity android:name=".activity.Splash_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.demotxt.myapp.Quickmart.activity.Book_Activity" />
-        <activity android:name="com.demotxt.myapp.Quickmart.activity.Error_Screen_Activity" />
-        <activity android:name="com.demotxt.myapp.Quickmart.activity.Signup" />
-        <activity android:name="com.demotxt.myapp.Quickmart.activity.Prod_Activity" />
-        <activity android:name="com.demotxt.myapp.Quickmart.activity.r3_Activity" />
-        <activity android:name="com.demotxt.myapp.Quickmart.activity.Login" />
-        <activity android:name="com.demotxt.myapp.Quickmart.activity.Shipping" />
-        <activity android:name="com.demotxt.myapp.Quickmart.activity.Confirmation" />
-        <activity android:name="com.demotxt.myapp.Quickmart.activity.TabsBasic" />
-        <activity android:name="com.demotxt.myapp.Quickmart.activity.MainActivity2" />
+        <activity android:name=".activity.Book_Activity" />
+        <activity android:name=".activity.Error_Screen_Activity" />
+        <activity android:name=".activity.Signup" />
+        <activity android:name=".activity.Prod_Activity" />
+        <activity android:name=".activity.r3_Activity" />
+        <activity android:name=".activity.Login" />
+        <activity android:name=".activity.Shipping" />
+        <activity android:name=".activity.Confirmation" />
+        <activity android:name=".activity.TabsBasic" />
+        <activity android:name=".activity.MainActivity2" />
     </application>
 
 </manifest>

@@ -41,17 +41,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.Quickmart.Order.Order_Activity;
+import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.activity.Login;
+import com.demotxt.myapp.Quickmart.activity.Notification_Activity;
+import com.demotxt.myapp.Quickmart.activity.Splash_Activity;
 import com.demotxt.myapp.Quickmart.activity.Web_Activity;
+import com.demotxt.myapp.Quickmart.activity.editDetails;
+import com.demotxt.myapp.Quickmart.ownmodels.ContactDialog;
 import com.demotxt.myapp.Quickmart.ownmodels.CustomDialoag;
 import com.demotxt.myapp.Quickmart.ownmodels.ImageFilePath;
 import com.demotxt.myapp.Quickmart.ownmodels.PrivacyDialog;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
-import com.demotxt.myapp.Quickmart.R;
-import com.demotxt.myapp.Quickmart.activity.Notification_Activity;
-import com.demotxt.myapp.Quickmart.activity.Splash_Activity;
-import com.demotxt.myapp.Quickmart.ownmodels.ContactDialog;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
@@ -70,11 +70,9 @@ import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
 public class ProfileFragment extends Fragment {
 
-    TextView username;
-    ImageView phtotimage;
-    TextView  signup;
-    ImageView logout;
-    CardView btn_order_history,notification, btn_privacy, dark, language, setting, fav, cart, shop,contact,exit;
+    TextView username, signup, edit;
+    ImageView phtotimage, logout;
+    CardView btn_order_history, notification, btn_privacy, dark, language, setting, fav, cart, shop, contact, exit;
     LinearLayout linearLayoutfornotlogin;
     ConstraintLayout linearLayoutforloggenin;
     boolean isAnimated;
@@ -92,10 +90,7 @@ public class ProfileFragment extends Fragment {
     public static final int PICK_PHOTO_FOR_AVATAR = 2;
 
 
-    private static final String[] Languages = new String[]{
-            "English", "Urdu"
-    };
-
+    private static final String[] Languages = new String[]{"English", "Urdu"};
     public boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
             getActivity().getSupportFragmentManager()
@@ -122,6 +117,7 @@ public class ProfileFragment extends Fragment {
         loginprefeditor = loginpref.edit();
         userid = String.valueOf(loginpref.getInt("userid", 0));
         username = view.findViewById(R.id.username);
+        edit=view.findViewById(R.id.edit);
         o = view.findViewById(R.id.ORDER);
         s = view.findViewById(R.id.NOTIY);
         l = view.findViewById(R.id.LANGUAGE);
@@ -132,7 +128,7 @@ public class ProfileFragment extends Fragment {
         p = view.findViewById(R.id.PRIVACY);
         con = view.findViewById(R.id.CONTACT);
         e = view.findViewById(R.id.EXIT);
-        notification= view.findViewById(R.id.NotificationCard);
+        notification = view.findViewById(R.id.NotificationCard);
         btn_order_history = view.findViewById(R.id.OrderHistoryCard);
         phtotimage = view.findViewById(R.id.selectimage);
         signup = view.findViewById(R.id.signup);
@@ -149,7 +145,7 @@ public class ProfileFragment extends Fragment {
             btn_order_history.setVisibility(View.VISIBLE);
             notification.setVisibility(View.VISIBLE);
             GetProfile(hostinglink + "/Home/GetProfile");
-            String name =  loginpref.getString("Name","");
+            String name = loginpref.getString("Name", "");
             username.setText(name);
 
         } else {
@@ -160,7 +156,7 @@ public class ProfileFragment extends Fragment {
         }
 
 
-       signup.setOnClickListener(new View.OnClickListener() {
+        signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), Login.class);
@@ -189,6 +185,15 @@ public class ProfileFragment extends Fragment {
                 btn_order_history.setVisibility(View.GONE);
                 notification.setVisibility(View.GONE);
 
+            }
+        });
+
+
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), editDetails.class);
+                startActivity(intent);
             }
         });
 
@@ -435,7 +440,7 @@ public class ProfileFragment extends Fragment {
         mDialog.show();
     }
 
-    private  static void setLocale(String lang,Context context) {
+    private static void setLocale(String lang, Context context) {
         Locale locale = new Locale(lang);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
@@ -618,8 +623,6 @@ public class ProfileFragment extends Fragment {
 
                     String bitMapToString = BitMapToString(bitmap3);
                     UploadProfile(hostinglink + "/Home/UploadProfile", bitMapToString, filename);
-
-
 
 
                 }

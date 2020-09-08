@@ -135,7 +135,7 @@ public class HomeFragment extends Fragment {
         trend = view.findViewById(R.id.textTrending);
 
 
-        int images[] = {R.drawable.cloth_banner, R.drawable.sale1, R.drawable.offer_img1, R.drawable.offer_img2, R.drawable.offer_img3};
+        int images[] = {R.drawable.off1, R.drawable.off2, R.drawable.off3, R.drawable.off4, R.drawable.off5};
 
         for (int image : images) {
             flipperimages(image);

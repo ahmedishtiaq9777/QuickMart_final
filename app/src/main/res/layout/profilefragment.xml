@@ -66,6 +66,22 @@
                 </TextView>
 
                 <TextView
+                    android:id="@+id/edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|right"
+                    android:text="@string/btn_edit_profile"
+                    android:textColor="@color/profiletext"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/logout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.95"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.18" />
+
+                <TextView
                     android:id="@+id/textView10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -225,8 +241,8 @@
 
                         <TextView
                             android:id="@+id/textView2"
-                            android:layout_width="95dp"
-                            android:layout_height="23dp"
+                            android:layout_width="107dp"
+                            android:layout_height="22dp"
                             android:layout_marginStart="10dp"
                             android:text="@string/Notification"
                             android:textColor="@color/profiletext"
@@ -282,7 +298,7 @@
 
                         <TextView
                             android:id="@+id/textView4"
-                            android:layout_width="79dp"
+                            android:layout_width="92dp"
                             android:layout_height="23dp"
                             android:layout_marginStart="10dp"
                             android:text="@string/Language"
@@ -396,8 +412,8 @@
 
                         <TextView
                             android:id="@+id/textView6"
-                            android:layout_width="77dp"
-                            android:layout_height="23dp"
+                            android:layout_width="94dp"
+                            android:layout_height="22dp"
                             android:layout_marginStart="10dp"
                             android:text="@string/Favourite"
                             android:textColor="@color/profiletext"
