@@ -47,9 +47,6 @@ import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
 
 public class CartFragment extends Fragment  {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
     private ListView listview;
 
   public    List<CartListBeanlist> Bean;

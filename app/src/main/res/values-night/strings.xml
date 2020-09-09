@@ -90,12 +90,8 @@
 
     <string name="share_app" translatable="false">I Would like to share this QuickMart Android App with you. Here You Can Download This Application from PlayStore</string>
 
-    <string name="lorem_ipsum" translatable="false">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam efficitur ipsum in placerat molestie.  Fusce quis mauris a enim sollicitudin
-        \n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam efficitur ipsum in placerat molestie.  Fusce quis mauris a enim sollicitudin
-    </string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="NEXT" translatable="false" />
     <string name="Privacy_Policy" translatable="false">Privacy Policy</string>

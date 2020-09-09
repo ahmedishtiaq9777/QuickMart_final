@@ -1,5 +1,7 @@
 package com.demotxt.myapp.Quickmart.ownmodels;
 
+import android.content.Context;
+
 import com.google.gson.annotations.SerializedName;
 
 public class Book {
@@ -13,14 +15,20 @@ public class Book {
     private String Distance;
     @SerializedName("")
     private float Rating;
+    @SerializedName("contact")
+    private String Contact;
+    @SerializedName("address")
+    private String Address;
 
 
-    public Book(String title, String thumbnail,int uid,float dist,double rating) {
+    public Book(String title, String thumbnail, int uid, float dist, double rating, String contact, String address) {
         Title = title;
         Thumbnail = thumbnail;
         id=uid;
         Distance = String.valueOf(dist);
         Rating = (float) rating;
+        Contact = contact;
+        Address = address;
     }
 
     public String getTitle() {
@@ -57,6 +65,18 @@ public class Book {
 
     public void setRating(float rating) {
         Rating = rating;
+    }
+
+    public String getContact() {
+        return Contact;
+    }
+
+    public void setContact(String contact) {
+        Contact = contact;
+    }
+
+    public String getAddress() {
+        return Address;
     }
 
 }

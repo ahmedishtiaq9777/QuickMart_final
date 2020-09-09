@@ -15,131 +15,130 @@
         Terry M Smith\n(904) 246-1297\n207 Cherry St, Neptune Beach, FL, 32266
     </string>
 
-    <string name="app_name">QuickMart</string>
-    <string name="error_name">Enter Valid Name</string>
-    <string name="error_email">Enter Valid Email </string>
-    <string name="error_password">Enter Valid Password</string>
-    <string name="error_contact">Enter Valid Contact</string>
-    <string name="error_address">Enter Valid Address</string>
-    <string name="error_zip">Enter Valid Zip</string>
+ <string name="app_name">QuickMart</string>
+ <string name="error_name">Enter Valid Name</string>
+ <string name="error_email">Enter Valid Email </string>
+ <string name="error_password">Enter Valid Password</string>
+ <string name="error_contact">Enter Valid Contact</string>
+ <string name="error_address">Enter Valid Address</string>
+ <string name="error_zip">Enter Valid Zip</string>
 
 
-    <string name="Shops">Shops</string>
-    <string name="Recommended">Recommended</string>
-    <string name="Trending">Trending</string>
+ <string name="Shops">Shops</string>
+ <string name="Recommended">Recommended</string>
+ <string name="Trending">Trending</string>
 
 
-    <string name="btn_edit_profile">EDIT</string>
-    <string name="logout">LOGOUT</string>
-    <string name="Exit">Exit</string>
-    <string name="Favourite">Favourite</string>
-    <string name="Notification">Notification</string>
-    <string name="Profile">Profile</string>
-    <string name="Productlist">Product list</string>
-    <string name="Order">Order</string>
-    <string name="Orderhistory">Order History</string>
-    <string name="Registershop">Register Shop</string>
-    <string name="Contactus">Contact Us</string>
-    <string name="Darkmode">Dark Mode</string>
-    <string name="PlaceOrder">Place the Order</string>
-    <string name="Cart">Cart</string>
-    <string name="Checkout">Checkout</string>
-    <string name="Shipping">Shipping</string>
-    <string name="Payment">Payment</string>
-    <string name="Confirm">Confirm</string>
-    <string name="Language">Language</string>
-    <string name="Reload">Try Again</string>
+ <string name="btn_edit_profile">EDIT</string>
+ <string name="logout">LOGOUT</string>
+ <string name="Exit">Exit</string>
+ <string name="Favourite">Favourite</string>
+ <string name="Notification">Notification</string>
+ <string name="Profile">Profile</string>
+ <string name="Productlist">Product list</string>
+ <string name="Order">Order</string>
+ <string name="Orderhistory">Order History</string>
+ <string name="Registershop">Register Shop</string>
+ <string name="Contactus">Contact Us</string>
+ <string name="Darkmode">Dark Mode</string>
+ <string name="PlaceOrder">Place the Order</string>
+ <string name="Cart">Cart</string>
+ <string name="Checkout">Checkout</string>
+ <string name="Shipping">Shipping</string>
+ <string name="Payment">Payment</string>
+ <string name="Confirm">Confirm</string>
+ <string name="Language">Language</string>
+ <string name="Reload">Try Again</string>
 
-    <string name="txt_profile_history">Order History</string>
-    <string name="txt_profile_rate">Rate Us</string>
-    <string name="txt_profile_share">Share</string>
-    <string name="navHome">Home</string>
-    <string name="navCart">Cart</string>
-    <string name="navFav">Favourite</string>
-    <string name="navProf">Profile</string>
-    <string name="contactDetail">Contact Detail</string>
-    <string name="shippingAdd">Shipping Address</string>
-    <string name="hint_of_province">State / Province</string>
-    <string name="hint_of_zipcode">Zip Code</string>
-    <string name="cash_on_dilivery">Cash on Delivery (COD)</string>
-    <string name="pay_with_card">Pay With Card</string>
-    <string name="Done">Confirm</string>
-
-
-    <string name="paymentDetail">Payment Details</string>
+ <string name="txt_profile_history">Order History</string>
+ <string name="txt_profile_rate">Rate Us</string>
+ <string name="txt_profile_share">Share</string>
+ <string name="navHome">Home</string>
+ <string name="navCart">Cart</string>
+ <string name="navFav">Favourite</string>
+ <string name="navProf">Profile</string>
+ <string name="contactDetail">Contact Detail</string>
+ <string name="shippingAdd">Shipping Address</string>
+ <string name="hint_of_province">State / Province</string>
+ <string name="hint_of_zipcode">Zip Code</string>
+ <string name="cash_on_dilivery">Cash on Delivery (COD)</string>
+ <string name="pay_with_card">Pay With Card</string>
+ <string name="Done">Confirm</string>
 
 
-    <!--profile preferences-->
-    <string name="pref_group_profile" translatable="false">PROFILE</string>
-    <string name="pref_title_name">Name</string>
-    <string name="pref_title_email">Email</string>
-    <string name="pref_title_phone">Phone Number</string>
-    <string name="pref_title_address">Address</string>
-    <string name="default_your_name">Your Name</string>
-    <string name="default_your_email">abc@gmail.com</string>
-    <string name="default_your_phone">03*********</string>
-    <string name="default_your_address">Your Address</string>
-    <string name="pref_msg_invalid_name">Invalid Name Input</string>
-    <string name="pref_msg_invalid_email">Invalid Email Input</string>
-    <string name="pref_msg_invalid_phone">Invalid Phone Input</string>
-    <string name="pref_msg_invalid_address">Invalid Address Input</string>
-    <string name="txt_profile_privacy">Privacy Policy</string>
+ <string name="paymentDetail">Payment Details</string>
 
 
-    <string name="signin"><u><b>Sign in</b></u></string>
+ <!--profile preferences-->
+ <string name="pref_group_profile" translatable="false">PROFILE</string>
+ <string name="pref_title_name">Name</string>
+ <string name="pref_title_email">Email</string>
+ <string name="pref_title_phone">Phone Number</string>
+ <string name="pref_title_address">Address</string>
+ <string name="default_your_name">Your Name</string>
+ <string name="default_your_email">abc@gmail.com</string>
+ <string name="default_your_phone">03*********</string>
+ <string name="default_your_address">Your Address</string>
+ <string name="pref_msg_invalid_name">Invalid Name Input</string>
+ <string name="pref_msg_invalid_email">Invalid Email Input</string>
+ <string name="pref_msg_invalid_phone">Invalid Phone Input</string>
+ <string name="pref_msg_invalid_address">Invalid Address Input</string>
+ <string name="txt_profile_privacy">Privacy Policy</string>
 
-    <string name="tandc" translatable="false"><u>terms &amp; conditions</u></string>
+
+ <string name="signin"><u><b>Sign in</b></u></string>
+
+ <string name="tandc" translatable="false"><u>terms &amp; conditions</u></string>
 
 
-    <string name="share_app" translatable="false">I Would like to share this QuickMart Android App with you. Here You Can Download This Application from PlayStore</string>
+ <string name="share_app" translatable="false">I Would like to share this QuickMart Android App with you. Here You Can Download This Application from PlayStore</string>
 
-    <string name="privacy" translatable="false">
+ <string name="privacy" translatable="false">
         "Privacy Policy\n"
-                We built the QuickMart app as a free app. This service is provided by us at no cost.This page is used to inform visitors regarding our policies with the collection, use, and disclosure of personal information if anyone decided to use our app.\n
+                "  We built the QuickMart app as a Free app. This service is provided by us at no cost.This page is used to inform visitors regarding our policies with the collection, use, and disclosure of Personal Information if anyone decided to use our app.\n"
                 "  If you choose to use our app, then you agree to the collection and use of information in relation to this policy. The Personal Information that we collect is used for providing and improving the Service. We will not use or share your information with anyone except as described in this Privacy Policy.\n"
                 "  The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, which is accessible at QuickMart unless otherwise defined in this Privacy Policy.\n"
                 "Contact Us\n"
                 "If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at quickmartapp@gmail.com."
     </string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-    <string name="NEXT" translatable="false" />
-    <string name="Privacy_Policy" translatable="false">Privacy Policy</string>
+ <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+ <string name="NEXT" translatable="false" />
+ <string name="Privacy_Policy" translatable="false">Privacy Policy</string>
 
-    <string name="country_prompt">Choose a country</string>
-    <string name="short_lorem_ipsum">Please Check Your Internet Connection.</string>
+ <string name="country_prompt">Choose a country</string>
+ <string name="short_lorem_ipsum">Please Check Your Internet Connection.</string>
 
-    <string-array name="city">
-        <item>Sialkot</item>
-        <item>Lahore</item>
-        <item>Islamabad</item>
-        <item>Karachi</item>
+ <string-array name="city">
+  <item>Sialkot</item>
+  <item>Lahore</item>
+  <item>Islamabad</item>
+  <item>Karachi</item>
 
-    </string-array>
+ </string-array>
 
-    <string-array name="MenCategory">
-        <item>Shirts</item>
-        <item>Jeans</item>
-        <item>Watches</item>
-        <item>Shoes</item>
+ <string-array name="MenCategory">
+  <item>Shirts</item>
+  <item>Jeans</item>
+  <item>Watches</item>
+  <item>Shoes</item>
 
-    </string-array>
+ </string-array>
 
-    <string name="pakistan">Pakistan</string>
-    <string name="sialkot">Sialkot</string>
-    <string name="km">Km</string>
-    <string name="qty">Qty</string>
-    <string name="price">Price</string>
-    <string name="hosting" translatable="false">http://ahmedishtiaq165-001-site1.ftempurl.com</string>
+ <string name="pakistan">Pakistan</string>
+ <string name="sialkot">Sialkot</string>
+ <string name="km">Km</string>
+ <string name="qty">Qty</string>
+ <string name="price">Price</string>
+ <string name="hosting" translatable="false">http://ahmedishtiaq165-001-site1.ftempurl.com</string>
 
-    <string name="date">Date</string>
-    <string name="Ordstatus">Status</string>
+ <string name="date">Date</string>
+ <string name="Ordstatus">Status</string>
 
-    <string name="Ordprice">Order Price</string>
-    <string name="Orddetail">Order Detail</string>
-    <string name="OrdId">Order Id</string>
+ <string name="Ordprice">Order Price</string>
+ <string name="Orddetail">Order Detail</string>
+ <string name="OrdId">Order Id</string>
 
-    <string name="CartITem">Cart Items</string>
+ <string name="CartITem">Cart Items</string>
 
 </resources>

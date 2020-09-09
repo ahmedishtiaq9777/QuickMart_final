@@ -35,6 +35,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.demotxt.myapp.Quickmart.CategoryFragments.CatKids_Adapter;
+import com.demotxt.myapp.Quickmart.CategoryFragments.CatMen_Adapter;
+import com.demotxt.myapp.Quickmart.CategoryFragments.CatWomen_Adapter;
 import com.demotxt.myapp.Quickmart.MyLocation;
 import com.demotxt.myapp.Quickmart.activity.Error_Screen_Activity;
 import com.demotxt.myapp.Quickmart.ownmodels.Book;
@@ -52,6 +55,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import kotlin.collections.LongIterator;
+
+import static android.content.Context.LAUNCHER_APPS_SERVICE;
 import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
 public class HomeFragment extends Fragment {
@@ -65,9 +71,12 @@ public class HomeFragment extends Fragment {
     private RecyclerViewAdapter myAdapter;
     private RecyclerViewProdAdapter myAdapter1;
     private RecyclerView3 myAdapter2;
+    private CatKids_Adapter mCatKids_adapter;
+    private CatMen_Adapter mCatMen_adapter;
+    private CatWomen_Adapter mCatWomen_adapter;
     TextView shop, rec, trend;
     //loc
-    public String Latitude, Longitude;
+    public String Latitude,Longitude;
     public static Location loc;
 
 
@@ -78,8 +87,17 @@ public class HomeFragment extends Fragment {
         //
         view = inflater.inflate(R.layout.homefragment, container, false);
 
+        viewFlipper = (ViewFlipper) view.findViewById(R.id.flipper);
+        shop = view.findViewById(R.id.textRecommend);
+        rec = view.findViewById(R.id.textNew);
+        trend = view.findViewById(R.id.textTrending);
+
         //Connection Check
         CheckConnection();
+
+        list = new ArrayList<>();
+        Book22 = new ArrayList<>();
+        mTrends = new ArrayList<>();
 
         // to Find the Location
         MyLocation.LocationResult locationResult = new MyLocation.LocationResult() {
@@ -90,15 +108,13 @@ public class HomeFragment extends Fragment {
                 System.out.println("Longitude: " + loc.getLongitude());
                 Latitude = String.valueOf(loc.getLatitude());
                 Longitude = String.valueOf(loc.getLongitude());
+                getSeller(hostinglink + "/Home/getsellers/",Latitude,Longitude);
             }
         };
-
         MyLocation myLocation = new MyLocation();
         myLocation.getLocation(getActivity(), locationResult);
 
-        list = new ArrayList<>();
-        Book22 = new ArrayList<>();
-        mTrends = new ArrayList<>();
+
 
 
         RefreshLayout = view.findViewById(R.id.SwipeRefresh);
@@ -111,7 +127,7 @@ public class HomeFragment extends Fragment {
                 Book22 = new ArrayList<>();
                 mTrends = new ArrayList<>();
 
-                getSeller(hostinglink + "/Home/getsellers/", Latitude, Longitude);
+                getSeller(hostinglink + "/Home/getsellers/",Latitude,Longitude);
 
                 getconnection(hostinglink + "/Home/getrecommendedproduct/", 2);
 
@@ -121,18 +137,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
-        getSeller(hostinglink + "/Home/getsellers/", Latitude, Longitude);
-
         getconnection(hostinglink + "/Home/getrecommendedproduct/", 2);
 
         getconnection(hostinglink + "/Home/gettrendingpro/", 3);
-
-        //flipper
-        viewFlipper = (ViewFlipper) view.findViewById(R.id.flipper);
-        shop = view.findViewById(R.id.textRecommend);
-        rec = view.findViewById(R.id.textNew);
-        trend = view.findViewById(R.id.textTrending);
 
 
         int images[] = {R.drawable.off1, R.drawable.off2, R.drawable.off3, R.drawable.off4, R.drawable.off5};
@@ -369,6 +376,7 @@ public class HomeFragment extends Fragment {
                     myAdapter.getFilter().filter(newText);
                     myAdapter1.getFilter().filter(newText);
                     myAdapter2.getFilter().filter(newText);
+
 
                     return false;
                 }

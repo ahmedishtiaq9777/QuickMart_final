@@ -28,6 +28,7 @@ import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.ownmodels.SignUpModel;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
+import com.demotxt.myapp.Quickmart.ownmodels.UserModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -111,9 +112,11 @@ public class Signup extends AppCompatActivity {
                     String pass = password.getText().toString();
                     String contact = phone.getText().toString();
                     SignUpModel m = new SignUpModel(name,contact,pass);
-                    generateRandomNumber();
-                lyt_SignUP.setVisibility(View.GONE);
-                lyt_Auth.setVisibility(View.VISIBLE);
+                    //
+                    UserModel model = new UserModel();
+                    model.setPhone(contact);
+                    model.setUserName(name);
+                    CheckUser();
                 }
             }
         });
@@ -147,6 +150,63 @@ public class Signup extends AppCompatActivity {
                 }
             }
         });
+    }
+    //
+    public void CheckUser(){
+        try {
+            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+            String url = hostinglink + "/Home/Checkuser";
+            StringRequest request = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            GsonBuilder builder = new GsonBuilder();
+                            Gson gson = builder.create();
+                            result = gson.fromJson(response,StringResponceFromWeb.class);
+                            if (result.getresult().equals("allreadyregistered")){
+                                Toast.makeText(getApplicationContext(), "This Phone No. is Already Registered", Toast.LENGTH_SHORT).show();
+                            }
+                            else if (result.getresult().equals("NewUser")){
+                                Toast.makeText(Signup.this, "New User", Toast.LENGTH_SHORT).show();
+                                //
+                                generateRandomNumber();
+                                lyt_SignUP.setVisibility(View.GONE);
+                                lyt_Auth.setVisibility(View.VISIBLE);
+                            }
+                            else {
+
+
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(Signup.this, "Volley Error", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            ){
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+
+                    params.put("phoneNo",phone.getText().toString());
+                    return params;
+                }
+
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Content-Type", "application/x-www-form-urlencoded");
+                    return params;
+                }
+            };
+
+            requestQueue.add(request);
+        }catch (Exception e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
     }
     //
     public void AddUserSign(){
@@ -183,8 +243,6 @@ public class Signup extends AppCompatActivity {
                                     startActivity(i);
                                 }
 
-                            } else if (result.getresult().equals("alreadyregistered")) {
-                                Toast.makeText(getApplicationContext(), "This Email is Already Registered", Toast.LENGTH_SHORT).show();
                             } else {
                                 Log.i("API-ERROR", "error");
                                 Toast.makeText(getApplicationContext(), "error" + response.toString(), Toast.LENGTH_SHORT).show();
@@ -223,7 +281,6 @@ public class Signup extends AppCompatActivity {
             Log.i("error", E.getMessage());
         }
     }
-
     //
     public void AddToCart(final String struserid, final String strpid )
     {
@@ -321,8 +378,8 @@ public class Signup extends AppCompatActivity {
 
         String url = "http://sendpk.com" +
                 "/api/sms.php?" +
-                "username=" + "923456378753" +
-                "&password=" + "Ibrar125" +
+                "username=" + "923046279543" +
+                "&password=" + "1234" +
                 "&sender=" + "QuickMart" +
                 "&mobile=" + ph + "&message=" + msg;
        //
