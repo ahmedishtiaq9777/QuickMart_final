@@ -32,56 +32,52 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
     private int Check;
-    private  FragmentManager fragmentmanager;
+    private FragmentManager fragmentmanager;
     BottomNavigationView navView;
     public static String hostinglink;
     private View layout;
     int proid;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fragmentmanager=getSupportFragmentManager();
-        hostinglink=getResources().getString(R.string.hosting);
+        fragmentmanager = getSupportFragmentManager();
+        hostinglink = getResources().getString(R.string.hosting);
         CheckConnection();
 
-        proid=0;       //To Check Internet Connection
-        if (Check == 1){
+        proid = 0;       //To Check Internet Connection
+        if (Check == 1) {
             setContentView(R.layout.activitymain2);
-        }
-        else {
+        } else {
             finish();
             // Intent intent = new Intent(getApplicationContext(),Error_Screen_Activity.class);
-            Intent intent = new Intent(MainActivity2.this,Error_Screen_Activity.class);
+            Intent intent = new Intent(MainActivity2.this, Error_Screen_Activity.class);
             startActivity(intent);
         }
 
         try {
             initToolbar();
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
 
         }
 
         LayoutInflater inflater = getLayoutInflater();
-        try{
+        try {
             layout = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toast_layout_root));//for product added :to make custom toast with tick mark
 
-        }catch (Exception e)
-        {
-            Toast.makeText(getApplicationContext(),"ERROR:"+e.getMessage(),Toast.LENGTH_SHORT).show();
-            Log.i("Loginactivity","error"+e.getMessage());
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "ERROR:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.i("Loginactivity", "error" + e.getMessage());
 
         }
 
         // Toast.makeText(getApplicationContext(),"error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
 
 
-
-
         try {
             Intent i = getIntent();
             proid = i.getExtras().getInt("proid");
-            if (proid!=0) {
+            if (proid != 0) {
                 Toast toast = new Toast(getApplicationContext());
                 toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
                 toast.setDuration(Toast.LENGTH_SHORT);
@@ -90,7 +86,7 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.i("In MainActivity:",e.getMessage());
+            Log.i("In MainActivity:", e.getMessage());
         }
 
 
@@ -99,47 +95,44 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         try {
             navView.setOnNavigationItemSelectedListener(this);
 
-            loadFragment(new HomeFragment(),"homestack");
+            loadFragment(new HomeFragment(), "homestack");
             // Passing each menu ID as a set of Ids because each
             // menu should be considered as top level destinations.
-        }catch (Exception e)
-        {
-            Toast.makeText(getApplicationContext(),"Error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
 
         fragmentmanager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
-                StringBuffer messege=null;
-                messege=new StringBuffer("current status of fragment back stack:"+fragmentmanager.getBackStackEntryCount()+"\n");
-                for(int index=(fragmentmanager.getBackStackEntryCount()-1);index>=0;index--)
-                {
+                StringBuffer messege = null;
+                messege = new StringBuffer("current status of fragment back stack:" + fragmentmanager.getBackStackEntryCount() + "\n");
+                for (int index = (fragmentmanager.getBackStackEntryCount() - 1); index >= 0; index--) {
 
-                    FragmentManager.BackStackEntry entry=fragmentmanager.getBackStackEntryAt(index);
-                    messege.append(entry.getName()+"\n");
+                    FragmentManager.BackStackEntry entry = fragmentmanager.getBackStackEntryAt(index);
+                    messege.append(entry.getName() + "\n");
 
 
                 }
-                Log.i("CALLBACKS",messege.toString());
+                Log.i("CALLBACKS", messege.toString());
             }
         });
     }
 
 
-
-    public boolean loadFragment(Fragment fragment,String stackname) {
+    public boolean loadFragment(Fragment fragment, String stackname) {
         if (fragment != null && !stackname.equals("homestack")) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragmentcontainer, fragment).addToBackStack(stackname)
                     .commit();
             return true;
-        }else if(stackname.equals("homestack"))
-        {  getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragmentcontainer, fragment)
-                .commit();
+        } else if (stackname.equals("homestack")) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragmentcontainer, fragment)
+                    .commit();
             return true;
         }
         return false;
@@ -147,15 +140,14 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
 
     @Override
     public void onBackPressed() {
-        Fragment fragment=fragmentmanager.findFragmentById(R.id.fragmentcontainer);
+        Fragment fragment = fragmentmanager.findFragmentById(R.id.fragmentcontainer);
         if (fragment != null) {
 
-            if(fragment instanceof FavoriteFragment || fragment instanceof CartFragment || fragment instanceof ProfileFragment) {
+            if (fragment instanceof FavoriteFragment || fragment instanceof CartFragment || fragment instanceof ProfileFragment) {
                 navView.getMenu().getItem(0).setChecked(true);
-                Fragment Homefragment=new HomeFragment();
-                loadFragment(Homefragment,"homestack");
-            }else if(fragment instanceof HomeFragment)
-            {
+                Fragment Homefragment = new HomeFragment();
+                loadFragment(Homefragment, "homestack");
+            } else if (fragment instanceof HomeFragment) {
                 MainActivity2.this.moveTaskToBack(true);
             }
             //super.onBackPressed();
@@ -164,38 +156,37 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         }
 
 
-
         // Fragment fragment= FragmentManager.
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int op = 0;
-        String backstackname=null;
+        String backstackname = null;
         Fragment fragment = null;
         switch (menuItem.getItemId()) {
             case R.id.nav_home:
                 navView.setBackgroundColor(getResources().getColor(R.color.navhome));
                 fragment = new HomeFragment();
-                backstackname="homestack";
+                backstackname = "homestack";
                 break;
             case R.id.nav_favourite:
 
                 navView.setBackgroundColor(getResources().getColor(R.color.navfav));
                 fragment = new FavoriteFragment();
-                backstackname="favstack";
+                backstackname = "favstack";
                 break;
             case R.id.nav_cart:
                 navView.setBackgroundColor(getResources().getColor(R.color.navcart));
                 fragment = new CartFragment();
-                backstackname="cartstack";
+                backstackname = "cartstack";
                 break;
 
             case R.id.nav_acc:
                 navView.setBackgroundColor(getResources().getColor(R.color.navprof));
                 if (getloginprefference() == true) {
                     fragment = new ProfileFragment();
-                    backstackname="profilestack";
+                    backstackname = "profilestack";
                     break;
                 } else {
 
@@ -205,7 +196,7 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         }
 
         if (op != 1)
-            return loadFragment(fragment,backstackname);
+            return loadFragment(fragment, backstackname);
         return false;
     }
 
@@ -225,7 +216,7 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
     }
 
     //Internet Connection Check
-    public void CheckConnection(){
+    public void CheckConnection() {
         try {
             ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
@@ -243,9 +234,8 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
                 }
 
             }
-        }catch (Exception e)
-        {
-            Toast.makeText(getApplicationContext(), "error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -27,29 +27,26 @@ public class Splash_Activity extends AppCompatActivity {
         gif = findViewById(R.id.logo);
 
 
-        mLoader =findViewById(R.id.Progressloader);
+        mLoader = findViewById(R.id.Progressloader);
 
-        new Handler().postDelayed(new Runnable(){
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
 
-                CheckConnection connection=new CheckConnection(getApplicationContext());
-                Boolean  is_connected=connection.CheckConnection();
+                CheckConnection connection = new CheckConnection(getApplicationContext());
+                Boolean is_connected = connection.CheckConnection();
 
 
-
-
-
-                if(is_connected){
+                if (is_connected) {
                     //
                     Intent start = new Intent(Splash_Activity.this, MainActivity2.class);
                     startActivity(start);
                     finish();
 
-                }else {
+                } else {
 
-                    Intent intent = new Intent(Splash_Activity.this,Error_Screen_Activity.class);
+                    Intent intent = new Intent(Splash_Activity.this, Error_Screen_Activity.class);
                     startActivity(intent);
 
 

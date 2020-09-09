@@ -46,7 +46,7 @@ import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
 
 public class Login extends AppCompatActivity {
-    TextView signup,ForgotPass;
+    TextView signup, ForgotPass;
     Button signin;
     private EditText phone, pass;
     AwesomeValidation awesomeValidation;
@@ -66,20 +66,19 @@ public class Login extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitylogin);
-        result=new StringResponceFromWeb();
+        result = new StringResponceFromWeb();
         awesomeValidation = new AwesomeValidation(BASIC);
         awesomeValidation.addValidation(Login.this, R.id.PH, RegexTemplate.NOT_EMPTY, R.string.error_contact);
         awesomeValidation.addValidation(Login.this, R.id.PASS, RegexTemplate.NOT_EMPTY, R.string.error_password);
 
 
         LayoutInflater inflater = getLayoutInflater();
-        try{
+        try {
             layout = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toast_layout_root));//for product added :to make custom toast with tick mark
 
-        }catch (Exception e)
-        {
-            Toast.makeText(getApplicationContext(),"ERROR:"+e.getMessage(),Toast.LENGTH_SHORT).show();
-            Log.i("Loginactivity","error"+e.getMessage());
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "ERROR:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.i("Loginactivity", "error" + e.getMessage());
 
         }
 
@@ -91,7 +90,6 @@ public class Login extends AppCompatActivity {
 
         phone = (EditText) findViewById(R.id.PH);
         pass = (EditText) findViewById(R.id.PASS);
-        checkBoxremember = (CheckBox) findViewById(R.id.checkboxremember);
         ForgotPass = findViewById(R.id.forgotpass);
 
         //Forget Password
@@ -99,7 +97,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO Forgot Password Work
-                Intent forgetIntent = new Intent(Login.this,Forgot_Pass_Activity.class);
+                Intent forgetIntent = new Intent(Login.this, Forgot_Pass_Activity.class);
                 startActivity(forgetIntent);
             }
         });
@@ -128,11 +126,11 @@ public class Login extends AppCompatActivity {
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(awesomeValidation.validate()) {
+                if (awesomeValidation.validate()) {
 
                     String ph = phone.getText().toString();
                     String password = pass.getText().toString();
-                    SignInModel m = new SignInModel(ph,password);
+                    SignInModel m = new SignInModel(ph, password);
 
                     try {
 
@@ -255,10 +253,7 @@ public class Login extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
-                else {
-                    Toast.makeText(Login.this, "Invalid", Toast.LENGTH_SHORT).show();
-                }
-                }
+            }
 
 
         });
@@ -272,10 +267,9 @@ public class Login extends AppCompatActivity {
                     Intent i = getIntent();
                     int pid = i.getExtras().getInt("proid");
                     it.putExtra("proid", pid);
-                }catch (Exception e)
-                {
+                } catch (Exception e) {
 
-                    Log.i("Signupfromprofile","intent in login for proid:"+e.getMessage());
+                    Log.i("Signupfromprofile", "intent in login for proid:" + e.getMessage());
                 }
                 startActivity(it);
 
@@ -285,16 +279,13 @@ public class Login extends AppCompatActivity {
     }
 
 
-
-
-    public void AddToCart(final String struserid, final String strpid)
-    {
-        try{
+    public void AddToCart(final String struserid, final String strpid) {
+        try {
 
             final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
             // String url = "http:// 192.168.10.13:64077/api/login";
             //String url="https://api.myjson.com/bins/kp9wz";
-            String url = hostinglink +"/Home/AddtoCart";
+            String url = hostinglink + "/Home/AddtoCart";
 
             StringRequest rRequest = new StringRequest(Request.Method.POST, url,
                     new Response.Listener<String>() {
@@ -303,9 +294,8 @@ public class Login extends AppCompatActivity {
                             //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
-                            result=gson.fromJson(response, StringResponceFromWeb.class);
-                            if(result.getresult().equals("Added"))
-                            {
+                            result = gson.fromJson(response, StringResponceFromWeb.class);
+                            if (result.getresult().equals("Added")) {
 
 
                                 Toast toast = new Toast(getApplicationContext());
@@ -326,22 +316,20 @@ public class Login extends AppCompatActivity {
                                     builder1.setTitle("Already Added");
                                     builder1.setMessage("Your product is Already Added to Cart!");
 
-                                    builder1 .setIcon(R.drawable.exclamationmarkresize);
+                                    builder1.setIcon(R.drawable.exclamationmarkresize);
                                     // builder1.show();
                                     AlertDialog alert11 = builder1.create();
 
                                     alert11.show();
                                     Thread.sleep(3000);
-                               //   Intent main=new Intent(Login.this,MainActivity2.class);
-                                 // startActivity(main);
+                                    //   Intent main=new Intent(Login.this,MainActivity2.class);
+                                    // startActivity(main);
 
                                 } catch (Exception e) {
                                     Log.i("error:", e.getMessage());
                                     Toast.makeText(getApplicationContext(), "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                                 }
-
-
 
 
                             }
@@ -376,8 +364,8 @@ public class Login extends AppCompatActivity {
             requestQueue.add(rRequest);
 
 
-        }catch (Exception e){
-            Toast.makeText(getApplicationContext(), "Error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
     }

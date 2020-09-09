@@ -20,7 +20,8 @@ public class editDetails extends AppCompatActivity {
 
     AwesomeValidation awesomeValidation;
     Button update;
-    TextView t1,t2,t3,t4;
+    TextView t1, t2, t3, t4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,29 +31,28 @@ public class editDetails extends AppCompatActivity {
         awesomeValidation.addValidation(editDetails.this, R.id.UPDATEDPHONE, "^0(?=3)[0-9]{10}$", R.string.error_contact);
         awesomeValidation.addValidation(editDetails.this, R.id.UPDATEDEMAIL, android.util.Patterns.EMAIL_ADDRESS.toString(), R.string.error_email);
         awesomeValidation.addValidation(editDetails.this, R.id.UPDATEDADDRESS, RegexTemplate.NOT_EMPTY, R.string.error_address);
-        
-        update=(Button) findViewById(R.id.UPDATE);
-        t1=(EditText) findViewById(R.id.UPDATEDNAME);
-        t2=(EditText) findViewById(R.id.UPDATEDEMAIL);
-        t3=(EditText) findViewById(R.id.UPDATEDPHONE);
-        t4=(EditText) findViewById(R.id.UPDATEDADDRESS);
+
+        update = (Button) findViewById(R.id.UPDATE);
+        t1 = (EditText) findViewById(R.id.UPDATEDNAME);
+        t2 = (EditText) findViewById(R.id.UPDATEDEMAIL);
+        t3 = (EditText) findViewById(R.id.UPDATEDPHONE);
+        t4 = (EditText) findViewById(R.id.UPDATEDADDRESS);
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if(awesomeValidation.validate()) {
+                if (awesomeValidation.validate()) {
                     String name = t1.getText().toString();
                     String email = t2.getText().toString();
                     String contact = t3.getText().toString();
                     String address = t4.getText().toString();
                     DetailModel m = new DetailModel(name, email, contact, address);
-                }
-                else {
+                } else {
                     Toast.makeText(editDetails.this, "clicked", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
-    
-    
+
+
 }

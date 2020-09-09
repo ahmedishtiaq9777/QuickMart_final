@@ -27,15 +27,14 @@ public class Error_Screen_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_error__screen_);
-        try{
+        try {
 
-            dialog=new CustomInternetDialog(Error_Screen_Activity.this);
+            dialog = new CustomInternetDialog(Error_Screen_Activity.this);
             dialog.showCustomDialog();
 
 
-        }catch (Exception e)
-        {
-            Toast.makeText(getApplicationContext(),"error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         reload = findViewById(R.id.Reload_button);
@@ -46,7 +45,7 @@ public class Error_Screen_Activity extends AppCompatActivity {
 
                 CheckConnection();
                 //Value check
-                if (Check == 1){
+                if (Check == 1) {
                     finish();
                     Intent start = new Intent(Error_Screen_Activity.this, MainActivity2.class);
                     startActivity(start);
@@ -59,8 +58,7 @@ public class Error_Screen_Activity extends AppCompatActivity {
                             .commit();
                             */
 
-                }
-                else if (Check == 0){
+                } else if (Check == 0) {
 
                     dialog.showCustomDialog();
 
@@ -74,24 +72,20 @@ public class Error_Screen_Activity extends AppCompatActivity {
     }
 
 
-
-
-    public void CheckConnection(){
+    public void CheckConnection() {
 
         ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
 
-        if (null != activeNetwork){
-            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI){
-                Toast.makeText(this,"Wifi On",Toast.LENGTH_SHORT).show();
+        if (null != activeNetwork) {
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
+                Toast.makeText(this, "Wifi On", Toast.LENGTH_SHORT).show();
                 Check = 1;
-            }
-            else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE){
-                Toast.makeText(this,"Mobile Data On",Toast.LENGTH_SHORT).show();
+            } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
+                Toast.makeText(this, "Mobile Data On", Toast.LENGTH_SHORT).show();
                 Check = 1;
-            }
-            else{
-                Toast.makeText(this,"No Internet Connection",Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
                 Check = 0;
             }
 

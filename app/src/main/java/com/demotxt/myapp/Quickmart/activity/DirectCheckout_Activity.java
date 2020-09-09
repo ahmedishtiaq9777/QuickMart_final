@@ -1,19 +1,19 @@
 package com.demotxt.myapp.Quickmart.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.ownmodels.UserModel;
 
 public class DirectCheckout_Activity extends AppCompatActivity {
 
-    EditText Name,Phone,Address;
+    EditText Name, Phone, Address;
     RadioButton COD;
     Button Confirm;
     CardView mCardView;
@@ -29,7 +29,7 @@ public class DirectCheckout_Activity extends AppCompatActivity {
         Address = findViewById(R.id.phoneNumber);
         COD = findViewById(R.id.Cod_Rd);
         Confirm = findViewById(R.id.ConfirmBtn);
-        mCardView= findViewById(R.id.include);
+        mCardView = findViewById(R.id.include);
 
 
         UserModel model = new UserModel();
@@ -37,7 +37,6 @@ public class DirectCheckout_Activity extends AppCompatActivity {
         Name.setText(model.getUserName());
         Phone.setText(model.getPhone());
         Address.setText(model.getAddress());
-
 
 
     }

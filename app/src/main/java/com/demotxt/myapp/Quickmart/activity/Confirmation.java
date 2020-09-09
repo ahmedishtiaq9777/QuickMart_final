@@ -41,29 +41,27 @@ import java.util.Map;
 
 public class Confirmation extends AppCompatActivity {
     private final String CHANNEL_ID = "Notification";
-    private final int  NOTIFICATION_ID = 001;
+    private final int NOTIFICATION_ID = 001;
     private RecyclerView recyclerView;
     private OrderViewAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     Button confirm;
-    TextView t1,t2, p;
+    TextView t1, t2, p;
     List<OrderViewImg> orderViewImgs;
     ArrayList<CartListBeanlist> prolist;
     SharedPreferences loginpref;
     String Userid;
-    double  total;
-
-
+    double total;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.confirmation);
 
-        confirm=(Button)findViewById(R.id.button3);
-        t1 = (TextView)findViewById(R.id.getname);
-        t2 = (TextView)findViewById(R.id.getaddress);
-        p = (TextView)findViewById(R.id.TOTAL);
+        confirm = (Button) findViewById(R.id.button3);
+        t1 = (TextView) findViewById(R.id.getname);
+        t2 = (TextView) findViewById(R.id.getaddress);
+        p = (TextView) findViewById(R.id.TOTAL);
 
         Bundle bn = getIntent().getExtras();
         String name = bn.getString("getname");
@@ -72,22 +70,21 @@ public class Confirmation extends AppCompatActivity {
         t2.setText(String.valueOf(address));
 
 
-
-         orderViewImgs = new ArrayList<>();
-         prolist=new ArrayList<CartListBeanlist>();
-         total=0.0;
+        orderViewImgs = new ArrayList<>();
+        prolist = new ArrayList<CartListBeanlist>();
+        total = 0.0;
         loginpref = getSharedPreferences("loginpref", MODE_PRIVATE);
-        Userid=String.valueOf(loginpref.getInt("userid",0));
+        Userid = String.valueOf(loginpref.getInt("userid", 0));
         Intent intent = getIntent();
         Bundle args = intent.getBundleExtra("Bundlelist");
-       prolist  = (ArrayList<CartListBeanlist>) args.getSerializable("list");
+        prolist = (ArrayList<CartListBeanlist>) args.getSerializable("list");
 
-        for (CartListBeanlist i:prolist ) {
-            OrderViewImg orderViewImg=new OrderViewImg(i.getImage(),i.getTitle(),i.getQuantity(),i.getPrice());
+        for (CartListBeanlist i : prolist) {
+            OrderViewImg orderViewImg = new OrderViewImg(i.getImage(), i.getTitle(), i.getQuantity(), i.getPrice());
             orderViewImgs.add(orderViewImg);
-            double oneproducttotal=0.0;
-         oneproducttotal = i.getQuantity()*i.getPrice();
-         total=total+oneproducttotal;
+            double oneproducttotal = 0.0;
+            oneproducttotal = i.getQuantity() * i.getPrice();
+            total = total + oneproducttotal;
         }
         p.setText(String.valueOf(total));
 
@@ -98,29 +95,30 @@ public class Confirmation extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        confirm=(Button)findViewById(R.id.button3);
-        t1 = (TextView)findViewById(R.id.getname);
-        t2 = (TextView)findViewById(R.id.getaddress);
+        confirm = (Button) findViewById(R.id.button3);
+        t1 = (TextView) findViewById(R.id.getname);
+        t2 = (TextView) findViewById(R.id.getaddress);
 
-        GsonBuilder builder=new GsonBuilder();
-        Gson gson=builder.create();
-        Type listOfTestObject = new TypeToken<List<CartListBeanlist>>(){}.getType();
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        Type listOfTestObject = new TypeToken<List<CartListBeanlist>>() {
+        }.getType();
         final String s = gson.toJson(CartFragment.list, listOfTestObject);
 
         try {
-            Log.i("Product Arraylist:",s);
-        }catch (Exception e)
-        {
-            Toast.makeText(getApplicationContext(),"error"+e.getMessage(),Toast.LENGTH_SHORT).show();
+            Log.i("Product Arraylist:", s);
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SaveOrder(MainActivity2.hostinglink +"/home/SaveOrder",s);
+                SaveOrder(MainActivity2.hostinglink + "/home/SaveOrder", s);
             }
         });
     }
-    public void SaveOrder(String Url, final String productsarray){
+
+    public void SaveOrder(String Url, final String productsarray) {
         try {
             final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
             // String url = "http:// 192.168.10.13:64077/api/login";
@@ -131,17 +129,16 @@ public class Confirmation extends AppCompatActivity {
                         public void onResponse(String response) {
                             try {
 
-                                GsonBuilder builder=new GsonBuilder();
-                                Gson gson=builder.create();
-                                StringResponceFromWeb result=gson.fromJson(response,StringResponceFromWeb.class);
-                               // Toast.makeText(getApplicationContext(),result.getresult(),Toast.LENGTH_SHORT).show();
-                                try{
-                                    String error=result.getErrorResult();
-                                    Toast.makeText(getApplicationContext(),error,Toast.LENGTH_SHORT).show();
-                                    Log.i("Error In Shipping :",error);
-                                }catch (NullPointerException E)
-                                {
-                                    Log.i("Orderconformed ..","Order is Conformed");
+                                GsonBuilder builder = new GsonBuilder();
+                                Gson gson = builder.create();
+                                StringResponceFromWeb result = gson.fromJson(response, StringResponceFromWeb.class);
+                                // Toast.makeText(getApplicationContext(),result.getresult(),Toast.LENGTH_SHORT).show();
+                                try {
+                                    String error = result.getErrorResult();
+                                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+                                    Log.i("Error In Shipping :", error);
+                                } catch (NullPointerException E) {
+                                    Log.i("Orderconformed ..", "Order is Conformed");
                                     Intent i = new Intent(getBaseContext(), AnimationOrder.class);
                                     startActivity(i);
                                     //notification function
@@ -159,7 +156,7 @@ public class Confirmation extends AppCompatActivity {
                         public void onErrorResponse(VolleyError error) {
                             // error
                             Log.i("In OnerrorResponce", error.getMessage());
-                            Toast.makeText(getApplicationContext(), "Error"+error.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Error" + error.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
             ) {
@@ -167,13 +164,13 @@ public class Confirmation extends AppCompatActivity {
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
 
-                    params.put("userid",Userid);
+                    params.put("userid", Userid);
 
-                //    JSONArray jsonArray= new JSONArray();
+                    //    JSONArray jsonArray= new JSONArray();
 
-                  // jsonArray.put(productsarray);
-                    params.put("orderedproducts",productsarray);
-                    params.put("total",String.valueOf(total));
+                    // jsonArray.put(productsarray);
+                    params.put("orderedproducts", productsarray);
+                    params.put("total", String.valueOf(total));
                     return params;
                 }
 
@@ -190,14 +187,14 @@ public class Confirmation extends AppCompatActivity {
     }
 
     //setting notification
-    public void SetNotification(){
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,CHANNEL_ID);
+    public void SetNotification() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);
         builder.setSmallIcon(R.drawable.logo3);
         builder.setContentTitle("Order");
         builder.setContentText("We've Got Your Order Please Wait For Confirmation ..");
         builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
-        notificationManagerCompat.notify(NOTIFICATION_ID,builder.build() );
+        notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
     }
 }

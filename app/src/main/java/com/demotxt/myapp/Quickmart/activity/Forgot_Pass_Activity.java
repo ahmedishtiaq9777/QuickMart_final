@@ -1,8 +1,5 @@
 package com.demotxt.myapp.Quickmart.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -21,7 +21,7 @@ import com.android.volley.toolbox.Volley;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
-import com.google.android.material.snackbar.Snackbar;
+import com.demotxt.myapp.Quickmart.ownmodels.UserModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -29,19 +29,21 @@ import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
 import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
 public class Forgot_Pass_Activity extends AppCompatActivity {
 
-    EditText PhoneNo,OTP_Text;
-    Button Forget_Btn,SendOTP;
+    EditText PhoneNo, OTP_Text;
+    Button Forget_Btn, SendOTP;
     int randomNumber;
     int range = 9;
-    int length = 4,val,userPin;
+    int length = 4, val, userPin;
     SharedPreferences mPreferences;
     SharedPreferences.Editor mEditor;
     private StringResponceFromWeb result;
-    ConstraintLayout Lyt_OTP,Lyt_Phone;
+    ConstraintLayout Lyt_OTP, Lyt_Phone;
+    AwesomeValidation awesomeValidation;
 
 
     @Override
@@ -51,8 +53,10 @@ public class Forgot_Pass_Activity extends AppCompatActivity {
         //
         result = new StringResponceFromWeb();
 
-        mPreferences = getApplicationContext().getSharedPreferences("ForgetOTP",MODE_PRIVATE);
+        mPreferences = getApplicationContext().getSharedPreferences("ForgetOTP", MODE_PRIVATE);
         mEditor = mPreferences.edit();
+        awesomeValidation = new AwesomeValidation(BASIC);
+        awesomeValidation.addValidation(Forgot_Pass_Activity.this, R.id.Txt_PhoneNo, "^0(?=3)[0-9]{10}$", R.string.error_contact);
 
         PhoneNo = findViewById(R.id.Txt_PhoneNo);
         SendOTP = findViewById(R.id.SendOTP_Btn);
@@ -65,7 +69,11 @@ public class Forgot_Pass_Activity extends AppCompatActivity {
         SendOTP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CheckUser();
+                if(awesomeValidation.validate()) {
+                    String contact = PhoneNo.getText().toString();
+                    UserModel model = new UserModel(contact);
+                    CheckUser();
+                }
             }
         });
 
@@ -78,20 +86,21 @@ public class Forgot_Pass_Activity extends AppCompatActivity {
                 try {
                     String pin = OTP_Text.getText().toString();
                     userPin = Integer.parseInt(pin);
-                }catch (Exception e){
-                    Toast.makeText(Forgot_Pass_Activity.this, "UserPin Empty", Toast.LENGTH_SHORT).show(); }
+                } catch (Exception e) {
+                    Toast.makeText(Forgot_Pass_Activity.this, "UserPin Empty", Toast.LENGTH_SHORT).show();
+                }
 
                 //Shared Pref for OTP PIN
                 try {
-                    val = mPreferences.getInt("OTP_PIN",0);
-                }catch (Exception e){
-                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show(); }
-
-                if (userPin == val){
-                   ForgetPass();
+                    val = mPreferences.getInt("OTP_PIN", 0);
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-                else {
-                    Toast.makeText(getApplicationContext(),"Pin didn't match",Toast.LENGTH_SHORT).show();
+
+                if (userPin == val) {
+                    ForgetPass();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Pin didn't match", Toast.LENGTH_SHORT).show();
                     Lyt_OTP.setVisibility(View.GONE);
                     Lyt_Phone.setVisibility(View.VISIBLE);
                 }
@@ -111,15 +120,14 @@ public class Forgot_Pass_Activity extends AppCompatActivity {
 
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
-                            result = gson.fromJson(response,StringResponceFromWeb.class);
-                            if (result.getresult().equals("NotRegistered")){
+                            result = gson.fromJson(response, StringResponceFromWeb.class);
+                            if (result.getresult().equals("NotRegistered")) {
 
-                            }
-                            else{
-                               String var = result.getresult().toString();
-                                Intent forg = new Intent(Forgot_Pass_Activity.this,Password_Activity.class);
-                                forg.putExtra("password",var);
-                                forg.putExtra("number",PhoneNo.getText().toString());
+                            } else {
+                                String var = result.getresult().toString();
+                                Intent forg = new Intent(Forgot_Pass_Activity.this, Password_Activity.class);
+                                forg.putExtra("password", var);
+                                forg.putExtra("number", PhoneNo.getText().toString());
                                 startActivity(forg);
                             }
                         }
@@ -130,12 +138,12 @@ public class Forgot_Pass_Activity extends AppCompatActivity {
                             Toast.makeText(Forgot_Pass_Activity.this, "Volley Error", Toast.LENGTH_SHORT).show();
                         }
                     }
-            ){
+            ) {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
 
-                    params.put("phoneNo",PhoneNo.getText().toString());
+                    params.put("phoneNo", PhoneNo.getText().toString());
                     return params;
                 }
 
@@ -147,7 +155,7 @@ public class Forgot_Pass_Activity extends AppCompatActivity {
             };
 
             requestQueue.add(request);
-        }catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
@@ -165,16 +173,15 @@ public class Forgot_Pass_Activity extends AppCompatActivity {
 
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
-                            result = gson.fromJson(response,StringResponceFromWeb.class);
-                            if (result.getresult().equals("allreadyregistered")){
+                            result = gson.fromJson(response, StringResponceFromWeb.class);
+                            if (result.getresult().equals("allreadyregistered")) {
                                 Toast.makeText(getApplicationContext(), "This Phone No. is Registered", Toast.LENGTH_SHORT).show();
                                 //generate no.
                                 generateRandomNumber();
                                 //
                                 Lyt_Phone.setVisibility(View.GONE);
                                 Lyt_OTP.setVisibility(View.VISIBLE);
-                            }
-                            else{
+                            } else {
                                 Toast.makeText(Forgot_Pass_Activity.this, "User not registered", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -185,12 +192,12 @@ public class Forgot_Pass_Activity extends AppCompatActivity {
                             Toast.makeText(Forgot_Pass_Activity.this, "Volley Error", Toast.LENGTH_SHORT).show();
                         }
                     }
-            ){
+            ) {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
 
-                    params.put("phoneNo",PhoneNo.getText().toString());
+                    params.put("phoneNo", PhoneNo.getText().toString());
                     return params;
                 }
 
@@ -202,7 +209,7 @@ public class Forgot_Pass_Activity extends AppCompatActivity {
             };
 
             requestQueue.add(request);
-        }catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
@@ -227,7 +234,8 @@ public class Forgot_Pass_Activity extends AppCompatActivity {
     }
 
     //To save OTP Pin in Shared Pref
-    public void OTPPref() {;
+    public void OTPPref() {
+        ;
         mEditor.putInt("OTP_PIN", randomNumber);
         mEditor.commit();
     }
