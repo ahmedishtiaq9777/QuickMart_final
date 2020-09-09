@@ -43,6 +43,15 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.51">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Please Enter Your Phone No."
+                android:textColor="@color/txtcolor"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -56,7 +65,7 @@
                     android:background="@color/logintxt"
                     android:drawablePadding="12dp"
                     android:gravity="left"
-                    android:hint="Enter Your Phone No. "
+                    android:hint="03xxxxxxxxx "
                     android:inputType="numberSigned"
                     android:lines="1"
                     android:padding="14dp"
@@ -70,7 +79,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/SendForget_Btn"
+            android:id="@+id/SendOTP_Btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
@@ -89,5 +98,100 @@
             app:layout_constraintVertical_bias="0.31" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lyt_OTP"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@drawable/gradient"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:textColor="@color/txtcolor"
+            android:textSize="34dp"
+            android:textStyle="bold"
+            android:src="@drawable/logo3"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:orientation="vertical"
+            android:padding="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.51">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enter Pin "
+                android:textColor="@color/txtcolor"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/txtcolor"
+                android:textColorHint="@color/txtcolor">
+
+                <EditText
+                    android:id="@+id/Pin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/logintxt"
+                    android:drawableLeft="@drawable/ic_key_black_24dp"
+                    android:drawablePadding="12dp"
+                    android:gravity="left"
+                    android:hint="PIN"
+                    android:inputType="numberSigned"
+                    android:lines="1"
+                    android:padding="14dp"
+                    android:textColor="@color/txtcolor"
+                    android:textColorHint="@color/txtcolor"
+                    android:textSize="@dimen/text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/Submit_OTP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            android:background="@drawable/button_border"
+            android:backgroundTint="@color/logintxt"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/SubmitBtn"
+            android:textColor="@color/txtcolor"
+            android:textSize="@dimen/text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout12"
+            app:layout_constraintVertical_bias="0.31" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

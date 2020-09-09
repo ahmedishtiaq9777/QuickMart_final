@@ -80,6 +80,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View v) {
 
+                userid = mData.get(position).getUserId();
                 Toast.makeText(mContext.getApplicationContext(),"seller id:"+userid,Toast.LENGTH_LONG).show();
                 //Starting Activity To show Category Activity
                 Intent intent = new Intent(mContext, TabsBasic.class);

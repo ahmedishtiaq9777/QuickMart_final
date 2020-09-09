@@ -32,6 +32,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.demotxt.myapp.Quickmart.ownmodels.Prod;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
 import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.utils.Tools;
@@ -64,7 +65,7 @@ public class Prod_Activity extends AppCompatActivity {
     private NestedScrollView nested_scroll_view;
     //For Review Layout
     private EditText Feedback_TXT;
-    private Button Submit_Btn;
+    private Button Submit_Btn,BuyNow;
     private AppCompatRatingBar mRatingBar;
     public String rate;
     public String Feedback;
@@ -276,6 +277,7 @@ try {
         final String strpid=String.valueOf(proid);//
           int userid =loginpref.getInt("userid",0);
           final String struserid=String.valueOf(userid);
+
 
 
 

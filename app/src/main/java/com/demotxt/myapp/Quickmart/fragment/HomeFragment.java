@@ -35,6 +35,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.demotxt.myapp.Quickmart.CategoryFragments.CatKids_Adapter;
+import com.demotxt.myapp.Quickmart.CategoryFragments.CatMen_Adapter;
+import com.demotxt.myapp.Quickmart.CategoryFragments.CatWomen_Adapter;
 import com.demotxt.myapp.Quickmart.MyLocation;
 import com.demotxt.myapp.Quickmart.activity.Error_Screen_Activity;
 import com.demotxt.myapp.Quickmart.ownmodels.Book;
@@ -68,6 +71,9 @@ public class HomeFragment extends Fragment {
     private RecyclerViewAdapter myAdapter;
     private RecyclerViewProdAdapter myAdapter1;
     private RecyclerView3 myAdapter2;
+    private CatKids_Adapter mCatKids_adapter;
+    private CatMen_Adapter mCatMen_adapter;
+    private CatWomen_Adapter mCatWomen_adapter;
     TextView shop, rec, trend;
     //loc
     public String Latitude,Longitude;
@@ -370,6 +376,7 @@ public class HomeFragment extends Fragment {
                     myAdapter.getFilter().filter(newText);
                     myAdapter1.getFilter().filter(newText);
                     myAdapter2.getFilter().filter(newText);
+
 
                     return false;
                 }

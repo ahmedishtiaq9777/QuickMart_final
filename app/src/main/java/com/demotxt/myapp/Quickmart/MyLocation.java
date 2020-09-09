@@ -76,7 +76,7 @@ public class MyLocation extends AppCompatActivity {
                 },2);
             }else {
                 Toast.makeText(context, "Location Permission Granted", Toast.LENGTH_SHORT).show();
-                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListenerNetwork);;
+                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListenerNetwork);
             }
 
 
@@ -139,8 +139,7 @@ public class MyLocation extends AppCompatActivity {
     {
         @Override
         public void run() {
-            lm.removeUpdates(locationListenerGps);
-            lm.removeUpdates(locationListenerNetwork);
+
 
             Location net_loc=null, gps_loc=null;
 
@@ -175,10 +174,14 @@ public class MyLocation extends AppCompatActivity {
 
             if(gps_loc!=null){
                 locationResult.gotLocation(gps_loc);
+                lm.removeUpdates(locationListenerGps);
+                lm.removeUpdates(locationListenerNetwork);
                 return;
             }
             if(net_loc!=null){
                 locationResult.gotLocation(net_loc);
+                lm.removeUpdates(locationListenerGps);
+                lm.removeUpdates(locationListenerNetwork);
                 return;
             }
             locationResult.gotLocation(null);

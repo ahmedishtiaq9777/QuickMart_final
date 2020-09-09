@@ -2,6 +2,7 @@ package com.demotxt.myapp.Quickmart.Cart_Fav;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.util.Log;
@@ -13,6 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.view.ViewCompat;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.Quickmart.R;
+import com.demotxt.myapp.Quickmart.activity.Prod_Activity;
 import com.demotxt.myapp.Quickmart.fragment.CartFragment;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
 import com.google.gson.Gson;
@@ -150,16 +156,12 @@ public class CartListBaseAdapter extends BaseAdapter {
             viewHolder.cross = (ImageView) convertView.findViewById(R.id.cross);
             viewHolder.plus = (ImageView) convertView.findViewById(R.id.plus);
             viewHolder.minus = (ImageView) convertView.findViewById(R.id.minus);
-
             viewHolder.title = (TextView) convertView.findViewById(R.id.title);
-
             viewHolder.price = (TextView) convertView.findViewById(R.id.price);
-
             viewHolder.Quantity = (TextView) convertView.findViewById(R.id.prodQuantity);
-
+            viewHolder.mCardView = convertView.findViewById(R.id.Cardview_Cart);
 
             viewHolder.title.setTypeface(fonts2);
-
             viewHolder.Quantity.setTypeface(fonts1);
             viewHolder.price.setTypeface(fonts2);
 
@@ -187,6 +189,24 @@ public class CartListBaseAdapter extends BaseAdapter {
         } catch (Exception e) {
             Log.i("sellerQuantity not add", "error:" + e.getMessage());
         }
+        //card on click listener
+        viewHolder.mCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, Prod_Activity.class);
+                // passing data to the book activity
+                intent.putExtra("Title",bean.getTitle());
+                intent.putExtra("Description",bean.getDescription());
+                intent.putExtra("Thumbnail",bean.getImage());
+                intent.putExtra("price",String.valueOf(bean.getPrice()));
+                intent.putExtra("proid",bean.getId());
+
+                // start the activity
+                context.startActivity(intent);
+
+            }
+        });
 
 
         viewHolder.plus.setOnClickListener(new View.OnClickListener() {
@@ -283,17 +303,6 @@ public class CartListBaseAdapter extends BaseAdapter {
                         notifyDataSetChanged();
                     }
 
-               /* for (CartListBeanlist obj:Bean) {
-                    Log.i("Item "+obj.getId(), "Title "+obj.getTitle());
-                }*/
-                    // CartListBeanlist obj= Bean.get(position);
-                    // Toast.makeText(context.getApplicationContext()," Title:"+obj.getTitle(),Toast.LENGTH_SHORT).show();
-
-
-                    //   Toast.makeText(context.getApplicationContext()," position:"+position,Toast.LENGTH_SHORT).show();
-                    //   CartListBaseAdapter.this.notifyAll();
-
-
                 } catch (Exception e) {
                     Toast.makeText(context.getApplicationContext(), " Error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -302,49 +311,6 @@ public class CartListBaseAdapter extends BaseAdapter {
             }
         });
 
-
-//        number = 01;
-//        viewHolder.text.setText(""+number);
-//
-//        final ViewHolder finalViewHolder = viewHolder;
-//        viewHolder.min.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                if (number == 1){
-//                    finalViewHolder.text.setText("" + number);
-//            }
-//
-//                if (number > 1){
-//
-//                    number = number -1;
-//                    finalViewHolder.text.setText(""+number);
-//                }
-//
-//            }
-//        });
-//
-//        final ViewHolder finalViewHolder1 = viewHolder;
-//        viewHolder.plus.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                if (number == 10) {
-//                    finalViewHolder1.text.setText("" + number);
-//                }
-//
-//                if (number < 10) {
-//
-//                    number = number + 1;
-//                    finalViewHolder1.text.setText("" + number);
-//
-//                }
-//
-//
-//
-//
-//            }
-//        });
 
 
         return convertView;
@@ -512,7 +478,7 @@ public class CartListBaseAdapter extends BaseAdapter {
         ImageView minus;
         ImageView cross;
         TextView title;
-
+        CardView mCardView;
         TextView price;
 
         TextView Quantity;
