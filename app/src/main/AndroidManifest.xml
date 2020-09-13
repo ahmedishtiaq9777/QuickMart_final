@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.demotxt.myapp.recyclerview">
+    package="com.demotxt.myapp.Quickmart">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -17,12 +17,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.Notification_Activity"></activity>
-        <activity android:name=".activity.Web_Activity"></activity>
+        <activity android:name=".activity.Password_Activity"></activity>
+        <activity android:name=".activity.DirectCheckout_Activity" />
+        <activity android:name=".activity.Forgot_Pass_Activity" />
+        <activity android:name=".activity.AboutSeller_Activity" />
+        <activity android:name=".activity.Notification_Activity" />
+        <activity android:name=".activity.Web_Activity" />
         <activity android:name=".Order.Order_Detail_Activity" />
         <activity android:name=".Order.Order_Activity" />
         <activity android:name=".activity.AnimationOrder" />
-        <activity android:name=".activity.User_Detail_Activity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -37,7 +40,6 @@
         </activity>
         <activity android:name=".activity.Book_Activity" />
         <activity android:name=".activity.Error_Screen_Activity" />
-        <activity android:name=".fragment.UsersettingFragment" />
         <activity android:name=".activity.Signup" />
         <activity android:name=".activity.Prod_Activity" />
         <activity android:name=".activity.r3_Activity" />
@@ -45,9 +47,7 @@
         <activity android:name=".activity.Shipping" />
         <activity android:name=".activity.Confirmation" />
         <activity android:name=".activity.TabsBasic" />
-        <activity android:name=".Test" />
         <activity android:name=".activity.MainActivity2" />
-        <activity android:name=".productlist.ShoppyProductListActivity" />
     </application>
 
 </manifest>
