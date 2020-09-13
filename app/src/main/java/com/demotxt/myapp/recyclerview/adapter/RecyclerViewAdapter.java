@@ -73,7 +73,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.tv_book_title.setText(mData.get(position).getTitle());
         holder.tv_book_dist.setText(mData.get(position).getDistance());
         //holder.img_book_thumbnail.setImageResource(mData.get(position).getThumbnail());
-        Picasso.get().load(mData.get(position).getThumbnail()).into(holder.img_book_thumbnail);
+        Picasso.get().load(mData.get(position).getThumbnail()).resize(300,300).into(holder.img_book_thumbnail);
         holder.mRatingBar.setRating(mData.get(position).getRating());
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {

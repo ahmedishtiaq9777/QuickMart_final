@@ -454,6 +454,7 @@ public class HomeFragment extends Fragment implements LocationListener {
             @Override
             public void onComplete(@NonNull Task<Location> task) {
 
+
                 Location location = task.getResult();
                 if (location != null) {
                     Geocoder geocoder = new Geocoder(getContext(),
@@ -513,7 +514,7 @@ public class HomeFragment extends Fragment implements LocationListener {
     public void LoadLatLong() {
 
         mPreferences = getContext().getSharedPreferences("LatLongPreF", Context.MODE_PRIVATE);
-        Latitude = mPreferences.getString("Latitude", "");
+        Latitude = mPreferences.getString("Latitude","");
         Longitude = mPreferences.getString("Longitude", "");
 
     }

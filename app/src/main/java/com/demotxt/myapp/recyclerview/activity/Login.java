@@ -85,7 +85,7 @@ public class Login extends AppCompatActivity {
 
         signup = (TextView) findViewById(R.id.signup);
 
-        email = (EditText) findViewById(R.id.emaill);
+        email = (EditText) findViewById(R.id.emaill2);
 
         pass = (EditText) findViewById(R.id.passwordd);
         checkBoxremember = (CheckBox) findViewById(R.id.checkboxremember);
@@ -121,7 +121,8 @@ public class Login extends AppCompatActivity {
                 awesomeValidation = new AwesomeValidation(BASIC);
                 awesomeValidation.addValidation(Login.this, R.id.emaill, android.util.Patterns.EMAIL_ADDRESS, R.string.error_email);
                 awesomeValidation.addValidation(Login.this, R.id.passwordd, RegexTemplate.NOT_EMPTY, R.string.error_password);
-
+                Toast.makeText(getApplicationContext(),"emaail:"+email.getText().toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"password"+pass.getText().toString(),Toast.LENGTH_LONG).show();
                 try {
 
                     final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -226,7 +227,8 @@ public class Login extends AppCompatActivity {
                         @Override
                         protected Map<String, String> getParams() {
                             Map<String, String> params = new HashMap<String, String>();
-                            params.put("email", email.getText().toString());
+
+                            params.put("phoneNo", email.getText().toString());
                             params.put("password", pass.getText().toString());
                             return params;
                         }
