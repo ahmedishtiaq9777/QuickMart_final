@@ -21,6 +21,7 @@ import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.Cart_Fav.CartListBaseAdapter;
 import com.demotxt.myapp.Quickmart.Cart_Fav.CartListBeanlist;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -42,7 +43,7 @@ public class FavoriteFragment extends Fragment {
     private Set<String> ids;
     private SharedPreferences cartpreferrence;
     private SharedPreferences.Editor cartprefEditor;
-
+    FloatingActionButton search;
 
     Typeface fonts1, fonts2;
     private List<CartListBeanlist> Bean;
@@ -53,12 +54,12 @@ public class FavoriteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.favoritefragment, container, false);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
-
         listview = (ListView) view.findViewById(R.id.listview);
         ids= new HashSet<String>();
         Bean=new ArrayList<>();
 
+        search = getActivity().findViewById(R.id.fab_search);
+        search.hide();
 
         cartpreferrence =   getContext().getSharedPreferences("favpref", MODE_PRIVATE);
  //

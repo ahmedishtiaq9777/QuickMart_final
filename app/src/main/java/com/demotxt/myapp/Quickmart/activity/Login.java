@@ -87,6 +87,7 @@ public class Login extends AppCompatActivity {
 
         signin = (Button) findViewById(R.id.signin1);
         signup = (TextView) findViewById(R.id.signup);
+        checkBoxremember = findViewById(R.id.checkboxremember);
 
         phone = (EditText) findViewById(R.id.PH);
         pass = (EditText) findViewById(R.id.PASS);
@@ -96,7 +97,6 @@ public class Login extends AppCompatActivity {
         ForgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO Forgot Password Work
                 Intent forgetIntent = new Intent(Login.this, Forgot_Pass_Activity.class);
                 startActivity(forgetIntent);
             }
@@ -160,6 +160,7 @@ public class Login extends AppCompatActivity {
                                             if (strResult.equals("success")) {
 
                                                 saveloginPrefference(userid);
+
                                                 Intent i = getIntent();
                                                 int pid = -1;
                                                 boolean login_from_profile = false;

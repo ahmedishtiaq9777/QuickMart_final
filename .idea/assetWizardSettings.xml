@@ -135,7 +135,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/star/baseline_star_24.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/edit/baseline_edit_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -145,9 +145,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="c11753" />
-                            <entry key="opacityPercent" value="90" />
-                            <entry key="outputName" value="ic_baseline_star_24" />
+                            <entry key="color" value="b8bfbe" />
+                            <entry key="opacityPercent" value="98" />
+                            <entry key="outputName" value="ic_edit_24" />
                             <entry key="sourceFile" value="C:\Users\mawai" />
                           </map>
                         </option>

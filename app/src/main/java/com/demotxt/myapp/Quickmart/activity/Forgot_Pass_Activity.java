@@ -70,8 +70,6 @@ public class Forgot_Pass_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(awesomeValidation.validate()) {
-                    String contact = PhoneNo.getText().toString();
-                    UserModel model = new UserModel(contact);
                     CheckUser();
                 }
             }

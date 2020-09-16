@@ -127,6 +127,7 @@ public class MyLocation extends AppCompatActivity {
         {
             timer1.cancel();
             locationResult.gotLocation(location);
+
             lm.removeUpdates(this);
             lm.removeUpdates(locationListenerGps);
         }
@@ -139,7 +140,6 @@ public class MyLocation extends AppCompatActivity {
     {
         @Override
         public void run() {
-
 
             Location net_loc=null, gps_loc=null;
 

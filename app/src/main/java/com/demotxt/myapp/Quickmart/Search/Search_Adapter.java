@@ -1,6 +1,7 @@
-package com.demotxt.myapp.Quickmart.adapter;
+package com.demotxt.myapp.Quickmart.Search;
 
 import android.app.Activity;
+import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,12 +20,12 @@ import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.activity.Prod_Activity;
 import com.demotxt.myapp.Quickmart.ownmodels.Prod;
-import com.demotxt.myapp.Quickmart.R;
 import com.squareup.picasso.Picasso;
 
-
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -32,11 +33,10 @@ import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewProdAdapter.MyViewHolder> implements Filterable {
+public class Search_Adapter extends RecyclerView.Adapter<Search_Adapter.MyViewHolder> implements Filterable {
 
     private Context mContext;
-    private List<Prod> Data1;
-    private List<Prod> Data1Full;
+    private List<Search_Model> Data1,Data1Full;
     private SharedPreferences cartpreferrence;
     private SharedPreferences.Editor cartprefEditor;
     private boolean isblack;
@@ -44,7 +44,7 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
     public Set<String> ids;
 
 
-    public RecyclerViewProdAdapter(Context mContext, List<Prod> data1) {
+    public Search_Adapter(Context mContext, List<Search_Model> data1) {
         this.mContext = mContext;
         this.Data1 = data1;
         Data1Full = new ArrayList<>(Data1);
@@ -61,7 +61,7 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
 
         View view ;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
-        view = mInflater.inflate(R.layout.cardveiw_item_prod,parent,false);
+        view = mInflater.inflate(R.layout.cardveiw_item_search,parent,false);
         return new MyViewHolder(view);
     }
 
@@ -96,12 +96,9 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
                 intent.putExtra("price",Data1.get(position).getPrice());
                 intent.putExtra("proid",Data1.get(position).getId());
                 intent.putExtra("sellerid",Data1.get(position).getSid());
-                //Transition Test
-                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,
-                        holder.img_book_thumbnail, ViewCompat.getTransitionName(holder.img_book_thumbnail));
 
                 // start the activity
-                mContext.startActivity(intent,optionsCompat.toBundle());
+                mContext.startActivity(intent);
             }
         });
         holder.heart.setOnClickListener(new View.OnClickListener(){
@@ -132,26 +129,6 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
                     Toast.makeText(mContext,"Error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
                 }
 
-              /*  if (iscjd=false)
-                {
-                    heart black
-                }
-               // int res = getResources().getIdentifier(, "drawable", this.getPackageName());
-
-              //  cartprefEditor.putBoolean("ischecked", false);
-               /* ischecked = cartpreferrence.getBoolean("heart", false);
-                if(ischecked==true)
-                {
-                    int ID=Data1.get(position).getId();
-
-                    ids.add(String.valueOf(ID));
-                    cartprefEditor
-
-
-                }else {
-                    cartprefEditor=
-                }*/
-
             }
         } );
 
@@ -172,10 +149,10 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            tv_book_title = itemView.findViewById(R.id.book_title_id);
-            price = itemView.findViewById(R.id.book_prod_price);
-            img_book_thumbnail = itemView.findViewById(R.id.book_img_id);
-            cardView = itemView.findViewById(R.id.cardview2);
+            tv_book_title = itemView.findViewById(R.id.S_title_id);
+            price = itemView.findViewById(R.id.S_prod_price);
+            img_book_thumbnail = itemView.findViewById(R.id.S_img_id);
+            cardView = itemView.findViewById(R.id.cardview_search);
             heart=itemView.findViewById(R.id.heart);
             mRatingBar = itemView.findViewById(R.id.card_RatingBar);
         }
@@ -190,14 +167,14 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
     private Filter mDataFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<Prod> filteredList = new ArrayList<>();
+            List<Search_Model> filteredList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
                 filteredList.addAll(Data1Full);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
-                for (Prod item : Data1Full) {
+                for (Search_Model item : Data1Full) {
                     if (item.getTitle().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
@@ -219,7 +196,4 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
 
         }
     };
-
-
-
 }

@@ -59,14 +59,15 @@ public class Prod_Activity extends AppCompatActivity {
     StringResponceFromWeb result;
     public Set<String> cartids;
     private ImageButton bt_toggle_reviews, bt_toggle_description;
-    private View lyt_expand_reviews, lyt_expand_warranty, lyt_expand_description;
+    private View lyt_expand_reviews, lyt_expand_description;
     private NestedScrollView nested_scroll_view;
     //For Review Layout
     private EditText Feedback_TXT;
     private Button Submit_Btn, BuyNow;
     private AppCompatRatingBar mRatingBar;
-    public String rate;
-    public String Feedback;
+    public String rate, Feedback;
+    private String Title, Description, image;
+    String struserid, strpid, strsellerid;
     private View layout;
     private Spinner spinner1, spinner2;
     //
@@ -201,8 +202,6 @@ public class Prod_Activity extends AppCompatActivity {
 
         loginpref = getSharedPreferences("loginpref", MODE_PRIVATE);// get login preferences which contains information like "userid" and login status
 
-        //    cartids=cartlistpref.getStringSet("cartids",cartids);//get current product ids in cartprefferences
-        //Toast.makeText(getApplicationContext(), "length:" + cartids.size(), Toast.LENGTH_SHORT).show();
         tvtitle = (TextView) findViewById(R.id.txttitle);
         //    tvdescription = (TextView) findViewById(R.id.txtDesc);
         tvdescription = (TextView) findViewById(R.id.textdesciption);
@@ -212,19 +211,24 @@ public class Prod_Activity extends AppCompatActivity {
         floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
         nested_scroll_view = (NestedScrollView) findViewById(R.id.nested_scroll_view);
 
-        //For Review
+        //
         Feedback_TXT = findViewById(R.id.txt_feedback);
         Submit_Btn = findViewById(R.id.Submit_Btn);
         mRatingBar = findViewById(R.id.AppCompact_RatingBar);
+        BuyNow = findViewById(R.id.BuyNow_btn);
 
-//Recieve data
+        //Recieve data from prod
         final Intent intent = getIntent();
-        String Title = intent.getExtras().getString("Title");
-        String Description = intent.getExtras().getString("Description");
-        String image = intent.getExtras().getString("Thumbnail");
+        Title = intent.getExtras().getString("Title");
+        Description = intent.getExtras().getString("Description");
+        image = intent.getExtras().getString("Thumbnail");
         Float pRise = intent.getExtras().getFloat("price");
+        sellerid = intent.getExtras().getInt("sellerid");
+        strsellerid = String.valueOf(sellerid);
+        proid = intent.getExtras().getInt("proid");
+        strpid = String.valueOf(proid);
 
-        String strprice = String.valueOf(pRise);
+        final String strprice = String.valueOf(pRise);
 
         // Setting values
         // section reviews
@@ -251,7 +255,7 @@ public class Prod_Activity extends AppCompatActivity {
         toggleArrow(bt_toggle_description);
         lyt_expand_description.setVisibility(View.VISIBLE);
 
-//setting values
+        //setting values
         tvtitle.setText(Title);
         tvdescription.setText(Description);
         price.setText(strprice);
@@ -264,10 +268,6 @@ public class Prod_Activity extends AppCompatActivity {
                 try {
                     Boolean is_logedin = loginpref.getBoolean("loggedin", false);
                     if (is_logedin.equals(true)) {
-                        proid = intent.getExtras().getInt("proid");
-                        sellerid = intent.getExtras().getInt("sellerid");
-                        final String strsellerid = String.valueOf(sellerid);
-                        final String strpid = String.valueOf(proid);//
                         int userid = loginpref.getInt("userid", 0);
                         final String struserid = String.valueOf(userid);
 
@@ -400,7 +400,6 @@ public class Prod_Activity extends AppCompatActivity {
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), "Error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
@@ -464,7 +463,27 @@ public class Prod_Activity extends AppCompatActivity {
                 }
             }
         });
-        //
+
+        //Buy Now Button
+        BuyNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Boolean Check_login = loginpref.getBoolean("loggedin", false);
+                if (Check_login.equals(true)) {
+                    Intent buyNow = new Intent(Prod_Activity.this, DirectCheckout_Activity.class);
+                    buyNow.putExtra("img", image);
+                    buyNow.putExtra("name", Title);
+                    buyNow.putExtra("price", strprice);
+                    buyNow.putExtra("sellerId", strsellerid);
+                    buyNow.putExtra("proId", strpid);
+                    startActivity(buyNow);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), Login.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
     }
 
     private void toggleSection(View bt, final View lyt) {

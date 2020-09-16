@@ -1,22 +1,19 @@
 package com.demotxt.myapp.Quickmart.activity;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -26,90 +23,71 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.Quickmart.Cart_Fav.CartListBeanlist;
+import com.demotxt.myapp.Quickmart.R;
+import com.demotxt.myapp.Quickmart.adapter.OrderViewAdapter;
 import com.demotxt.myapp.Quickmart.fragment.CartFragment;
 import com.demotxt.myapp.Quickmart.ownmodels.OrderViewImg;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
-import com.demotxt.myapp.Quickmart.R;
-import com.demotxt.myapp.Quickmart.adapter.OrderViewAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
-
-public class Confirmation extends AppCompatActivity {
-    private final String CHANNEL_ID = "Notification";
-    private final int NOTIFICATION_ID = 001;
-    private RecyclerView recyclerView;
-    private OrderViewAdapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
+public class Direct_Confirmation extends AppCompatActivity {
     Button confirm;
     TextView t1, t2, p;
-    List<OrderViewImg> orderViewImgs;
+    ImageView mImageView;
+    TextView Pname,Pprice;
     ArrayList<CartListBeanlist> prolist;
     SharedPreferences loginpref;
-    String Userid, name, address;
-    String pId, sId;
+    String Userid,name,address;
+    int pId,sId;
     double total;
+    int code;
 
 
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.confirmation);
+        setContentView(R.layout.activity_direct__confirmation);
 
         confirm = (Button) findViewById(R.id.button3);
         t1 = (TextView) findViewById(R.id.getname);
         t2 = (TextView) findViewById(R.id.getaddress);
         p = (TextView) findViewById(R.id.TOTAL);
+        Pname = findViewById(R.id.txtName);
+        Pprice = findViewById(R.id.txtPrice);
+        mImageView = findViewById(R.id.imageV);
 
-        Bundle bn = getIntent().getExtras();
-        name = bn.getString("getname");
-        address = bn.getString("getaddress");
-
-        orderViewImgs = new ArrayList<>();
-        prolist = new ArrayList<CartListBeanlist>();
         total = 0.0;
         loginpref = getSharedPreferences("loginpref", MODE_PRIVATE);
         Userid = String.valueOf(loginpref.getInt("userid", 0));
-        Intent intent = getIntent();
-        //
-        try {
-            Bundle args = intent.getBundleExtra("Bundlelist");
-            prolist = (ArrayList<CartListBeanlist>) args.getSerializable("list");
-        } catch (Exception E) {
-            Toast.makeText(this, "Serializable Error", Toast.LENGTH_SHORT).show();
-        }
 
+        //Intent values From DirectCheckout
+        Intent DC = getIntent();
+        name = DC.getExtras().getString("UserName");
+        address =  DC.getExtras().getString("UserAdd");
+        String i = DC.getExtras().getString("proId");
+        String sell = DC.getExtras().getString("sellerId");
+        pId = Integer.parseInt(i);
+        sId = Integer.parseInt(sell);
+        //
         t1.setText(name);
         t2.setText(address);
-
-///////////////////////
-        for (CartListBeanlist i : prolist) {
-            OrderViewImg orderViewImg = new OrderViewImg(i.getImage(), i.getTitle(), i.getQuantity(), i.getPrice());
-            orderViewImgs.add(orderViewImg);
-            double oneproducttotal = 0.0;
-            oneproducttotal = i.getQuantity() * i.getPrice();
-            total = total + oneproducttotal;
-        }
-
-        p.setText(String.valueOf(total));
-
+        Pname.setText(DC.getExtras().getString("name"));
+        double pt = DC.getExtras().getDouble("price");
+        Pprice.setText(String.valueOf(pt));
+        Picasso.get().load(DC.getExtras().getString("img")).into(mImageView);
 
         //
-        recyclerView = findViewById(R.id.recyclerViewOrder);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        adapter = new OrderViewAdapter(orderViewImgs);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+        total = DC.getExtras().getDouble("price");
+        p.setText(String.valueOf(total));
+
 
         confirm = (Button) findViewById(R.id.button3);
         t1 = (TextView) findViewById(R.id.getname);
@@ -119,7 +97,22 @@ public class Confirmation extends AppCompatActivity {
         Gson gson = builder.create();
         Type listOfTestObject = new TypeToken<List<CartListBeanlist>>() {
         }.getType();
-        final String s = gson.toJson(CartFragment.list, listOfTestObject);
+        List<CartListBeanlist> templist=new ArrayList<CartListBeanlist>() ;
+
+
+        CartListBeanlist ob = new CartListBeanlist();
+        ob.setImage(DC.getExtras().getString("img"));
+        ob.setTitle(DC.getExtras().getString("name"));
+        ob.setPrice(DC.getExtras().getDouble("price"));
+        ob.setQuantity(1);
+        ob.setId(pId);
+        ob.setSellerid(sId);
+
+        templist.add(ob);
+
+
+        final String s = gson.toJson(templist, listOfTestObject);
+
 
 
         try {
@@ -130,7 +123,9 @@ public class Confirmation extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 SaveOrder(MainActivity2.hostinglink + "/home/SaveOrder", s);
+
             }
         });
     }
@@ -159,7 +154,6 @@ public class Confirmation extends AppCompatActivity {
                                     Intent i = new Intent(getBaseContext(), AnimationOrder.class);
                                     startActivity(i);
                                     //notification function
-                                    SetNotification();
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -182,10 +176,6 @@ public class Confirmation extends AppCompatActivity {
                     Map<String, String> params = new HashMap<String, String>();
 
                     params.put("userid", Userid);
-
-                    //    JSONArray jsonArray= new JSONArray();
-
-                    // jsonArray.put(productsarray);
                     params.put("orderedproducts", productsarray);
                     params.put("total", String.valueOf(total));
                     return params;
@@ -203,15 +193,4 @@ public class Confirmation extends AppCompatActivity {
         }
     }
 
-    //setting notification
-    public void SetNotification() {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);
-        builder.setSmallIcon(R.drawable.logo3);
-        builder.setContentTitle("Order");
-        builder.setContentText("We've Got Your Order Please Wait For Confirmation ..");
-        builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
-        notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
-    }
 }

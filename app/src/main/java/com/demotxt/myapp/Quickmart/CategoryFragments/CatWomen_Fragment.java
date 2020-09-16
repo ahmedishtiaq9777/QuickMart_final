@@ -54,35 +54,31 @@ public class CatWomen_Fragment extends Fragment {
 
         setHasOptionsMenu(true);
         // Inflate the layout for this fragment
-        View rootview =  inflater.inflate(R.layout.fragment_cat_women_, container, false);
+        View rootview = inflater.inflate(R.layout.fragment_cat_women_, container, false);
 
         mRecyclerView = rootview.findViewById(R.id.Rv_CatWomen);
-        connection=new CheckConnection(getActivity());
-        dialog=new CustomInternetDialog(getActivity());
+        connection = new CheckConnection(getActivity());
+        dialog = new CustomInternetDialog(getActivity());
 
-        boolean is_connected=connection.CheckConnection();
-        if(!is_connected)
-        {
+        boolean is_connected = connection.CheckConnection();
+        if (!is_connected) {
             dialog.showCustomDialog();
         }
 
         ProdWomen = new ArrayList<>();
 
         //Add Data in The Recycler Views;
-        TabsBasic activity=(TabsBasic) getActivity();// get acticity data
-        int sid= activity.getuserid();
-        String userid=String.valueOf(sid);
-        String url=hostinglink +"/Home/getprowithsellerid";
-        getconnection(url,userid);
-
-
-
+        TabsBasic activity = (TabsBasic) getActivity();// get acticity data
+        int sid = activity.getuserid();
+        String userid = String.valueOf(sid);
+        String url = hostinglink + "/Home/getprowithsellerid";
+        getconnection(url, userid);
 
 
         return rootview;
     }
 
-    public  void   getconnection(String url, final String seller_id) {
+    public void getconnection(String url, final String seller_id) {
         final RequestQueue request = Volley.newRequestQueue(getContext());
 
 
@@ -121,12 +117,12 @@ public class CatWomen_Fragment extends Fragment {
                         error.printStackTrace();
                     }
                 }
-        )  {
+        ) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("sellerid",seller_id);
-                params.put("category","Woman");
+                params.put("sellerid", seller_id);
+                params.put("category", "Woman");
                 // JSONArray jsonArray= new JSONArray();
                 // jsonArray.put(sid);
                 // params.put("sellerid",jsonArray.toString());
@@ -151,28 +147,26 @@ public class CatWomen_Fragment extends Fragment {
         };
 
 
-
-
-
         request.add(rRequest);
 
 
     }
-    private  void  setadapterRecyclerView()
-    {
 
-        mLayoutManager = new  GridLayoutManager(getContext(),2);
-        mAdapter = new CatWomen_Adapter(getActivity(),ProdWomen);
+    private void setadapterRecyclerView() {
+
+        mLayoutManager = new GridLayoutManager(getContext(), 2);
+        mAdapter = new CatWomen_Adapter(getActivity(), ProdWomen);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
     }
-    private  void setimageurl(){
+
+    private void setimageurl() {
         int n = 0;
-        for (CatWomen i :ProdWomen ) {
-            i.setThumbnail( hostinglink + i.getThumbnail());
+        for (CatWomen i : ProdWomen) {
+            i.setThumbnail(hostinglink + i.getThumbnail());
             // list.remove(n);
-            ProdWomen.set(n,i);
+            ProdWomen.set(n, i);
             n++;
 
 
@@ -180,28 +174,33 @@ public class CatWomen_Fragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
         inflater = getActivity().getMenuInflater();
-        inflater.inflate(R.menu.menu_search_setting,menu);
+        inflater.inflate(R.menu.menu_search_setting, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
 
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
+        try {
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                mAdapter.getFilter().filter(newText);
-                return false;
-            }
-        });
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    mAdapter.getFilter().filter(newText);
+                    return false;
+                }
+            });
+        } catch (Exception E) {
+            Toast.makeText(getContext(), "Loading Data", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

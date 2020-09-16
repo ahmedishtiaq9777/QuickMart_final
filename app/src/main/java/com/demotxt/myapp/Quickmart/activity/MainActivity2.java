@@ -9,9 +9,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,13 +24,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.demotxt.myapp.Quickmart.Search.Search_Activity;
 import com.demotxt.myapp.Quickmart.fragment.CartFragment;
 import com.demotxt.myapp.Quickmart.fragment.FavoriteFragment;
 import com.demotxt.myapp.Quickmart.fragment.HomeFragment;
 import com.demotxt.myapp.Quickmart.fragment.ProfileFragment;
 import com.demotxt.myapp.Quickmart.R;
+import com.demotxt.myapp.Quickmart.ownmodels.DetailModel;
 import com.demotxt.myapp.Quickmart.utils.Tools;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity2 extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     private SharedPreferences loginPreferences;
@@ -37,6 +44,8 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
     public static String hostinglink;
     private View layout;
     int proid;
+    FloatingActionButton search;
+    public static RelativeLayout lyt_search;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,21 +53,16 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         fragmentmanager = getSupportFragmentManager();
         hostinglink = getResources().getString(R.string.hosting);
         CheckConnection();
-
+        //
+        loadUserDetail();
+        //
         proid = 0;       //To Check Internet Connection
         if (Check == 1) {
             setContentView(R.layout.activitymain2);
         } else {
             finish();
-            // Intent intent = new Intent(getApplicationContext(),Error_Screen_Activity.class);
             Intent intent = new Intent(MainActivity2.this, Error_Screen_Activity.class);
             startActivity(intent);
-        }
-
-        try {
-            initToolbar();
-        } catch (Exception e) {
-
         }
 
         LayoutInflater inflater = getLayoutInflater();
@@ -70,9 +74,6 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
             Log.i("Loginactivity", "error" + e.getMessage());
 
         }
-
-        // Toast.makeText(getApplicationContext(),"error:"+e.getMessage(),Toast.LENGTH_SHORT).show();
-
 
         try {
             Intent i = getIntent();
@@ -89,7 +90,6 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
             Log.i("In MainActivity:", e.getMessage());
         }
 
-
         navView = (BottomNavigationView) findViewById(R.id.nav_view);
 
         try {
@@ -101,7 +101,6 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "Error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-
 
         fragmentmanager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
@@ -118,6 +117,25 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
                 Log.i("CALLBACKS", messege.toString());
             }
         });
+
+
+        //For Search
+        search = findViewById(R.id.fab_search);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity2.this, Search_Activity.class);
+                startActivity(i);
+            }
+        });
+
+    }
+    //load user detail
+    public void loadUserDetail(){
+        DetailModel model = new DetailModel(getApplicationContext());
+        model.getYourName();
+        model.getYourPhone();
+        model.getYourAddress();
     }
 
 
@@ -239,12 +257,5 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         }
     }
 
-    private void initToolbar() {
-        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Tools.setSystemBarColor(this);
-    }
 
 }

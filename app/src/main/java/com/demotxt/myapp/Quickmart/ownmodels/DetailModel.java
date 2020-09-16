@@ -1,50 +1,57 @@
 package com.demotxt.myapp.Quickmart.ownmodels;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import com.demotxt.myapp.Quickmart.R;
+
+
 public class DetailModel {
 
-    public DetailModel(String name, String email, String phonenumber, String address) {
-        this.name = name;
-        this.email = email;
-        this.phone = phonenumber;
-        this.address = address;
+    private Context ctx;
+    private SharedPreferences default_prefence;
+
+    public DetailModel(Context context) {
+        this.ctx = context;
+        default_prefence = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    String name;
-    String phone;
-    String email;
-    String address;
-
-
-    public String getName() {
-        return name;
+    private String str(int string_id) {
+        return ctx.getString(string_id);
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setYourName(String name) {
+        default_prefence.edit().putString(str(R.string.pref_title_name), name).apply();
     }
 
-    public String getEmail() {
-        return email;
+    public String getYourName() {
+        return default_prefence.getString(str(R.string.pref_title_name), str(R.string.default_your_name));
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setYourEmail(String name) {
+        default_prefence.edit().putString(str(R.string.pref_title_email), name).apply();
     }
 
-    public String getPhone() {
-        return phone;
+    public String getYourEmail() {
+        return default_prefence.getString(str(R.string.pref_title_email), str(R.string.default_your_email));
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setYourPhone(String name) {
+        default_prefence.edit().putString(str(R.string.pref_title_phone), name).apply();
     }
 
-    public String getAddress() {
-        return address;
+    public String getYourPhone() {
+        return default_prefence.getString(str(R.string.pref_title_phone), str(R.string.default_your_phone));
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setYourAddress(String name) {
+        default_prefence.edit().putString(str(R.string.pref_title_address), name).apply();
     }
+
+    public String getYourAddress() {
+        return default_prefence.getString(str(R.string.pref_title_address), str(R.string.default_your_address));
+    }
+
 }
 

@@ -18,6 +18,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -82,6 +84,11 @@ public class Password_Activity extends AppCompatActivity {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
+
+                            GsonBuilder builder = new GsonBuilder();
+                            Gson gson = builder.create();
+                            result = gson.fromJson(response, StringResponceFromWeb.class);
+
                             if (result.getresult().equals("success")) {
                                 Toast.makeText(Password_Activity.this, "Success", Toast.LENGTH_SHORT).show();
                             } else if (result.getresult().equals("null")) {
