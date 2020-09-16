@@ -17,7 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.Password_Activity"></activity>
+        <activity android:name=".activity.Direct_Confirmation"></activity>
+        <activity android:name=".activity.Detail_Activity" />
+        <activity android:name=".Search.Search_Activity" />
+        <activity android:name=".activity.Password_Activity" />
         <activity android:name=".activity.DirectCheckout_Activity" />
         <activity android:name=".activity.Forgot_Pass_Activity" />
         <activity android:name=".activity.AboutSeller_Activity" />
@@ -26,6 +29,7 @@
         <activity android:name=".Order.Order_Detail_Activity" />
         <activity android:name=".Order.Order_Activity" />
         <activity android:name=".activity.AnimationOrder" />
+        <activity android:name=".activity.editDetails" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

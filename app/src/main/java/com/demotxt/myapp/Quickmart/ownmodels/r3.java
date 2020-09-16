@@ -15,17 +15,28 @@ public class r3 {
     private float Price;
     @SerializedName("productId")
     private  int Id;
+    @SerializedName("userId")
+    private int Sid;
 
     public r3() {
     }
 
-    public r3(String title, String category, String description, String thumbnail,float price,int id) {
+    public int getSid() {
+        return Sid;
+    }
+
+    public void setSid(int sid) {
+        Sid = sid;
+    }
+
+    public r3(String title, String category, String description, String thumbnail, float price, int id, int sid) {
         Title = title;
         Category = category;
         Description = description;
         Thumbnail = thumbnail;
         Price=price;
         Id=id;
+        Sid = sid;
     }
 
 

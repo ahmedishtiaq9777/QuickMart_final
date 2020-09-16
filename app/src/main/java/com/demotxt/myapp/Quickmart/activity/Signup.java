@@ -28,6 +28,7 @@ import com.android.volley.toolbox.Volley;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.demotxt.myapp.Quickmart.R;
+import com.demotxt.myapp.Quickmart.ownmodels.DetailModel;
 import com.demotxt.myapp.Quickmart.ownmodels.SignUpModel;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
 import com.demotxt.myapp.Quickmart.ownmodels.UserModel;
@@ -121,9 +122,11 @@ public class Signup extends AppCompatActivity {
                     String pass = password.getText().toString();
                     String contact = phone.getText().toString();
                     SignUpModel m = new SignUpModel(name, contact, pass);
-                    UserModel model = new UserModel();
-                    model.setPhone(contact);
-                    model.setUserName(name);
+                    //
+                    DetailModel model = new DetailModel(getApplicationContext());
+                    model.setYourName(name);
+                    model.setYourPhone(contact);
+                    //
                     CheckUser();
                     Checkcheckbox();
                 }
@@ -418,6 +421,8 @@ public class Signup extends AppCompatActivity {
                 "&sender=" + "QuickMart" +
                 "&mobile=" + ph + "&message=" + msg;
         //
+        try {
+
 
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
@@ -434,7 +439,9 @@ public class Signup extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Error in Volley", Toast.LENGTH_SHORT).show();
             }
         });
-        queue.add(stringRequest);
+        queue.add(stringRequest);}catch (Exception e){
+            Toast.makeText(this, "Exception :"+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

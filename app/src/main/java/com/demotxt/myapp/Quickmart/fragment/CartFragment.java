@@ -29,6 +29,7 @@ import com.demotxt.myapp.Quickmart.ownmodels.CheckConnection;
 import com.demotxt.myapp.Quickmart.ownmodels.CustomInternetDialog;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
 import com.demotxt.myapp.Quickmart.Cart_Fav.CartListBeanlist;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
@@ -48,8 +49,8 @@ import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
 public class CartFragment extends Fragment  {
     private ListView listview;
-
-  public    List<CartListBeanlist> Bean;
+    FloatingActionButton search;
+    public  List<CartListBeanlist> Bean;
     private CartListBaseAdapter baseAdapter;
     private Button pay;
     private CheckConnection connection;
@@ -61,8 +62,6 @@ public class CartFragment extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
-
-        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
 
         listview = (ListView) view.findViewById(R.id.listview);
         connection = new CheckConnection(getActivity());
@@ -76,16 +75,12 @@ public class CartFragment extends Fragment  {
         loginpref = getActivity().getSharedPreferences("loginpref", MODE_PRIVATE);
        // loginprefeditor = loginpref.edit();
 
+        //
+        search = getActivity().findViewById(R.id.fab_search);
+        search.hide();
+        //
         userid=  String.valueOf(loginpref.getInt("userid", 0));
-       /* if(userid.equals(0))
-        {
-            Intent login=new Intent(getActivity(), Login.class);
-            startActivity(login);
-        }*/
-      //  cartids=new HashSet<String>();
-     //   cartprefs=getContext().getSharedPreferences("cartprefs",MODE_PRIVATE);
-     //   cartprefeditor=cartprefs.edit();
-      //  cartids=cartprefs.getStringSet("cartids",cartids);
+
         Bean = new ArrayList<CartListBeanlist>();
         getconnection(hostinglink+"/Home/LoadUserCartProducts");
 

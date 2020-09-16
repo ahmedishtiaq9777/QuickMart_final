@@ -20,6 +20,8 @@ public class Book {
     @SerializedName("address")
     private String Address;
 
+    public Book() {
+    }
 
     public Book(String title, String thumbnail, int uid, float dist, double rating, String contact, String address) {
         Title = title;

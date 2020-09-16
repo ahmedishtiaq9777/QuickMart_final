@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,16 +43,21 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.Quickmart.Order.Order_Activity;
 import com.demotxt.myapp.Quickmart.R;
+import com.demotxt.myapp.Quickmart.activity.Detail_Activity;
 import com.demotxt.myapp.Quickmart.activity.Login;
+import com.demotxt.myapp.Quickmart.activity.MainActivity2;
 import com.demotxt.myapp.Quickmart.activity.Notification_Activity;
 import com.demotxt.myapp.Quickmart.activity.Splash_Activity;
 import com.demotxt.myapp.Quickmart.activity.Web_Activity;
 import com.demotxt.myapp.Quickmart.activity.editDetails;
 import com.demotxt.myapp.Quickmart.ownmodels.ContactDialog;
 import com.demotxt.myapp.Quickmart.ownmodels.CustomDialoag;
+import com.demotxt.myapp.Quickmart.ownmodels.DetailModel;
 import com.demotxt.myapp.Quickmart.ownmodels.ImageFilePath;
 import com.demotxt.myapp.Quickmart.ownmodels.PrivacyDialog;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
+import com.demotxt.myapp.Quickmart.ownmodels.UserModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
@@ -70,8 +76,8 @@ import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
 public class ProfileFragment extends Fragment {
 
-    TextView username, signup, edit;
-    ImageView phtotimage, logout;
+    TextView username, signup;
+    ImageView phtotimage, logout,edit;
     CardView btn_order_history, notification, btn_privacy, dark, language, setting, fav, cart, shop, contact, exit;
     LinearLayout linearLayoutfornotlogin;
     ConstraintLayout linearLayoutforloggenin;
@@ -88,9 +94,11 @@ public class ProfileFragment extends Fragment {
     public static boolean file_islarge;
     public File file;
     public static final int PICK_PHOTO_FOR_AVATAR = 2;
+    FloatingActionButton search;
 
 
     private static final String[] Languages = new String[]{"English", "Urdu"};
+
     public boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
             getActivity().getSupportFragmentManager()
@@ -108,16 +116,17 @@ public class ProfileFragment extends Fragment {
         //selectphoto();
         file_islarge = false;
         loadLocale(getContext());
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
 
         final View view = inflater.inflate(R.layout.profilefragment, container, false);
-
 
         loginpref = getContext().getSharedPreferences("loginpref", MODE_PRIVATE);
         loginprefeditor = loginpref.edit();
         userid = String.valueOf(loginpref.getInt("userid", 0));
         username = view.findViewById(R.id.username);
-        edit=view.findViewById(R.id.edit);
+        //
+        DetailModel m = new DetailModel(getContext());
+        username.setText(m.getYourName());
+        //
         o = view.findViewById(R.id.ORDER);
         s = view.findViewById(R.id.NOTIY);
         l = view.findViewById(R.id.LANGUAGE);
@@ -136,8 +145,6 @@ public class ProfileFragment extends Fragment {
         linearLayoutfornotlogin = (LinearLayout) view.findViewById(R.id.fornotloggedin);
         linearLayoutforloggenin = (ConstraintLayout) view.findViewById(R.id.forloggedin);
         //
-
-
         islogin = loginpref.getBoolean("loggedin", false);
         if (islogin) {
             linearLayoutfornotlogin.setVisibility(View.GONE);
@@ -145,8 +152,6 @@ public class ProfileFragment extends Fragment {
             btn_order_history.setVisibility(View.VISIBLE);
             notification.setVisibility(View.VISIBLE);
             GetProfile(hostinglink + "/Home/GetProfile");
-            String name = loginpref.getString("Name", "");
-            username.setText(name);
 
         } else {
             linearLayoutforloggenin.setVisibility(View.GONE);
@@ -155,6 +160,10 @@ public class ProfileFragment extends Fragment {
             notification.setVisibility(View.GONE);
         }
 
+        //
+        search = getActivity().findViewById(R.id.fab_search);
+        search.hide();
+        //
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,14 +197,15 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
+        edit = view.findViewById(R.id.btn_edit);
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), editDetails.class);
+                Intent intent = new Intent(getActivity(), Detail_Activity.class);
                 startActivity(intent);
             }
         });
+
 
         //For Order history
         btn_order_history.setOnClickListener(new View.OnClickListener() {
@@ -234,24 +244,6 @@ public class ProfileFragment extends Fragment {
                 }
                 PrivacyDialog dialog = new PrivacyDialog(getContext());
                 dialog.showPrivacyDialog();
-            }
-        });
-
-
-        //For  settings
-        setting = view.findViewById(R.id.NotificationCard);
-        setting.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if (!isAnimated) {
-                    s.playAnimation();
-                    isAnimated = true;
-                } else {
-                    s.cancelAnimation();
-                    isAnimated = false;
-                }
-
             }
         });
 
@@ -678,17 +670,6 @@ public class ProfileFragment extends Fragment {
                                 String url = result2.getLogo();
                                 url = hostinglink + url;
                                 Picasso.get().load(url).into(phtotimage);
-
-                                /*  try{
-                                      GetProfile(hostinglink +"/Home/GetProfile");
-                                  }catch (Exception e)
-
-
-                                  {
-                                      Toast.makeText(getContext(),e.getMessage(), Toast.LENGTH_SHORT).show();
-                                  }*/
-
-
                             }
 
 
@@ -739,7 +720,6 @@ public class ProfileFragment extends Fragment {
     public void GetProfile(String url) {
         final RequestQueue request = Volley.newRequestQueue(getContext());
 
-
         StringRequest rRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -747,8 +727,6 @@ public class ProfileFragment extends Fragment {
 
                         // Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
                         try {
-
-                            // Toast.makeText(getContext(),"Responce:"+response,Toast.LENGTH_SHORT).show();
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
                             result = gson.fromJson(response, StringResponceFromWeb.class);
@@ -762,31 +740,25 @@ public class ProfileFragment extends Fragment {
                                     String url = result.getresult();
                                     url = hostinglink + url;
                                     Picasso.get().load(url).into(phtotimage);
+
+                                    UserModel model = new UserModel();
+                                    model.setImage(url);
+                                    model.setUserName(result.getUsername());
+
                                 } catch (Exception e) {
                                     Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                                 }
 
-
                             }
-
 
                         } catch (Exception e) {
                             Toast.makeText(getContext(), "excaption:" + e.getMessage(), Toast.LENGTH_LONG).show();
                         }
-
-                        //  Toast.makeText(ShoppyProductListActivity.this, response, Toast.LENGTH_SHORT).show();
-
-
-                        // response
-                        //  Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
-
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // error
-//                        Toast.makeText(getContext(),  Toast.LENGTH_SHORT).show();
                         error.printStackTrace();
                     }
                 }
@@ -794,29 +766,16 @@ public class ProfileFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                /*JSONArray jsonArray= new JSONArray();
-                for (String  i:cartids) {
-                    jsonArray.put(i);
-                }*/
                 params.put("userid", userid);
-
-
-                //  params.p
-
                 return params;
             }
-
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("Content-Type", "application/x-www-form-urlencoded");
                 return params;
             }
         };
-
-
         request.add(rRequest);
-
-
     }
 
     public String BitMapToString(Bitmap bitmap) {

@@ -18,21 +18,29 @@
         app:menu="@menu/bottom_nav"
         app:itemTextColor="@color/navbartext" />
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/toolbar"
-        app:contentInsetStartWithNavigation="0dp"
-        app:layout_scrollFlags="scroll|enterAlways"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
-
     <FrameLayout
         android:id="@+id/fragmentcontainer"
         android:layout_width="match_parent"
         android:layout_height="690dp"
         android:layout_above="@id/nav_view"
-        android:layout_below="@id/toolbar"
         />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_search"
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|right"
+        android:layout_marginStart="@dimen/spacing_large"
+        android:layout_marginTop="@dimen/spacing_large"
+        android:clickable="true"
+        android:src="@drawable/ic_search_black"
+        android:tint="@color/white"
+        app:backgroundTint="@color/buttonbg"
+        app:fabSize="normal"
+        app:rippleColor="@android:color/white"
+        android:layout_above="@id/nav_view"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="20dp"/>
 </RelativeLayout>

@@ -1,10 +1,8 @@
-package com.demotxt.myapp.Quickmart.ownmodels;
-
-import android.media.Rating;
+package com.demotxt.myapp.Quickmart.Search;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Prod {
+public class Search_Model {
     @SerializedName("title")
     private String Title;
     private String Category;
@@ -21,9 +19,15 @@ public class Prod {
     @SerializedName("userId")
     private int Sid;
 
+    public int getSid() {
+        return Sid;
+    }
 
+    public void setSid(int sid) {
+        Sid = sid;
+    }
 
-    public Prod(String title, String category, String description, String thumbnail, float price, int id, double rating, int sid) {
+    public Search_Model(String title, String category, String description, String thumbnail, float price, int id, double rating, int sid) {
         Title = title;
         Category = category;
         Description = description;
@@ -80,13 +84,4 @@ public class Prod {
     }
 
     public  void setPrice(float price){Price=Price;}
-
-    public int getSid() {
-        return Sid;
-    }
-
-    public void setSid(int sid) {
-        Sid = sid;
-    }
-
 }

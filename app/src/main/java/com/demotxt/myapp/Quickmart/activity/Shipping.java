@@ -22,6 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.demotxt.myapp.Quickmart.Cart_Fav.CartListBeanlist;
+import com.demotxt.myapp.Quickmart.ownmodels.DetailModel;
 import com.demotxt.myapp.Quickmart.ownmodels.ShippingModel;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
 import com.demotxt.myapp.Quickmart.R;
@@ -37,13 +38,13 @@ import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
 
 public class Shipping extends AppCompatActivity {
 
-    EditText t1, t2, t3, t4, t5;
+    EditText t1, t3, t4;
     TextView city;
     Button ship;
     AwesomeValidation awesomeValidation;
     ArrayList<CartListBeanlist> list;
     SharedPreferences loginpref;
-    String Userid;
+    String Userid,name,contact,address;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,33 +59,42 @@ public class Shipping extends AppCompatActivity {
         awesomeValidation = new AwesomeValidation(BASIC);
         awesomeValidation.addValidation(Shipping.this, R.id.nameShip, "[a-zA-Z\\s]+", R.string.error_name);
         awesomeValidation.addValidation(Shipping.this, R.id.contactShip, "^0(?=3)[0-9]{10}$", R.string.error_contact);
-        awesomeValidation.addValidation(Shipping.this, R.id.emailShip, android.util.Patterns.EMAIL_ADDRESS.toString(), R.string.error_email);
         awesomeValidation.addValidation(Shipping.this, R.id.addShip, RegexTemplate.NOT_EMPTY, R.string.error_address);
-        awesomeValidation.addValidation(Shipping.this, R.id.zipShip, "^[0-9]{5}", R.string.error_zip);
 
         ship = (Button) findViewById(R.id.button1);
         t1 = (EditText) findViewById(R.id.nameShip);
-        t2 = (EditText) findViewById(R.id.emailShip);
         t3 = (EditText) findViewById(R.id.contactShip);
         t4 = (EditText) findViewById(R.id.addShip);
-        t5 = (EditText) findViewById(R.id.zipShip);
+        //
+        t1.setEnabled(false);
+        t3.setEnabled(false);
+        t4.setEnabled(false);
+
+        //
 
         ship.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (awesomeValidation.validate()) {
-                    String name = t1.getText().toString();
-                    String email = t2.getText().toString();
-                    String contact = t3.getText().toString();
-                    String address = t4.getText().toString();
-                    String code = t5.getText().toString();
                     String cty = city.getText().toString();
-                    ShippingModel m = new ShippingModel(name, email, contact, address, code, cty);
+                    //
+                    DetailModel model = new DetailModel(getApplicationContext());
+                    name = model.getYourName();
+                    t1.setText(name);
+                    contact = model.getYourPhone();
+                    t3.setText(contact);
+                    address = model.getYourAddress();
+                    t4.setText(address);
+                    //
+
+                    ShippingModel m = new ShippingModel(name, "", contact, address, "", cty);
                     GsonBuilder builder = new GsonBuilder();
                     Gson gson = builder.create();
                     String shipping_detail = gson.toJson(m);
                     String url = MainActivity2.hostinglink + "/home/SaveShippingDetail";
                     SaveShippingDetail(url, shipping_detail);
+
+                    //
                     Intent i = new Intent(getBaseContext(), Confirmation.class);
                     i.putExtra("getname", name);
                     i.putExtra("getaddress", address);
