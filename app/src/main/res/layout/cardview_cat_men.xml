@@ -2,8 +2,8 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardview_men"
-    android:layout_width="170dp"
-    android:layout_height="230dp"
+    android:layout_width="160dp"
+    android:layout_height="200dp"
     android:layout_margin="10dp"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
@@ -21,7 +21,7 @@
             <ImageView
                 android:id="@+id/men_img_id"
                 android:layout_width="match_parent"
-                android:layout_height="190dp"
+                android:layout_height="160dp"
                 android:background="#2d2d2d"
                 android:scaleType="centerCrop"
                 android:transitionName="test"/>
@@ -39,15 +39,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/men_title_id"
-                android:layout_width="110dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="P_Name"
-                android:textColor="#2d2d2d"
-                android:textSize="13sp"
-                android:textStyle="normal" />
+            <androidx.appcompat.widget.AppCompatRatingBar
+                android:id="@+id/card_RatingBar"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"/>
+
 
             <TextView
                 android:id="@+id/men_prod_price"
@@ -57,18 +57,22 @@
                 android:text="Price"
                 android:textColor="@color/green2"
                 android:textSize="13sp"
+                android:layout_marginStart="8dp"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatRatingBar
-            android:id="@+id/card_RatingBar"
-            style="@style/Widget.AppCompat.RatingBar.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:numStars="5"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"/>
+        <TextView
+            android:id="@+id/men_title_id"
+            android:layout_width="147dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:gravity="left"
+            android:text="P_Name"
+            android:textColor="#2d2d2d"
+            android:textSize="11sp"
+            android:textStyle="normal" />
+
 
     </LinearLayout>
 
