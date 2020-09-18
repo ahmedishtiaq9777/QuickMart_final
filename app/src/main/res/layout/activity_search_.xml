@@ -26,17 +26,16 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginTop="12dp"
-        android:background="@color/grey_600"
+        android:background="@color/profilebackground"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background"
         android:padding="12dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
