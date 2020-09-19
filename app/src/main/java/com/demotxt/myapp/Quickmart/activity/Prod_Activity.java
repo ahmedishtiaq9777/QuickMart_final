@@ -253,7 +253,6 @@ public class Prod_Activity extends AppCompatActivity {
 
 
         toggleArrow(bt_toggle_description);
-        lyt_expand_description.setVisibility(View.VISIBLE);
 
         //setting values
         tvtitle.setText(Title);
@@ -470,19 +469,39 @@ public class Prod_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Boolean Check_login = loginpref.getBoolean("loggedin", false);
                 if (Check_login.equals(true)) {
-                    Intent buyNow = new Intent(Prod_Activity.this, DirectCheckout_Activity.class);
-                    buyNow.putExtra("img", image);
-                    buyNow.putExtra("name", Title);
-                    buyNow.putExtra("price", strprice);
-                    buyNow.putExtra("sellerId", strsellerid);
-                    buyNow.putExtra("proId", strpid);
-                    startActivity(buyNow);
+
+                    if (validateSpinner(spinner2, "Choose Color", "Color") == false) {
+                        AlertDialog.Builder build = new AlertDialog.Builder(Prod_Activity.this);
+                        build.setTitle("Choose Color");
+                        build.setMessage("Please Select a Color");
+                        build.setIcon(R.drawable.exclamationmarkresize);
+                        // builder1.show();
+                        AlertDialog alert = build.create();
+                        alert.show();
+                    } else if (validateSpinner(spinner1, "Choose Size", "Size") == false) {
+                        AlertDialog.Builder build = new AlertDialog.Builder(Prod_Activity.this);
+                        build.setTitle("Choose Size");
+                        build.setMessage("Please Select a Size");
+                        build.setIcon(R.drawable.exclamationmarkresize);
+                        // builder1.show();
+                        AlertDialog alert = build.create();
+                        alert.show();
+                    } else {
+                        Intent buyNow = new Intent(Prod_Activity.this, DirectCheckout_Activity.class);
+                        buyNow.putExtra("img", image);
+                        buyNow.putExtra("name", Title);
+                        buyNow.putExtra("price", strprice);
+                        buyNow.putExtra("sellerId", strsellerid);
+                        buyNow.putExtra("proId", strpid);
+                        startActivity(buyNow);
+                    }
                 } else {
                     Intent intent = new Intent(getApplicationContext(), Login.class);
                     startActivity(intent);
                 }
             }
         });
+
 
     }
 

@@ -23,7 +23,7 @@ public class CartListBeanlist implements Serializable {
     private int Quantity;
     @SerializedName("sellerQuantity")
     private int sellerQuantity;
-    @SerializedName("userId")
+    @SerializedName("sellerId")
     private  int Sellerid;
     @SerializedName("description")
     private String Description;
