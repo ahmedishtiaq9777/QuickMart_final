@@ -120,9 +120,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Remember password?"
+                    android:text="Remember me?"
                     android:textColor="@color/logintxt"
                     android:textSize="16sp"
+                    android:gravity="left"
 
                     />
             </LinearLayout>
@@ -134,11 +135,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginRight="20dp"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="right"
+                android:gravity="left"
                 android:text="Forgot password?"
                 android:textColor="@color/logintxt"
                 android:textSize="16sp"
+                android:layout_marginStart="5dp"
 
                 />
 

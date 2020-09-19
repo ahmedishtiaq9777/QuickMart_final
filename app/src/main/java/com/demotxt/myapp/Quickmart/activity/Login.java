@@ -131,6 +131,7 @@ public class Login extends AppCompatActivity {
                     String ph = phone.getText().toString();
                     String password = pass.getText().toString();
                     SignInModel m = new SignInModel(ph, password);
+                    Checkcheckbox();
 
                     try {
 
@@ -277,6 +278,20 @@ public class Login extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void Checkcheckbox() {
+        if (checkBoxremember.isChecked()) {
+        } else {
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(Login.this);
+            builder1.setTitle("Please Agree");
+            builder1.setMessage("Please tick remmeber me");
+            builder1.setIcon(R.drawable.exclamationmarkresize);
+            // builder1.show();
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+
+        }
     }
 
 
