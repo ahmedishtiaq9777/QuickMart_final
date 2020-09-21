@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient2"
+    android:background="@color/loginbg"
     tools:context="com.demotxt.myapp.Quickmart.activity.Forgot_Pass_Activity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -104,7 +104,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        android:background="@drawable/gradient"
+        android:background="@color/loginbg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,5 +1,6 @@
 package com.demotxt.myapp.Quickmart.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +29,7 @@ import com.android.volley.toolbox.Volley;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.demotxt.myapp.Quickmart.R;
+import com.demotxt.myapp.Quickmart.ownmodels.DetailModel;
 import com.demotxt.myapp.Quickmart.ownmodels.SignUpModel;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
 import com.demotxt.myapp.Quickmart.ownmodels.UserModel;
@@ -47,20 +50,19 @@ public class Signup extends AppCompatActivity {
     EditText phone, password, userName;
     AwesomeValidation awesomeValidation;
     //for Auth
-    int randomNumber;
+    int randomNumber, val, userPin;
     int range = 9;  // to generate a single number with this range, by default its 0..9
     int length = 4;
-    int val;
     ConstraintLayout lyt_SignUP, lyt_Auth;
     EditText OTP_Txt;
-    int userPin;
     Button AuthSubmit_Btn;
+    CheckBox checkBox;
     SharedPreferences mPreferences;
     SharedPreferences.Editor mEditor;
-    private SharedPreferences  loginpref;
+    private SharedPreferences loginpref;
     private StringResponceFromWeb result;
     private View layout;
-    private SharedPreferences.Editor  loginprefeditor;
+    private SharedPreferences.Editor loginprefeditor;
 
 
     @Override
@@ -72,7 +74,7 @@ public class Signup extends AppCompatActivity {
         //INIT
         result = new StringResponceFromWeb();
 
-        mPreferences = getApplicationContext().getSharedPreferences("OTPPREF",MODE_PRIVATE);
+        mPreferences = getApplicationContext().getSharedPreferences("OTPPREF", MODE_PRIVATE);
         mEditor = mPreferences.edit();
 
         awesomeValidation = new AwesomeValidation(BASIC);
@@ -97,33 +99,43 @@ public class Signup extends AppCompatActivity {
         userName = (EditText) findViewById(R.id.USERNAME);
         phone = (EditText) findViewById(R.id.PHONE);
         password = (EditText) findViewById(R.id.PASSWORD);
+        checkBox = (CheckBox) findViewById(R.id.checkboxAgree);
         lyt_Auth = findViewById(R.id.lyt_Auth);
         lyt_SignUP = findViewById(R.id.lyt_SignUp);
         AuthSubmit_Btn = findViewById(R.id.Submit_Auth);
         OTP_Txt = findViewById(R.id.Txt_Pin);
 
+        signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Signup.this,Login.class);
+                startActivity(i);
+            }
+        });
 
 
         //Sign Up Button
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(awesomeValidation.validate()){
+                if (awesomeValidation.validate()) {
                     String name = userName.getText().toString();
                     String pass = password.getText().toString();
                     String contact = phone.getText().toString();
-                    SignUpModel m = new SignUpModel(name,contact,pass);
+                    SignUpModel m = new SignUpModel(name, contact, pass);
                     //
-                    UserModel model = new UserModel();
-                    model.setPhone(contact);
-                    model.setUserName(name);
+                    DetailModel model = new DetailModel(getApplicationContext());
+                    model.setYourName(name);
+                    model.setYourPhone(contact);
+                    //
                     CheckUser();
+                    Checkcheckbox();
                 }
             }
         });
         //
 
-        loginprefeditor.putString("Name",userName.getText().toString());
+        loginprefeditor.putString("Name", userName.getText().toString());
 
         //Auth Submit button
         AuthSubmit_Btn.setOnClickListener(new View.OnClickListener() {
@@ -131,29 +143,47 @@ public class Signup extends AppCompatActivity {
             public void onClick(View v) {
                 //getting pin
                 try {
-                String pin = OTP_Txt.getText().toString();
-                userPin = Integer.parseInt(pin);
-                }catch (Exception e){
-                    Toast.makeText(Signup.this, "UserPin Empty", Toast.LENGTH_SHORT).show(); }
+                    String pin = OTP_Txt.getText().toString();
+                    userPin = Integer.parseInt(pin);
+                } catch (Exception e) {
+                    Toast.makeText(Signup.this, "UserPin Empty", Toast.LENGTH_SHORT).show();
+                }
 
                 //Shared Pref for OTP PIN
                 try {
-                    val = mPreferences.getInt("OTP_PIN",0);
-                }catch (Exception e){
-                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show(); }
-
-                if (userPin == val){
-                    AddUserSign();
+                    val = mPreferences.getInt("OTP_PIN", 0);
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-                else {
+
+                if (userPin == val) {
+                    AddUserSign();
+                } else {
                     lyt_Auth.setVisibility(View.GONE);
                     lyt_SignUP.setVisibility(View.VISIBLE);
                 }
             }
         });
     }
+
+    private void Checkcheckbox() {
+        if (checkBox.isChecked()) {
+        } else {
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(Signup.this);
+            builder1.setTitle("Please Agree");
+            builder1.setMessage("Please agree to our terms and conditions!");
+
+            builder1.setIcon(R.drawable.exclamationmarkresize);
+            // builder1.show();
+            AlertDialog alert11 = builder1.create();
+
+            alert11.show();
+
+        }
+    }
+
     //
-    public void CheckUser(){
+    public void CheckUser() {
         try {
             RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
             String url = hostinglink + "/Home/Checkuser";
@@ -164,18 +194,25 @@ public class Signup extends AppCompatActivity {
 
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
-                            result = gson.fromJson(response,StringResponceFromWeb.class);
-                            if (result.getresult().equals("allreadyregistered")){
-                                Toast.makeText(getApplicationContext(), "This Phone No. is Already Registered", Toast.LENGTH_SHORT).show();
-                            }
-                            else if (result.getresult().equals("NewUser")){
+                            result = gson.fromJson(response, StringResponceFromWeb.class);
+                            if (result.getresult().equals("allreadyregistered")) {
+                                AlertDialog.Builder builder1 = new AlertDialog.Builder(Signup.this);
+                                builder1.setTitle("Already Registered");
+                                builder1.setMessage("Try with another phone number!");
+
+                                builder1.setIcon(R.drawable.exclamationmarkresize);
+                                // builder1.show();
+                                AlertDialog alert11 = builder1.create();
+
+                                alert11.show();
+
+                            } else if (result.getresult().equals("NewUser")) {
                                 Toast.makeText(Signup.this, "New User", Toast.LENGTH_SHORT).show();
                                 //
                                 generateRandomNumber();
                                 lyt_SignUP.setVisibility(View.GONE);
                                 lyt_Auth.setVisibility(View.VISIBLE);
-                            }
-                            else {
+                            } else {
 
 
                             }
@@ -187,12 +224,12 @@ public class Signup extends AppCompatActivity {
                             Toast.makeText(Signup.this, "Volley Error", Toast.LENGTH_SHORT).show();
                         }
                     }
-            ){
+            ) {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
 
-                    params.put("phoneNo",phone.getText().toString());
+                    params.put("phoneNo", phone.getText().toString());
                     return params;
                 }
 
@@ -204,13 +241,14 @@ public class Signup extends AppCompatActivity {
             };
 
             requestQueue.add(request);
-        }catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
     }
+
     //
-    public void AddUserSign(){
+    public void AddUserSign() {
         try {
             final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 
@@ -263,7 +301,7 @@ public class Signup extends AppCompatActivity {
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
 
-                    params.put("phoneNo",phone.getText().toString());
+                    params.put("phoneNo", phone.getText().toString());
                     params.put("password", password.getText().toString());
                     params.put("userType", "C");
                     return params;
@@ -282,15 +320,15 @@ public class Signup extends AppCompatActivity {
             Log.i("error", E.getMessage());
         }
     }
+
     //
-    public void AddToCart(final String struserid, final String strpid )
-    {
-        try{
+    public void AddToCart(final String struserid, final String strpid) {
+        try {
 
             final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
             // String url = "http:// 192.168.10.13:64077/api/login";
             //String url="https://api.myjson.com/bins/kp9wz";
-            String url = hostinglink +"/Home/AddtoCart";
+            String url = hostinglink + "/Home/AddtoCart";
 
             StringRequest rRequest = new StringRequest(Request.Method.POST, url,
                     new Response.Listener<String>() {
@@ -299,13 +337,12 @@ public class Signup extends AppCompatActivity {
                             //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
-                            result=gson.fromJson(response, StringResponceFromWeb.class);
-                            if(result.getresult().equals("Added"))
-                            {
+                            result = gson.fromJson(response, StringResponceFromWeb.class);
+                            if (result.getresult().equals("Added")) {
                                 finish();
-                                Intent main =new Intent(Signup.this,MainActivity2.class);
+                                Intent main = new Intent(Signup.this, MainActivity2.class);
 
-                                main.putExtra("proid",Integer.parseInt(strpid));
+                                main.putExtra("proid", Integer.parseInt(strpid));
                                 startActivity(main);
 
                                 // Toast.makeText(getApplicationContext(), "Product Added to Cart" , Toast.LENGTH_SHORT).show();
@@ -341,8 +378,8 @@ public class Signup extends AppCompatActivity {
             requestQueue.add(rRequest);
 
 
-        }catch (Exception e){
-            Toast.makeText(getApplicationContext(), "Error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "Error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -366,7 +403,8 @@ public class Signup extends AppCompatActivity {
     }
 
     //To save OTP Pin in Shared Pref
-    public void OTPPref() {;
+    public void OTPPref() {
+        ;
         mEditor.putInt("OTP_PIN", randomNumber);
         mEditor.commit();
     }
@@ -383,7 +421,9 @@ public class Signup extends AppCompatActivity {
                 "&password=" + "1234" +
                 "&sender=" + "QuickMart" +
                 "&mobile=" + ph + "&message=" + msg;
-       //
+        //
+        try {
+
 
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 
@@ -400,7 +440,9 @@ public class Signup extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Error in Volley", Toast.LENGTH_SHORT).show();
             }
         });
-        queue.add(stringRequest);
+        queue.add(stringRequest);}catch (Exception e){
+            Toast.makeText(this, "Exception :"+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

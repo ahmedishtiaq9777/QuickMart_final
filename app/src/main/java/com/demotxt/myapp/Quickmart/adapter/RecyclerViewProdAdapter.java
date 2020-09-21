@@ -95,6 +95,7 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
                 intent.putExtra("Thumbnail",Data1.get(position).getThumbnail());
                 intent.putExtra("price",Data1.get(position).getPrice());
                 intent.putExtra("proid",Data1.get(position).getId());
+                intent.putExtra("sellerid",Data1.get(position).getSid());
                 //Transition Test
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,
                         holder.img_book_thumbnail, ViewCompat.getTransitionName(holder.img_book_thumbnail));

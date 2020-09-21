@@ -91,6 +91,7 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
                 intent.putExtra("Thumbnail", Data2.get(position).getThumbnail());
                 intent.putExtra("price", Data2.get(position).getPrice());
                 intent.putExtra("proid", Data2.get(position).getId());
+                intent.putExtra("sellerid",Data2.get(position).getSid());
 
                 //Transition Test
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,

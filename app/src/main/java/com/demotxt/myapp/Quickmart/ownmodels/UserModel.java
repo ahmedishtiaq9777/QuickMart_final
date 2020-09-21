@@ -4,14 +4,17 @@ public class UserModel {
     String Phone;
     String Address;
     String UserName;
+    String Image;
 
-    public UserModel() {
+    public UserModel(){
+
     }
 
-    public UserModel(String phone, String address, String userName) {
+    public UserModel(String phone, String address, String userName, String image) {
         this.Phone = phone;
         this.Address = address;
         this.UserName = userName;
+        this.Image = image;
     }
 
     public String getPhone() {
@@ -37,6 +40,15 @@ public class UserModel {
     public void setUserName(String userName) {
         UserName = userName;
     }
+
+    public String getImage() {
+        return Image;
+    }
+
+    public void setImage(String image) {
+        Image = image;
+    }
+
 
 
 }

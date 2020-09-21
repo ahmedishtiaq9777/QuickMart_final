@@ -200,8 +200,9 @@ public class CartListBaseAdapter extends BaseAdapter {
                 intent.putExtra("Title",bean.getTitle());
                 intent.putExtra("Description",bean.getDescription());
                 intent.putExtra("Thumbnail",bean.getImage());
-                intent.putExtra("price",String.valueOf(bean.getPrice()));
+                intent.putExtra("price",(float)bean.getPrice());
                 intent.putExtra("proid",bean.getId());
+                intent.putExtra("sellerid",bean.getSellerid());
 
                 // start the activity
                 context.startActivity(intent);

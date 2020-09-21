@@ -27,12 +27,12 @@ public class Web_Activity extends AppCompatActivity {
         webViewurl.getSettings().setBuiltInZoomControls(true);
         final Activity activity = this;
 
-            webViewurl.setWebViewClient(new WebViewClient() {
-                public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                    Toast.makeText(activity, description, Toast.LENGTH_SHORT).show();
-                }
-            });
-            webViewurl.loadUrl("http://ahmedishtiaq165-001-site1.ftempurl.com/Seller/signup");
+        webViewurl.setWebViewClient(new WebViewClient() {
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                Toast.makeText(activity, description, Toast.LENGTH_SHORT).show();
+            }
+        });
+        webViewurl.loadUrl("http://ahmedishtiaq165-001-site1.ftempurl.com/Seller/signup");
 
 
     }

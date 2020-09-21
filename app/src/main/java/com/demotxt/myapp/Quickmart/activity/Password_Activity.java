@@ -1,13 +1,13 @@
 package com.demotxt.myapp.Quickmart.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -28,10 +28,10 @@ import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
 public class Password_Activity extends AppCompatActivity {
 
-    EditText Phone,OldPass,NewPass,ConfirmPass;
+    EditText Phone, OldPass, NewPass, ConfirmPass;
     Button ChangePass_Btn;
     StringResponceFromWeb result;
-    String pass,con_Pass;
+    String pass, con_Pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +65,10 @@ public class Password_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (pass.equals(con_Pass)){
+                if (pass.equals(con_Pass)) {
                     ForgetPassword();
 
-                }else{
+                } else {
                     Toast.makeText(Password_Activity.this, "Password Doesn't Match", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -84,11 +84,15 @@ public class Password_Activity extends AppCompatActivity {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            if (result.getresult().equals("success")){
-                                Toast.makeText(Password_Activity.this,"Success",Toast.LENGTH_SHORT).show();
-                            }
-                            else if (result.getresult().equals("null")){
-                                Toast.makeText(Password_Activity.this,"null",Toast.LENGTH_SHORT).show();
+
+                            GsonBuilder builder = new GsonBuilder();
+                            Gson gson = builder.create();
+                            result = gson.fromJson(response, StringResponceFromWeb.class);
+
+                            if (result.getresult().equals("success")) {
+                                Toast.makeText(Password_Activity.this, "Success", Toast.LENGTH_SHORT).show();
+                            } else if (result.getresult().equals("null")) {
+                                Toast.makeText(Password_Activity.this, "null", Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
@@ -98,14 +102,14 @@ public class Password_Activity extends AppCompatActivity {
                             Toast.makeText(Password_Activity.this, "Volley Error", Toast.LENGTH_SHORT).show();
                         }
                     }
-            ){
+            ) {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
 
-                    params.put("phoneNo",Phone.getText().toString());
-                    params.put("oldpassword",OldPass.getText().toString());
-                    params.put("newpassword",NewPass.getText().toString());
+                    params.put("phoneNo", Phone.getText().toString());
+                    params.put("oldpassword", OldPass.getText().toString());
+                    params.put("newpassword", NewPass.getText().toString());
                     return params;
                 }
 
@@ -116,7 +120,7 @@ public class Password_Activity extends AppCompatActivity {
                 }
             };
             requestQueue.add(request);
-        }catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }

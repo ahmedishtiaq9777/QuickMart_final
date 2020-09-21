@@ -188,7 +188,7 @@ public class CatMen_Fragment extends Fragment {
         SearchView searchView = (SearchView) searchItem.getActionView();
 
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-
+        try {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -200,7 +200,9 @@ public class CatMen_Fragment extends Fragment {
                 mAdapter.getFilter().filter(newText);
                 return false;
             }
-        });
+        });}catch (Exception E){
+            Toast.makeText(getContext(), "Loading Data", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

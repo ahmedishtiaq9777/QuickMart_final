@@ -18,8 +18,12 @@ public class Prod {
     private int Id;
     @SerializedName("avgRating")
     private float Rating;
+    @SerializedName("userId")
+    private int Sid;
 
-    public Prod(String title, String category, String description, String thumbnail,float price,int id,double rating) {
+
+
+    public Prod(String title, String category, String description, String thumbnail, float price, int id, double rating, int sid) {
         Title = title;
         Category = category;
         Description = description;
@@ -27,6 +31,7 @@ public class Prod {
         Price=price;
          Id=id;
          Rating = (float) rating;
+         Sid = sid;
     }
 
 
@@ -75,4 +80,13 @@ public class Prod {
     }
 
     public  void setPrice(float price){Price=Price;}
+
+    public int getSid() {
+        return Sid;
+    }
+
+    public void setSid(int sid) {
+        Sid = sid;
+    }
+
 }

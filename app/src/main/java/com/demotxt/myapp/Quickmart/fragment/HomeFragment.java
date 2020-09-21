@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
@@ -46,6 +48,8 @@ import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.adapter.RecyclerView3;
 import com.demotxt.myapp.Quickmart.adapter.RecyclerViewAdapter;
 import com.demotxt.myapp.Quickmart.adapter.RecyclerViewProdAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -72,15 +76,16 @@ public class HomeFragment extends Fragment {
     private RecyclerViewProdAdapter myAdapter1;
     private RecyclerView3 myAdapter2;
     TextView shop, rec, trend;
+    FloatingActionButton search;
     //loc
     public String Latitude,Longitude;
     public static Location loc;
+    public static List<String> SellerIds = new ArrayList<>();
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ProfileFragment.loadLocale(getContext());
         setHasOptionsMenu(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
         //
         view = inflater.inflate(R.layout.homefragment, container, false);
 
@@ -110,8 +115,9 @@ public class HomeFragment extends Fragment {
         };
         MyLocation myLocation = new MyLocation();
         myLocation.getLocation(getActivity(), locationResult);
-
-
+        //
+        search = getActivity().findViewById(R.id.fab_search);
+        search.show();
 
 
         RefreshLayout = view.findViewById(R.id.SwipeRefresh);
@@ -139,7 +145,7 @@ public class HomeFragment extends Fragment {
         getconnection(hostinglink + "/Home/gettrendingpro/", 3);
 
 
-        int images[] = {R.drawable.cloth_banner, R.drawable.sale1, R.drawable.offer_img1, R.drawable.offer_img2, R.drawable.offer_img3};
+        int images[] = {R.drawable.off1, R.drawable.off2, R.drawable.off3, R.drawable.off4, R.drawable.off5};
 
         for (int image : images) {
             flipperimages(image);
@@ -235,6 +241,15 @@ public class HomeFragment extends Fragment {
                                     list.set(n, i);
                                     n++;
                                 }
+                                int t = 0;
+                                SellerIds = new ArrayList<>();
+                                //for getting ids of all the sellers
+                                for (Book x : list){
+                                     int y = x.getUserId();
+                                     SellerIds.add(String.valueOf(y));
+                                     t++;
+                                }
+
                                 //Setting Recycler View 1
                                 setrecycleone();
                             } catch (Exception e) {
@@ -341,47 +356,6 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
             }
 
-        }
-
-    }
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
-        inflater = getActivity().getMenuInflater();
-        inflater.inflate(R.menu.menu_search_setting, menu);
-
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-
-        try {
-
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-
-                    shop.setVisibility(View.GONE);
-                    rec.setVisibility(View.GONE);
-                    trend.setVisibility(View.GONE);
-
-                    myAdapter.getFilter().filter(newText);
-                    myAdapter1.getFilter().filter(newText);
-                    myAdapter2.getFilter().filter(newText);
-
-
-                    return false;
-                }
-
-            });
-
-        } catch (Exception E) {
-            Toast.makeText(getContext(), E.getMessage(), Toast.LENGTH_LONG).show();
         }
 
     }

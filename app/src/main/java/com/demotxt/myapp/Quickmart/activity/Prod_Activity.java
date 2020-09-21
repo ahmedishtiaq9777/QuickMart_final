@@ -20,7 +20,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.core.widget.NestedScrollView;
@@ -37,6 +36,7 @@ import com.demotxt.myapp.Quickmart.ownmodels.Prod;
 import com.demotxt.myapp.Quickmart.ownmodels.ProductSpecification;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
 import com.demotxt.myapp.Quickmart.R;
+import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
 import com.demotxt.myapp.Quickmart.utils.Tools;
 import com.demotxt.myapp.Quickmart.utils.ViewAnimation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -56,7 +56,7 @@ import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
 public class Prod_Activity extends AppCompatActivity {
 
-    private TextView tvtitle,tvdescription,price;
+    private TextView tvtitle, tvdescription, price;
     private ImageView img;
     private FloatingActionButton floatingActionButton;
     private SharedPreferences loginpref;
@@ -65,14 +65,16 @@ public class Prod_Activity extends AppCompatActivity {
     StringResponceFromWeb result;
     public Set<String> cartids;
     private ImageButton bt_toggle_reviews, bt_toggle_description;
-    private View lyt_expand_reviews, lyt_expand_warranty, lyt_expand_description;
+    private View lyt_expand_reviews, lyt_expand_description;
     private NestedScrollView nested_scroll_view;
     //For Review Layout
     private EditText Feedback_TXT;
-    private Button Submit_Btn,BuyNow;
+    private Button Submit_Btn, BuyNow;
     private AppCompatRatingBar mRatingBar;
     public String rate;
     public String Feedback;
+    private String Title, Description, image;
+    String struserid, strpid, strsellerid;
      private View layout;
      public  List<ProductSpecification> sizecolorlist;
     public List<String> SizeList, colorList;
@@ -91,13 +93,12 @@ public class Prod_Activity extends AppCompatActivity {
         colorList=new ArrayList<>();
         // For custom toast
         final LayoutInflater inflater = getLayoutInflater();
-        try{
+        try {
             layout = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toast_layout_root));//for product added :to make custom toast with tick mark
 
-        }catch (Exception e)
-        {
-            Toast.makeText(getApplicationContext(),"ERROR:"+e.getMessage(),Toast.LENGTH_SHORT).show();
-            Log.i("Prodactivity","error"+e.getMessage());
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "ERROR:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.i("Prodactivity", "error" + e.getMessage());
 
         }
       proid= getIntent().getExtras().getInt("proid");
@@ -127,6 +128,7 @@ public class Prod_Activity extends AppCompatActivity {
                     return true;
                 }
             }
+
             @Override
             public View getDropDownView(int position, View convertView,
                                         ViewGroup parent) {
@@ -156,6 +158,7 @@ selectedsize=selectedItemText;
                             .show();
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -185,6 +188,7 @@ selectedsize=selectedItemText;
                     return true;
                 }
             }
+
             @Override
             public View getDropDownView(int position, View convertView,
                                         ViewGroup parent) {
@@ -253,6 +257,7 @@ selectedsize=selectedItemText;
                             .show();
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -262,30 +267,33 @@ selectedsize=selectedItemText;
 
         loginpref = getSharedPreferences("loginpref", MODE_PRIVATE);// get login preferences which contains information like "userid" and login status
 
-    //    cartids=cartlistpref.getStringSet("cartids",cartids);//get current product ids in cartprefferences
-        //Toast.makeText(getApplicationContext(), "length:" + cartids.size(), Toast.LENGTH_SHORT).show();
         tvtitle = (TextView) findViewById(R.id.txttitle);
-    //    tvdescription = (TextView) findViewById(R.id.txtDesc);
+        //    tvdescription = (TextView) findViewById(R.id.txtDesc);
         tvdescription = (TextView) findViewById(R.id.textdesciption);
-       // tvcategory = (TextView) findViewById(R.id.txtCat);
+        // tvcategory = (TextView) findViewById(R.id.txtCat);
         img = (ImageView) findViewById(R.id.bookthumbnail);
         price = (TextView) findViewById(R.id.price);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
         nested_scroll_view = (NestedScrollView) findViewById(R.id.nested_scroll_view);
 
-        //For Review
+        //
         Feedback_TXT = findViewById(R.id.txt_feedback);
         Submit_Btn = findViewById(R.id.Submit_Btn);
         mRatingBar = findViewById(R.id.AppCompact_RatingBar);
+        BuyNow = findViewById(R.id.BuyNow_btn);
 
-//Recieve data
+        //Recieve data from prod
         final Intent intent = getIntent();
-        String Title = intent.getExtras().getString("Title");
-        String Description = intent.getExtras().getString("Description");
-        String image = intent.getExtras().getString("Thumbnail");
+        Title = intent.getExtras().getString("Title");
+        Description = intent.getExtras().getString("Description");
+        image = intent.getExtras().getString("Thumbnail");
         Float pRise = intent.getExtras().getFloat("price");
+        sellerid = intent.getExtras().getInt("sellerid");
+        strsellerid = String.valueOf(sellerid);
+        proid = intent.getExtras().getInt("proid");
+        strpid = String.valueOf(proid);
 
-        String strprice = String.valueOf(pRise);
+        final String strprice = String.valueOf(pRise);
 
         // Setting values
         // section reviews
@@ -310,103 +318,107 @@ selectedsize=selectedItemText;
 
 
         toggleArrow(bt_toggle_description);
-        lyt_expand_description.setVisibility(View.VISIBLE);
 
-//setting values
+        //setting values
         tvtitle.setText(Title);
         tvdescription.setText(Description);
         price.setText(strprice);
-      //  img.setImageResource(image);
+        //  img.setImageResource(image);
         Picasso.get().load(image).into(img);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-try {
-    Boolean is_logedin=loginpref.getBoolean("loggedin",false);
-    if(is_logedin.equals(true))
-    {
-        proid= intent.getExtras().getInt("proid");
-     sellerid  = intent.getExtras().getInt("sellerid");
-       final  String  strsellerid=String.valueOf(sellerid);
-        final String strpid=String.valueOf(proid);//
-          int userid =loginpref.getInt("userid",0);
-          final String struserid=String.valueOf(userid);
+                try {
+                    Boolean is_logedin = loginpref.getBoolean("loggedin", false);
+                    if (is_logedin.equals(true)) {
+                        int userid = loginpref.getInt("userid", 0);
+                        final String struserid = String.valueOf(userid);
 
 
-
-
-
-
-
-try{
+                        try {
+                            if (validateSpinner(spinner2, "Choose Color", "Color") == false) {
+                                AlertDialog.Builder build = new AlertDialog.Builder(Prod_Activity.this);
+                                build.setTitle("Choose Color");
+                                build.setMessage("Please Select a Color");
+                                build.setIcon(R.drawable.exclamationmarkresize);
+                                // builder1.show();
+                                AlertDialog alert = build.create();
+                                alert.show();
+                            } else {
+                                if (validateSpinner(spinner1, "Choose Size", "Size") == false) {
+                                    AlertDialog.Builder build = new AlertDialog.Builder(Prod_Activity.this);
+                                    build.setTitle("Choose Size");
+                                    build.setMessage("Please Select a Size");
+                                    build.setIcon(R.drawable.exclamationmarkresize);
+                                    // builder1.show();
+                                    AlertDialog alert = build.create();
+                                    alert.show();
+                                } else {
 
     final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
     // String url = "http:// 192.168.10.13:64077/api/login";
     //String url="https://api.myjson.com/bins/kp9wz";
     String url = hostinglink +"/Home/AddtoCart";
 
-    StringRequest rRequest = new StringRequest(Request.Method.POST, url,
-            new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
-                    GsonBuilder builder = new GsonBuilder();
-                    Gson gson = builder.create();
-                    result=gson.fromJson(response, StringResponceFromWeb.class);
-                    if(result.getresult().equals("Added"))
-                    {
+                                    StringRequest rRequest = new StringRequest(Request.Method.POST, url,
+                                            new Response.Listener<String>() {
+                                                @Override
+                                                public void onResponse(String response) {
+                                                    //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                                                    GsonBuilder builder = new GsonBuilder();
+                                                    Gson gson = builder.create();
+                                                    result = gson.fromJson(response, StringResponceFromWeb.class);
+                                                    if (result.getresult().equals("Added")) {
 
 
-                        Toast toast = new Toast(getApplicationContext());
-                        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-                        toast.setDuration(Toast.LENGTH_SHORT);
-                        toast.setView(layout);
-                        toast.show();
+                                                        Toast toast = new Toast(getApplicationContext());
+                                                        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                                                        toast.setDuration(Toast.LENGTH_SHORT);
+                                                        toast.setView(layout);
+                                                        toast.show();
 
 
-                       // Toast.makeText(getApplicationContext(), "Product Added to Cart" , Toast.LENGTH_SHORT).show();
+                                                        // Toast.makeText(getApplicationContext(), "Product Added to Cart" , Toast.LENGTH_SHORT).show();
 
 
-                                            } else if (result.getresult().equals("AllreadyAdded")) {
-                                                // Toast.makeText(getApplicationContext(), "Product is Already Added", Toast.LENGTH_LONG).show();
-                                                // response
-                                                try {
-                                                    AlertDialog.Builder builder1 = new AlertDialog.Builder(Prod_Activity.this);
-                                                    builder1.setTitle("Already Added");
-                                                    builder1.setMessage("Your product is Already Added to Cart!");
+                                                    } else if (result.getresult().equals("AllreadyAdded")) {
+                                                        // Toast.makeText(getApplicationContext(), "Product is Already Added", Toast.LENGTH_LONG).show();
+                                                        // response
+                                                        try {
+                                                            AlertDialog.Builder builder1 = new AlertDialog.Builder(Prod_Activity.this);
+                                                            builder1.setTitle("Already Added");
+                                                            builder1.setMessage("Your product is Already Added to Cart!");
 
-                            builder1 .setIcon(R.drawable.exclamationmarkresize);
-                            // builder1.show();
-                            AlertDialog alert11 = builder1.create();
+                                                            builder1.setIcon(R.drawable.exclamationmarkresize);
+                                                            // builder1.show();
+                                                            AlertDialog alert11 = builder1.create();
 
-                                                    alert11.show();
-
-
-                                                } catch (Exception e) {
-                                                    Log.i("error:", e.getMessage());
-                                                    Toast.makeText(getApplicationContext(), "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                        }
+                                                            alert11.show();
 
 
+                                                        } catch (Exception e) {
+                                                            Log.i("error:", e.getMessage());
+                                                            Toast.makeText(getApplicationContext(), "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                                        }
 
 
-                    }
-                }
-            },
-            new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    // error
-                    Log.i("APIERROR", error.getMessage());
-                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-                }
-            }
-    ) {
-        @Override
-        protected Map<String, String> getParams() {
-            Map<String, String> params = new HashMap<String, String>();
+                                                    }
+                                                }
+                                            },
+                                            new Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+                                                    // error
+                                                    Log.i("APIERROR", error.getMessage());
+                                                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                    ) {
+                                        @Override
+                                        protected Map<String, String> getParams() {
+                                            Map<String, String> params = new HashMap<String, String>();
 
             params.put("productId", strpid);
             params.put("userId", struserid);
@@ -416,55 +428,44 @@ try{
             return params;
         }
 
-        public Map<String, String> getHeaders() throws AuthFailureError {
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("Content-Type", "application/x-www-form-urlencoded");
-            return params;
-        }
-    };
+                                        public Map<String, String> getHeaders() throws AuthFailureError {
+                                            Map<String, String> params = new HashMap<String, String>();
+                                            params.put("Content-Type", "application/x-www-form-urlencoded");
+                                            return params;
+                                        }
+                                    };
 
-    requestQueue.add(rRequest);
-
-
-}catch (Exception e){
-    Toast.makeText(getApplicationContext(), "Error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
-}
+                                    requestQueue.add(rRequest);
 
 
+                                }
+                            }
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), "Error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
 
 
+                        /// cartids.add(strpid);
+                        ///cartlistprefeditor.remove("cartids");
+                        ///cartlistprefeditor.commit();
+                        //cartlistprefeditor.putStringSet("cartids",cartids);
+                        //cartlistprefeditor.commit();
+                        // Toast.makeText(getApplicationContext(), "Product Added to Cart" , Toast.LENGTH_SHORT).show();
 
+                        //  int userid=loginpref.getInt("userid",-1);
+                        //
 
+                        //  getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/AddToCart",userid,proid);
+                    } else {
+                        proid = intent.getExtras().getInt("proid");
+                        Intent login = new Intent(Prod_Activity.this, Login.class);
+                        login.putExtra("proid", proid);
+                        startActivity(login);
 
-
-
-
-
-
-        /// cartids.add(strpid);
-        ///cartlistprefeditor.remove("cartids");
-        ///cartlistprefeditor.commit();
-        //cartlistprefeditor.putStringSet("cartids",cartids);
-        //cartlistprefeditor.commit();
-       // Toast.makeText(getApplicationContext(), "Product Added to Cart" , Toast.LENGTH_SHORT).show();
-
-        //  int userid=loginpref.getInt("userid",-1);
-        //
-
-        //  getconnection("http://ahmedishtiaq9778-001-site1.ftempurl.com/Home/AddToCart",userid,proid);
-    }else {
-        proid= intent.getExtras().getInt("proid");
-        Intent login=new Intent(Prod_Activity.this,Login.class);
-        login.putExtra("proid",proid);
-        startActivity(login);
-
-    }
-}
-catch (Exception e)
-{
-    Toast.makeText(getApplicationContext(), "Error:"+e.getMessage(), Toast.LENGTH_SHORT).show();
-}
-
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -474,7 +475,7 @@ catch (Exception e)
             public void onClick(View v) {
                 //Checking if user is logged in
                 Boolean Check_login = loginpref.getBoolean("loggedin", false);
-                if(Check_login.equals(true)) {
+                if (Check_login.equals(true)) {
                     //Values
                     rate = String.valueOf(mRatingBar.getRating());
                     Feedback = Feedback_TXT.getText().toString();
@@ -482,7 +483,7 @@ catch (Exception e)
                     final String strpid = String.valueOf(proid);
                     int userid = loginpref.getInt("userid", 0);
                     final String struserid = String.valueOf(userid);
-                    String url = hostinglink+"/home/SaveFeedback";
+                    String url = MainActivity2.hostinglink + "/home/SaveFeedback";
                     //
                     try {
                         final RequestQueue request = Volley.newRequestQueue(getApplicationContext());
@@ -491,7 +492,7 @@ catch (Exception e)
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
-                                        Toast.makeText(getApplicationContext(),"ON-Response",Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), "ON-Response", Toast.LENGTH_LONG).show();
                                     }
                                 },
                                 new Response.ErrorListener() {
@@ -504,12 +505,13 @@ catch (Exception e)
                             @Override
                             protected Map<String, String> getParams() {
                                 Map<String, String> params = new HashMap<String, String>();
-                                params.put("userid",struserid);
-                                params.put("proid",strpid);
-                                params.put("rating",rate);
-                                params.put("feedback",Feedback);
+                                params.put("userid", struserid);
+                                params.put("proid", strpid);
+                                params.put("rating", rate);
+                                params.put("feedback", Feedback);
                                 return params;
                             }
+
                             public Map<String, String> getHeaders() throws AuthFailureError {
                                 Map<String, String> params = new HashMap<String, String>();
                                 params.put("Content-Type", "application/x-www-form-urlencoded");
@@ -518,17 +520,56 @@ catch (Exception e)
                         };
                         request.add(rRequest);
 
-                    }catch (Exception e){
-                        Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                }
-                else {
-                    Intent intent = new Intent(getApplicationContext(),Login.class);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), Login.class);
                     startActivity(intent);
                 }
             }
         });
-        //
+
+        //Buy Now Button
+        BuyNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Boolean Check_login = loginpref.getBoolean("loggedin", false);
+                if (Check_login.equals(true)) {
+
+                    if (validateSpinner(spinner2, "Choose Color", "Color") == false) {
+                        AlertDialog.Builder build = new AlertDialog.Builder(Prod_Activity.this);
+                        build.setTitle("Choose Color");
+                        build.setMessage("Please Select a Color");
+                        build.setIcon(R.drawable.exclamationmarkresize);
+                        // builder1.show();
+                        AlertDialog alert = build.create();
+                        alert.show();
+                    } else if (validateSpinner(spinner1, "Choose Size", "Size") == false) {
+                        AlertDialog.Builder build = new AlertDialog.Builder(Prod_Activity.this);
+                        build.setTitle("Choose Size");
+                        build.setMessage("Please Select a Size");
+                        build.setIcon(R.drawable.exclamationmarkresize);
+                        // builder1.show();
+                        AlertDialog alert = build.create();
+                        alert.show();
+                    } else {
+                        Intent buyNow = new Intent(Prod_Activity.this, DirectCheckout_Activity.class);
+                        buyNow.putExtra("img", image);
+                        buyNow.putExtra("name", Title);
+                        buyNow.putExtra("price", strprice);
+                        buyNow.putExtra("sellerId", strsellerid);
+                        buyNow.putExtra("proId", strpid);
+                        startActivity(buyNow);
+                    }
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), Login.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+
     }
 
     public void getsizecolor(String url) {
@@ -695,6 +736,7 @@ SizeList.add(specification.getProductSize());
             ViewAnimation.collapse(lyt);
         }
     }
+
     public boolean toggleArrow(View view) {
         if (view.getRotation() == 0) {
             view.animate().setDuration(200).rotation(180);
@@ -705,6 +747,19 @@ SizeList.add(specification.getProductSize());
         }
     }
 
+    boolean validateSpinner(Spinner spinner, String error, String msg) {
+
+        View selectedView = spinner.getSelectedView();
+        if (selectedView != null && selectedView instanceof TextView) {
+            TextView selectedTextView = (TextView) selectedView;
+            if (selectedTextView.getText().equals(msg)) {
+                selectedTextView.setError(error);
+                Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }
+        return true;
+    }
 
 
 }

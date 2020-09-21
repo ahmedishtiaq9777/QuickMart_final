@@ -33,8 +33,8 @@
 
                 <com.mikhaellopez.circularimageview.CircularImageView
                     android:id="@+id/selectimage"
-                    android:layout_width="96dp"
-                    android:layout_height="96dp"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="3dp"
                     android:src="@drawable/ic_account_box_black_24dp"
@@ -53,17 +53,44 @@
                     android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:paddingLeft="5dp"
                     android:text="Username"
                     android:textColor="@color/profiletext"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/selectimage"
                     app:layout_constraintStart_toStartOf="@+id/selectimage"
-                    app:layout_constraintTop_toBottomOf="@+id/selectimage">
+                    app:layout_constraintTop_toBottomOf="@+id/selectimage"/>
 
-                </TextView>
+
+                <ImageView
+                    android:id="@+id/btn_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|right"
+                    android:padding="2dp"
+                    android:src="@drawable/ic_edit_24"
+                    android:text="@string/btn_edit_profile"
+                    android:textColor="@color/profiletext"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/logout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.95"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/btn_edit_profile"
+                    android:textColor="@color/profiletext"
+                    android:textSize="11sp"
+                    app:layout_constraintEnd_toEndOf="@+id/btn_edit"
+                    app:layout_constraintStart_toStartOf="@+id/btn_edit"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/textView10"
@@ -81,8 +108,8 @@
 
                 <ImageView
                     android:id="@+id/logout"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center_horizontal|right"
                     android:src="@drawable/ic_exit"
                     android:paddingEnd="8dp"
@@ -225,8 +252,8 @@
 
                         <TextView
                             android:id="@+id/textView2"
-                            android:layout_width="95dp"
-                            android:layout_height="23dp"
+                            android:layout_width="107dp"
+                            android:layout_height="22dp"
                             android:layout_marginStart="10dp"
                             android:text="@string/Notification"
                             android:textColor="@color/profiletext"
@@ -282,7 +309,7 @@
 
                         <TextView
                             android:id="@+id/textView4"
-                            android:layout_width="79dp"
+                            android:layout_width="92dp"
                             android:layout_height="23dp"
                             android:layout_marginStart="10dp"
                             android:text="@string/Language"
@@ -396,8 +423,8 @@
 
                         <TextView
                             android:id="@+id/textView6"
-                            android:layout_width="77dp"
-                            android:layout_height="23dp"
+                            android:layout_width="94dp"
+                            android:layout_height="22dp"
                             android:layout_marginStart="10dp"
                             android:text="@string/Favourite"
                             android:textColor="@color/profiletext"

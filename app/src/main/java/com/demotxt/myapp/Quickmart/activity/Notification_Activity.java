@@ -34,11 +34,12 @@ public class Notification_Activity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.notify_RecyclerView);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new Notify_Adapter(this,notifies);
+        mAdapter = new Notify_Adapter(this, notifies);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
     }
+
     private void initToolbar() {
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

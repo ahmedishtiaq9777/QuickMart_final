@@ -1,10 +1,10 @@
 package com.demotxt.myapp.Quickmart.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.demotxt.myapp.Quickmart.R;
 
@@ -15,7 +15,7 @@ public class AnimationOrder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animation_order);
 
-       new Handler().postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
@@ -23,7 +23,7 @@ public class AnimationOrder extends AppCompatActivity {
                 startActivity(start);
                 finish();
             }
-        },6000);
+        }, 6000);
     }
 }
 

@@ -41,7 +41,7 @@ import java.util.Map;
 
 import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
-public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class CatKids_Fragment extends Fragment {
     private RecyclerView mRecyclerView;
     private CatKids_Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -62,15 +62,13 @@ public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSele
         View rootview = inflater.inflate(R.layout.fragment_cat_kids_, container, false);
         mRecyclerView = rootview.findViewById(R.id.Rv_CatKids);
         mSpinner = rootview.findViewById(R.id.kidCategory);
-      //  connection=new CheckConnection(getActivity());
-        dialog=new CustomInternetDialog(getActivity());
+        //  connection=new CheckConnection(getActivity());
+        dialog = new CustomInternetDialog(getActivity());
         //
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),R.array.Accounttypes,
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.Accounttypes,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
-
-        mSpinner.setOnItemSelectedListener(this);
 
 
         ProdKids = new ArrayList<>();
@@ -79,7 +77,7 @@ public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSele
         TabsBasic activity = (TabsBasic) getActivity();// get acticity data
         int sid = activity.getuserid();
         String userid = String.valueOf(sid);
-        String url = hostinglink +"/Home/getprowithsellerid";
+        String url = hostinglink + "/Home/getprowithsellerid";
         getconnection(url, userid);
 
 
@@ -150,7 +148,7 @@ public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSele
     private void setimageurl() {
         int n = 0;
         for (Catkids i : ProdKids) {
-            i.setThumbnail(hostinglink  + i.getThumbnail());
+            i.setThumbnail(hostinglink + i.getThumbnail());
             // list.remove(n);
             ProdKids.set(n, i);
             n++;
@@ -171,40 +169,22 @@ public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSele
 
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
+        try {
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                mAdapter.getFilter().filter(newText);
-                return false;
-            }
-        });
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-        String val = parent.getItemAtPosition(position).toString();
-
-        if (val.equals("shirt")){
-            mAdapter.getFilter().filter(val);
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    mAdapter.getFilter().filter(newText);
+                    return false;
+                }
+            });
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Loading Data", Toast.LENGTH_SHORT).show();
         }
-        else if (val.equals("Pant")){
-            mAdapter.getFilter().filter(val);
-        }
-        else if (val.equals("Shoes")){
-            mAdapter.getFilter().filter(val);
-        }
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
     }
 
 
