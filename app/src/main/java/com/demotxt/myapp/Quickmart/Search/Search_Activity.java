@@ -197,7 +197,7 @@ public class Search_Activity extends AppCompatActivity {
             request.add(rRequest);
 
         } catch (Exception E) {
-
+            E.printStackTrace();
         }
     }
 
