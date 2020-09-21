@@ -32,7 +32,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.demotxt.myapp.Quickmart.CategoryFragments.Catkids;
 import com.demotxt.myapp.Quickmart.ownmodels.Prod;
+import com.demotxt.myapp.Quickmart.ownmodels.ProductSpecification;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
 import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.utils.Tools;
@@ -49,6 +51,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
 public class Prod_Activity extends AppCompatActivity {
 
@@ -70,12 +74,21 @@ public class Prod_Activity extends AppCompatActivity {
     public String rate;
     public String Feedback;
      private View layout;
+     public  List<ProductSpecification> sizecolorlist;
+    public List<String> SizeList, colorList;
+    public ArrayAdapter<String> Colorspinner;
+    public   ArrayAdapter<String> Sizespinner;
+    public   Spinner spinner1 ,spinner2;
+    public String selectedcolor,selectedsize;
     //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prod_);
+        sizecolorlist=new ArrayList<>();
+        SizeList=new ArrayList<>();
+        colorList=new ArrayList<>();
         // For custom toast
         final LayoutInflater inflater = getLayoutInflater();
         try{
@@ -87,18 +100,21 @@ public class Prod_Activity extends AppCompatActivity {
             Log.i("Prodactivity","error"+e.getMessage());
 
         }
+      proid= getIntent().getExtras().getInt("proid");
+        getsizecolor(hostinglink+"/Home/getsizecolors");
+
                // Size Spinner
-             final Spinner spinner1 = (Spinner) findViewById(R.id.sizeSpinner);
+            spinner1 = (Spinner) findViewById(R.id.sizeSpinner);
         // Initializing a String Array
-        String[] size = new String[]{
+      /*  String[] size = new String[]{
                 "Size",
                 "S",
                 "M",
                 "L",
                 "XL"
-        };
-        final List<String> SizeList = new ArrayList<>(Arrays.asList(size));
-        final ArrayAdapter<String> Sizespinner = new ArrayAdapter<String>(
+        };*/
+    //    final List<String> SizeList = new ArrayList<>(Arrays.asList(size));
+      /*  final ArrayAdapter<String> Sizespinner = new ArrayAdapter<String>(
                 this,R.layout.item_spinner,SizeList){
             @Override
             public boolean isEnabled(int position){
@@ -125,15 +141,15 @@ public class Prod_Activity extends AppCompatActivity {
                 }
                 return view;
             }
-        };
-        Sizespinner.setDropDownViewResource(R.layout.item_spinner);
-        spinner1.setAdapter(Sizespinner);
+        };*/
+       // Sizespinner.setDropDownViewResource(R.layout.item_spinner);
+        //spinner1.setAdapter(Sizespinner);
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItemText = (String) parent.getItemAtPosition(position);
-
-                if(position > 0){
+selectedsize=selectedItemText;
+                if(position >= 0){
                     // Notify the selected item text
                     Toast.makeText
                             (getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT)
@@ -146,17 +162,17 @@ public class Prod_Activity extends AppCompatActivity {
         });
 
         // Color Spinner
-            final Spinner spinner2 = (Spinner) findViewById(R.id.colorSpinner);
+             spinner2 = (Spinner) findViewById(R.id.colorSpinner);
         // Initializing a String Array
-        String[] color = new String[]{
+      /*  String[] color = new String[]{
                 "Color",
                 "Red",
                 "Yellow",
                 "White",
                 "Black"
-        };
-        final List<String> colorList = new ArrayList<>(Arrays.asList(color));
-        final ArrayAdapter<String> Colorspinner = new ArrayAdapter<String>(
+        };*/
+     //   final List<String> colorList = new ArrayList<>(Arrays.asList(color));
+     /*   final ArrayAdapter<String> Colorspinner = new ArrayAdapter<String>(
                 this,R.layout.item_spinner,colorList){
             @Override
             public boolean isEnabled(int position){
@@ -183,15 +199,54 @@ public class Prod_Activity extends AppCompatActivity {
                 }
                 return view;
             }
-        };
-        Colorspinner.setDropDownViewResource(R.layout.item_spinner);
-        spinner2.setAdapter(Colorspinner);
+        };*/
+      //  Colorspinner.setDropDownViewResource(R.layout.item_spinner);
+       // spinner2.setAdapter(Colorspinner);
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItemText = (String) parent.getItemAtPosition(position);
 
-                if(position > 0){
+               selectedcolor=selectedItemText;
+                SizeList.clear();
+               getsizeswithcolor(selectedItemText);
+
+                Sizespinner   = new ArrayAdapter<String>(getApplicationContext(),R.layout.item_spinner,SizeList){
+                @Override
+                public boolean isEnabled(int position){
+                    if(position == 0)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                @Override
+                public View getDropDownView(int position, View convertView,
+                        ViewGroup parent) {
+                    View view = super.getDropDownView(position, convertView, parent);
+                    TextView tv = (TextView) view;
+                    tv.setTextColor(Color.BLACK);
+
+                                 /*   if(position == 0){
+                                        // Set the hint text color gray
+                                        tv.setTextColor(Color.GRAY);
+                                    }
+                                    else {
+                                        tv.setTextColor(Color.BLACK);
+                                    }*/
+                    return view;
+                }
+            };
+
+
+
+                Sizespinner.setDropDownViewResource(R.layout.item_spinner);
+                spinner1.setAdapter(Sizespinner);
+
+                if(position >= 0){
                     // Notify the selected item text
                     Toast.makeText
                             (getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT)
@@ -289,7 +344,7 @@ try{
     final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
     // String url = "http:// 192.168.10.13:64077/api/login";
     //String url="https://api.myjson.com/bins/kp9wz";
-    String url = MainActivity2.hostinglink +"/Home/AddtoCart";
+    String url = hostinglink +"/Home/AddtoCart";
 
     StringRequest rRequest = new StringRequest(Request.Method.POST, url,
             new Response.Listener<String>() {
@@ -356,6 +411,8 @@ try{
             params.put("productId", strpid);
             params.put("userId", struserid);
             params.put("sellerid",strsellerid);
+            params.put("color",selectedcolor);
+            params.put("size",selectedsize);
             return params;
         }
 
@@ -425,7 +482,7 @@ catch (Exception e)
                     final String strpid = String.valueOf(proid);
                     int userid = loginpref.getInt("userid", 0);
                     final String struserid = String.valueOf(userid);
-                    String url = MainActivity2.hostinglink+"/home/SaveFeedback";
+                    String url = hostinglink+"/home/SaveFeedback";
                     //
                     try {
                         final RequestQueue request = Volley.newRequestQueue(getApplicationContext());
@@ -474,6 +531,157 @@ catch (Exception e)
         //
     }
 
+    public void getsizecolor(String url) {
+        final RequestQueue request = Volley.newRequestQueue(getApplicationContext());
+
+
+        StringRequest rRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        //
+                        try {
+                            GsonBuilder builder = new GsonBuilder();
+                            Gson gson = builder.create();
+                            sizecolorlist = Arrays.asList(gson.fromJson(response, ProductSpecification[].class));
+
+                            for (ProductSpecification p:sizecolorlist
+                                 ) {
+                                colorList.add(p.getProductColor());
+                               // SizeList.add(p.getProductSize());
+                            }
+
+                          Sizespinner   = new ArrayAdapter<String>(
+                                    getApplicationContext(),R.layout.item_spinner,SizeList){
+                                @Override
+                                public boolean isEnabled(int position){
+                                    if(position == 0)
+                                    {
+                                        return false;
+                                    }
+                                    else
+                                    {
+                                        return true;
+                                    }
+                                }
+                                @Override
+                                public View getDropDownView(int position, View convertView,
+                                                            ViewGroup parent) {
+                                    View view = super.getDropDownView(position, convertView, parent);
+                                    TextView tv = (TextView) view;
+                                    tv.setTextColor(Color.BLACK);
+
+                                 /*   if(position == 0){
+                                        // Set the hint text color gray
+                                        tv.setTextColor(Color.GRAY);
+                                    }
+                                    else {
+                                        tv.setTextColor(Color.BLACK);
+                                    }*/
+                                    return view;
+                                }
+                            };
+                            Sizespinner.setDropDownViewResource(R.layout.item_spinner);
+                            spinner1.setAdapter(Sizespinner);
+
+                           Colorspinner = new ArrayAdapter<String>(
+                                    getApplicationContext(),R.layout.item_spinner,colorList){
+                                @Override
+                                public boolean isEnabled(int position){
+                                   return  true;
+                                    /* if(position == 0)
+                                    {
+                                        return false;
+                                    }
+                                    else
+                                    {
+                                        return true;
+                                    }*/
+                                }
+                                @Override
+                                public View getDropDownView(int position, View convertView,
+                                                            ViewGroup parent) {
+                                    View view = super.getDropDownView(position, convertView, parent);
+                                    TextView tv = (TextView) view;
+                               /*     if(position == 0){
+                                        // Set the hint text color gray
+                                        tv.setTextColor(Color.GRAY);
+                                    }
+                                    else {
+                                        tv.setTextColor(Color.BLACK);
+                                    }*/
+                                    tv.setTextColor(Color.BLACK);
+                                    return view;
+                                }
+                            };
+                            Colorspinner.setDropDownViewResource(R.layout.item_spinner);
+                            spinner2.setAdapter(Colorspinner);
+
+
+
+
+
+
+
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+//                        Toast.makeText(getContext(),  Toast.LENGTH_SHORT).show();
+                        error.printStackTrace();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("proid",String.valueOf(proid));
+
+
+                return params;
+            }
+
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+
+
+        request.add(rRequest);
+
+
+    }
+    public  void getsizeswithcolor(String color)
+    {
+        SizeList=null;
+        SizeList=new ArrayList<>();
+        for (ProductSpecification specification:sizecolorlist
+             ) {
+
+
+if(specification.getProductColor().equals(color))
+{
+
+SizeList.add(specification.getProductSize());
+}
+
+        }
+        for (String size:SizeList) {
+            Log.i("proid:"+proid,"Size:"+size);
+
+        }
+
+
+    }
     private void toggleSection(View bt, final View lyt) {
         boolean show = toggleArrow(bt);
         if (show) {
