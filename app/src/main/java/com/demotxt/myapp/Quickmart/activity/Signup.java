@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +16,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -31,13 +33,13 @@ import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.ownmodels.DetailModel;
 import com.demotxt.myapp.Quickmart.ownmodels.SignUpModel;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
-import com.demotxt.myapp.Quickmart.ownmodels.UserModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
 import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
@@ -48,10 +50,11 @@ public class Signup extends AppCompatActivity {
     Button signup;
     EditText phone, password, userName;
     AwesomeValidation awesomeValidation;
+    String name,contact,pin;
     //for Auth
     int randomNumber, val, userPin;
-    int range = 9;  // to generate a single number with this range, by default its 0..9
-    int length = 4;
+    final int range = 9;  // to generate a single number with this range, by default its 0..9
+    final int length = 4;
     ConstraintLayout lyt_SignUP, lyt_Auth;
     EditText OTP_Txt;
     Button AuthSubmit_Btn;
@@ -94,7 +97,7 @@ public class Signup extends AppCompatActivity {
 
 
         signin = (TextView) findViewById(R.id.signin);
-        signup = (Button) findViewById(R.id.signin1);
+        signup = findViewById(R.id.signin1);
         userName = (EditText) findViewById(R.id.USERNAME);
         phone = (EditText) findViewById(R.id.PHONE);
         password = (EditText) findViewById(R.id.PASSWORD);
@@ -107,64 +110,76 @@ public class Signup extends AppCompatActivity {
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                signin.setBackgroundResource(R.drawable.ripple_chip_view);
                 Intent i = new Intent(Signup.this,Login.class);
                 startActivity(i);
             }
         });
-
 
         //Sign Up Button
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (awesomeValidation.validate()) {
-                    String name = userName.getText().toString();
-                    String pass = password.getText().toString();
-                    String contact = phone.getText().toString();
-                    SignUpModel m = new SignUpModel(name, contact, pass);
                     //
-                    DetailModel model = new DetailModel(getApplicationContext());
-                    model.setYourName(name);
-                    model.setYourPhone(contact);
+                    name = userName.getText().toString();
+                    String pass = password.getText().toString();
+                    contact = phone.getText().toString();
+                    SignUpModel m = new SignUpModel(name, contact, pass);
                     //
                     CheckUser();
                     Checkcheckbox();
+
                 }
             }
         });
-        //
 
-        loginprefeditor.putString("Name", userName.getText().toString());
+        //Adding a Text Watcher to disable button
+        OTP_Txt.addTextChangedListener(OTPTextWatcher);
 
         //Auth Submit button
         AuthSubmit_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //getting pin
-                try {
-                    String pin = OTP_Txt.getText().toString();
-                    userPin = Integer.parseInt(pin);
-                } catch (Exception e) {
-                    Toast.makeText(Signup.this, "UserPin Empty", Toast.LENGTH_SHORT).show();
-                }
-
-                //Shared Pref for OTP PIN
-                try {
-                    val = mPreferences.getInt("OTP_PIN", 0);
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-
-                if (userPin == val) {
-                    AddUserSign();
-                } else {
-                    lyt_Auth.setVisibility(View.GONE);
-                    lyt_SignUP.setVisibility(View.VISIBLE);
-                }
+               ValidateOTP();
             }
         });
     }
 
+    private final TextWatcher OTPTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            pin = OTP_Txt.getText().toString().trim();
+            AuthSubmit_Btn.setEnabled(!pin.isEmpty());
+        }
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+    };
+
+
+    //
+    private void ValidateOTP(){
+        //Shared Pref for OTP PIN
+        try {
+            userPin = Integer.parseInt(pin);
+            val = mPreferences.getInt("OTP_PIN", 0);
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        if (userPin == val) {
+            AddUserSign();
+
+        } else {
+            lyt_Auth.setVisibility(View.GONE);
+            lyt_SignUP.setVisibility(View.VISIBLE);
+        }
+    }
+    //
     private void Checkcheckbox() {
         if (checkBox.isChecked()) {
         } else {
@@ -180,7 +195,6 @@ public class Signup extends AppCompatActivity {
 
         }
     }
-
     //
     public void CheckUser() {
         try {
@@ -226,14 +240,14 @@ public class Signup extends AppCompatActivity {
             ) {
                 @Override
                 protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
+                    Map<String, String> params = new HashMap<>();
 
                     params.put("phoneNo", phone.getText().toString());
                     return params;
                 }
 
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<String, String>();
+                public Map<String, String> getHeaders() {
+                    Map<String, String> params = new HashMap<>();
                     params.put("Content-Type", "application/x-www-form-urlencoded");
                     return params;
                 }
@@ -245,30 +259,35 @@ public class Signup extends AppCompatActivity {
         }
 
     }
-
     //
     public void AddUserSign() {
-        try {
-            final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 
+        try {
+            //
+            DetailModel model = new DetailModel(getApplicationContext());
+            model.setYourName(name);
+            model.setYourPhone(contact);
+            //
+            final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
             String url = hostinglink + "/Home/signup";
             StringRequest rRequest = new StringRequest(Request.Method.POST, url,
                     new Response.Listener<String>() {
                         @Override
-                        public void onResponse(String response) {
+                        public void onResponse(@NonNull String response) {
                             String struserid;
 
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
                             result = gson.fromJson(response, StringResponceFromWeb.class);
                             if (result.getresult().equals("registered")) {
+
                                 struserid = String.valueOf(result.getUserid());
                                 int pid = 0;
                                 Intent j = getIntent();
                                 try {
-                                    pid = j.getExtras().getInt("proid");
+                                    pid = Objects.requireNonNull(j.getExtras()).getInt("proid");
                                 } catch (Exception e) {
-
+                                    e.printStackTrace();
                                 }
                                 if (pid != 0) {
                                     String strpid = String.valueOf(pid);
@@ -283,7 +302,7 @@ public class Signup extends AppCompatActivity {
 
                             } else {
                                 Log.i("API-ERROR", "error");
-                                Toast.makeText(getApplicationContext(), "error" + response.toString(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "error" + response, Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
@@ -291,14 +310,14 @@ public class Signup extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             // error
-                            Log.i("API-ERROR", error.getMessage());
+                            Log.i("API-ERROR", Objects.requireNonNull(error.getMessage()));
                             Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                         }
                     }
             ) {
                 @Override
                 protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
+                    Map<String, String> params = new HashMap<>();
 
                     params.put("phoneNo", phone.getText().toString());
                     params.put("password", password.getText().toString());
@@ -306,8 +325,8 @@ public class Signup extends AppCompatActivity {
                     return params;
                 }
 
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<String, String>();
+                public Map<String, String> getHeaders() {
+                    Map<String, String> params = new HashMap<>();
                     params.put("Content-Type", "application/x-www-form-urlencoded");
                     return params;
                 }
@@ -316,10 +335,9 @@ public class Signup extends AppCompatActivity {
             requestQueue.add(rRequest);
         } catch (Exception E) {
             Toast.makeText(getApplicationContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
-            Log.i("error", E.getMessage());
+            Log.i("error", Objects.requireNonNull(E.getMessage()));
         }
     }
-
     //
     public void AddToCart(final String struserid, final String strpid) {
         try {
@@ -350,16 +368,17 @@ public class Signup extends AppCompatActivity {
                     },
                     new Response.ErrorListener() {
                         @Override
-                        public void onErrorResponse(VolleyError error) {
+                        public void onErrorResponse(@NonNull VolleyError error) {
                             // error
-                            Log.i("APIERROR", error.getMessage());
+                            Log.i("APIERROR", Objects.requireNonNull(error.getMessage()));
                             Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                         }
                     }
             ) {
+                @NonNull
                 @Override
                 protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
+                    Map<String, String> params = new HashMap<>();
 
                     params.put("productId", strpid);
                     params.put("userId", struserid);
@@ -367,8 +386,8 @@ public class Signup extends AppCompatActivity {
                     return params;
                 }
 
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<String, String>();
+                public Map<String, String> getHeaders() {
+                    Map<String, String> params = new HashMap<>();
                     params.put("Content-Type", "application/x-www-form-urlencoded");
                     return params;
                 }
@@ -386,16 +405,16 @@ public class Signup extends AppCompatActivity {
     //To Generate a Random 4 Digit PIN
     public int generateRandomNumber() {
         SecureRandom secureRandom = new SecureRandom();
-        String s = "";
+        StringBuilder s = new StringBuilder();
         for (int i = 0; i < length; i++) {
             int number = secureRandom.nextInt(range);
             if (number == 0 && i == 0) { // to prevent the Zero to be the first number as then it will reduce the length of generated pin to three or even more if the second or third number came as zeros
                 i = -1;
                 continue;
             }
-            s = s + number;
+            s.append(number);
         }
-        randomNumber = Integer.parseInt(s);
+        randomNumber = Integer.parseInt(s.toString());
         OTPPref();
         SendOTP_PIN();
         return randomNumber;
@@ -403,7 +422,6 @@ public class Signup extends AppCompatActivity {
 
     //To save OTP Pin in Shared Pref
     public void OTPPref() {
-        ;
         mEditor.putInt("OTP_PIN", randomNumber);
         mEditor.commit();
     }

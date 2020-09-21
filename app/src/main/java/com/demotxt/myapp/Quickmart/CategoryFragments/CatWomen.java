@@ -11,14 +11,14 @@ public class CatWomen {
     @SerializedName("productImage")
     private String Thumbnail;
     @SerializedName("price")
-    private float Price;
+    private final float Price;
     @SerializedName("productId")
     private  int Id;
 
     @SerializedName("avgRating")
     private float Rating;
     @SerializedName("userId")
-    private  int UserId;
+    private final int UserId;
     public CatWomen(String title, String category, String description, String thumbnail, float price, int id,double rating,int userId) {
         Title = title;
         Category = category;

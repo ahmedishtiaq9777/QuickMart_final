@@ -10,110 +10,116 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lyt_fullview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context="com.demotxt.myapp.Quickmart.com.demotxt.myapp.Quickmart.fragment.HomeFragment">
 
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <ViewFlipper
+                android:id="@+id/flipper"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/customborder"
+                android:padding="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textRecommend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:elevation="20dp"
+                android:text="@string/Shops"
+                android:textColor="@color/hometext"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:context="com.demotxt.myapp.Quickmart.com.demotxt.myapp.Quickmart.fragment.HomeFragment">
+                app:layout_constraintTop_toBottomOf="@id/flipper"
+                tools:targetApi="lollipop" />
 
-                <ViewFlipper
-                    android:id="@+id/flipper"
-                    android:layout_width="match_parent"
-                    android:layout_height="140dp"
-                    android:layout_margin="4dp"
-                    android:padding="5dp"
-                    android:background="@drawable/customborder"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:elevation="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textRecommend"
+                tools:targetApi="lollipop" />
 
-                <TextView
-                    android:id="@+id/textRecommend"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:text="@string/Shops"
-                    android:textColor="@color/hometext"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:elevation="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/flipper" />
+            <TextView
+                android:id="@+id/textNew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:elevation="20dp"
+                android:text="@string/Recommended"
+                android:textColor="@color/hometext"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recyclerview_id"
+                tools:targetApi="lollipop" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:elevation="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textRecommend" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:elevation="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textNew"
+                tools:targetApi="lollipop" />
 
-                <TextView
-                    android:id="@+id/textNew"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:text="@string/Recommended"
-                    android:textColor="@color/hometext"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:elevation="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/recyclerview_id" />
+            <TextView
+                android:id="@+id/textTrending"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:elevation="20dp"
+                android:text="@string/Trending"
+                android:textColor="@color/hometext"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recyclerview2"
+                tools:targetApi="lollipop" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:elevation="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textNew" />
-
-                <TextView
-                    android:id="@+id/textTrending"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:text="@string/Trending"
-                    android:textColor="@color/hometext"
-                    android:textSize="20sp"
-                    android:elevation="20dp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/recyclerview2" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:elevation="20dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textTrending" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:elevation="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textTrending"
+                tools:targetApi="lollipop" />
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.core.widget.NestedScrollView>
-
-
 
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

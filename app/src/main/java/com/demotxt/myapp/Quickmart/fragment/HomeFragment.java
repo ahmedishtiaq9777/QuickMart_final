@@ -1,29 +1,25 @@
 package com.demotxt.myapp.Quickmart.fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -37,9 +33,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.demotxt.myapp.Quickmart.CategoryFragments.CatKids_Adapter;
-import com.demotxt.myapp.Quickmart.CategoryFragments.CatMen_Adapter;
-import com.demotxt.myapp.Quickmart.CategoryFragments.CatWomen_Adapter;
 import com.demotxt.myapp.Quickmart.MyLocation;
 import com.demotxt.myapp.Quickmart.activity.Error_Screen_Activity;
 import com.demotxt.myapp.Quickmart.ownmodels.Book;
@@ -49,7 +42,6 @@ import com.demotxt.myapp.Quickmart.adapter.RecyclerView3;
 import com.demotxt.myapp.Quickmart.adapter.RecyclerViewAdapter;
 import com.demotxt.myapp.Quickmart.adapter.RecyclerViewProdAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -58,10 +50,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
-import kotlin.collections.LongIterator;
-
-import static android.content.Context.LAUNCHER_APPS_SERVICE;
 import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
 public class HomeFragment extends Fragment {
@@ -77,14 +67,17 @@ public class HomeFragment extends Fragment {
     private RecyclerView3 myAdapter2;
     TextView shop, rec, trend;
     FloatingActionButton search;
+    ConstraintLayout lyt;
     //loc
+    LocationManager lm;
+    boolean gps_enabled;
     public String Latitude,Longitude;
     public static Location loc;
     public static List<String> SellerIds = new ArrayList<>();
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ProfileFragment.loadLocale(getContext());
+        ProfileFragment.loadLocale(Objects.requireNonNull(getContext()));
         setHasOptionsMenu(true);
         //
         view = inflater.inflate(R.layout.homefragment, container, false);
@@ -93,9 +86,11 @@ public class HomeFragment extends Fragment {
         shop = view.findViewById(R.id.textRecommend);
         rec = view.findViewById(R.id.textNew);
         trend = view.findViewById(R.id.textTrending);
+        lyt = view.findViewById(R.id.lyt_fullview);
 
         //Connection Check
         CheckConnection();
+        CheckGps();
 
         list = new ArrayList<>();
         Book22 = new ArrayList<>();
@@ -116,7 +111,7 @@ public class HomeFragment extends Fragment {
         MyLocation myLocation = new MyLocation();
         myLocation.getLocation(getActivity(), locationResult);
         //
-        search = getActivity().findViewById(R.id.fab_search);
+        search = Objects.requireNonNull(getActivity()).findViewById(R.id.fab_search);
         search.show();
 
 
@@ -124,6 +119,7 @@ public class HomeFragment extends Fragment {
         RefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+
                 RefreshLayout.setRefreshing(true);
 
                 list = new ArrayList<>();
@@ -145,7 +141,7 @@ public class HomeFragment extends Fragment {
         getconnection(hostinglink + "/Home/gettrendingpro/", 3);
 
 
-        int images[] = {R.drawable.off1, R.drawable.off2, R.drawable.off3, R.drawable.off4, R.drawable.off5};
+        int[] images = {R.drawable.off1, R.drawable.off2, R.drawable.off3, R.drawable.off4, R.drawable.off5};
 
         for (int image : images) {
             flipperimages(image);
@@ -155,17 +151,17 @@ public class HomeFragment extends Fragment {
 
     //For Trending and Recommended
     public void getconnection(String url, final int val) {
-
-        RefreshLayout.setRefreshing(false);
         try {
-
-            final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+            final RequestQueue requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
 
             StringRequest rRequest = new StringRequest(Request.Method.GET, url,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             try {
+                                //
+                                RefreshLayout.setRefreshing(false);
+                                //
                                 if (val != 0) {
                                     GsonBuilder builder = new GsonBuilder();
                                     Gson gson = builder.create();
@@ -197,6 +193,7 @@ public class HomeFragment extends Fragment {
                                         }
                                         //Setting Recycler View 3
                                         setrecyclethree();
+
                                     }
                                 }
                             } catch (Exception e) {
@@ -218,17 +215,19 @@ public class HomeFragment extends Fragment {
             Toast.makeText(getContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
-
     //For Seller
     public void getSeller(String url, final String la, final String lo) {
         try {
-            final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+            final RequestQueue requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
 
             StringRequest rRequest = new StringRequest(Request.Method.POST, url,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             try {
+                                //
+                                RefreshLayout.setRefreshing(false);
+                                //
                                 GsonBuilder builder = new GsonBuilder();
                                 Gson gson = builder.create();
                                 //For Seller Recycler View
@@ -252,6 +251,8 @@ public class HomeFragment extends Fragment {
 
                                 //Setting Recycler View 1
                                 setrecycleone();
+                                //
+                                RefreshLayout.setRefreshing(false);
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 Toast.makeText(getContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -266,7 +267,7 @@ public class HomeFragment extends Fragment {
                     }) {
                 @Override
                 protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
+                    Map<String, String> params = new HashMap<>();
 
                     params.put("latitude", la);
                     params.put("longitude", lo);
@@ -276,8 +277,8 @@ public class HomeFragment extends Fragment {
                     return params;
                 }
 
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<String, String>();
+                public Map<String, String> getHeaders() {
+                    Map<String, String> params = new HashMap<>();
                     params.put("Content-Type", "application/x-www-form-urlencoded");
                     return params;
                 }
@@ -339,9 +340,10 @@ public class HomeFragment extends Fragment {
         myrv3.setAdapter(myAdapter2);
     }
 
+    //To check Internet Connection
     public void CheckConnection() {
 
-        ConnectivityManager manager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager manager = (ConnectivityManager) Objects.requireNonNull(getContext()).getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
 
         if (null != activeNetwork) {
@@ -359,5 +361,41 @@ public class HomeFragment extends Fragment {
         }
 
     }
+
+    //To check if GPS is enabled
+    public void CheckGps(){
+
+        lm = (LocationManager) Objects.requireNonNull(getContext()).getSystemService(Context.LOCATION_SERVICE);
+
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+
+        if(!gps_enabled) {
+            // notify user
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
+            builder1.setMessage("Please Enable Gps To Get Nearby Stores");
+            builder1.setCancelable(true);
+
+            builder1.setPositiveButton(
+                    "Ok",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+
+
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+        }
+        else{
+            Toast.makeText(getContext(), "GPS IS ENABLED", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
 
 }

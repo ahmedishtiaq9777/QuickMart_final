@@ -9,12 +9,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -31,9 +28,10 @@ import com.demotxt.myapp.Quickmart.fragment.HomeFragment;
 import com.demotxt.myapp.Quickmart.fragment.ProfileFragment;
 import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.ownmodels.DetailModel;
-import com.demotxt.myapp.Quickmart.utils.Tools;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.Objects;
 
 public class MainActivity2 extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     private SharedPreferences loginPreferences;
@@ -45,7 +43,7 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
     private View layout;
     int proid;
     FloatingActionButton search;
-    public static RelativeLayout lyt_search;
+    public RelativeLayout lyt_search;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,17 +75,12 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
 
         try {
             Intent i = getIntent();
-            proid = i.getExtras().getInt("proid");
+            proid = Objects.requireNonNull(i.getExtras()).getInt("proid");
             if (proid != 0) {
-                Toast toast = new Toast(getApplicationContext());
-                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-                toast.setDuration(Toast.LENGTH_SHORT);
-                toast.setView(layout);
-                toast.show();
+                Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.i("In MainActivity:", e.getMessage());
         }
 
         navView = (BottomNavigationView) findViewById(R.id.nav_view);
@@ -105,12 +98,12 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         fragmentmanager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
-                StringBuffer messege = null;
+                StringBuffer messege;
                 messege = new StringBuffer("current status of fragment back stack:" + fragmentmanager.getBackStackEntryCount() + "\n");
                 for (int index = (fragmentmanager.getBackStackEntryCount() - 1); index >= 0; index--) {
 
                     FragmentManager.BackStackEntry entry = fragmentmanager.getBackStackEntryAt(index);
-                    messege.append(entry.getName() + "\n");
+                    messege.append(entry.getName()).append("\n");
 
 
                 }
@@ -149,7 +142,7 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
         } else if (stackname.equals("homestack")) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragmentcontainer, fragment)
+                    .replace(R.id.fragmentcontainer, Objects.requireNonNull(fragment))
                     .commit();
             return true;
         }

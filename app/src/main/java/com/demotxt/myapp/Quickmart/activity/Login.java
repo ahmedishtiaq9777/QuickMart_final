@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,10 +17,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -39,6 +41,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
@@ -50,7 +53,7 @@ public class Login extends AppCompatActivity {
     Button signin;
     private EditText phone, pass;
     AwesomeValidation awesomeValidation;
-
+    String ph, password;
     private SharedPreferences rememberMepref, loginpref;
     private SharedPreferences.Editor rememberMePrefsEditor, loginprefeditor;
     private CheckBox checkBoxremember;
@@ -83,7 +86,7 @@ public class Login extends AppCompatActivity {
         }
 
 
-        cartids = new HashSet<String>();
+        cartids = new HashSet<>();
 
         signin = (Button) findViewById(R.id.signin1);
         signup = (TextView) findViewById(R.id.signup);
@@ -92,6 +95,10 @@ public class Login extends AppCompatActivity {
         phone = (EditText) findViewById(R.id.PH);
         pass = (EditText) findViewById(R.id.PASS);
         ForgotPass = findViewById(R.id.forgotpass);
+
+        //adding TextWatchers
+        phone.addTextChangedListener(LoginTextWatcher);
+        pass.addTextChangedListener(LoginTextWatcher);
 
         //Forget Password
         ForgotPass.setOnClickListener(new View.OnClickListener() {
@@ -128,8 +135,8 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 if (awesomeValidation.validate()) {
 
-                    String ph = phone.getText().toString();
-                    String password = pass.getText().toString();
+                     ph = phone.getText().toString();
+                     password = pass.getText().toString();
                     SignInModel m = new SignInModel(ph, password);
                     Checkcheckbox();
 
@@ -166,16 +173,16 @@ public class Login extends AppCompatActivity {
                                                 int pid = -1;
                                                 boolean login_from_profile = false;
                                                 try {
-                                                    pid = i.getExtras().getInt("proid");
+                                                    pid = Objects.requireNonNull(i.getExtras()).getInt("proid");
                                                 } catch (Exception e) {
                                                     Log.i("Came from Profile", "login through profile fragment");
-                                                    Log.i("Exception", e.getMessage());
+                                                    Log.i("Exception", Objects.requireNonNull(e.getMessage()));
                                                 }
                                                 try {
                                                     login_from_profile = i.getExtras().getBoolean("loginfromprofile");
                                                 } catch (Exception e) {
                                                     Log.i("ProdActivity", "login through ProdActivity");
-                                                    Log.i("Exception", e.getMessage());
+                                                    Log.i("Exception", Objects.requireNonNull(e.getMessage()));
                                                 }
 
                                                 if (pid != -1) {
@@ -210,7 +217,7 @@ public class Login extends AppCompatActivity {
                                                 startActivity(intent2);
 
                                             } else {
-                                                Toast.makeText(getApplicationContext(), "Error:" + response.toString(), Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(), "Error:" + response, Toast.LENGTH_SHORT).show();
                                             }
 
 
@@ -226,23 +233,23 @@ public class Login extends AppCompatActivity {
                                 },
                                 new Response.ErrorListener() {
                                     @Override
-                                    public void onErrorResponse(VolleyError error) {
+                                    public void onErrorResponse(@NonNull VolleyError error) {
                                         // error
-                                        Log.i("APIERROR", error.getMessage());
+                                        Log.i("APIERROR", Objects.requireNonNull(error.getMessage()));
                                         Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                         ) {
                             @Override
                             protected Map<String, String> getParams() {
-                                Map<String, String> params = new HashMap<String, String>();
+                                Map<String, String> params = new HashMap<>();
                                 params.put("phoneNo", phone.getText().toString());
                                 params.put("password", pass.getText().toString());
                                 return params;
                             }
 
-                            public Map<String, String> getHeaders() throws AuthFailureError {
-                                Map<String, String> params = new HashMap<String, String>();
+                            public Map<String, String> getHeaders() {
+                                Map<String, String> params = new HashMap<>();
                                 params.put("Content-Type", "application/x-www-form-urlencoded");
                                 return params;
                             }
@@ -267,7 +274,7 @@ public class Login extends AppCompatActivity {
                 Intent it = new Intent(Login.this, Signup.class);
                 try {
                     Intent i = getIntent();
-                    int pid = i.getExtras().getInt("proid");
+                    int pid = Objects.requireNonNull(i.getExtras()).getInt("proid");
                     it.putExtra("proid", pid);
                 } catch (Exception e) {
 
@@ -279,6 +286,24 @@ public class Login extends AppCompatActivity {
         });
 
     }
+    //Text Watcher
+    private final TextWatcher LoginTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            ph = phone.getText().toString().trim();
+            password = pass.getText().toString().trim();
+
+            signin.setEnabled(!ph.isEmpty() && !password.isEmpty());
+        }
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+    };
+
+
 
     private void Checkcheckbox() {
         if (checkBoxremember.isChecked()) {
@@ -342,7 +367,7 @@ public class Login extends AppCompatActivity {
                                     // startActivity(main);
 
                                 } catch (Exception e) {
-                                    Log.i("error:", e.getMessage());
+                                    Log.i("error:", Objects.requireNonNull(e.getMessage()));
                                     Toast.makeText(getApplicationContext(), "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                                 }
@@ -353,16 +378,16 @@ public class Login extends AppCompatActivity {
                     },
                     new Response.ErrorListener() {
                         @Override
-                        public void onErrorResponse(VolleyError error) {
+                        public void onErrorResponse(@NonNull VolleyError error) {
                             // error
-                            Log.i("APIERROR", error.getMessage());
+                            Log.i("APIERROR", Objects.requireNonNull(error.getMessage()));
                             Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                         }
                     }
             ) {
                 @Override
                 protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
+                    Map<String, String> params = new HashMap<>();
 
                     params.put("productId", strpid);
                     params.put("userId", struserid);
@@ -370,8 +395,8 @@ public class Login extends AppCompatActivity {
                     return params;
                 }
 
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<String, String>();
+                public Map<String, String> getHeaders() {
+                    Map<String, String> params = new HashMap<>();
                     params.put("Content-Type", "application/x-www-form-urlencoded");
                     return params;
                 }

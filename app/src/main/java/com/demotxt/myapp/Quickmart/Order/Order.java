@@ -34,7 +34,7 @@ public class Order {
         return OrderStatus;
     }
 
-    public String getPrice(){return Price;};
+    public String getPrice(){return Price;}
 
     public void setOrderId(String orderId) {
         OrderId = orderId;

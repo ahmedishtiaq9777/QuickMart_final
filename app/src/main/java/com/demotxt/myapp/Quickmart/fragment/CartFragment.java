@@ -25,7 +25,6 @@ import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.Quickmart.Cart_Fav.CartListBaseAdapter;
 import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.activity.Shipping;
-import com.demotxt.myapp.Quickmart.ownmodels.CheckConnection;
 import com.demotxt.myapp.Quickmart.ownmodels.CustomInternetDialog;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
 import com.demotxt.myapp.Quickmart.Cart_Fav.CartListBeanlist;
@@ -33,6 +32,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
+import com.demotxt.myapp.Quickmart.ownmodels.CheckConnect;
 
 import java.io.Serializable;
 
@@ -53,7 +53,6 @@ public class CartFragment extends Fragment  {
     public  List<CartListBeanlist> Bean;
     private CartListBaseAdapter baseAdapter;
     private Button pay;
-    private CheckConnection connection;
     private CustomInternetDialog dialog;
     private SharedPreferences loginpref;
     private String userid;
@@ -64,7 +63,7 @@ public class CartFragment extends Fragment  {
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
         listview = (ListView) view.findViewById(R.id.listview);
-        connection = new CheckConnection(getActivity());
+        CheckConnect connection = new CheckConnect(getActivity());
         dialog = new CustomInternetDialog(getActivity());
         list = new ArrayList<CartListBeanlist>();
         //quntities=new ArrayList<String>();

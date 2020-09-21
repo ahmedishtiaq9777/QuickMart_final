@@ -9,8 +9,10 @@ import android.widget.Button;
 
 import com.demotxt.myapp.Quickmart.R;
 
+import java.util.Objects;
+
 public class CustomInternetDialog {
-  private   Context context;
+  private final Context context;
    public CustomInternetDialog(Context cntx)
     {
         context=cntx;
@@ -23,7 +25,7 @@ public class CustomInternetDialog {
         dialog.setCancelable(true);
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.copyFrom(Objects.requireNonNull(dialog.getWindow()).getAttributes());
         lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
@@ -32,7 +34,7 @@ public class CustomInternetDialog {
             @Override
             public void onClick(View v) {
 
-                CheckConnection obj=new CheckConnection(context);
+                CheckConnect obj=new CheckConnect(context);
                 Boolean isconnected=obj.CheckConnection();
                 if(isconnected){
                     dialog.dismiss();

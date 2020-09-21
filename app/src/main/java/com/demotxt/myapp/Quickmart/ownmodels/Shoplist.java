@@ -1,8 +1,9 @@
 package com.demotxt.myapp.Quickmart.ownmodels;
 
 public class Shoplist {
-    private int mImage;
-    private String mtitle, mEmail;
+    private final int mImage;
+    private final String mtitle;
+    private final String mEmail;
 
     public Shoplist(int image, String Title, String Mail) {
         mImage = image;

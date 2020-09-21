@@ -41,7 +41,7 @@ public class DirectCheckout_Activity extends AppCompatActivity {
     RadioButton COD;
     Button Confirm;
     ImageView mImageView;
-    TextView name,price;
+    TextView name,price,EditCheckout_Btn;
     String N,P,I,pId,sId;
     int Code = 111;
     String Uname,Ucontact,Uaddress,Userid;
@@ -64,6 +64,7 @@ public class DirectCheckout_Activity extends AppCompatActivity {
         mImageView = findViewById(R.id.imageView5);
         name = findViewById(R.id.txt_P_Name);
         price = findViewById(R.id.txt_P_Price);
+        EditCheckout_Btn = findViewById(R.id.editCheckout_btn);
 
         //product detail
         Intent i = getIntent();
@@ -97,6 +98,15 @@ public class DirectCheckout_Activity extends AppCompatActivity {
         String shipping_detail = gson.toJson(m);
         String url = MainActivity2.hostinglink + "/home/SaveShippingDetail";
         SaveShippingDetail(url, shipping_detail);
+
+        //Edit Checkout Detail
+        EditCheckout_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ch = new Intent(DirectCheckout_Activity.this,Detail_Activity.class);
+                startActivity(ch);
+            }
+        });
 
 
         // Intent to confirmation

@@ -20,11 +20,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.core.widget.NestedScrollView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -46,6 +46,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public class Prod_Activity extends AppCompatActivity {
@@ -110,7 +111,7 @@ public class Prod_Activity extends AppCompatActivity {
 
             @Override
             public View getDropDownView(int position, View convertView,
-                                        ViewGroup parent) {
+                                        @NonNull ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
                 if (position == 0) {
@@ -166,7 +167,7 @@ public class Prod_Activity extends AppCompatActivity {
 
             @Override
             public View getDropDownView(int position, View convertView,
-                                        ViewGroup parent) {
+                                        @NonNull ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
                 if (position == 0) {
@@ -198,7 +199,7 @@ public class Prod_Activity extends AppCompatActivity {
             }
         });
         //result=new StringResponseFromWeb();
-        cartids = new HashSet<String>();
+        cartids = new HashSet<>();
 
         loginpref = getSharedPreferences("loginpref", MODE_PRIVATE);// get login preferences which contains information like "userid" and login status
 
@@ -219,7 +220,7 @@ public class Prod_Activity extends AppCompatActivity {
 
         //Recieve data from prod
         final Intent intent = getIntent();
-        Title = intent.getExtras().getString("Title");
+        Title = Objects.requireNonNull(intent.getExtras()).getString("Title");
         Description = intent.getExtras().getString("Description");
         image = intent.getExtras().getString("Thumbnail");
         Float pRise = intent.getExtras().getFloat("price");
@@ -333,7 +334,7 @@ public class Prod_Activity extends AppCompatActivity {
 
 
                                                         } catch (Exception e) {
-                                                            Log.i("error:", e.getMessage());
+                                                            Log.i("error:", Objects.requireNonNull(e.getMessage()));
                                                             Toast.makeText(getApplicationContext(), "error" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                                                         }
@@ -346,14 +347,14 @@ public class Prod_Activity extends AppCompatActivity {
                                                 @Override
                                                 public void onErrorResponse(VolleyError error) {
                                                     // error
-                                                    Log.i("APIERROR", error.getMessage());
+                                                    Log.i("APIERROR", Objects.requireNonNull(error.getMessage()));
                                                     Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                     ) {
                                         @Override
                                         protected Map<String, String> getParams() {
-                                            Map<String, String> params = new HashMap<String, String>();
+                                            Map<String, String> params = new HashMap<>();
 
                                             params.put("productId", strpid);
                                             params.put("userId", struserid);
@@ -361,8 +362,8 @@ public class Prod_Activity extends AppCompatActivity {
                                             return params;
                                         }
 
-                                        public Map<String, String> getHeaders() throws AuthFailureError {
-                                            Map<String, String> params = new HashMap<String, String>();
+                                        public Map<String, String> getHeaders() {
+                                            Map<String, String> params = new HashMap<>();
                                             params.put("Content-Type", "application/x-www-form-urlencoded");
                                             return params;
                                         }
@@ -437,7 +438,7 @@ public class Prod_Activity extends AppCompatActivity {
                         ) {
                             @Override
                             protected Map<String, String> getParams() {
-                                Map<String, String> params = new HashMap<String, String>();
+                                Map<String, String> params = new HashMap<>();
                                 params.put("userid", struserid);
                                 params.put("proid", strpid);
                                 params.put("rating", rate);
@@ -445,8 +446,8 @@ public class Prod_Activity extends AppCompatActivity {
                                 return params;
                             }
 
-                            public Map<String, String> getHeaders() throws AuthFailureError {
-                                Map<String, String> params = new HashMap<String, String>();
+                            public Map<String, String> getHeaders() {
+                                Map<String, String> params = new HashMap<>();
                                 params.put("Content-Type", "application/x-www-form-urlencoded");
                                 return params;
                             }
@@ -532,7 +533,7 @@ public class Prod_Activity extends AppCompatActivity {
     boolean validateSpinner(Spinner spinner, String error, String msg) {
 
         View selectedView = spinner.getSelectedView();
-        if (selectedView != null && selectedView instanceof TextView) {
+        if (selectedView instanceof TextView) {
             TextView selectedTextView = (TextView) selectedView;
             if (selectedTextView.getText().equals(msg)) {
                 selectedTextView.setError(error);

@@ -61,7 +61,7 @@ public class Search_Activity extends AppCompatActivity {
     private Search_Adapter mSearch_adapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<Search_Model> ModelProd;
-    private String link = hostinglink + "/Home/SearchNearByProducts";
+    private final String link = hostinglink + "/Home/SearchNearByProducts";
     private final List<String> Sellers_list = new ArrayList<>();
 
     @Override
@@ -129,13 +129,14 @@ public class Search_Activity extends AppCompatActivity {
 
                 @Override
                 public boolean onQueryTextSubmit(String query) {
+                    mSearch_adapter.getFilter().filter(query);
+                    mRecyclerView.setVisibility(View.VISIBLE);
                     return false;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    mSearch_adapter.getFilter().filter(newText);
-                    mRecyclerView.setVisibility(View.VISIBLE);
+                    mRecyclerView.setVisibility(View.GONE);
                     return false;
                 }
             });

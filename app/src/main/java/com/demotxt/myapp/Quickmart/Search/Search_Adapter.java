@@ -1,7 +1,5 @@
 package com.demotxt.myapp.Quickmart.Search;
 
-import android.app.Activity;
-import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,18 +12,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.activity.Prod_Activity;
-import com.demotxt.myapp.Quickmart.ownmodels.Prod;
 import com.squareup.picasso.Picasso;
 
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -35,8 +30,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Search_Adapter extends RecyclerView.Adapter<Search_Adapter.MyViewHolder> implements Filterable {
 
-    private Context mContext;
-    private List<Search_Model> Data1,Data1Full;
+    private final Context mContext;
+    private List<Search_Model> Data1;
+    private final List<Search_Model> Data1Full;
     private SharedPreferences cartpreferrence;
     private SharedPreferences.Editor cartprefEditor;
     private boolean isblack;
@@ -48,11 +44,12 @@ public class Search_Adapter extends RecyclerView.Adapter<Search_Adapter.MyViewHo
         this.mContext = mContext;
         this.Data1 = data1;
         Data1Full = new ArrayList<>(Data1);
-        ids=new HashSet<String>();
+        ids= new HashSet<>();
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         cartpreferrence =   mContext.getSharedPreferences("favpref", MODE_PRIVATE);
         cartprefEditor = cartpreferrence.edit();
         ids=cartpreferrence.getStringSet("ids",ids);
@@ -66,7 +63,7 @@ public class Search_Adapter extends RecyclerView.Adapter<Search_Adapter.MyViewHo
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
         int ID=Data1.get(position).getId();
         String strID=String.valueOf(ID);
@@ -141,10 +138,13 @@ public class Search_Adapter extends RecyclerView.Adapter<Search_Adapter.MyViewHo
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_book_title,price;
-        ImageView img_book_thumbnail,heart;
-        CardView cardView ;
-        AppCompatRatingBar mRatingBar;
+        final TextView tv_book_title;
+        final TextView price;
+        final ImageView img_book_thumbnail;
+        @NonNull
+        final ImageView heart;
+        final CardView cardView ;
+        final AppCompatRatingBar mRatingBar;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -159,12 +159,13 @@ public class Search_Adapter extends RecyclerView.Adapter<Search_Adapter.MyViewHo
     }
 
     //For Search Purposes
+    @NonNull
     @Override
     public Filter getFilter() {
         return mDataFilter;
     }
 
-    private Filter mDataFilter = new Filter() {
+    private final Filter mDataFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Search_Model> filteredList = new ArrayList<>();

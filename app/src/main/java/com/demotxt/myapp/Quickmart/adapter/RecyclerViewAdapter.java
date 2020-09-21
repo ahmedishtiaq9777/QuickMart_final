@@ -3,6 +3,8 @@ package com.demotxt.myapp.Quickmart.adapter;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,21 +30,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static android.content.Context.BIND_NOT_FOREGROUND;
 import static android.content.Context.MODE_PRIVATE;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> implements Filterable {
 
-    private Context mContext;
+    private final Context mContext;
     private List<Book> mData;
-    private List<Book> mDataFull;
+    private final List<Book> mDataFull;
     int userid;
-    String img;
-    String name,add,contact;
     //
     private SharedPreferences cartpreferrence;
     private SharedPreferences.Editor cartprefEditor;
-    private boolean isblack;
     //  private List<Integer> Ids;
     public Set<String> ids;
 
@@ -50,14 +48,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.mContext = mContext;
         this.mData = mData;
         mDataFull = new ArrayList<>(mData);
-        ids = new HashSet<String>();
+        ids = new HashSet<>();
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         cartpreferrence = mContext.getSharedPreferences("favpref", MODE_PRIVATE);
         cartprefEditor = cartpreferrence.edit();
         ids = cartpreferrence.getStringSet("ids", ids);
+
 
 
         //
@@ -117,12 +117,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_book_title,tv_book_dist;
-        ImageView img_book_thumbnail,Info;
-        CardView cardView;
-        AppCompatRatingBar mRatingBar;
+        final TextView tv_book_title;
+        final TextView tv_book_dist;
+        final ImageView img_book_thumbnail;
+        final ImageView Info;
+        final CardView cardView;
+        final AppCompatRatingBar mRatingBar;
 
-        public MyViewHolder(View itemView) {
+        public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tv_book_title = itemView.findViewById(R.id.book_title_id);
@@ -136,14 +138,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     //For Search Purposes
+    @NonNull
     @Override
     public Filter getFilter() {
         return mDataFilter;
     }
 
-    private Filter mDataFilter = new Filter() {
+    private final Filter mDataFilter = new Filter() {
         @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
+        protected FilterResults performFiltering(@Nullable CharSequence constraint) {
             List<Book> filteredList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {

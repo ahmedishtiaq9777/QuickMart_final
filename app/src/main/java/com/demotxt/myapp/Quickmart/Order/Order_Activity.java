@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -91,14 +90,14 @@ public class Order_Activity extends AppCompatActivity {
         ) {
             @Override
             protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("userid", User_Id);
 
                 return params;
             }
 
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
                 params.put("Content-Type", "application/x-www-form-urlencoded");
                 return params;
             }

@@ -106,9 +106,9 @@ public class MyLocation extends AppCompatActivity {
         }
     }
 
-    LocationListener locationListenerGps = new LocationListener()
+    final LocationListener locationListenerGps = new LocationListener()
     {
-        public void onLocationChanged(Location location)
+        public void onLocationChanged(@NonNull Location location)
         {
             timer1.cancel();
             locationResult.gotLocation(location);
@@ -116,14 +116,14 @@ public class MyLocation extends AppCompatActivity {
             lm.removeUpdates(this);
             lm.removeUpdates(locationListenerNetwork);
         }
-        public void onProviderDisabled(String provider) {}
-        public void onProviderEnabled(String provider) {}
+        public void onProviderDisabled(@NonNull String provider) {}
+        public void onProviderEnabled(@NonNull String provider) {}
         public void onStatusChanged(String provider, int status, Bundle extras) {}
     };
 
-    LocationListener locationListenerNetwork = new LocationListener()
+    final LocationListener locationListenerNetwork = new LocationListener()
     {
-        public void onLocationChanged(Location location)
+        public void onLocationChanged(@NonNull Location location)
         {
             timer1.cancel();
             locationResult.gotLocation(location);
@@ -131,8 +131,8 @@ public class MyLocation extends AppCompatActivity {
             lm.removeUpdates(this);
             lm.removeUpdates(locationListenerGps);
         }
-        public void onProviderDisabled(String provider) {}
-        public void onProviderEnabled(String provider) {}
+        public void onProviderDisabled(@NonNull String provider) {}
+        public void onProviderEnabled(@NonNull String provider) {}
         public void onStatusChanged(String provider, int status, Bundle extras) {}
     };
 

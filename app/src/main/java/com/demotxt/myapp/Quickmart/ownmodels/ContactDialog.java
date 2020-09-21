@@ -9,8 +9,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.demotxt.myapp.Quickmart.R;
 
+import java.util.Objects;
+
 public class ContactDialog extends AppCompatActivity {
-    private Context context;
+    private final Context context;
 
 
     public ContactDialog(Context cntx) {
@@ -24,7 +26,7 @@ public class ContactDialog extends AppCompatActivity {
         dialog.setContentView(R.layout.contactdialog);
         dialog.setCancelable(true);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.copyFrom(Objects.requireNonNull(dialog.getWindow()).getAttributes());
         lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         dialog.show();

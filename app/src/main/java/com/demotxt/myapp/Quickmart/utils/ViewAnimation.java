@@ -9,9 +9,12 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 public class ViewAnimation {
 
-    public static void expand(final View v, final AnimListener animListener) {
+    public static void expand(final View v, @NonNull final AnimListener animListener) {
         Animation a = expandAction(v);
         a.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -36,7 +39,8 @@ public class ViewAnimation {
         v.startAnimation(a);
     }
 
-    private static Animation expandAction(final View v) {
+    @NonNull
+    private static Animation expandAction(@NonNull final View v) {
         v.measure(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         final int targtetHeight = v.getMeasuredHeight();
 
@@ -62,7 +66,7 @@ public class ViewAnimation {
         return a;
     }
 
-    public static void collapse(final View v) {
+    public static void collapse(@NonNull final View v) {
         final int initialHeight = v.getMeasuredHeight();
 
         Animation a = new Animation() {
@@ -129,7 +133,7 @@ public class ViewAnimation {
         ViewAnimation.fadeIn(v, null);
     }
 
-    public static void fadeIn(final View v, final AnimListener animListener) {
+    public static void fadeIn(@NonNull final View v, final AnimListener animListener) {
         v.setVisibility(View.GONE);
         v.setAlpha(0.0f);
         // Prepare the View for the animation
@@ -146,7 +150,7 @@ public class ViewAnimation {
                 .alpha(1.0f);
     }
 
-    public static void fadeOut(final View v) {
+    public static void fadeOut(@NonNull final View v) {
         ViewAnimation.fadeOut(v, null);
     }
 
@@ -237,7 +241,7 @@ public class ViewAnimation {
         ViewAnimation.showScale(v, null);
     }
 
-    public static void showScale(final View v, final AnimListener animListener) {
+    public static void showScale(@NonNull final View v, final AnimListener animListener) {
         v.animate()
                 .scaleY(1)
                 .scaleX(1)
@@ -256,7 +260,7 @@ public class ViewAnimation {
         ViewAnimation.fadeOut(v, null);
     }
 
-    public static void hideScale(final View v, final AnimListener animListener) {
+    public static void hideScale(final View v, @Nullable final AnimListener animListener) {
         v.animate()
                 .scaleY(0)
                 .scaleX(0)
@@ -279,7 +283,7 @@ public class ViewAnimation {
                 .start();
     }
 
-    public static void showFab(View fab) {
+    public static void showFab(@NonNull View fab) {
         fab.animate()
                 .translationY(0)
                 .setDuration(300)

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardview_id"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
@@ -9,7 +8,8 @@
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:layout_margin="6dp"
     cardview:cardCornerRadius="4dp"
-    android:padding="5dp">
+    android:padding="5dp"
+    android:focusable="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -29,7 +29,8 @@
             cardview:layout_constraintBottom_toTopOf="@+id/linearLayout"
             cardview:layout_constraintEnd_toEndOf="parent"
             cardview:layout_constraintStart_toStartOf="parent"
-            cardview:layout_constraintTop_toTopOf="parent" />
+            cardview:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="TODO" />
 
         <ImageView
             android:id="@+id/info_Btn"
@@ -38,7 +39,8 @@
             android:src="@drawable/ic__info_24"
             android:layout_margin="4dp"
             cardview:layout_constraintEnd_toEndOf="parent"
-            cardview:layout_constraintTop_toTopOf="parent" />
+            cardview:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="TODO" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -71,7 +73,8 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="8dp"
                     android:numStars="5"
-                    android:paddingStart="4dp" />
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"/>
 
 
             </LinearLayout>
@@ -79,13 +82,15 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_location_on_black_24dp" />
+                android:src="@drawable/ic_location_on_black_24dp"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@+id/book_distance"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingTop="10dp"
+                android:paddingStart="2dp"
                 android:paddingEnd="2dp"
                 android:text="2" />
 
@@ -93,6 +98,7 @@
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
                 android:paddingStart="2dp"
+                android:paddingEnd="2dp"
                 android:paddingTop="10dp"
                 android:text="@string/km" />
 

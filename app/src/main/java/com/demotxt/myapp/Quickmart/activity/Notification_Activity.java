@@ -13,6 +13,7 @@ import com.demotxt.myapp.Quickmart.utils.Tools;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Notification_Activity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
@@ -43,7 +44,7 @@ public class Notification_Activity extends AppCompatActivity {
     private void initToolbar() {
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Notifications");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Notifications");
         Tools.setSystemBarColor(this);
     }
 }

@@ -140,5 +140,6 @@
     <string name="OrdId">Order Id</string>
 
     <string name="CartITem">Cart Items</string>
+    <string name="todo">TODO</string>
 
 </resources>
