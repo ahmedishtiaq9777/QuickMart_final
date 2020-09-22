@@ -2,6 +2,7 @@ package com.demotxt.myapp.Quickmart.CategoryFragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -14,12 +15,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -38,6 +37,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
@@ -65,7 +65,7 @@ public class CatKids_Fragment extends Fragment {
         //  connection=new CheckConnection(getActivity());
         dialog = new CustomInternetDialog(getActivity());
         //
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.Accounttypes,
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(Objects.requireNonNull(getContext()), R.array.Accounttypes,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
@@ -75,7 +75,7 @@ public class CatKids_Fragment extends Fragment {
 
         //int   sid=getArguments().getInt("user_id");
         TabsBasic activity = (TabsBasic) getActivity();// get acticity data
-        int sid = activity.getuserid();
+        int sid = Objects.requireNonNull(activity).getuserid();
         String userid = String.valueOf(sid);
         String url = hostinglink + "/Home/getprowithsellerid";
         getconnection(url, userid);
@@ -85,7 +85,7 @@ public class CatKids_Fragment extends Fragment {
     }
 
     public void getconnection(String url, final String seller_id) {
-        final RequestQueue request = Volley.newRequestQueue(getContext());
+        final RequestQueue request = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
 
 
         StringRequest rRequest = new StringRequest(Request.Method.POST, url,
@@ -118,15 +118,15 @@ public class CatKids_Fragment extends Fragment {
         ) {
             @Override
             protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("sellerid", seller_id);
                 params.put("category", "Kid");
 
                 return params;
             }
 
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
                 params.put("Content-Type", "application/x-www-form-urlencoded");
                 return params;
             }
@@ -159,9 +159,9 @@ public class CatKids_Fragment extends Fragment {
 
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
 
-        inflater = getActivity().getMenuInflater();
+        inflater = Objects.requireNonNull(getActivity()).getMenuInflater();
         inflater.inflate(R.menu.menu_search_setting, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);

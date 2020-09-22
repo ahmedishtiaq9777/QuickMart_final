@@ -11,7 +11,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -27,6 +26,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
@@ -67,7 +67,7 @@ public class Order_Detail_Activity extends AppCompatActivity {
 
         //Receive Data
         Intent intent = getIntent();
-        String Price = intent.getExtras().getString("Price");
+        String Price = Objects.requireNonNull(intent.getExtras()).getString("Price");
         String status = intent.getExtras().getString("Status");
         String id = intent.getExtras().getString("ID");
         String date = intent.getExtras().getString("Date");
@@ -80,7 +80,7 @@ public class Order_Detail_Activity extends AppCompatActivity {
         txt_status.setText(status);
 
         //Progressbar conditions
-        if (status.equals("completed")){
+        if (Objects.requireNonNull(status).equals("completed")){
             mProgressBar.setProgress(100);
         }
         else if (status.equals("ongoing")){
@@ -98,7 +98,7 @@ public class Order_Detail_Activity extends AppCompatActivity {
 
         }catch (Exception e) {
 
-            Log.e("error",e.getMessage());
+            Log.e("error", Objects.requireNonNull(e.getMessage()));
 
         }
     }
@@ -136,14 +136,14 @@ public class Order_Detail_Activity extends AppCompatActivity {
         ){
             @Override
             protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("orderid", Order_Id);
 
                 return params;
             }
 
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
                 params.put("Content-Type", "application/x-www-form-urlencoded");
                 return params;
             }

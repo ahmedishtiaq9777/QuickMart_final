@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/loginbg"
     tools:context="com.demotxt.myapp.Quickmart.activity.Forgot_Pass_Activity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,13 +21,14 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:textColor="@color/txtcolor"
-            android:textSize="34dp"
+            android:textSize="34sp"
             android:textStyle="bold"
             android:src="@drawable/logo3"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="TODO" />
 
         <LinearLayout
             android:id="@+id/linearLayout4"
@@ -84,8 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
             android:layout_marginEnd="60dp"
-            android:background="@drawable/button_border"
-            android:backgroundTint="@color/logintxt"
+            android:background="@drawable/ripple_effect_button"
             android:gravity="center"
             android:padding="10dp"
             android:text="@string/SubmitBtn"
@@ -115,13 +114,14 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:textColor="@color/txtcolor"
-            android:textSize="34dp"
+            android:textSize="34sp"
             android:textStyle="bold"
             android:src="@drawable/logo3"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout12"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="TODO" />
 
         <LinearLayout
             android:id="@+id/linearLayout12"
@@ -178,8 +178,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
             android:layout_marginEnd="60dp"
-            android:background="@drawable/button_border"
-            android:backgroundTint="@color/logintxt"
+            android:background="@drawable/ripple_effect_button"
             android:gravity="center"
             android:padding="10dp"
             android:text="@string/SubmitBtn"

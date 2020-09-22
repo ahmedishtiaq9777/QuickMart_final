@@ -12,9 +12,6 @@ public class CartListBeanlist implements Serializable {
     private String title;
     @SerializedName("price")
     private double price;
-
-
-
     @SerializedName("productId")
     private  int Id;
     @SerializedName("userQuantity")
@@ -23,8 +20,6 @@ public class CartListBeanlist implements Serializable {
     private int sellerQuantity;
     @SerializedName("sellerId")
     private  int Sellerid;
-
-
     @SerializedName("description")
     private String Description;
     @SerializedName("specificationid")

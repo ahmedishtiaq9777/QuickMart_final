@@ -1,5 +1,7 @@
 package com.demotxt.myapp.Quickmart.Order;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 public class Order_Detail {
@@ -31,6 +33,7 @@ public class Order_Detail {
         Title = title;
     }
 
+    @NonNull
     public String getPrice() {
         return String.valueOf(Price);
     }

@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardview2"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    android:layout_width="150dp"
-    android:layout_height="210dp"
+    android:layout_width="160dp"
+    android:layout_height="200dp"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="6dp"
-    cardview:cardCornerRadius="4dp">
+    android:layout_margin="10dp"
+    cardview:cardCornerRadius="4dp"
+    android:focusable="true">
 
     <LinearLayout
         android:orientation="vertical"
@@ -21,11 +23,12 @@
         <ImageView
             android:id="@+id/book_img_id"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="160dp"
             android:scaleType="centerCrop"
             android:background="#2d2d2d"
-            android:src="@drawable/loadingbackgroundd"
-            android:transitionName="test"/>
+            android:transitionName="test"
+            android:contentDescription="TODO"
+            tools:targetApi="lollipop" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -33,7 +36,7 @@
                 android:src="@drawable/ic_favorite_border_24dp"
                 android:id="@+id/heart"
                 android:layout_alignParentEnd="true"
-                />
+                android:contentDescription="TODO" />
 
         </RelativeLayout>
 
@@ -41,45 +44,48 @@
             android:layout_width="match_parent"
             android:layout_height="20dp">
 
-            <TextView
-                android:id="@+id/book_title_id"
-                android:layout_width="75dp"
+
+            <androidx.appcompat.widget.AppCompatRatingBar
+                android:id="@+id/card_RatingBar"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-               android:layout_marginLeft="5dp"
-                android:text="P_Name"
-                android:textColor="#2d2d2d"
-                android:textSize="13sp"
-                android:textStyle="normal" />
+                android:numStars="5"
+                android:layout_marginStart="8dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:layout_marginStart="3dp"
                 android:text="Rs. "
-                android:layout_marginStart="14dp"
                 android:textColor="@color/green2"
                 android:textSize="13sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/book_prod_price"
-                android:layout_width="wrap_content"
+                android:layout_width="45dp"
                 android:layout_height="match_parent"
-                android:gravity="center"
+                android:gravity="left"
                 android:text="@string/price"
                 android:textColor="@color/green2"
                 android:textSize="13sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
-
-        <androidx.appcompat.widget.AppCompatRatingBar
-            android:id="@+id/card_RatingBar"
-            style="@style/Widget.AppCompat.RatingBar.Small"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/book_title_id"
+            android:layout_width="147dp"
             android:layout_height="match_parent"
-            android:numStars="5"
-            android:layout_marginStart="8dp"/>
+            android:layout_marginLeft="5dp"
+            android:gravity="left"
+            android:text="P_Name"
+            android:textColor="#2d2d2d"
+            android:textSize="11sp"
+            android:textStyle="normal" />
+
+
 
     </LinearLayout>
 

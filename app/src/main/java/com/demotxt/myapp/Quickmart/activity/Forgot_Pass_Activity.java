@@ -11,7 +11,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -21,7 +20,6 @@ import com.android.volley.toolbox.Volley;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
-import com.demotxt.myapp.Quickmart.ownmodels.UserModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -37,8 +35,10 @@ public class Forgot_Pass_Activity extends AppCompatActivity {
     EditText PhoneNo, OTP_Text;
     Button Forget_Btn, SendOTP;
     int randomNumber;
-    int range = 9;
-    int length = 4, val, userPin;
+    final int range = 9;
+    final int length = 4;
+    int val;
+    int userPin;
     SharedPreferences mPreferences;
     SharedPreferences.Editor mEditor;
     private StringResponceFromWeb result;
@@ -119,10 +119,10 @@ public class Forgot_Pass_Activity extends AppCompatActivity {
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
                             result = gson.fromJson(response, StringResponceFromWeb.class);
-                            if (result.getresult().equals("NotRegistered")) {
+                            if(result.getresult().equals("NotRegistered")) {
 
                             } else {
-                                String var = result.getresult().toString();
+                                String var = result.getresult();
                                 Intent forg = new Intent(Forgot_Pass_Activity.this, Password_Activity.class);
                                 forg.putExtra("password", var);
                                 forg.putExtra("number", PhoneNo.getText().toString());
@@ -139,14 +139,14 @@ public class Forgot_Pass_Activity extends AppCompatActivity {
             ) {
                 @Override
                 protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
+                    Map<String, String> params = new HashMap<>();
 
                     params.put("phoneNo", PhoneNo.getText().toString());
                     return params;
                 }
 
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<String, String>();
+                public Map<String, String> getHeaders() {
+                    Map<String, String> params = new HashMap<>();
                     params.put("Content-Type", "application/x-www-form-urlencoded");
                     return params;
                 }
@@ -193,14 +193,14 @@ public class Forgot_Pass_Activity extends AppCompatActivity {
             ) {
                 @Override
                 protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
+                    Map<String, String> params = new HashMap<>();
 
                     params.put("phoneNo", PhoneNo.getText().toString());
                     return params;
                 }
 
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<String, String>();
+                public Map<String, String> getHeaders() {
+                    Map<String, String> params = new HashMap<>();
                     params.put("Content-Type", "application/x-www-form-urlencoded");
                     return params;
                 }
@@ -216,16 +216,16 @@ public class Forgot_Pass_Activity extends AppCompatActivity {
     //To Generate a Random 4 Digit PIN
     public int generateRandomNumber() {
         SecureRandom secureRandom = new SecureRandom();
-        String s = "";
+        StringBuilder s = new StringBuilder();
         for (int i = 0; i < length; i++) {
             int number = secureRandom.nextInt(range);
             if (number == 0 && i == 0) { // to prevent the Zero to be the first number as then it will reduce the length of generated pin to three or even more if the second or third number came as zeros
                 i = -1;
                 continue;
             }
-            s = s + number;
+            s.append(number);
         }
-        randomNumber = Integer.parseInt(s);
+        randomNumber = Integer.parseInt(s.toString());
         OTPPref();
         SendOTP_PIN();
         return randomNumber;
@@ -233,7 +233,6 @@ public class Forgot_Pass_Activity extends AppCompatActivity {
 
     //To save OTP Pin in Shared Pref
     public void OTPPref() {
-        ;
         mEditor.putInt("OTP_PIN", randomNumber);
         mEditor.commit();
     }

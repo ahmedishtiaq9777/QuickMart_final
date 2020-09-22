@@ -49,7 +49,6 @@ import com.demotxt.myapp.Quickmart.activity.MainActivity2;
 import com.demotxt.myapp.Quickmart.activity.Notification_Activity;
 import com.demotxt.myapp.Quickmart.activity.Splash_Activity;
 import com.demotxt.myapp.Quickmart.activity.Web_Activity;
-import com.demotxt.myapp.Quickmart.activity.editDetails;
 import com.demotxt.myapp.Quickmart.ownmodels.ContactDialog;
 import com.demotxt.myapp.Quickmart.ownmodels.CustomDialoag;
 import com.demotxt.myapp.Quickmart.ownmodels.DetailModel;

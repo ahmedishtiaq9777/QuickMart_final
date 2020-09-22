@@ -26,15 +26,16 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKidsViewHolder> implements Filterable {
 
-    private Context mContext;
+    private final Context mContext;
     private List<Catkids> mData;
-    private List<Catkids> mDataFull;
+    private final List<Catkids> mDataFull;
     //
     private SharedPreferences cartpreferrence;
     private SharedPreferences.Editor cartprefEditor;
@@ -92,7 +93,7 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
                 intent.putExtra("sellerid",mData.get(position).getUserId());
                 //Transition Test
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,
-                        holder.img_kids_thumbnail, ViewCompat.getTransitionName(holder.img_kids_thumbnail));
+                        holder.img_kids_thumbnail, Objects.requireNonNull(ViewCompat.getTransitionName(holder.img_kids_thumbnail)));
 
                 // start the activity
                 mContext.startActivity(intent,optionsCompat.toBundle());
@@ -169,10 +170,12 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
 
     public static class CatKidsViewHolder extends RecyclerView.ViewHolder   {
 
-        TextView tv_kids_title,tv_price;
-        ImageView img_kids_thumbnail, heart;
-        CardView cardView;
-        AppCompatRatingBar mRatingBar;
+        final TextView tv_kids_title;
+        final TextView tv_price;
+        final ImageView img_kids_thumbnail;
+        final ImageView heart;
+        final CardView cardView;
+        final AppCompatRatingBar mRatingBar;
 
 
         public CatKidsViewHolder(@NonNull View itemView) {
@@ -194,7 +197,7 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
         return mDataFilter;
     }
 
-    private Filter mDataFilter = new Filter() {
+    private final Filter mDataFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Catkids> filteredList = new ArrayList<>();

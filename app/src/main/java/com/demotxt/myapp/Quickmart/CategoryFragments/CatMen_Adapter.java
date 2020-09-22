@@ -26,15 +26,16 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class CatMen_Adapter extends RecyclerView.Adapter<CatMen_Adapter.CatMenViewHolder> implements Filterable {
 
-    private Context mContext;
+    private final Context mContext;
     private List<CatMen> mData;
-    private List<CatMen> mDataFull;
+    private final List<CatMen> mDataFull;
     //
     private SharedPreferences cartpreferrence;
     private SharedPreferences.Editor cartprefEditor;
@@ -94,7 +95,7 @@ public class CatMen_Adapter extends RecyclerView.Adapter<CatMen_Adapter.CatMenVi
                 intent.putExtra("sellerid",mData.get(position).getUserId());
                 //Transition Test
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,
-                        holder.img_men_thumbnail, ViewCompat.getTransitionName(holder.img_men_thumbnail));
+                        holder.img_men_thumbnail, Objects.requireNonNull(ViewCompat.getTransitionName(holder.img_men_thumbnail)));
 
                 // start the activity
                 mContext.startActivity(intent,optionsCompat.toBundle());
@@ -167,10 +168,12 @@ public class CatMen_Adapter extends RecyclerView.Adapter<CatMen_Adapter.CatMenVi
 
     public static class CatMenViewHolder extends RecyclerView.ViewHolder   {
 
-        TextView tv_men_title,tv_price;
-        ImageView img_men_thumbnail, heart;
-        CardView cardView;
-        AppCompatRatingBar mRatingBar;
+        final TextView tv_men_title;
+        final TextView tv_price;
+        final ImageView img_men_thumbnail;
+        final ImageView heart;
+        final CardView cardView;
+        final AppCompatRatingBar mRatingBar;
 
 
         public CatMenViewHolder(@NonNull View itemView) {
@@ -191,7 +194,7 @@ public class CatMen_Adapter extends RecyclerView.Adapter<CatMen_Adapter.CatMenVi
         return mDataFilter;
     }
 
-    private Filter mDataFilter = new Filter() {
+    private final Filter mDataFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<CatMen> filteredList = new ArrayList<>();

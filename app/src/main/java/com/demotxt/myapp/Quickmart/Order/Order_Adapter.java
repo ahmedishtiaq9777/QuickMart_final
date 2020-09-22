@@ -18,8 +18,8 @@ import java.util.Set;
 
 public class Order_Adapter extends RecyclerView.Adapter<Order_Adapter.OrderViewHolder>{
 
-    private Context mContext;
-    private List<Order> mData;
+    private final Context mContext;
+    private final List<Order> mData;
 
     //  private List<Integer> Ids;
     public Set<String> ids;
@@ -73,8 +73,11 @@ public class Order_Adapter extends RecyclerView.Adapter<Order_Adapter.OrderViewH
 
     public static class OrderViewHolder extends RecyclerView.ViewHolder   {
 
-        TextView Order_Id,Order_Price,Order_Status,Order_Date;
-        CardView cardView;
+        final TextView Order_Id;
+        final TextView Order_Price;
+        final TextView Order_Status;
+        final TextView Order_Date;
+        final CardView cardView;
 
 
         public OrderViewHolder(@NonNull View itemView) {

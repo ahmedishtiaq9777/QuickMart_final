@@ -1,7 +1,5 @@
 package com.demotxt.myapp.Quickmart.ownmodels;
 
-import android.content.Context;
-
 import com.google.gson.annotations.SerializedName;
 
 public class Book {

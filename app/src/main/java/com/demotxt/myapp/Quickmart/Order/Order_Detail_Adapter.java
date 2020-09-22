@@ -17,8 +17,8 @@ import java.util.List;
 
 public class Order_Detail_Adapter extends RecyclerView.Adapter<Order_Detail_Adapter.OrderViewHolder>{
 
-    private Context mContext;
-    private List<Order_Detail> mData;
+    private final Context mContext;
+    private final List<Order_Detail> mData;
 
     public Order_Detail_Adapter(Context mContext, List<Order_Detail> mdata){
         this.mContext=mContext;
@@ -39,7 +39,7 @@ public class Order_Detail_Adapter extends RecyclerView.Adapter<Order_Detail_Adap
     public void onBindViewHolder(@NonNull final OrderViewHolder holder, final int position) {
 
         holder.ProdName.setText(mData.get(position).getTitle());
-        holder.ProdPrice.setText(String.valueOf(mData.get(position).getPrice()));
+        holder.ProdPrice.setText(mData.get(position).getPrice());
         holder.ProdQuantity.setText(mData.get(position).getQuantity());
         Picasso.get().load(mData.get(position).getImage()).into(holder.ProdImage);
 
@@ -53,8 +53,10 @@ public class Order_Detail_Adapter extends RecyclerView.Adapter<Order_Detail_Adap
 
     public static class OrderViewHolder extends RecyclerView.ViewHolder   {
 
-        TextView ProdName,ProdQuantity,ProdPrice;
-        ImageView ProdImage;
+        final TextView ProdName;
+        final TextView ProdQuantity;
+        final TextView ProdPrice;
+        final ImageView ProdImage;
 
 
         public OrderViewHolder(@NonNull View itemView) {

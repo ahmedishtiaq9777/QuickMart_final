@@ -17,6 +17,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/editCheckout_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_edit_profile"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textColor="@color/profiletext"
+            android:textStyle="bold"
+            android:elevation="12dp"
+            android:textSize="20sp"
+            app:fontFamily="sans-serif-medium"
+            android:textAlignment="viewEnd"
+            tools:targetApi="lollipop" />
+
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -117,7 +132,8 @@
             android:src="@drawable/ic_account_box_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="TODO" />
 
         <TextView
             android:id="@+id/txt_P_Name"
@@ -180,16 +196,15 @@
             android:checked="true"
             android:text="@string/cash_on_dilivery"
             android:textColor="@color/profiletext"
-            android:textSize="15dp" />
+            android:textSize="15sp" />
 
         <RadioButton
-            android:id="@+id/card_Rd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:enabled="false"
             android:text="@string/pay_with_card"
             android:textColor="@color/disabletext"
-            android:textSize="15dp" />
+            android:textSize="15sp" />
     </LinearLayout>
 
 
@@ -203,10 +218,11 @@
         android:padding="16dp"
         android:text="@string/Done"
         android:textColor="@color/navbartext"
-        android:textSize="18dp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout7" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout7"
+        tools:targetApi="lollipop" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

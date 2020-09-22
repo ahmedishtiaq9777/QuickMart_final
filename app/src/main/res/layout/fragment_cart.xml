@@ -22,16 +22,13 @@
     <Button
         android:id="@+id/pay"
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="false"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="3dp"
-        android:background="@drawable/button_border"
-        android:backgroundTint="@color/buttonbg"
+        android:background="@drawable/ripple_effect_button"
         android:gravity="center"
         android:padding="16dp"
         android:text="@string/PlaceOrder"

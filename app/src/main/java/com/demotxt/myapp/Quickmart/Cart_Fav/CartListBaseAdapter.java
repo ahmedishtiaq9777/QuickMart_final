@@ -115,13 +115,14 @@ public class CartListBaseAdapter extends BaseAdapter {
 
 
     }
-
+    //TODO Changed Array
     public void initializearray() {
         Bean = new ArrayList<>();
-        for (CartListBeanlist item : BeanTemp) {
+        Bean.addAll(BeanTemp);
+        /*for (CartListBeanlist item : BeanTemp) {
             Bean.add(item);
 
-        }
+        }*/
     }
 
 
@@ -477,7 +478,7 @@ public class CartListBaseAdapter extends BaseAdapter {
 
     }
 
-    private class ViewHolder {
+    private static class ViewHolder {
         ImageView image;
         ImageView plus;
         ImageView minus;

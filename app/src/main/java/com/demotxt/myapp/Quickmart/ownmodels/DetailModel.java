@@ -9,8 +9,8 @@ import com.demotxt.myapp.Quickmart.R;
 
 public class DetailModel {
 
-    private Context ctx;
-    private SharedPreferences default_prefence;
+    private final Context ctx;
+    private final SharedPreferences default_prefence;
 
     public DetailModel(Context context) {
         this.ctx = context;

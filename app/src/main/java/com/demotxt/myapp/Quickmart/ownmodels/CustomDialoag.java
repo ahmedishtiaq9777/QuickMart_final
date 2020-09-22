@@ -15,17 +15,19 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.airbnb.lottie.LottieAnimationView;
 import com.demotxt.myapp.Quickmart.R;
 
+import java.util.Objects;
+
 public class CustomDialoag extends AppCompatActivity {
-    private Context context;
+    private final Context context;
     LottieAnimationView lav;
     boolean isChecked = false;
     public static final String MYPREFRENCES = "nightModePrefs";
     public static final String KEY_ISNIGHTMODE = "isNightMode";
-    SharedPreferences sharedPreferences;
+    final SharedPreferences sharedPreferences;
 
     public CustomDialoag(Context cntx) {
         context = cntx;
-        sharedPreferences = context.getSharedPreferences(MYPREFRENCES,context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences(MYPREFRENCES, MODE_PRIVATE);
     }
 
     @Override
@@ -65,7 +67,7 @@ public class CustomDialoag extends AppCompatActivity {
 
         buttonCheck();
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.copyFrom(Objects.requireNonNull(dialog.getWindow()).getAttributes());
         lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         dialog.show();

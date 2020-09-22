@@ -39,9 +39,10 @@ import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
 public class Shipping extends AppCompatActivity {
 
     EditText t1, t3, t4;
-    TextView city;
+    TextView city,editCheckout_Btn;
     Button ship;
     AwesomeValidation awesomeValidation;
+    @androidx.annotation.Nullable
     ArrayList<CartListBeanlist> list;
     SharedPreferences loginpref;
     String Userid,name,contact,address;
@@ -65,6 +66,8 @@ public class Shipping extends AppCompatActivity {
         t1 = (EditText) findViewById(R.id.nameShip);
         t3 = (EditText) findViewById(R.id.contactShip);
         t4 = (EditText) findViewById(R.id.addShip);
+        t4 = (EditText) findViewById(R.id.addShip);
+        editCheckout_Btn = findViewById(R.id.editCheckout_btn);
         //
         t1.setEnabled(false);
         t3.setEnabled(false);
@@ -72,6 +75,17 @@ public class Shipping extends AppCompatActivity {
 
         //
 
+        //Edit Checkout Detail
+        editCheckout_Btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent ch = new Intent(Shipping.this,Detail_Activity.class);
+                startActivity(ch);
+            }
+        });
+
+
+        //
         ship.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -135,7 +149,7 @@ public class Shipping extends AppCompatActivity {
                     },
                     new Response.ErrorListener() {
                         @Override
-                        public void onErrorResponse(VolleyError error) {
+                        public void onErrorResponse(@androidx.annotation.NonNull VolleyError error) {
                             // error
                             Log.i("In OnerrorResponce", error.getMessage());
                             Toast.makeText(getApplicationContext(), "Error" + error.getMessage(), Toast.LENGTH_SHORT).show();

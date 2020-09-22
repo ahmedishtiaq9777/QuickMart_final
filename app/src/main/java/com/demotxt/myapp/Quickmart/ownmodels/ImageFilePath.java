@@ -23,7 +23,7 @@ public class ImageFilePath {
      * @param uri
      * @return path of the selected image file from gallery
      */
-    static String nopath = "Select Video Only";
+    static final String nopath = "Select Video Only";
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @SuppressLint("NewApi")
@@ -52,7 +52,7 @@ public class ImageFilePath {
                 final String id = DocumentsContract.getDocumentId(uri);
                 final Uri contentUri = ContentUris.withAppendedId(
                         Uri.parse("content://downloads/public_downloads"),
-                        Long.valueOf(id));
+                        Long.parseLong(id));
 
                 return getDataColumn(context, contentUri, null, null);
             }

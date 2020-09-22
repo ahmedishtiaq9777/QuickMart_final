@@ -2,6 +2,7 @@ package com.demotxt.myapp.Quickmart.CategoryFragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -17,7 +18,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -26,7 +26,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.activity.TabsBasic;
-import com.demotxt.myapp.Quickmart.ownmodels.CheckConnection;
+import com.demotxt.myapp.Quickmart.ownmodels.CheckConnect;
 import com.demotxt.myapp.Quickmart.ownmodels.CustomInternetDialog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -36,6 +36,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
@@ -45,7 +46,7 @@ public class CatMen_Fragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
 
     List<CatMen> ProdMen;
-    CheckConnection connection;
+    CheckConnect connection;
     CustomInternetDialog dialog;
 
 
@@ -57,7 +58,7 @@ public class CatMen_Fragment extends Fragment {
         View rootview =  inflater.inflate(R.layout.fragment_cat_men_, container, false);
         mRecyclerView = rootview.findViewById(R.id.Rv_CatMen);
 
-        connection=new CheckConnection(getActivity());
+        connection=new CheckConnect(getActivity());
         dialog=new CustomInternetDialog(getActivity());
 
         boolean is_connected=connection.CheckConnection();
@@ -70,7 +71,7 @@ public class CatMen_Fragment extends Fragment {
 
 
         TabsBasic activity=(TabsBasic) getActivity();  // get activity data
-        int sid= activity.getuserid();
+        int sid= Objects.requireNonNull(activity).getuserid();
         Log.i("Seller id",  String.valueOf(sid));
         String userid=String.valueOf(sid);
         String url=hostinglink +"/Home/getprowithsellerid";
@@ -83,7 +84,7 @@ public class CatMen_Fragment extends Fragment {
         return rootview;
     }
     public  void   getconnection(String url, final String seller_id) {
-        final RequestQueue request = Volley.newRequestQueue(getContext());
+        final RequestQueue request = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
 
 
         StringRequest rRequest = new StringRequest(Request.Method.POST, url,
@@ -124,7 +125,7 @@ public class CatMen_Fragment extends Fragment {
         )  {
             @Override
             protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
+                Map<String, String> params = new HashMap<>();
                 params.put("sellerid",seller_id);
                 params.put("category","Men");
 
@@ -144,8 +145,8 @@ public class CatMen_Fragment extends Fragment {
                 return params;
             }
 
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
                 params.put("Content-Type", "application/x-www-form-urlencoded");
                 return params;
             }
@@ -179,9 +180,9 @@ public class CatMen_Fragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
 
-        inflater = getActivity().getMenuInflater();
+        inflater = Objects.requireNonNull(getActivity()).getMenuInflater();
         inflater.inflate(R.menu.menu_search_setting,menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);

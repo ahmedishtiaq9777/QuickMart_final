@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardview_id_r3"
-    android:layout_width="170dp"
-    android:layout_height="230dp"
-    android:layout_margin="12dp"
+    android:layout_width="150dp"
+    android:layout_height="180dp"
+    android:layout_margin="10dp"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     cardview:cardCornerRadius="4dp"
-    >
+    android:focusable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,45 +23,64 @@
             <ImageView
                 android:id="@+id/r3_img_id"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="130dp"
                 android:background="#2d2d2d"
                 android:scaleType="centerCrop"
-                android:transitionName="test"/>
+                android:transitionName="test"
+                android:contentDescription="TODO"
+                tools:targetApi="lollipop" />
 
             <ImageView
                 android:id="@+id/heart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/ic_favorite_border_24dp" />
+                android:src="@drawable/ic_favorite_border_24dp"
+                android:contentDescription="TODO" />
 
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="20dp">
 
+            <androidx.appcompat.widget.AppCompatRatingBar
+                android:id="@+id/card_RatingBar"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5" />
             <TextView
-                android:id="@+id/r3_title_id"
-                android:layout_width="110dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="P_Name"
-                android:textColor="#2d2d2d"
+                android:text="Rs. "
+                android:textColor="@color/green2"
                 android:textSize="13sp"
-                android:textStyle="normal" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/r3_prod_price"
-                android:layout_width="60dp"
+                android:layout_width="45dp"
                 android:layout_height="match_parent"
-                android:gravity="center"
+                android:gravity="left"
                 android:text="Price"
                 android:textColor="@color/green2"
                 android:textSize="13sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/r3_title_id"
+            android:layout_width="147dp"
+            android:layout_height="match_parent"
+            android:gravity="left"
+            android:layout_marginStart="2dp"
+            android:text="P_Name"
+            android:textColor="#2d2d2d"
+            android:textSize="11sp"
+            android:textStyle="normal" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

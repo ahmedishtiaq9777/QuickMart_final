@@ -1,7 +1,5 @@
 package com.demotxt.myapp.Quickmart.ownmodels;
 
-import android.media.Rating;
-
 import com.google.gson.annotations.SerializedName;
 
 public class Prod {
@@ -15,7 +13,7 @@ public class Prod {
     @SerializedName("price")
     private float Price;
     @SerializedName("productId")
-    private int Id;
+    private final int Id;
     @SerializedName("avgRating")
     private float Rating;
     @SerializedName("userId")
@@ -79,7 +77,7 @@ public class Prod {
         Thumbnail = thumbnail;
     }
 
-    public  void setPrice(float price){Price=Price;}
+    public  void setPrice(float price){Price=price;}
 
     public int getSid() {
         return Sid;
