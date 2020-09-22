@@ -13,7 +13,7 @@ public class Book {
     private int id;
     @SerializedName("d_kilometers")
     private String Distance;
-    @SerializedName("")
+    @SerializedName("rating")
     private float Rating;
     @SerializedName("contact")
     private String Contact;
