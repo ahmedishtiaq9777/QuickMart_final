@@ -95,7 +95,6 @@
                         android:layout_width="125dp"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/navbartext"
-
                         tools:targetApi="lollipop" />
 
                     <View
@@ -122,7 +121,7 @@
             android:id="@+id/nested_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/background"
+            android:background="@color/cardbg"
             android:clipToPadding="false"
             android:scrollbars="none"
             android:scrollingCache="true"
@@ -131,7 +130,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/background"
+                android:background="@color/cardbg"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -153,7 +152,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="monospace"
                         android:text="Description"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textColor="@color/profiletext" />
@@ -209,7 +207,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:minHeight="?attr/actionBarSize"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:background="@color/cardbg">
 
                     <ImageButton
                         android:layout_width="?attr/actionBarSize"
@@ -306,8 +305,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:background="@color/background" />
-
-
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
@@ -321,12 +318,12 @@
         android:layout_margin="@dimen/spacing_large"
         android:clickable="true"
         android:src="@drawable/ic_shopping_cart"
-        android:tint="@color/white"
-        app:backgroundTint="@color/red"
+        android:tint="@color/navbartext"
+        app:backgroundTint="@color/green"
         app:fabSize="normal"
         app:layout_anchor="@id/app_bar_layout"
         app:layout_anchorGravity="bottom|right|end"
-        app:rippleColor="@android:color/white"
+        app:rippleColor="@android:color/holo_blue_dark"
         android:focusable="true" />
 
     <Button
@@ -335,14 +332,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:background="@color/red"
+        android:background="@color/green"
         android:text="Buy Now"
-        android:textColor="@color/white"
-        />
-
-
-
-
-
-
+        android:textColor="@color/navbartext" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -56,6 +56,7 @@
                     android:drawableLeft="@drawable/user"
                     android:drawablePadding="17dp"
                     android:drawableTint="@color/txtcolor"
+                    android:inputType="text"
                     android:gravity="left"
                     android:hint="Username"
                     android:lines="1"

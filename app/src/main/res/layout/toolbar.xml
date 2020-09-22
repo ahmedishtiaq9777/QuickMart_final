@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="0dp"
-    android:background="@drawable/gradient2"
+    android:background="@color/navfav"
     android:contentInsetStart="10dp"
     android:contentInsetLeft="10dp"
     android:contentInsetRight="10dp"
@@ -26,11 +26,10 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="45dp"
         android:gravity="center"
-        android:text="@string/Cart"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text"
-
-        />
+        android:text="@string/Orderhistory"
+        android:textColor="@color/navbartext"
+        android:textStyle="bold"
+        android:textSize="@dimen/text" />
 
 
 </androidx.appcompat.widget.Toolbar>

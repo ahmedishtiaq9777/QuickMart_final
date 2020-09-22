@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradient"
+        android:background="@color/navfav"
         android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +42,7 @@
                 android:id="@+id/Txt_NotifyDetail"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="@color/navbartext"
                 android:text="@string/short_lorem_ipsum"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

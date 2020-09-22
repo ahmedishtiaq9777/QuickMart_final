@@ -58,11 +58,11 @@
                 <androidx.appcompat.widget.AppCompatRatingBar
                     android:id="@+id/shop_RatingBar"
                     style="@style/Widget.AppCompat.RatingBar.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_width="85dp"
+                    android:layout_height="18dp"
                     android:numStars="5"
                     android:paddingStart="4dp"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="38dp"/>
 
 
             </LinearLayout>

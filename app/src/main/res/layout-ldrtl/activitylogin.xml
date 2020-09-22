@@ -46,6 +46,7 @@
                 android:drawableLeft="@drawable/user"
                 android:drawablePadding="12dp"
                 android:drawableTint="@color/txtcolor"
+                android:inputType="phone"
                 android:gravity="left"
                 android:hint="@string/pref_title_phone"
                 android:lines="1"

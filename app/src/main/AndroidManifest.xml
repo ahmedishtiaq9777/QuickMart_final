@@ -29,7 +29,6 @@
         <activity android:name=".Order.Order_Detail_Activity" />
         <activity android:name=".Order.Order_Activity" />
         <activity android:name=".activity.AnimationOrder" />
-        <activity android:name=".activity.editDetails" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

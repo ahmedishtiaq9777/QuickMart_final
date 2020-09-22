@@ -38,10 +38,10 @@
         android:tint="@color/white"
         app:backgroundTint="@color/buttonbg"
         app:fabSize="normal"
-        app:rippleColor="@android:color/white"
         android:layout_above="@id/nav_view"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="40dp"
         android:layout_marginEnd="20dp"
-        android:focusable="true" />
+        android:focusable="true"
+        app:rippleColor="@android:color/holo_purple" />
 </RelativeLayout>
