@@ -24,7 +24,8 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@drawable/ic_cloud_off"
-            android:tint="@color/navbartext" />
+            android:tint="@color/navbartext"
+            android:contentDescription="TODO" />
 
         <TextView
             android:id="@+id/title"
@@ -47,7 +48,7 @@
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         android:textColor="@color/text"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/Reload_button"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,14 +58,13 @@
 
     <Button
         android:id="@+id/Reload_button"
-        android:background="@drawable/button_border"
-        android:backgroundTint="@color/buttonbg"
+        android:background="@drawable/ripple_effect_button"
         android:layout_width="195dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
         android:text="@string/Reload"
         android:textColor="#ffff"
-        android:textSize="25dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

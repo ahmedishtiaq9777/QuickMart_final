@@ -18,15 +18,15 @@ import java.util.List;
 
 
 public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewAdapter.OrderViewHolder> {
-    private List<OrderViewImg> mOrderList;
+    private final List<OrderViewImg> mOrderList;
     private StringResponceFromWeb result;
 
     public static class OrderViewHolder extends RecyclerView.ViewHolder{
-        public ImageView imageView;
+        public final ImageView imageView;
         public ImageView plus,minus;
-        public TextView tit;
-        public TextView qty;
-        public TextView pri;
+        public final TextView tit;
+        public final TextView qty;
+        public final TextView pri;
 
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,6 +22,7 @@ import com.google.gson.GsonBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
@@ -32,6 +32,7 @@ public class Password_Activity extends AppCompatActivity {
     Button ChangePass_Btn;
     StringResponceFromWeb result;
     String pass, con_Pass;
+    //TODO Validation on New Password
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class Password_Activity extends AppCompatActivity {
 
         //
         Intent i = getIntent();
-        String no = i.getExtras().getString("number");
+        String no = Objects.requireNonNull(i.getExtras()).getString("number");
         String p = i.getExtras().getString("password");
 
         //
@@ -105,7 +106,7 @@ public class Password_Activity extends AppCompatActivity {
             ) {
                 @Override
                 protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
+                    Map<String, String> params = new HashMap<>();
 
                     params.put("phoneNo", Phone.getText().toString());
                     params.put("oldpassword", OldPass.getText().toString());
@@ -113,8 +114,8 @@ public class Password_Activity extends AppCompatActivity {
                     return params;
                 }
 
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<String, String>();
+                public Map<String, String> getHeaders() {
+                    Map<String, String> params = new HashMap<>();
                     params.put("Content-Type", "application/x-www-form-urlencoded");
                     return params;
                 }

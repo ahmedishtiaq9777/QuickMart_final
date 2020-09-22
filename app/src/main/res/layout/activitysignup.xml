@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/loginbg"
     android:padding="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,7 +26,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="TODO" />
 
         <LinearLayout
             android:id="@+id/linearLayout3"
@@ -43,7 +43,6 @@
             app:layout_constraintVertical_bias="0.23000002">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colortext"
@@ -63,7 +62,8 @@
                     android:padding="14dp"
                     android:textColor="@color/txtcolor"
                     android:textColorHint="@color/txtcolor"
-                    android:textSize="@dimen/text" />
+                    android:textSize="@dimen/text"
+                    tools:targetApi="m" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,7 +73,6 @@
                 android:background="@color/grey_40" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/email1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colortext"
@@ -94,7 +93,8 @@
                     android:padding="14dp"
                     android:textColor="@color/txtcolor"
                     android:textColorHint="@color/txtcolor"
-                    android:textSize="@dimen/text" />
+                    android:textSize="@dimen/text"
+                    tools:targetApi="m" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -104,7 +104,6 @@
                 android:background="@color/grey_40" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colortext"
@@ -127,7 +126,7 @@
                     android:textSize="@dimen/text"
 
 
-                    />
+                    tools:targetApi="m" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <View
@@ -137,7 +136,6 @@
 
             <LinearLayout
 
-                android:id="@+id/linear4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -156,11 +154,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/logintxt"
-                        android:checked="false" />
+                        android:checked="false"
+                        tools:targetApi="lollipop" />
 
                     <TextView
 
-                        android:id="@+id/remember"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -196,8 +194,7 @@
             android:layout_marginStart="60dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="60dp"
-            android:background="@drawable/button_border"
-            android:backgroundTint="@color/logintxt"
+            android:background="@drawable/ripple_effect_button"
             android:gravity="center"
             android:padding="10dp"
             android:text="Create Account"
@@ -208,7 +205,6 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
         <LinearLayout
-            android:id="@+id/signupline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -221,7 +217,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:layout_marginRight="3dp"
                 android:gravity="center"
                 android:text="Have an account ?"
@@ -235,7 +230,6 @@
                 android:id="@+id/signin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:layout_marginLeft="3dp"
                 android:gravity="center"
                 android:text="@string/signin"
@@ -262,13 +256,14 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:textColor="@color/txtcolor"
-            android:textSize="34dp"
+            android:textSize="34sp"
             android:textStyle="bold"
             android:src="@drawable/logo3"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="TODO" />
 
         <LinearLayout
             android:id="@+id/linearLayout4"
@@ -316,18 +311,20 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
             android:layout_marginEnd="60dp"
-            android:background="@drawable/button_border"
-            android:backgroundTint="@color/logintxt"
+            android:background="@drawable/ripple_effect_button"
+            android:enabled="false"
             android:gravity="center"
             android:padding="10dp"
             android:text="@string/SubmitBtn"
+            android:elevation="20dp"
             android:textColor="@color/txtcolor"
             android:textSize="@dimen/text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
-            app:layout_constraintVertical_bias="0.31" />
+            app:layout_constraintVertical_bias="0.31"
+            tools:targetApi="lollipop" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

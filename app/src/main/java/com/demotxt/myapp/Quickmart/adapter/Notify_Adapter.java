@@ -18,8 +18,8 @@ import java.util.List;
 
 public class Notify_Adapter extends RecyclerView.Adapter<Notify_Adapter.OrderViewHolder>{
 
-    private Context mContext;
-    private List<Notify> mData;
+    private final Context mContext;
+    private final List<Notify> mData;
 
     public Notify_Adapter(Context mContext, List<Notify> mdata){
         this.mContext=mContext;
@@ -58,9 +58,9 @@ public class Notify_Adapter extends RecyclerView.Adapter<Notify_Adapter.OrderVie
 
     public static class OrderViewHolder extends RecyclerView.ViewHolder   {
 
-        TextView Detail;
-        CardView cardView;
-        ImageView cross;
+        final TextView Detail;
+        final CardView cardView;
+        final ImageView cross;
 
 
         public OrderViewHolder(@NonNull View itemView) {

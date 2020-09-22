@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -24,6 +25,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 //import com.demotxt.myapp.recyclerview.ownmodels.CheckConnection;
 
@@ -50,7 +52,7 @@ public class TabsBasic extends AppCompatActivity {
         }*/
 
         Intent i = getIntent();
-        userid = i.getExtras().getInt("sellerid");
+        userid = Objects.requireNonNull(i.getExtras()).getInt("sellerid");
         // userid=i.getIntExtra("sellerid",0); this
         // userid=7;
         //  Log.i("UserId", "Seller id: "+userid);
@@ -62,7 +64,7 @@ public class TabsBasic extends AppCompatActivity {
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Products");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Products");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Tools.setSystemBarColor(this);
     }
@@ -75,7 +77,7 @@ public class TabsBasic extends AppCompatActivity {
         tab_layout.setupWithViewPager(view_pager);
     }
 
-    private void setupViewPager(ViewPager viewPager) {
+    private void setupViewPager(@NonNull ViewPager viewPager) {
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(PlaceholderFragment.newInstance(0), "Men");
         adapter.addFragment(PlaceholderFragment.newInstance(1), "Women");
@@ -119,14 +121,14 @@ public class TabsBasic extends AppCompatActivity {
         View rootView;
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
             inflater.inflate(R.layout.activity_tabs_basic, container, false);
             return rootView;
         }
     }
 
-    private class SectionsPagerAdapter extends FragmentPagerAdapter {
+    private static class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
@@ -135,6 +137,7 @@ public class TabsBasic extends AppCompatActivity {
             super(manager);
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
             Fragment frag = null;
@@ -157,7 +160,7 @@ public class TabsBasic extends AppCompatActivity {
 
                     break;
             }
-            return frag;
+            return Objects.requireNonNull(frag);
         }
 
         @Override

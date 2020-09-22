@@ -1,7 +1,5 @@
 package com.demotxt.myapp.Quickmart.ownmodels;
 
-import com.google.gson.annotations.SerializedName;
-
 public class Notify {
     private String Text;
 

@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardview_id_r3"
     android:layout_width="150dp"
     android:layout_height="180dp"
     android:layout_margin="10dp"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    cardview:cardCornerRadius="4dp">
+    cardview:cardCornerRadius="4dp"
+    android:focusable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,14 +26,17 @@
                 android:layout_height="130dp"
                 android:background="#2d2d2d"
                 android:scaleType="centerCrop"
-                android:transitionName="test"/>
+                android:transitionName="test"
+                android:contentDescription="TODO"
+                tools:targetApi="lollipop" />
 
             <ImageView
                 android:id="@+id/heart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/ic_favorite_border_24dp" />
+                android:src="@drawable/ic_favorite_border_24dp"
+                android:contentDescription="TODO" />
 
         </RelativeLayout>
 

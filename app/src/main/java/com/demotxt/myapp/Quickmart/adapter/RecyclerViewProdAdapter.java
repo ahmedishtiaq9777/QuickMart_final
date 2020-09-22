@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatRatingBar;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityOptionsCompat;
@@ -28,15 +29,17 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewProdAdapter.MyViewHolder> implements Filterable {
 
-    private Context mContext;
+    private final Context mContext;
     private List<Prod> Data1;
-    private List<Prod> Data1Full;
+    @NonNull
+    private final List<Prod> Data1Full;
     private SharedPreferences cartpreferrence;
     private SharedPreferences.Editor cartprefEditor;
     private boolean isblack;
@@ -48,11 +51,12 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
         this.mContext = mContext;
         this.Data1 = data1;
         Data1Full = new ArrayList<>(Data1);
-        ids=new HashSet<String>();
+        ids= new HashSet<>();
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         cartpreferrence =   mContext.getSharedPreferences("favpref", MODE_PRIVATE);
         cartprefEditor = cartpreferrence.edit();
         ids=cartpreferrence.getStringSet("ids",ids);
@@ -66,7 +70,7 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
         int ID=Data1.get(position).getId();
         String strID=String.valueOf(ID);
@@ -98,7 +102,7 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
                 intent.putExtra("sellerid",Data1.get(position).getSid());
                 //Transition Test
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,
-                        holder.img_book_thumbnail, ViewCompat.getTransitionName(holder.img_book_thumbnail));
+                        holder.img_book_thumbnail, Objects.requireNonNull(ViewCompat.getTransitionName(holder.img_book_thumbnail)));
 
                 // start the activity
                 mContext.startActivity(intent,optionsCompat.toBundle());
@@ -164,10 +168,12 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_book_title,price;
-        ImageView img_book_thumbnail,heart;
-        CardView cardView ;
-        AppCompatRatingBar mRatingBar;
+        final TextView tv_book_title;
+        final TextView price;
+        final ImageView img_book_thumbnail;
+        final ImageView heart;
+        final CardView cardView ;
+        final AppCompatRatingBar mRatingBar;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -187,7 +193,7 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
         return mDataFilter;
     }
 
-    private Filter mDataFilter = new Filter() {
+    private final Filter mDataFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Prod> filteredList = new ArrayList<>();

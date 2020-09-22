@@ -17,7 +17,7 @@
     app:contentInsetRight="10dp"
     app:contentInsetStart="10dp"
 
-    >
+    tools:targetApi="lollipop">
 
 
     <androidx.appcompat.widget.AppCompatTextView

@@ -13,7 +13,7 @@ public class Search_Model {
     @SerializedName("price")
     private float Price;
     @SerializedName("productId")
-    private int Id;
+    private final int Id;
     @SerializedName("avgRating")
     private float Rating;
     @SerializedName("userId")
@@ -83,5 +83,5 @@ public class Search_Model {
         Thumbnail = thumbnail;
     }
 
-    public  void setPrice(float price){Price=Price;}
+    public  void setPrice(float price){Price=price;}
 }

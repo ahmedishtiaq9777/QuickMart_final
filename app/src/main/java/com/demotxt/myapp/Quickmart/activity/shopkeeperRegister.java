@@ -10,8 +10,4 @@ import androidx.core.app.AppComponentFactory;
 
 public class shopkeeperRegister extends AppComponentFactory {
 
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-
-
-    }
 }

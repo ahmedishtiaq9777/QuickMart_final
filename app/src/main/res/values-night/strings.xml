@@ -72,7 +72,7 @@
     <string name="pref_title_email">Email</string>
     <string name="pref_title_phone">Phone Number</string>
     <string name="pref_title_address">Address</string>
-    <string name="default_your_name">Your Name</string>
+    <string name="default_your_name" translatable="false">Your Name</string>
     <string name="default_your_email">abc@gmail.com</string>
     <string name="default_your_phone">03*********</string>
     <string name="default_your_address">Your Address</string>
@@ -108,4 +108,5 @@
     </string-array>
 
     <string name="hosting" translatable="false">http://ahmedishtiaq165-001-site1.ftempurl.com</string>
+    <string name="todo">TODO</string>
 </resources>

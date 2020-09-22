@@ -14,9 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.demotxt.myapp.Quickmart.ownmodels.CustomInternetDialog;
 import com.demotxt.myapp.Quickmart.R;
 
-//import com.demotxt.myapp.recyclerview.fragment.FragmentConfirmation;
-//import com.demotxt.myapp.recyclerview.ownmodels.CheckConnection;
-
 public class Error_Screen_Activity extends AppCompatActivity {
 
     private Button reload;

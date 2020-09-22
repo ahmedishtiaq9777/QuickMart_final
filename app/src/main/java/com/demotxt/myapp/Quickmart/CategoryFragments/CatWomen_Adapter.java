@@ -23,15 +23,16 @@ import com.demotxt.myapp.Quickmart.activity.Prod_Activity;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class CatWomen_Adapter extends RecyclerView.Adapter<CatWomen_Adapter.CatWomenViewHolder> implements Filterable {
 
-    private Context mContext;
+    private final Context mContext;
     private List<CatWomen> mData;
-    private List<CatWomen> mDataFull;
+    private final List<CatWomen> mDataFull;
     //
     private SharedPreferences cartpreferrence;
     private SharedPreferences.Editor cartprefEditor;
@@ -92,7 +93,7 @@ public class CatWomen_Adapter extends RecyclerView.Adapter<CatWomen_Adapter.CatW
                 intent.putExtra("sellerid",mData.get(position).getUserId());
                 //Transition Test
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,
-                        holder.img_women_thumbnail, ViewCompat.getTransitionName(holder.img_women_thumbnail));
+                        holder.img_women_thumbnail, Objects.requireNonNull(ViewCompat.getTransitionName(holder.img_women_thumbnail)));
 
                 // start the activity
                 mContext.startActivity(intent,optionsCompat.toBundle());
@@ -165,10 +166,12 @@ public class CatWomen_Adapter extends RecyclerView.Adapter<CatWomen_Adapter.CatW
 
     public static class CatWomenViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_women_title, tv_price;
-        ImageView img_women_thumbnail, heart;
-        CardView cardView;
-        AppCompatRatingBar mRatingBar;
+        final TextView tv_women_title;
+        final TextView tv_price;
+        final ImageView img_women_thumbnail;
+        final ImageView heart;
+        final CardView cardView;
+        final AppCompatRatingBar mRatingBar;
 
 
         public CatWomenViewHolder(@NonNull View itemView) {
@@ -189,7 +192,7 @@ public class CatWomen_Adapter extends RecyclerView.Adapter<CatWomen_Adapter.CatW
         return mDataFilter;
     }
 
-    private Filter mDataFilter = new Filter() {
+    private final Filter mDataFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<CatWomen> filteredList = new ArrayList<>();

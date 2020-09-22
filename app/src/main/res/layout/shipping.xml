@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
 
 
     <LinearLayout
-        android:id="@+id/shipline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -15,6 +15,21 @@
         android:padding="@dimen/spacing_large"
         android:layout_gravity="center"
         android:background="@color/background">
+
+
+        <TextView
+            android:id="@+id/editCheckout_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_edit_profile"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textColor="@color/profiletext"
+            android:textStyle="bold"
+            android:elevation="12dp"
+            android:textSize="20sp"
+            app:fontFamily="sans-serif-medium"
+            android:textAlignment="viewEnd"
+            tools:targetApi="lollipop" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -80,25 +95,22 @@
 
 
         <TextView
-            android:id="@+id/textView25"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
         <RadioButton
-            android:id="@+id/radioButton1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
             android:text="@string/cash_on_dilivery"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:checked="true"
             android:textColor="@color/profiletext"/>
         <RadioButton
-            android:id="@+id/radioButton2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pay_with_card"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:textColor="@color/disabletext"
             android:enabled="false"/>
 
@@ -111,8 +123,7 @@
             android:layout_marginTop="25dp"
 
             android:text="@string/Done"
-            android:background="@drawable/button_border"
-            android:backgroundTint="@color/buttonbg"
+            android:background="@drawable/ripple_effect_button"
             android:textColor="@color/navbartext"
             android:textSize="18sp" />
 

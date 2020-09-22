@@ -15,6 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class r3_Activity extends AppCompatActivity {
@@ -33,7 +34,7 @@ public class r3_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_r3);
 
 
-        cartids = new HashSet<String>();
+        cartids = new HashSet<>();
 
         loginpref = getSharedPreferences("loginpref", MODE_PRIVATE);// get login preferences which contains information like "userid" and login status
         cartlistpref = getSharedPreferences("cartprefs", MODE_PRIVATE);//get cartpreferences that contains cartitemlist
@@ -51,7 +52,7 @@ public class r3_Activity extends AppCompatActivity {
 
         // Recieve data
         final Intent intent = getIntent();
-        String Title = intent.getExtras().getString("Title");
+        String Title = Objects.requireNonNull(intent.getExtras()).getString("Title");
         String Description = intent.getExtras().getString("Description");
         String image = intent.getExtras().getString("Thumbnail");
         float pRise = intent.getExtras().getFloat("price");

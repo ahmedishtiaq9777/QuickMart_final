@@ -14,9 +14,8 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
-import androidx.annotation.ColorInt;
-import androidx.annotation.ColorRes;
-import androidx.annotation.DrawableRes;
+
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 //import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import  androidx.core.graphics.drawable.RoundedBitmapDrawable;
@@ -53,7 +52,7 @@ public class Tools {
         }
     }
 
-    public static void setSystemBarColor(Activity act, @ColorRes int color) {
+    public static void setSystemBarColor(Activity act, @androidx.annotation.ColorRes int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = act.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -62,7 +61,7 @@ public class Tools {
         }
     }
 
-    public static void setSystemBarColorDialog(Context act, Dialog dialog, @ColorRes int color) {
+    public static void setSystemBarColorDialog(Context act, Dialog dialog, @androidx.annotation.ColorRes int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = dialog.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -107,17 +106,18 @@ public class Tools {
         }
     }
 
-    public static void displayImageOriginal(Context ctx, ImageView img, @DrawableRes int drawable) {
+    public static void displayImageOriginal(Context ctx, ImageView img, @androidx.annotation.DrawableRes int drawable) {
         try {
             Glide.with(ctx).load(drawable)
                     .crossFade()
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(img);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    public static void displayImageRound(final Context ctx, final ImageView img, @DrawableRes int drawable) {
+    public static void displayImageRound(final Context ctx, final ImageView img, @androidx.annotation.DrawableRes  int drawable) {
         try {
             Glide.with(ctx).load(drawable).asBitmap().centerCrop().into(new BitmapImageViewTarget(img) {
                 @Override
@@ -128,6 +128,7 @@ public class Tools {
                 }
             });
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -138,6 +139,7 @@ public class Tools {
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(img);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -164,7 +166,7 @@ public class Tools {
         return name;
     }
 
-    public static int dpToPx(Context c, int dp) {
+    public static int dpToPx(@NonNull Context c, int dp) {
         Resources r = c.getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
@@ -204,7 +206,7 @@ public class Tools {
         });
     }
 
-    public static int dip2px(Context context, float dpValue) {
+    public static int dip2px(@NonNull Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
@@ -224,7 +226,7 @@ public class Tools {
         }
     }
 
-    public static boolean toggleArrow(boolean show, View view) {
+    public static boolean toggleArrow(boolean show, @NonNull View view) {
         return toggleArrow(show, view, true);
     }
 
@@ -238,13 +240,13 @@ public class Tools {
         }
     }
 
-    public static void changeNavigateionIconColor(Toolbar toolbar, @ColorInt int color) {
+    public static void changeNavigateionIconColor(Toolbar toolbar, @androidx.annotation.ColorInt  int color) {
         Drawable drawable = toolbar.getNavigationIcon();
         drawable.mutate();
         drawable.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
     }
 
-    public static void changeMenuIconColor(Menu menu, @ColorInt int color) {
+    public static void changeMenuIconColor(Menu menu, @androidx.annotation.ColorInt int color) {
         for (int i = 0; i < menu.size(); i++) {
             Drawable drawable = menu.getItem(i).getIcon();
             if (drawable == null) continue;
@@ -253,12 +255,13 @@ public class Tools {
         }
     }
 
-    public static void changeOverflowMenuIconColor(Toolbar toolbar, @ColorInt int color) {
+    public static void changeOverflowMenuIconColor(Toolbar toolbar, @androidx.annotation.ColorInt  int color) {
         try {
             Drawable drawable = toolbar.getOverflowIcon();
             drawable.mutate();
             drawable.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -270,6 +273,7 @@ public class Tools {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
+    @NonNull
     public static String toCamelCase(String input) {
         input = input.toLowerCase();
         StringBuilder titleCase = new StringBuilder();
@@ -289,7 +293,7 @@ public class Tools {
         return titleCase.toString();
     }
 
-    public static String insertPeriodically(String text, String insert, int period) {
+    public static String insertPeriodically(@NonNull String text, String insert, int period) {
         StringBuilder builder = new StringBuilder(text.length() + insert.length() * (text.length() / period) + 1);
         int index = 0;
         String prefix = "";

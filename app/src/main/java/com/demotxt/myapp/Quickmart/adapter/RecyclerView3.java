@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.ViewCompat;
@@ -26,20 +28,22 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHolder> implements Filterable {
 
-    private Context mContext;
+    private final Context mContext;
     private List<Prod> Data2;
-    private List<Prod> Data2Full;
+    private final List<Prod> Data2Full;
 
     private SharedPreferences cartpreferrence;
     private SharedPreferences.Editor cartprefEditor;
     private boolean isblack;
     //  private List<Integer> Ids;
+    @Nullable
     public Set<String> ids;
 
 
@@ -47,11 +51,12 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
         this.mContext = mContext;
         this.Data2 = data;
         Data2Full = new ArrayList<>(Data2);
-        ids = new HashSet<String>();
+        ids = new HashSet<>();
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         cartpreferrence = mContext.getSharedPreferences("favpref", MODE_PRIVATE);
         cartprefEditor = cartpreferrence.edit();
@@ -64,7 +69,7 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
 
         int ID = Data2.get(position).getId();
@@ -95,7 +100,7 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
 
                 //Transition Test
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,
-                        holder.img_r3_thumbnail, ViewCompat.getTransitionName(holder.img_r3_thumbnail));
+                        holder.img_r3_thumbnail, Objects.requireNonNull(ViewCompat.getTransitionName(holder.img_r3_thumbnail)));
 
                 // start the activity
                 mContext.startActivity(intent,optionsCompat.toBundle());
@@ -112,14 +117,14 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
                     isblack = cartpreferrence.getBoolean(strID, false);// Check whether selected product is black or not
                     if (isblack == true) {
                         holder.heart.setImageResource(R.drawable.ic_favorite_border_24dp);
-                        ids.remove(strID);
+                        Objects.requireNonNull(ids).remove(strID);
                         cartprefEditor.putBoolean(strID, false);
 
 
                     } else {
                         holder.heart.setImageResource(R.drawable.ic_favorite_fill_24dp);
                         cartprefEditor.putBoolean(strID, true);
-                        ids.add(strID);
+                        Objects.requireNonNull(ids).add(strID);
                         //  Log.i("message", "length: " +ids.size());
                         //  Toast.makeText(, "error:", Toast.LENGTH_SHORT).show();
 
@@ -143,9 +148,11 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_r3_title, r3_price;
-        ImageView img_r3_thumbnail, heart;
-        CardView cardView;
+        final TextView tv_r3_title;
+        final TextView r3_price;
+        final ImageView img_r3_thumbnail;
+        final ImageView heart;
+        final CardView cardView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -165,7 +172,7 @@ public class RecyclerView3 extends RecyclerView.Adapter<RecyclerView3.MyViewHold
         return mDataFilter;
     }
 
-    private Filter mDataFilter = new Filter() {
+    private final Filter mDataFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Prod> filteredList = new ArrayList<>();

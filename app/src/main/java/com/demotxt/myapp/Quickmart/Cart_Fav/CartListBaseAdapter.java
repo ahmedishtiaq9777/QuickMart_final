@@ -58,6 +58,7 @@ public class CartListBaseAdapter extends BaseAdapter {
     private String proid, userid, finalQuantity;
     private int selectionid;
     private StringResponceFromWeb result;
+    private String specId;
     List<String> quantities, proids;
     //List<String> seller_quantities;
 
@@ -114,13 +115,14 @@ public class CartListBaseAdapter extends BaseAdapter {
 
 
     }
-
+    //TODO Changed Array
     public void initializearray() {
         Bean = new ArrayList<>();
-        for (CartListBeanlist item : BeanTemp) {
+        Bean.addAll(BeanTemp);
+        /*for (CartListBeanlist item : BeanTemp) {
             Bean.add(item);
 
-        }
+        }*/
     }
 
 
@@ -217,7 +219,7 @@ public class CartListBaseAdapter extends BaseAdapter {
                 proid = String.valueOf(bean.getId());// get product id from object convert it to string
                 //  Toast.makeText(context,"proid:"+proid,Toast.LENGTH_SHORT).show();
                 //Toast.makeText(context,"Position:"+position,Toast.LENGTH_SHORT).show();
-
+                specId=String.valueOf(bean.getSpecificationid());
                 int quantity_on_cart = Integer.parseInt(viewHolder.Quantity.getText().toString());/// quantity on view
                 if (selectionid == 1) {
                     int Total_pro_quantity = bean.getSellerQuantity();
@@ -252,6 +254,7 @@ public class CartListBaseAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 proid = String.valueOf(bean.getId());
+                specId=String.valueOf(bean.getSpecificationid());
                 //   Toast.makeText(context,"proid:"+proid,Toast.LENGTH_SHORT).show();
                 // Toast.makeText(context,"Position:"+position,Toast.LENGTH_SHORT).show();
                 int quantity_on_cart = Integer.parseInt(viewHolder.Quantity.getText().toString());
@@ -278,7 +281,7 @@ public class CartListBaseAdapter extends BaseAdapter {
                     proid = String.valueOf(bean.getId());
                     if (selectionid == 1) {
 
-                        getconnection(hostinglink + "/home/DeleteProductFromCart", proid);
+                        getconnection(hostinglink + "/home/DeleteProductFromCart", proid,specId);
 
 
                         //CartFragment.list.remove(position);
@@ -319,7 +322,7 @@ public class CartListBaseAdapter extends BaseAdapter {
 
 
     // for deleting product
-    public void getconnection(String url, final String pid) {
+    public void getconnection(String url, final String pid, final String spid) {
         final RequestQueue request = Volley.newRequestQueue(context);
 
 
@@ -359,6 +362,7 @@ public class CartListBaseAdapter extends BaseAdapter {
                 }*/
                 params.put("userid", userid);
                 params.put("proid", pid);
+                params.put("specificationId",spid);
 
                 //  params.p
 
@@ -379,7 +383,7 @@ public class CartListBaseAdapter extends BaseAdapter {
     }
 
     // for saving user quantity
-    public void SaveQuantityInDb(String url, final String Selected_Quantity, final String pid, final String msg) {
+    public void SaveQuantityInDb(String url, final String Selected_Quantity, final String pid, final String msg, final String specificationid) {
 
 
         try {
@@ -400,7 +404,7 @@ public class CartListBaseAdapter extends BaseAdapter {
                             if (ResultForQuantitySave.getresult().equals("SaveSuccessFully")) {
                                 Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                             } else {
-
+                                Toast.makeText(context, ResultForQuantitySave.getresult(), Toast.LENGTH_SHORT).show();
                             }
 
 
@@ -421,6 +425,7 @@ public class CartListBaseAdapter extends BaseAdapter {
                     params.put("quantity", Selected_Quantity);
                     params.put("proid", pid);
                     params.put("userid", userid);
+                    params.put("specificationId",specificationid);
  /*JSONArray jsonArray1= new JSONArray();
  JSONArray jsonArray2= new JSONArray();
 
@@ -468,12 +473,12 @@ public class CartListBaseAdapter extends BaseAdapter {
         //   viewHolder.Quantity.setText(str_quntity_on_cart);
         Log.i("Quantity", "Quantity:" + str_quntity_on_cart);
 
-        SaveQuantityInDb(hostinglink + "/home/SaveQuantityInCart", str_quntity_on_cart, proid, message);/// Intent intent = new Intent("custom-message");
+        SaveQuantityInDb(hostinglink + "/home/SaveQuantityInCart", str_quntity_on_cart, proid, message,specId);/// Intent intent = new Intent("custom-message");
 
 
     }
 
-    private class ViewHolder {
+    private static class ViewHolder {
         ImageView image;
         ImageView plus;
         ImageView minus;
