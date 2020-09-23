@@ -315,7 +315,7 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         try {
             myrv.setLayoutManager(layoutManager);
-
+            myrv.setHasFixedSize(true);
             myrv.setAdapter(myAdapter);
 
 
@@ -329,6 +329,7 @@ public class HomeFragment extends Fragment {
         myAdapter1 = new RecyclerViewProdAdapter(getActivity(), Book22);
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         myrv2.setLayoutManager(layoutManager1);
+        myrv2.setHasFixedSize(true);
         myrv2.setAdapter(myAdapter1);
     }
 
@@ -337,6 +338,7 @@ public class HomeFragment extends Fragment {
         myAdapter2 = new RecyclerView3(getActivity(), mTrends);
         GridLayoutManager layoutManager2 = new GridLayoutManager(getContext(), 2);
         myrv3.setLayoutManager(layoutManager2);
+        myrv3.setHasFixedSize(true);
         myrv3.setAdapter(myAdapter2);
     }
 
@@ -375,21 +377,7 @@ public class HomeFragment extends Fragment {
 
         if(!gps_enabled) {
             // notify user
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
-            builder1.setMessage("Please Enable Gps To Get Nearby Stores");
-            builder1.setCancelable(true);
-
-            builder1.setPositiveButton(
-                    "Ok",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                        }
-                    });
-
-
-            AlertDialog alert11 = builder1.create();
-            alert11.show();
+            Toast.makeText(getContext(), " No Gps ", Toast.LENGTH_SHORT).show();
         }
         else{
             Toast.makeText(getContext(), "GPS IS ENABLED", Toast.LENGTH_SHORT).show();
