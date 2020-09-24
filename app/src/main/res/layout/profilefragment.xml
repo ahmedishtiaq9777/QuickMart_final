@@ -8,8 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/profilebackground">
+        android:orientation="vertical">
 
 
         <androidx.cardview.widget.CardView
@@ -29,7 +28,8 @@
                 android:id="@+id/forloggedin"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@color/buttonbg">
 
                 <com.mikhaellopez.circularimageview.CircularImageView
                     android:id="@+id/selectimage"
@@ -54,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Username"
-                    android:textColor="@color/profiletext"
+                    android:textColor="@color/navbartext"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/selectimage"
@@ -70,7 +70,9 @@
                     android:padding="2dp"
                     android:src="@drawable/ic_edit_24"
                     android:text="@string/btn_edit_profile"
-                    android:textColor="@color/profiletext"
+                    android:background="@color/buttonbg"
+                    android:backgroundTint="@color/navbartext"
+                    android:textColor="@color/navbartext"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/logout"
@@ -86,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="@string/btn_edit_profile"
-                    android:textColor="@color/profiletext"
+                    android:textColor="@color/navbartext"
                     android:textSize="11sp"
                     app:layout_constraintEnd_toEndOf="@+id/btn_edit"
                     app:layout_constraintStart_toStartOf="@+id/btn_edit"
@@ -101,7 +103,7 @@
                     android:layout_marginBottom="7dp"
                     android:text="@string/logout"
                     android:textSize="11sp"
-                    android:textColor="@color/profiletext"
+                    android:textColor="@color/navbartext"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
@@ -111,6 +113,8 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center_horizontal|right"
+                    android:backgroundTint="@color/navbartext"
+                    android:background="@color/buttonbg"
                     android:src="@drawable/ic_exit"
                     android:paddingEnd="8dp"
                     android:layout_marginEnd="2dp"
@@ -289,9 +293,10 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="69dp"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:background="@color/buttonbg">
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/LANGUAGE"
@@ -313,7 +318,7 @@
                             android:layout_height="23dp"
                             android:layout_marginStart="10dp"
                             android:text="@string/Language"
-                            android:textColor="@color/profiletext"
+                            android:textColor="@color/navbartext"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -346,9 +351,10 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="69dp"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:background="@color/buttonbg">
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/DARKMODE"
@@ -369,7 +375,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:text="@string/Darkmode"
-                            android:textColor="@color/profiletext"
+                            android:textColor="@color/navbartext"
                             android:textStyle="bold"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -516,9 +522,10 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="69dp"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:background="@color/buttonbg">
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/SHOP"
@@ -536,7 +543,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:text="@string/Registershop"
-                            android:textColor="@color/profiletext"
+                            android:textColor="@color/navbartext"
                             android:textStyle="bold"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -569,9 +576,10 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="69dp"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:background="@color/buttonbg">
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/PRIVACY"
@@ -591,7 +599,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:text="@string/txt_profile_privacy"
-                            android:textColor="@color/profiletext"
+                            android:textColor="@color/navbartext"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"

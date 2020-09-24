@@ -52,11 +52,10 @@
                     android:id="@+id/USERNAME"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/logintxt"
+                    android:background="@color/buttonbg"
                     android:drawableLeft="@drawable/user"
                     android:drawablePadding="17dp"
                     android:drawableTint="@color/txtcolor"
-                    android:inputType="text"
                     android:gravity="left"
                     android:hint="Username"
                     android:lines="1"
@@ -83,7 +82,7 @@
                     android:id="@+id/PHONE"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/logintxt"
+                    android:background="@color/buttonbg"
                     android:drawableLeft="@drawable/user"
                     android:drawableTint="@color/txtcolor"
                     android:drawablePadding="12dp"
@@ -115,7 +114,7 @@
                     android:id="@+id/PASSWORD"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/logintxt"
+                    android:background="@color/buttonbg"
                     android:drawableLeft="@drawable/pass"
                     android:drawableTint="@color/txtcolor"
                     android:drawablePadding="19dp"
@@ -164,7 +163,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="Agree to the"
-                        android:textColor="@color/logintxt"
+                        android:textColor="@color/hometext"
                         android:textSize="16sp"
                         />
                 </LinearLayout>
@@ -221,7 +220,7 @@
                 android:layout_marginRight="3dp"
                 android:gravity="center"
                 android:text="Have an account ?"
-                android:textColor="@color/logintxt"
+                android:textColor="@color/hometext"
                 android:textSize="18sp"
 
                 />

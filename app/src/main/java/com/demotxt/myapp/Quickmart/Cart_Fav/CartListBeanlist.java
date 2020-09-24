@@ -24,10 +24,14 @@ public class CartListBeanlist implements Serializable {
     private String Description;
     @SerializedName("specificationid")
     private int Specificationid;
+    @SerializedName("size")
+    private String Size;
+    @SerializedName("color")
+    private String Color;
 
 
 
-    public CartListBeanlist(String image, String title, double price,int id,int quantity,int  sellerQuantity,int sellerid, String description,int specificationid) {
+    public CartListBeanlist(String image, String title, double price,int id,int quantity,int  sellerQuantity,int sellerid, String description,int specificationid, String size, String color) {
         this.image = image;
         this.title = title;
         this.price = price;
@@ -37,6 +41,9 @@ public class CartListBeanlist implements Serializable {
         this.Sellerid=sellerid;
         this.Description = description;
         this.Specificationid=specificationid;
+        this.Size=size;
+        this.Color=color;
+
     }
     public CartListBeanlist(){}
 
@@ -110,4 +117,21 @@ public class CartListBeanlist implements Serializable {
     public void setDescription(String description) {
         Description = description;
     }
+
+    public String getSize() {
+        return Size;
+    }
+
+    public void setSize(String size) {
+        Size = size;
+    }
+
+    public String getColor() { return Color; }
+
+    public void setColor(String color) {
+        Color = color;
+    }
+
+
+
 }

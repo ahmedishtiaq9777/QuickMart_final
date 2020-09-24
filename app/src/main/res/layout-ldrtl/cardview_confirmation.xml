@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#ffffff"
     android:padding="10dp">
 
     <androidx.cardview.widget.CardView
@@ -26,24 +27,24 @@
                 android:id="@+id/imageView2"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
+                android:contentDescription="TODO"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.100000024"
-                tools:srcCompat="@tools:sample/avatars"
-                android:contentDescription="TODO" />
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/textTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginBottom="8dp"
+                android:gravity="right"
                 android:selectAllOnFocus="false"
                 android:text="Title"
-                android:gravity="end"
-                android:textColor="#fff"
+                android:textColor="@color/navbartext"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.51"
@@ -51,60 +52,121 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/titleQty"
+                android:id="@+id/textQty"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginBottom="8dp"
+                android:selectAllOnFocus="false"
+                android:text="5"
+                android:textColor="@color/navbartext"
+
+                android:textSize="15sp"
+
+
+                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintTop_toBottomOf="@+id/textTitle" />
+
+            <TextView
+                android:id="@+id/titleQty"
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="5dp"
                 android:selectAllOnFocus="false"
                 android:text="@string/qty"
-                android:textColor="#fff"
-
+                android:textColor="@color/navbartext"
                 android:textSize="15sp"
-
-
-                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.23"
+                app:layout_constraintStart_toEndOf="@+id/textQty"
                 app:layout_constraintTop_toBottomOf="@+id/textTitle" />
 
             <TextView
-                android:id="@+id/textQty"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-
-                android:layout_marginTop="8dp"
-                android:selectAllOnFocus="false"
-                android:text="2"
-                android:textColor="#fff"
-                android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@+id/titleQty"
-                app:layout_constraintTop_toBottomOf="@+id/textTitle" />
-
-            <TextView
+                android:id="@+id/textView11"
                 android:layout_width="40dp"
                 android:layout_height="19dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="5dp"
                 android:selectAllOnFocus="false"
                 android:text="@string/price"
-                android:gravity="end"
-                android:textColor="#fff"
-                app:layout_constraintStart_toEndOf="@+id/imageView2"
-                app:layout_constraintTop_toBottomOf="@id/titleQty"
-                tools:layout_editor_absoluteY="12dp" />
+                android:textColor="@color/navbartext"
+                app:layout_constraintBottom_toTopOf="@+id/textView15"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.13"
+                app:layout_constraintStart_toEndOf="@+id/textPrice"
+                app:layout_constraintTop_toBottomOf="@+id/titleQty"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/textPrice"
                 android:layout_width="35dp"
                 android:layout_height="19dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:selectAllOnFocus="false"
                 android:text="1500"
-                android:textColor="#fff"
+                android:textColor="@color/navbartext"
                 app:layout_constraintStart_toStartOf="@+id/textQty"
                 app:layout_constraintTop_toBottomOf="@+id/textQty" />
+
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="40dp"
+                android:layout_height="19dp"
+                android:layout_marginTop="5dp"
+                android:selectAllOnFocus="false"
+                android:text="Size:"
+                android:textColor="@color/navbartext"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textView15"
+                app:layout_constraintHorizontal_bias="0.15"
+                app:layout_constraintStart_toEndOf="@+id/size"
+                app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+            <TextView
+                android:id="@+id/size"
+                android:layout_width="40dp"
+                android:layout_height="19dp"
+                android:layout_marginTop="5dp"
+                android:selectAllOnFocus="false"
+                android:text="XXL"
+                android:textColor="@color/navbartext"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/textPrice"
+                app:layout_constraintTop_toBottomOf="@+id/textPrice" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="40dp"
+                android:layout_height="19dp"
+                android:selectAllOnFocus="false"
+                android:text="Color:"
+                android:textColor="@color/navbartext"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.83"
+                app:layout_constraintStart_toEndOf="@+id/size"
+                app:layout_constraintTop_toBottomOf="@+id/textTitle"
+                app:layout_constraintVertical_bias="0.95" />
+
+            <TextView
+                android:id="@+id/color"
+                android:layout_width="57dp"
+                android:layout_height="18dp"
+                android:layout_marginTop="5dp"
+                android:selectAllOnFocus="false"
+                android:text="Yellow"
+                android:textColor="@color/navbartext"
+                app:layout_constraintBottom_toBottomOf="@+id/textView14"
+                app:layout_constraintEnd_toStartOf="@+id/textView15"
+                app:layout_constraintHorizontal_bias="0.15"
+                app:layout_constraintStart_toEndOf="@+id/textView14"
+                app:layout_constraintTop_toBottomOf="@+id/textView11"
+                app:layout_constraintVertical_bias="1.0" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

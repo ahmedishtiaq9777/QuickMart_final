@@ -133,133 +133,134 @@ public class Login extends AppCompatActivity {
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (awesomeValidation.validate()) {
+                if(Checkcheckbox()==true) {
+                    if (awesomeValidation.validate()) {
 
-                     ph = phone.getText().toString();
-                     password = pass.getText().toString();
-                    SignInModel m = new SignInModel(ph, password);
-                    Checkcheckbox();
+                        ph = phone.getText().toString();
+                        password = pass.getText().toString();
+                        SignInModel m = new SignInModel(ph, password);
 
-                    try {
+                        try {
 
-                        final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-                        // String url = "http:// 192.168.10.13:64077/api/login";
-                        //String url="https://api.myjson.com/bins/kp9wz";
-                        String url = hostinglink + "/Home/login";
-
-
-                        StringRequest rRequest = new StringRequest(Request.Method.POST, url,
-                                new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        try {
+                            final RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                            // String url = "http:// 192.168.10.13:64077/api/login";
+                            //String url="https://api.myjson.com/bins/kp9wz";
+                            String url = hostinglink + "/Home/login";
 
 
-                                            JSONObject user = new JSONObject(response);
-                                            String strResult = user.getString("result");
-                                            int userid = user.getInt("userid");
-
-                                            // response
-                                            //  Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
-                                            //  int size=response.toString().length();
-                                            // String result=response.toString().substring(1,size-1);
+                            StringRequest rRequest = new StringRequest(Request.Method.POST, url,
+                                    new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
 
 
-                                            if (strResult.equals("success")) {
+                                                JSONObject user = new JSONObject(response);
+                                                String strResult = user.getString("result");
+                                                int userid = user.getInt("userid");
 
-                                                saveloginPrefference(userid);
+                                                // response
+                                                //  Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
+                                                //  int size=response.toString().length();
+                                                // String result=response.toString().substring(1,size-1);
 
-                                                Intent i = getIntent();
-                                                int pid = -1;
-                                                boolean login_from_profile = false;
-                                                try {
-                                                    pid = Objects.requireNonNull(i.getExtras()).getInt("proid");
-                                                } catch (Exception e) {
-                                                    Log.i("Came from Profile", "login through profile fragment");
-                                                    Log.i("Exception", Objects.requireNonNull(e.getMessage()));
-                                                }
-                                                try {
-                                                    login_from_profile = i.getExtras().getBoolean("loginfromprofile");
-                                                } catch (Exception e) {
-                                                    Log.i("ProdActivity", "login through ProdActivity");
-                                                    Log.i("Exception", Objects.requireNonNull(e.getMessage()));
-                                                }
 
-                                                if (pid != -1) {
-                                                    String struserid = String.valueOf(loginpref.getInt("userid", 0));
-                                                    String strpid = String.valueOf(pid);
-                                                    AddToCart(struserid, strpid);
+                                                if (strResult.equals("success")) {
+
+                                                    saveloginPrefference(userid);
+
+                                                    Intent i = getIntent();
+                                                    int pid = -1;
+                                                    boolean login_from_profile = false;
+                                                    try {
+                                                        pid = Objects.requireNonNull(i.getExtras()).getInt("proid");
+                                                    } catch (Exception e) {
+                                                        Log.i("Came from Profile", "login through profile fragment");
+                                                        Log.i("Exception", Objects.requireNonNull(e.getMessage()));
+                                                    }
+                                                    try {
+                                                        login_from_profile = i.getExtras().getBoolean("loginfromprofile");
+                                                    } catch (Exception e) {
+                                                        Log.i("ProdActivity", "login through ProdActivity");
+                                                        Log.i("Exception", Objects.requireNonNull(e.getMessage()));
+                                                    }
+
+                                                    if (pid != -1) {
+                                                        String struserid = String.valueOf(loginpref.getInt("userid", 0));
+                                                        String strpid = String.valueOf(pid);
+                                                        AddToCart(struserid, strpid);
+                                                        // finish();
+                                                        Intent mainactivity2 = new Intent(Login.this, MainActivity2.class);
+                                                        //  mainactivity2.putExtra("code", 5);
+                                                        startActivity(mainactivity2);
+                                                    } else if (login_from_profile) {
+                                                        Intent mainactivity2 = new Intent(Login.this, MainActivity2.class);
+                                                        startActivity(mainactivity2);
+                                                    }
+
+                                                    //   Intent intent = new Intent(Login.this, ShoppyProductListActivity.class);        //this is for searching ....product list
+                                                    //  intent.putExtra("email", email.getText().toString());
+                                                    //    intent.putExtra("password", pass.getText().toString());
+                                                    //    startActivity(intent);
+                                                    // getconnection("http://ahmedishtiaqbutt-001-site1.atempurl.com/Home/getproducts/");
+
+
                                                     // finish();
-                                                    Intent mainactivity2 = new Intent(Login.this, MainActivity2.class);
-                                                    //  mainactivity2.putExtra("code", 5);
-                                                    startActivity(mainactivity2);
-                                                } else if (login_from_profile) {
-                                                    Intent mainactivity2 = new Intent(Login.this, MainActivity2.class);
-                                                    startActivity(mainactivity2);
+                                                    //  Intent intent2=new Intent(Login.this,MainActivity2.class);
+
+                                                    //  startActivity(intent2);
+                                                } else if (strResult.equals("sellersuccess")) {
+
+                                                    finish();
+                                                    Intent intent2 = new Intent(Login.this, MainActivity2.class);
+
+                                                    startActivity(intent2);
+
+                                                } else {
+                                                    Toast.makeText(getApplicationContext(), "Error:" + response, Toast.LENGTH_SHORT).show();
                                                 }
 
-                                                //   Intent intent = new Intent(Login.this, ShoppyProductListActivity.class);        //this is for searching ....product list
-                                                //  intent.putExtra("email", email.getText().toString());
-                                                //    intent.putExtra("password", pass.getText().toString());
-                                                //    startActivity(intent);
-                                                // getconnection("http://ahmedishtiaqbutt-001-site1.atempurl.com/Home/getproducts/");
 
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
 
-                                                // finish();
-                                                //  Intent intent2=new Intent(Login.this,MainActivity2.class);
-
-                                                //  startActivity(intent2);
-                                            } else if (strResult.equals("sellersuccess")) {
-
-                                                finish();
-                                                Intent intent2 = new Intent(Login.this, MainActivity2.class);
-
-                                                startActivity(intent2);
-
-                                            } else {
-                                                Toast.makeText(getApplicationContext(), "Error:" + response, Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                             }
 
 
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-
-                                            Toast.makeText(getApplicationContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                         }
 
-
+                                    },
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(@NonNull VolleyError error) {
+                                            // error
+                                            Log.i("APIERROR", Objects.requireNonNull(error.getMessage()));
+                                            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
-
-                                },
-                                new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(@NonNull VolleyError error) {
-                                        // error
-                                        Log.i("APIERROR", Objects.requireNonNull(error.getMessage()));
-                                        Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-                                    }
+                            ) {
+                                @Override
+                                protected Map<String, String> getParams() {
+                                    Map<String, String> params = new HashMap<>();
+                                    params.put("phoneNo", phone.getText().toString());
+                                    params.put("password", pass.getText().toString());
+                                    return params;
                                 }
-                        ) {
-                            @Override
-                            protected Map<String, String> getParams() {
-                                Map<String, String> params = new HashMap<>();
-                                params.put("phoneNo", phone.getText().toString());
-                                params.put("password", pass.getText().toString());
-                                return params;
-                            }
 
-                            public Map<String, String> getHeaders() {
-                                Map<String, String> params = new HashMap<>();
-                                params.put("Content-Type", "application/x-www-form-urlencoded");
-                                return params;
-                            }
-                        };
+                                public Map<String, String> getHeaders() {
+                                    Map<String, String> params = new HashMap<>();
+                                    params.put("Content-Type", "application/x-www-form-urlencoded");
+                                    return params;
+                                }
+                            };
 
-                        requestQueue.add(rRequest);
+                            requestQueue.add(rRequest);
 
 
-                    } catch (Exception E) {
-                        Toast.makeText(getApplicationContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
+                        } catch (Exception E) {
+                            Toast.makeText(getApplicationContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }
@@ -305,8 +306,9 @@ public class Login extends AppCompatActivity {
 
 
 
-    private void Checkcheckbox() {
+    private boolean Checkcheckbox() {
         if (checkBoxremember.isChecked()) {
+            return true;
         } else {
             AlertDialog.Builder builder1 = new AlertDialog.Builder(Login.this);
             builder1.setTitle("Please Agree");
@@ -315,6 +317,7 @@ public class Login extends AppCompatActivity {
             // builder1.show();
             AlertDialog alert11 = builder1.create();
             alert11.show();
+            return false;
 
         }
     }

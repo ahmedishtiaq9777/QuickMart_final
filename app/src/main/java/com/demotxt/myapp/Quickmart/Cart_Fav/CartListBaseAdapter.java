@@ -15,8 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.view.ViewCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -159,6 +157,8 @@ public class CartListBaseAdapter extends BaseAdapter {
             viewHolder.plus = (ImageView) convertView.findViewById(R.id.plus);
             viewHolder.minus = (ImageView) convertView.findViewById(R.id.minus);
             viewHolder.title = (TextView) convertView.findViewById(R.id.title);
+            viewHolder.color = (TextView) convertView.findViewById(R.id.color);
+            viewHolder.size = (TextView) convertView.findViewById(R.id.size);
             viewHolder.price = (TextView) convertView.findViewById(R.id.price);
             viewHolder.Quantity = (TextView) convertView.findViewById(R.id.prodQuantity);
             viewHolder.mCardView = convertView.findViewById(R.id.Cardview_Cart);
@@ -166,7 +166,6 @@ public class CartListBaseAdapter extends BaseAdapter {
             viewHolder.title.setTypeface(fonts2);
             viewHolder.Quantity.setTypeface(fonts1);
             viewHolder.price.setTypeface(fonts2);
-
             convertView.setTag(viewHolder);
 
 
@@ -181,6 +180,8 @@ public class CartListBaseAdapter extends BaseAdapter {
         // viewHolder.image.setImageResource(bean.getImage());
         Picasso.get().load(bean.getImage()).into(viewHolder.image);
         viewHolder.title.setText(bean.getTitle());
+        viewHolder.size.setText(bean.getSize());
+        viewHolder.color.setText(bean.getColor());
 
         String pricestr = String.valueOf(bean.getPrice());
         String userquantity = String.valueOf(bean.getQuantity());
@@ -202,6 +203,8 @@ public class CartListBaseAdapter extends BaseAdapter {
                 intent.putExtra("Description",bean.getDescription());
                 intent.putExtra("Thumbnail",bean.getImage());
                 intent.putExtra("price",(float)bean.getPrice());
+                intent.putExtra("Color",bean.getColor());
+                intent.putExtra("Size",bean.getSize());
                 intent.putExtra("proid",bean.getId());
                 intent.putExtra("sellerid",bean.getSellerid());
 
@@ -486,7 +489,8 @@ public class CartListBaseAdapter extends BaseAdapter {
         TextView title;
         CardView mCardView;
         TextView price;
-
+        TextView color;
+        TextView size;
         TextView Quantity;
 
 

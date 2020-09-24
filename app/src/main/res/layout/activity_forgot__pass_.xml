@@ -62,7 +62,7 @@
                     android:id="@+id/Txt_PhoneNo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/logintxt"
+                    android:background="@color/buttonbg"
                     android:drawablePadding="12dp"
                     android:gravity="left"
                     android:hint="03xxxxxxxxx "

@@ -3,21 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/background"
     android:layout_marginBottom="4dp"
     android:orientation="vertical">
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/Cardview_Cart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/background">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="6dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="6dp"
             android:background="@color/buttonbg"
@@ -38,22 +37,24 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:padding="11dp">
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:paddingTop="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/title"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:maxLines="2"
-                        android:gravity="right"
-                        android:paddingStart="4dp"
-                        android:paddingEnd="4dp"
                         android:text="Lemon peel Base ball"
+                        android:gravity="right"
                         android:textColor="@color/navbartext"
                         android:textSize="@dimen/text" />
 
@@ -62,27 +63,80 @@
                         android:layout_width="14dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:gravity="left"
                         android:src="@drawable/ic_clear_black_24dp"
                         android:contentDescription="TODO" />
 
                 </LinearLayout>
 
-
-                <TextView
-                    android:id="@+id/price"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:baselineAligned="false"
-                    android:text="$ 250.00"
+                    android:layout_marginTop="3dp"
+                    android:orientation="horizontal"
+                    android:padding="1dp">
+
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:text="2500.0"
+                        android:textColor="@color/navbartext"
+                        android:textSize="@dimen/textsub" />
+                    <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:text="Price:"
                     android:textColor="@color/navbartext"
                     android:textSize="@dimen/textsub" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:padding="1dp">
+
+
+
+                    <TextView
+                        android:id="@+id/size"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:text="XXL"
+                        android:textColor="@color/navbartext"
+                        android:textSize="@dimen/textsub" />
+                    <TextView
+                    android:layout_width="35dp"
+                    android:layout_height="match_parent"
+                    android:text="Size:"
+                    android:textColor="@color/navbartext"
+                    android:textSize="@dimen/textsub" />
+
+
+                    <TextView
+                        android:id="@+id/color"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:text="Yellow"
+                        android:textColor="@color/navbartext"
+                        android:textSize="@dimen/textsub" />
+                    <TextView
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:text="Color:"
+                    android:textColor="@color/navbartext"
+                    android:textSize="@dimen/textsub" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal"
                     android:padding="1dp">
 
@@ -93,8 +147,6 @@
                         android:layout_height="21dp"
                         android:gravity="center"
                         android:src="@drawable/ms"
-
-
                         android:contentDescription="TODO" />
 
                     <TextView
@@ -106,7 +158,7 @@
                         android:layout_marginRight="10dp"
                         android:gravity="center"
                         android:text="1"
-                        android:textColor="@color/white"
+                        android:textColor="@color/navbartext"
                         android:textSize="@dimen/textsub" />
 
                     <ImageView

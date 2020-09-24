@@ -42,7 +42,7 @@
                 android:id="@+id/PH"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/logintxt"
+                android:background="@color/buttonbg"
                 android:drawableLeft="@drawable/user"
                 android:drawablePadding="12dp"
                 android:drawableTint="@color/txtcolor"
@@ -75,7 +75,7 @@
                 android:id="@+id/PASS"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/logintxt"
+                android:background="@color/buttonbg"
                 android:drawableLeft="@drawable/pass"
                 android:drawableTint="@color/txtcolor"
                 android:drawablePadding="16dp"
@@ -121,7 +121,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="Remember me?"
-                    android:textColor="@color/logintxt"
+                    android:textColor="@color/hometext"
                     android:textSize="16sp"
                     android:gravity="left"
 
@@ -133,13 +133,12 @@
                 android:id="@+id/forgotpass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_gravity="center"
                 android:layout_marginRight="20dp"
+                android:gravity="center"
                 android:text="Forgot password?"
                 android:textColor="@color/red"
-                android:textAlignment="viewEnd"
                 android:textSize="16sp"
-                android:layout_marginStart="5dp"
 
                 />
 
@@ -185,7 +184,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Not a Member?"
-            android:textColor="@color/logintxt"
+            android:textColor="@color/hometext"
             android:textSize="18sp"
 
             />
