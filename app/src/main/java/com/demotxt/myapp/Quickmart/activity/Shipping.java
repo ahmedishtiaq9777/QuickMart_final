@@ -66,12 +66,17 @@ public class Shipping extends AppCompatActivity {
         t1 = (EditText) findViewById(R.id.nameShip);
         t3 = (EditText) findViewById(R.id.contactShip);
         t4 = (EditText) findViewById(R.id.addShip);
-        t4 = (EditText) findViewById(R.id.addShip);
         editCheckout_Btn = findViewById(R.id.editCheckout_btn);
         //
+        final DetailModel obj = new DetailModel(getApplicationContext());
+        //
+        t1.setText(obj.getYourName());
         t1.setEnabled(false);
-        t3.setEnabled(false);
+        t4.setText(obj.getYourAddress());
         t4.setEnabled(false);
+        t3.setText(obj.getYourPhone());
+        t3.setEnabled(false);
+        //
 
         //
 

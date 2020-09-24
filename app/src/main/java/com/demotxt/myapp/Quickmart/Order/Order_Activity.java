@@ -110,6 +110,7 @@ public class Order_Activity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mAdapter = new Order_Adapter(getApplicationContext(), mOrderList);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter);
     }
 }
