@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.activity.TabsBasic;
 //import com.demotxt.myapp.recyclerview.ownmodels.CheckConnection;
+import com.demotxt.myapp.Quickmart.ownmodels.CheckConnect;
 import com.demotxt.myapp.Quickmart.ownmodels.CustomInternetDialog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -41,16 +43,15 @@ import java.util.Objects;
 
 import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
-public class CatKids_Fragment extends Fragment {
+public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSelectedListener {
     private RecyclerView mRecyclerView;
     private CatKids_Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     Spinner mSpinner;
-
+    String Cattext,cat;
     List<Catkids> ProdKids;
     //CheckConnection connection;
     CustomInternetDialog dialog;
-    String[] SubCats = {};
 
     // private int sid;
 
@@ -65,10 +66,11 @@ public class CatKids_Fragment extends Fragment {
         //  connection=new CheckConnection(getActivity());
         dialog = new CustomInternetDialog(getActivity());
         //
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(Objects.requireNonNull(getContext()), R.array.Accounttypes,
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(Objects.requireNonNull(getContext()), R.array.KidsCategory,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
+        mSpinner.setOnItemSelectedListener(this);
 
 
         ProdKids = new ArrayList<>();
@@ -173,18 +175,57 @@ public class CatKids_Fragment extends Fragment {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
+                    query = CheckCategory();
+
+                    mAdapter.getCatFilter().filter(query);
                     return false;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
+
+
                     mAdapter.getFilter().filter(newText);
+
                     return false;
                 }
             });
         } catch (Exception e) {
             Toast.makeText(getContext(), "Loading Data", Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        Cattext = adapterView.getItemAtPosition(i).toString();
+        CheckCategory();
+        Toast.makeText(getContext(), Cattext, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+    }
+
+    public String CheckCategory(){
+
+        if (Cattext.equals("Kids(1–5) Boy")){
+            cat = "boyKids(1-5)";
+        }
+        else if (Cattext.equals("Kids(6–12) Boy")){
+            cat = "boyKids(6-12)";
+        }
+        else if (Cattext.equals("Kids(1–5) Girl")){
+            cat = "GirlKids(1-5)";
+        }
+        else if (Cattext.equals("Kids(6–12) Girl")){
+            cat = "GirlKids(6-12)";
+        }
+        else if (Cattext.equals("All")){
+            cat = "";
+        }
+
+        return cat;
     }
 
 

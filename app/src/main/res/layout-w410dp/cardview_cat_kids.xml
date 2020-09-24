@@ -85,6 +85,18 @@
             android:textSize="11sp"
             android:textStyle="normal" />
 
+        <TextView
+            android:id="@+id/category"
+            android:visibility="gone"
+            android:layout_width="147dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:gravity="left"
+            android:text="P_Name"
+            android:textColor="#2d2d2d"
+            android:textSize="11sp"
+            android:textStyle="normal" />
+
 
 
 

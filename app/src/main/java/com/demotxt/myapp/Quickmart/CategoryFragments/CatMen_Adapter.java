@@ -76,6 +76,7 @@ public class CatMen_Adapter extends RecyclerView.Adapter<CatMen_Adapter.CatMenVi
         holder.tv_price.setText(String.valueOf(mData.get(position).getPrice()));
         //holder.img_book_thumbnail.setImageResource(mData.get(position).getThumbnail());
         Picasso.get().load(mData.get(position).getThumbnail()).into(holder.img_men_thumbnail);
+        holder.category.setText(mData.get(position).getCategory());
         //For Rating Purposes
         holder.mRatingBar.setRating(mData.get(position).getRating());
         //
@@ -169,6 +170,7 @@ public class CatMen_Adapter extends RecyclerView.Adapter<CatMen_Adapter.CatMenVi
     public static class CatMenViewHolder extends RecyclerView.ViewHolder   {
 
         final TextView tv_men_title;
+        final TextView category;
         final TextView tv_price;
         final ImageView img_men_thumbnail;
         final ImageView heart;
@@ -185,6 +187,7 @@ public class CatMen_Adapter extends RecyclerView.Adapter<CatMen_Adapter.CatMenVi
             cardView = itemView.findViewById(R.id.cardview_men);
             heart = itemView.findViewById(R.id.heart);
             mRatingBar = itemView.findViewById(R.id.card_RatingBar);
+            category  = itemView.findViewById(R.id.category);
         }
     }
 
@@ -192,6 +195,10 @@ public class CatMen_Adapter extends RecyclerView.Adapter<CatMen_Adapter.CatMenVi
     @Override
     public Filter getFilter() {
         return mDataFilter;
+    }
+
+    public Filter getCatFilter() {
+        return mCatFilter;
     }
 
     private final Filter mDataFilter = new Filter() {
@@ -206,6 +213,39 @@ public class CatMen_Adapter extends RecyclerView.Adapter<CatMen_Adapter.CatMenVi
 
                 for (CatMen item : mDataFull) {
                     if (item.getTitle().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            mData = new ArrayList<>();
+            mData.addAll( (List) results.values);
+            notifyDataSetChanged();
+
+        }
+    };
+
+    private final Filter mCatFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<CatMen> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(mDataFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (CatMen item : mDataFull) {
+                    if (item.getCategory().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
                 }

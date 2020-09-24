@@ -75,6 +75,8 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
         holder.tv_price.setText(String.valueOf(mData.get(position).getPrice()));
         //holder.img_book_thumbnail.setImageResource(mData.get(position).getThumbnail());
         Picasso.get().load(mData.get(position).getThumbnail()).into(holder.img_kids_thumbnail);
+        holder.category.setText(mData.get(position).getCategory());
+
         //For Rating Purposes
         holder.mRatingBar.setRating(mData.get(position).getRating());
         //
@@ -137,27 +139,6 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
                 }
 
 
-              /*  if (iscjd=false)
-                {
-                    heart black
-                }
-               // int res = getResources().getIdentifier(, "drawable", this.getPackageName());
-
-              //  cartprefEditor.putBoolean("ischecked", false);
-               /* ischecked = cartpreferrence.getBoolean("heart", false);
-                if(ischecked==true)
-                {
-                    int ID=Data1.get(position).getId();
-
-                    ids.add(String.valueOf(ID));
-                    cartprefEditor
-
-
-                }else {
-                    cartprefEditor=
-                }*/
-
-
             }
         });
 
@@ -170,7 +151,7 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
 
     public static class CatKidsViewHolder extends RecyclerView.ViewHolder   {
 
-        final TextView tv_kids_title;
+        final TextView tv_kids_title,category;
         final TextView tv_price;
         final ImageView img_kids_thumbnail;
         final ImageView heart;
@@ -187,6 +168,7 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
             cardView = itemView.findViewById(R.id.cardview_kids);
             heart = itemView.findViewById(R.id.heart);
             mRatingBar = itemView.findViewById(R.id.card_RatingBar);
+            category = itemView.findViewById(R.id.category);
 
         }
     }
@@ -197,6 +179,9 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
         return mDataFilter;
     }
 
+    public Filter getCatFilter(){return mCatFilter;}
+
+    //for Search
     private final Filter mDataFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
@@ -211,12 +196,44 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
                     if (item.getTitle().toLowerCase().contains(filterPattern)) {
                         filteredList.add(item);
                     }
-                    else if (item.getCategory().toLowerCase().contains(filterPattern)){
-                        filteredList.add(item);
-                    }
-
                 }
 
+
+
+
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            mData = new ArrayList<>();
+            mData.addAll( (List) results.values);
+            notifyDataSetChanged();
+
+        }
+    };
+
+    private final Filter mCatFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Catkids> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(mDataFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (Catkids item : mDataFull) {
+                    if (item.getCategory().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
             }
 
             FilterResults results = new FilterResults();

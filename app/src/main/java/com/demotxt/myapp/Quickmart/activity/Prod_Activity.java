@@ -100,7 +100,14 @@ public class Prod_Activity extends AppCompatActivity {
             Log.i("Prodactivity", "error" + e.getMessage());
 
         }
-        proid = getIntent().getExtras().getInt("proid");
+        //
+        try {
+            proid = getIntent().getExtras().getInt("proid");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        //
         getsizecolor(hostinglink + "/Home/getsizecolors");
 
         // Size Spinner

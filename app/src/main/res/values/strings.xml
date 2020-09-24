@@ -118,10 +118,34 @@
     </string-array>
 
     <string-array name="MenCategory">
+
+        <item>All</item>
         <item>Shirts</item>
+        <item>T-Shirt</item>
         <item>Jeans</item>
-        <item>Watches</item>
+        <item>Accessories</item>
         <item>Shoes</item>
+
+    </string-array>
+
+    <string-array name="WomenCategory">
+
+        <item>All</item>
+        <item>Tops</item>
+        <item>Bottoms</item>
+        <item>Bags</item>
+        <item>Shoes</item>
+        <item>Accessories</item>
+
+    </string-array>
+
+    <string-array name="KidsCategory">
+
+        <item>All</item>
+        <item>Kids(1–5) Boy</item>
+        <item>Kids(6–12) Boy</item>
+        <item>Kids(1–5) Girl</item>
+        <item>Kids(6–12) Girl</item>
 
     </string-array>
 

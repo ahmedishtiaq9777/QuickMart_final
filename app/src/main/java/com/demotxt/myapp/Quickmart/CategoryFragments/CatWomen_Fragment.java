@@ -15,6 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -39,14 +42,15 @@ import java.util.Objects;
 
 import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
-public class CatWomen_Fragment extends Fragment {
+public class CatWomen_Fragment extends Fragment implements AdapterView.OnItemSelectedListener {
     private RecyclerView mRecyclerView;
     private CatWomen_Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     CheckConnect connection;
     CustomInternetDialog dialog;
-
+    String Cattext,cat;
     List<CatWomen> ProdWomen;
+    Spinner mSpinner;
 
 
     @Override
@@ -58,6 +62,7 @@ public class CatWomen_Fragment extends Fragment {
         View rootview = inflater.inflate(R.layout.fragment_cat_women_, container, false);
 
         mRecyclerView = rootview.findViewById(R.id.Rv_CatWomen);
+        mSpinner = rootview.findViewById(R.id.WomenCategory);
         connection = new CheckConnect(getActivity());
         dialog = new CustomInternetDialog(getActivity());
 
@@ -65,6 +70,12 @@ public class CatWomen_Fragment extends Fragment {
         if (!is_connected) {
             dialog.showCustomDialog();
         }
+        //
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(Objects.requireNonNull(getContext()), R.array.WomenCategory,
+                android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinner.setAdapter(adapter);
+        mSpinner.setOnItemSelectedListener(this);
 
         ProdWomen = new ArrayList<>();
 
@@ -190,11 +201,15 @@ public class CatWomen_Fragment extends Fragment {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
+
+                    query = CheckCategory();
+                    mAdapter.getCatFilter().filter(query);
                     return false;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
+
                     mAdapter.getFilter().filter(newText);
                     return false;
                 }
@@ -202,6 +217,44 @@ public class CatWomen_Fragment extends Fragment {
         } catch (Exception E) {
             Toast.makeText(getContext(), "Loading Data", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    //Check and return value
+    public String CheckCategory(){
+
+        if (Cattext.equals("Tops")){
+            cat = "WomanTops";
+        }
+        else if (Cattext.equals("Bottoms")){
+            cat = "WomanBottom";
+        }
+        else if (Cattext.equals("Bags")){
+            cat = "WomanBags";
+        }
+        else if (Cattext.equals("Shoes")){
+            cat = "WomanShoes";
+        }
+        else if (Cattext.equals("Accessories")){
+            cat = "AccesariesWomen";
+        }
+        else if (Cattext.equals("All")){
+            cat = "All";
+        }
+
+        return cat;
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        Cattext = adapterView.getItemAtPosition(i).toString();
+        CheckCategory();
+        Toast.makeText(getContext(), Cattext, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 
 

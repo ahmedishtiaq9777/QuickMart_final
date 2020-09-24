@@ -12,19 +12,18 @@
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/kidCategory"
-            android:visibility="gone"
-
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
-
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:background="@drawable/customborder"
-            android:entries="@array/MenCategory"
+            android:background="@drawable/ripple_effect_button"
+            android:entries="@array/KidsCategory"
+            android:padding="8dp"
             android:gravity="center"
             android:overlapAnchor="false"
-            android:popupBackground="@drawable/spinnerborder"
+            android:popupBackground="@color/background"
             android:spinnerMode="dropdown"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
