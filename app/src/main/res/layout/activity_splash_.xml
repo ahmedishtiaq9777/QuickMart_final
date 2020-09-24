@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
     tools:context="com.demotxt.myapp.Quickmart.activity.Splash_Activity">
 
     <pl.droidsonroids.gif.GifImageView
@@ -13,7 +12,7 @@
         android:layout_height="335dp"
         android:layout_marginTop="100dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/quickmart" />
+        android:src="@drawable/quickmartblue" />
 
     <com.agrawalsuneet.dotsloader.loaders.LazyLoader
         android:id="@+id/Progressloader"
@@ -27,11 +26,11 @@
         app:lazyloader_dotsDist="8dp"
         app:lazyloader_dotsRadius="10dp"
         app:lazyloader_firstDelayDur="150"
-        app:lazyloader_firstDotColor="@color/grey_40"
+        app:lazyloader_firstDotColor="@color/buttonbg"
         app:lazyloader_interpolator="@android:anim/decelerate_interpolator"
         app:lazyloader_secondDelayDur="300"
-        app:lazyloader_secondDotColor="@color/grey_40"
-        app:lazyloader_thirdDotColor="@color/grey_40" />
+        app:lazyloader_secondDotColor="@color/buttonbg"
+        app:lazyloader_thirdDotColor="@color/buttonbg" />
 
 
 </RelativeLayout>

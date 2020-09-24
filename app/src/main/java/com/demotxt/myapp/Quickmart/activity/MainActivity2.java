@@ -7,11 +7,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -21,12 +18,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.Search.Search_Activity;
 import com.demotxt.myapp.Quickmart.fragment.CartFragment;
 import com.demotxt.myapp.Quickmart.fragment.FavoriteFragment;
 import com.demotxt.myapp.Quickmart.fragment.HomeFragment;
 import com.demotxt.myapp.Quickmart.fragment.ProfileFragment;
-import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.ownmodels.DetailModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -63,15 +60,6 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
             startActivity(intent);
         }
 
-        LayoutInflater inflater = getLayoutInflater();
-        try {
-            layout = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toast_layout_root));//for product added :to make custom toast with tick mark
-
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "ERROR:" + e.getMessage(), Toast.LENGTH_SHORT).show();
-            Log.i("Loginactivity", "error" + e.getMessage());
-
-        }
 
         try {
             Intent i = getIntent();

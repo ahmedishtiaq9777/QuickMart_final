@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#03A9F4</color>
-    <color name="colorPrimaryDark">#2962FF</color>
+    <color name="colorPrimary">#4290f5</color>
+    <color name="colorPrimaryDark">#0288D1</color>
     <color name="colorAccent">#FF4081</color>
 
 
@@ -11,7 +11,7 @@
     <color name="buttonbg">#40C4FF</color>
     <color name="text">#03A9F4</color>
     <color name="disabletext">#66000000</color>
-    <color name="hometext">#283593</color>
+    <color name="hometext">#4290f5</color>
     <color name="profiletext">#03A9F4</color>
     <color name="navbartext">#ffffff</color>
     <color name="cardbg">#ffffff</color>
