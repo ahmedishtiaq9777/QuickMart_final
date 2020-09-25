@@ -1,8 +1,6 @@
 package com.demotxt.myapp.Quickmart.fragment;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
@@ -26,7 +24,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -34,13 +31,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.Quickmart.MyLocation;
-import com.demotxt.myapp.Quickmart.activity.Error_Screen_Activity;
-import com.demotxt.myapp.Quickmart.ownmodels.Book;
-import com.demotxt.myapp.Quickmart.ownmodels.Prod;
 import com.demotxt.myapp.Quickmart.R;
+import com.demotxt.myapp.Quickmart.activity.Error_Screen_Activity;
 import com.demotxt.myapp.Quickmart.adapter.RecyclerView3;
 import com.demotxt.myapp.Quickmart.adapter.RecyclerViewAdapter;
 import com.demotxt.myapp.Quickmart.adapter.RecyclerViewProdAdapter;
+import com.demotxt.myapp.Quickmart.ownmodels.Book;
+import com.demotxt.myapp.Quickmart.ownmodels.Prod;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -77,7 +74,12 @@ public class HomeFragment extends Fragment {
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ProfileFragment.loadLocale(Objects.requireNonNull(getContext()));
+       try{
+           ProfileFragment.loadLocale(Objects.requireNonNull(getContext()));
+           ProfileFragment.LoadDarkLocale(Objects.requireNonNull(getContext()));}
+       catch (Exception e){
+           e.printStackTrace();
+       }
         setHasOptionsMenu(true);
         //
         view = inflater.inflate(R.layout.homefragment, container, false);
@@ -287,7 +289,7 @@ public class HomeFragment extends Fragment {
         } catch (
                 Exception E) {
             RefreshLayout.setRefreshing(false);
-            Toast.makeText(getContext(), "Error: " , Toast.LENGTH_SHORT).show();
+            E.printStackTrace();
         }
 
 
@@ -303,7 +305,7 @@ public class HomeFragment extends Fragment {
             viewFlipper.setInAnimation(getContext(), android.R.anim.slide_in_left);
             viewFlipper.setOutAnimation(getContext(), android.R.anim.slide_out_right);
         } catch (Exception e) {
-            Toast.makeText(getContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "error:" , Toast.LENGTH_SHORT).show();
         }
     }
 
