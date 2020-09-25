@@ -480,6 +480,8 @@ public class ProfileFragment extends Fragment {
         int rotatedWidth, rotatedHeight;
         int orientation = getOrientation(context, photoUri);
 
+
+
         if (orientation == 90 || orientation == 270) {
             rotatedWidth = dbo.outHeight;
             rotatedHeight = dbo.outWidth;
@@ -538,7 +540,9 @@ public class ProfileFragment extends Fragment {
         }
 
         cursor.moveToFirst();
-        return cursor.getInt(0);
+        int b=cursor.getInt(0);
+        cursor.close();
+        return b;
     }
 
     public void selectphoto() {
@@ -735,7 +739,8 @@ public class ProfileFragment extends Fragment {
                             result = gson.fromJson(response, StringResponceFromWeb.class);
 
                             if (result.getresult().equals("error")) {
-                                Toast.makeText(getContext(), "error:" + result.getErrorResult(), Toast.LENGTH_SHORT).show();
+                             //   Toast.makeText(getContext(), "error:" + result.getErrorResult(), Toast.LENGTH_SHORT).show();
+                               Log.i("Profile","Error"+result.getErrorResult());
                             } else if (!result.getUsername().equals(null)) {
                                 try {
 

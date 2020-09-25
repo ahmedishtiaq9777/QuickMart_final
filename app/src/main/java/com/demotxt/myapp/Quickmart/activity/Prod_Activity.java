@@ -144,6 +144,7 @@ public class Prod_Activity extends AppCompatActivity {
                 String selectedItemText = (String) parent.getItemAtPosition(position);
 
                 selectedcolor = selectedItemText;
+
                 SizeList.clear();
                 getsizeswithcolor(selectedItemText);
 
@@ -475,6 +476,8 @@ public class Prod_Activity extends AppCompatActivity {
                         buyNow.putExtra("color",selectedcolor);
                         buyNow.putExtra("size",selectedsize);
                         buyNow.putExtra("proId", strpid);
+                        buyNow.putExtra("size",selectedsize);
+                        buyNow.putExtra("color",selectedcolor);
                         startActivity(buyNow);
                     }
                 } else {
@@ -659,7 +662,7 @@ public class Prod_Activity extends AppCompatActivity {
     boolean validateSpinner(Spinner spinner, String error, String msg) {
 
         View selectedView = spinner.getSelectedView();
-        if (selectedView instanceof TextView) {
+        if (selectedView != null && selectedView instanceof TextView) {
             TextView selectedTextView = (TextView) selectedView;
             if (selectedTextView.getText().equals(msg)) {
                 selectedTextView.setError(error);

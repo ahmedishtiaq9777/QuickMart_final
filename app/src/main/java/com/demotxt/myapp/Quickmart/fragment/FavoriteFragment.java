@@ -1,11 +1,13 @@
 package com.demotxt.myapp.Quickmart.fragment;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,10 +46,12 @@ public class FavoriteFragment extends Fragment {
     private SharedPreferences cartpreferrence;
     private SharedPreferences.Editor cartprefEditor;
     FloatingActionButton search;
+    private LinearLayout plusminus_layout;
 
     Typeface fonts1, fonts2;
     private List<CartListBeanlist> Bean;
     private CartListBaseAdapter baseAdapter;
+    View convertView;
 
 
     @Override
@@ -61,8 +65,13 @@ public class FavoriteFragment extends Fragment {
         search = getActivity().findViewById(R.id.fab_search);
         search.hide();
 
+        convertView = inflater.inflate(R.layout.cart_list, null);
+        convertView.setVisibility(View.GONE);
+        //plusminus_layout=view.findViewById(R.id.lyt_plusminus);
+        //plusminus_layout.setVisibility(View.GONE);
+
         cartpreferrence =   getContext().getSharedPreferences("favpref", MODE_PRIVATE);
- //
+
        ids=cartpreferrence.getStringSet("ids",ids);
 
 

@@ -435,8 +435,8 @@ public class Signup extends AppCompatActivity {
 
         String url = "http://sendpk.com" +
                 "/api/sms.php?" +
-                "username=" + "923046279543" +
-                "&password=" + "1234" +
+                "username=" + "923006103303" +
+                "&password=" + "ahmedishtiaq9777" +
                 "&sender=" + "QuickMart" +
                 "&mobile=" + ph + "&message=" + msg;
         //
