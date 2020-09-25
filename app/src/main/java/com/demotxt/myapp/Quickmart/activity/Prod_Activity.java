@@ -467,6 +467,8 @@ public class Prod_Activity extends AppCompatActivity {
                         buyNow.putExtra("price", strprice);
                         buyNow.putExtra("sellerId", strsellerid);
                         buyNow.putExtra("proId", strpid);
+                        buyNow.putExtra("size",selectedsize);
+                        buyNow.putExtra("color",selectedcolor);
                         startActivity(buyNow);
                     }
                 } else {
