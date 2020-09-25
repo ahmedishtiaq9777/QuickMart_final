@@ -71,21 +71,6 @@ public class CartListBaseAdapter extends BaseAdapter {
     public CartListBaseAdapter(Context context, List<CartListBeanlist> bean, int number) {
 
 
-        //  proids= Arrays.asList(new String[bean.size()]);
-        // quantities=Arrays.asList(new String[bean.size()]);
-        //  seller_quantities=Arrays.asList(new String[bean.size()]);
-
-      /*  for(int index=0;index<bean.size();index++)
-        {
-            quantities.set(index,"1");
-        }*/
-
-
-        // for (String q:quantities) {
-        //   q
-        //}
-
-
         this.context = context;
 
         selectionid = number;
@@ -182,6 +167,10 @@ public class CartListBaseAdapter extends BaseAdapter {
         viewHolder.title.setText(bean.getTitle());
         viewHolder.size.setText(bean.getSize());
         viewHolder.color.setText(bean.getColor());
+
+        final String SpecificID = String.valueOf(bean.getSpecificationid());
+
+
 
         String pricestr = String.valueOf(bean.getPrice());
         String userquantity = String.valueOf(bean.getQuantity());
@@ -284,8 +273,7 @@ public class CartListBaseAdapter extends BaseAdapter {
                     proid = String.valueOf(bean.getId());
                     if (selectionid == 1) {
 
-                        getconnection(hostinglink + "/home/DeleteProductFromCart", proid,specId);
-
+                        getconnection(hostinglink + "/home/DeleteProductFromCart", proid,SpecificID);
 
                         //CartFragment.list.remove(position);
 

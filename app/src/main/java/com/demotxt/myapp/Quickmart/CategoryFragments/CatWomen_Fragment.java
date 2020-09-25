@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,6 +52,7 @@ public class CatWomen_Fragment extends Fragment implements AdapterView.OnItemSel
     String Cattext,cat;
     List<CatWomen> ProdWomen;
     Spinner mSpinner;
+    ConstraintLayout lyt_Main, lyt_second;
 
 
     @Override
@@ -63,6 +65,9 @@ public class CatWomen_Fragment extends Fragment implements AdapterView.OnItemSel
 
         mRecyclerView = rootview.findViewById(R.id.Rv_CatWomen);
         mSpinner = rootview.findViewById(R.id.WomenCategory);
+        lyt_Main = rootview.findViewById(R.id.lyt_mainFrag);
+        lyt_second = rootview.findViewById(R.id.lyt_SecondFrag);
+        //
         connection = new CheckConnect(getActivity());
         dialog = new CustomInternetDialog(getActivity());
 
@@ -106,18 +111,19 @@ public class CatWomen_Fragment extends Fragment implements AdapterView.OnItemSel
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
                             ProdWomen = Arrays.asList(gson.fromJson(response, CatWomen[].class));
+
+                            if (ProdWomen.isEmpty()) {
+                                lyt_Main.setVisibility(View.GONE);
+                                lyt_second.setVisibility(View.VISIBLE);
+                            }
+                            else {
                             setimageurl();
-                            setadapterRecyclerView();
+                            setadapterRecyclerView();}
+
 
                         } catch (Exception e) {
                             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                         }
-
-                        //  Toast.makeText(ShoppyProductListActivity.this, response, Toast.LENGTH_SHORT).show();
-
-
-                        // response
-                        //  Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
 
                     }
                 },

@@ -330,11 +330,11 @@
         android:id="@+id/BuyNow_btn"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:layout_marginBottom="2dp"
         android:layout_gravity="bottom"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:background="@drawable/ripple_effect_green_button"
         android:text="Buy Now"
         android:textColor="@color/navbartext"
         android:textStyle="bold"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

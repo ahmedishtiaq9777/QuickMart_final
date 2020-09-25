@@ -7,6 +7,7 @@
     tools:context="com.demotxt.myapp.Quickmart.CategoryFragments.CatWomen_Fragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lyt_mainFrag"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -46,4 +47,26 @@
             app:layout_constraintVertical_bias="0.050000012" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lyt_SecondFrag"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <FrameLayout
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="@drawable/no_product"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.40" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </FrameLayout>

@@ -41,8 +41,8 @@ public class DirectCheckout_Activity extends AppCompatActivity {
     RadioButton COD;
     Button Confirm;
     ImageView mImageView;
-    TextView name,price,EditCheckout_Btn;
-    String N,P,I,pId,sId;
+    TextView name,price,EditCheckout_Btn,color,size;
+    String N,P,I,pId,sId,Tsize,Tcolor;
     int Code = 111;
     String Uname,Ucontact,Uaddress,Userid;
     SharedPreferences loginpref;
@@ -65,6 +65,8 @@ public class DirectCheckout_Activity extends AppCompatActivity {
         name = findViewById(R.id.txt_P_Name);
         price = findViewById(R.id.txt_P_Price);
         EditCheckout_Btn = findViewById(R.id.editCheckout_btn);
+        color = findViewById(R.id.txt_color);
+        size = findViewById(R.id.txt_size);
 
         //product detail
         Intent i = getIntent();
@@ -76,6 +78,10 @@ public class DirectCheckout_Activity extends AppCompatActivity {
         Picasso.get().load(I).into(mImageView);
         pId = i.getExtras().getString("proId");
         sId = i.getExtras().getString("sellerId");
+        Tsize = i.getExtras().getString("size");
+        size.setText(Tsize);
+        Tcolor = i.getExtras().getString("color");
+        color.setText(Tcolor);
 
         //
         final DetailModel obj = new DetailModel(getApplicationContext());
@@ -90,7 +96,6 @@ public class DirectCheckout_Activity extends AppCompatActivity {
         UserPhone.setText(obj.getYourPhone());
         UserPhone.setEnabled(false);
         //
-
         //Saving Shipping Detail
         ShippingModel m = new ShippingModel(Uname, "", Ucontact, Uaddress, "", "Sialkot");
         GsonBuilder builder = new GsonBuilder();

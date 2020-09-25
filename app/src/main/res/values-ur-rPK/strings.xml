@@ -77,5 +77,6 @@
     <string name="Orddetail">آرڈر تفصیل</string>
     <string name="OrdId">آرڈر کی شناخت</string>
     <string name="CartITem">کارٹ آئٹم</string>
+    <string name="share_app" translatable="false">ہماری ایپ شیئر کریں</string>
 
 </resources>

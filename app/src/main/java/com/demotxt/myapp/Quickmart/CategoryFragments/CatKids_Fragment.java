@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,10 +49,11 @@ public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSele
     private CatKids_Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     Spinner mSpinner;
-    String Cattext,cat;
+    String Cattext, cat;
     List<Catkids> ProdKids;
     //CheckConnection connection;
     CustomInternetDialog dialog;
+    ConstraintLayout lyt_Main, lyt_second;
 
     // private int sid;
 
@@ -63,6 +65,9 @@ public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSele
         View rootview = inflater.inflate(R.layout.fragment_cat_kids_, container, false);
         mRecyclerView = rootview.findViewById(R.id.Rv_CatKids);
         mSpinner = rootview.findViewById(R.id.kidCategory);
+        lyt_Main = rootview.findViewById(R.id.lyt_mainFrag);
+        lyt_second = rootview.findViewById(R.id.lyt_SecondFrag);
+
         //  connection=new CheckConnection(getActivity());
         dialog = new CustomInternetDialog(getActivity());
         //
@@ -101,8 +106,13 @@ public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSele
                             Gson gson = builder.create();
                             ProdKids = Arrays.asList(gson.fromJson(response, Catkids[].class));
 
-                            setimageurl();
-                            setadapterRecyclerView();
+                            if (ProdKids.isEmpty()) {
+                                    lyt_Main.setVisibility(View.GONE);
+                                    lyt_second.setVisibility(View.VISIBLE);
+                            } else {
+                                setimageurl();
+                                setadapterRecyclerView();
+                            }
 
                         } catch (Exception e) {
                             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
@@ -112,8 +122,6 @@ public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSele
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // error
-//                        Toast.makeText(getContext(),  Toast.LENGTH_SHORT).show();
                         error.printStackTrace();
                     }
                 }
@@ -207,21 +215,17 @@ public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSele
     public void onNothingSelected(AdapterView<?> adapterView) {
     }
 
-    public String CheckCategory(){
+    public String CheckCategory() {
 
-        if (Cattext.equals("Kids(1–5) Boy")){
+        if (Cattext.equals("Kids(1–5) Boy")) {
             cat = "boyKids(1-5)";
-        }
-        else if (Cattext.equals("Kids(6–12) Boy")){
+        } else if (Cattext.equals("Kids(6–12) Boy")) {
             cat = "boyKids(6-12)";
-        }
-        else if (Cattext.equals("Kids(1–5) Girl")){
+        } else if (Cattext.equals("Kids(1–5) Girl")) {
             cat = "GirlKids(1-5)";
-        }
-        else if (Cattext.equals("Kids(6–12) Girl")){
+        } else if (Cattext.equals("Kids(6–12) Girl")) {
             cat = "GirlKids(6-12)";
-        }
-        else if (Cattext.equals("All")){
+        } else if (Cattext.equals("All")) {
             cat = "";
         }
 

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,6 +53,7 @@ public class CatMen_Fragment extends Fragment implements AdapterView.OnItemSelec
     CheckConnect connection;
     CustomInternetDialog dialog;
     Spinner mSpinner;
+    ConstraintLayout lyt_Main, lyt_second;
 
 
     @Override
@@ -62,6 +64,8 @@ public class CatMen_Fragment extends Fragment implements AdapterView.OnItemSelec
         View rootview =  inflater.inflate(R.layout.fragment_cat_men_, container, false);
         mRecyclerView = rootview.findViewById(R.id.Rv_CatMen);
         mSpinner = rootview.findViewById(R.id.menCategory);
+        lyt_Main = rootview.findViewById(R.id.lyt_mainFrag);
+        lyt_second = rootview.findViewById(R.id.lyt_SecondFrag);
         connection=new CheckConnect(getActivity());
         dialog=new CustomInternetDialog(getActivity());
 
@@ -112,19 +116,18 @@ public class CatMen_Fragment extends Fragment implements AdapterView.OnItemSelec
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
                             ProdMen = Arrays.asList(gson.fromJson(response, CatMen[].class));
+                            if (ProdMen.isEmpty()){
+                                lyt_Main.setVisibility(View.GONE);
+                                lyt_second.setVisibility(View.VISIBLE);
+                            }
+                            else {
                             setimageurl();
                             setadapterRecyclerView();
+                            }
 
                         } catch (Exception e) {
                             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                         }
-
-                        //  Toast.makeText(ShoppyProductListActivity.this, response, Toast.LENGTH_SHORT).show();
-
-
-                        // response
-                        //  Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -141,19 +144,6 @@ public class CatMen_Fragment extends Fragment implements AdapterView.OnItemSelec
                 Map<String, String> params = new HashMap<>();
                 params.put("sellerid",seller_id);
                 params.put("category","Men");
-
-                // JSONArray jsonArray= new JSONArray();
-                // jsonArray.put(sid);
-                // params.put("sellerid",jsonArray.toString());
-              /*  JSONArray jsonArray= new JSONArray();
-                for (String  i:) {
-                    jsonArray.put(i);
-                }
-                params.put("idsarray",jsonArray.toString());
-                *?
-               */
-
-                //  params.p
 
                 return params;
             }

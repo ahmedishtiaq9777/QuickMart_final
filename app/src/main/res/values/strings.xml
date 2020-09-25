@@ -90,9 +90,6 @@
 
     <string name="tandc" translatable="false"><u>terms &amp; conditions</u></string>
 
-
-    <string name="share_app" translatable="false">I Would like to share this QuickMart Android App with you. Here You Can Download This Application from PlayStore</string>
-
     <string name="privacy" translatable="false">
         "Privacy Policy\n"
                 "  We built the QuickMart app as a Free app. This service is provided by us at no cost.This page is used to inform visitors regarding our policies with the collection, use, and disclosure of Personal Information if anyone decided to use our app.\n"
@@ -164,6 +161,7 @@
     <string name="OrdId">Order Id</string>
 
     <string name="CartITem">Cart Items</string>
-    <string name="todo">TODO</string>
+    <string name="todo" translatable="false">TODO</string>
+    <string name="share_app" translatable="false">Share</string>
 
 </resources>

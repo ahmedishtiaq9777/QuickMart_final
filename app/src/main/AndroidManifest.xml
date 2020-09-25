@@ -24,7 +24,6 @@
         <activity android:name=".activity.DirectCheckout_Activity" />
         <activity android:name=".activity.Forgot_Pass_Activity" />
         <activity android:name=".activity.AboutSeller_Activity" />
-        <activity android:name=".activity.Notification_Activity" />
         <activity android:name=".activity.Web_Activity" />
         <activity android:name=".Order.Order_Detail_Activity" />
         <activity android:name=".Order.Order_Activity" />

@@ -260,7 +260,6 @@ public class Prod_Activity extends AppCompatActivity {
                         int userid = loginpref.getInt("userid", 0);
                         final String struserid = String.valueOf(userid);
 
-
                         try {
                             if (validateSpinner(spinner2, "Choose Color", "Color") == false) {
                                 AlertDialog.Builder build = new AlertDialog.Builder(Prod_Activity.this);
@@ -472,6 +471,8 @@ public class Prod_Activity extends AppCompatActivity {
                         buyNow.putExtra("name", Title);
                         buyNow.putExtra("price", strprice);
                         buyNow.putExtra("sellerId", strsellerid);
+                        buyNow.putExtra("color",selectedcolor);
+                        buyNow.putExtra("size",selectedsize);
                         buyNow.putExtra("proId", strpid);
                         startActivity(buyNow);
                     }
