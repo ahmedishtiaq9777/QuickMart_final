@@ -21,14 +21,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
@@ -45,12 +44,10 @@ import com.demotxt.myapp.Quickmart.Order.Order_Activity;
 import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.activity.Detail_Activity;
 import com.demotxt.myapp.Quickmart.activity.Login;
-import com.demotxt.myapp.Quickmart.activity.MainActivity2;
 import com.demotxt.myapp.Quickmart.activity.Notification_Activity;
 import com.demotxt.myapp.Quickmart.activity.Splash_Activity;
 import com.demotxt.myapp.Quickmart.activity.Web_Activity;
 import com.demotxt.myapp.Quickmart.ownmodels.ContactDialog;
-import com.demotxt.myapp.Quickmart.ownmodels.CustomDialoag;
 import com.demotxt.myapp.Quickmart.ownmodels.DetailModel;
 import com.demotxt.myapp.Quickmart.ownmodels.ImageFilePath;
 import com.demotxt.myapp.Quickmart.ownmodels.PrivacyDialog;
@@ -97,6 +94,8 @@ public class ProfileFragment extends Fragment {
 
 
     private static final String[] Languages = new String[]{"English", "Urdu"};
+    private static final String[] Modes = new String[]{"Light Mode", "Dark Mode"};
+
 
     public boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
@@ -115,6 +114,7 @@ public class ProfileFragment extends Fragment {
         //selectphoto();
         file_islarge = false;
         loadLocale(getContext());
+        LoadDarkLocale(getContext());
 
         final View view = inflater.inflate(R.layout.profilefragment, container, false);
 
@@ -314,17 +314,16 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "onclick", Toast.LENGTH_SHORT).show();
-
-                try {
-
-                    CustomDialoag dialoag = new CustomDialoag(getContext());
-                    dialoag.showCustomDialog();
-                } catch (Exception e) {
-
-                    Toast.makeText(getContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.i("error in profile", "error:" + e.getMessage());
+                if (!isAnimated) {
+                    d.playAnimation();
+                    d.setSpeed(9);
+                    isAnimated = true;
+                } else {
+                    d.cancelAnimation();
+                    isAnimated = false;
                 }
+
+                showChangeDarkModeDialog();
             }
         });
 
@@ -402,6 +401,50 @@ public class ProfileFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public static void LoadDarkLocale(Context context) {
+        SharedPreferences pref = context.getSharedPreferences("Settings", MODE_PRIVATE);
+        String m = pref.getString("mode", "");
+        setDarkLocale(m, context);
+    }
+
+    private void showChangeDarkModeDialog() {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(getContext());
+        mBuilder.setTitle("Choose Mode");
+        mBuilder.setSingleChoiceItems(Modes, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                if (i == 0) {
+                    setDarkLocale("light", getContext());
+                    getActivity().recreate();
+
+                } else if (i == 1) {
+                    setDarkLocale("dark", getContext());
+                    getActivity().recreate();
+                }
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog mDialog = mBuilder.create();
+        mDialog.show();
+
+    }
+
+    private static void setDarkLocale(String mode, Context context) {
+        if (mode.equals("light")){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }else
+            if(mode.equals("dark")){
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+
+        //saving data in shared preference
+
+        SharedPreferences.Editor editor = context.getSharedPreferences("Settings", MODE_PRIVATE).edit();
+        editor.putString("mode", mode);
+        editor.apply();
     }
 
     private void showChangeLanguageDialog() {
