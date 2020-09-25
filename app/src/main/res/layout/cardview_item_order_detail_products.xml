@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="350dp"
+    android:layout_width="320dp"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
     android:padding="4dp">
@@ -15,7 +14,7 @@
 
         <ImageView
             android:id="@+id/prodImage"
-            android:layout_width="70dp"
+            android:layout_width="60dp"
             android:layout_height="70dp"
             android:contentDescription="TODO"
             android:padding="4dp"
@@ -29,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Qty"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="4dp"
             android:textColor="@color/navbartext"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -50,9 +49,9 @@
 
         <TextView
             android:id="@+id/prodName"
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="8dp"
             android:text="Product Name"
             android:textColor="@color/navbartext"
             android:textSize="16sp"
@@ -64,7 +63,7 @@
             android:id="@+id/txt_RS"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="6dp"
             android:text="Rs. "
             android:textColor="@color/navbartext"
             android:textSize="16sp"

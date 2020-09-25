@@ -39,6 +39,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -120,6 +121,7 @@ public class CartFragment extends Fragment  {
                             }
                             try {
                                 Bean = Arrays.asList(gson.fromJson(response, CartListBeanlist[].class));
+
                             } catch (JsonSyntaxException e) {
                                 Log.i("User not login", "user not login or user have not carted any product");
                             }

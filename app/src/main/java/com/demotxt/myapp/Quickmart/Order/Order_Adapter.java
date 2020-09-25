@@ -46,6 +46,8 @@ public class Order_Adapter extends RecyclerView.Adapter<Order_Adapter.OrderViewH
         holder.Order_Price.setText(mData.get(position).getPrice());
         holder.Order_Status.setText(mData.get(position).getOrderStatus());
         holder.Order_Date.setText(mData.get(position).getOrderDate());
+
+
         //Card click Listener
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

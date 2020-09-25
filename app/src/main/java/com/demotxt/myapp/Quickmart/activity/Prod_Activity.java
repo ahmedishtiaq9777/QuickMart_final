@@ -23,6 +23,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatRatingBar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.widget.NestedScrollView;
 
 import com.android.volley.Request;
@@ -40,6 +41,7 @@ import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
 import com.demotxt.myapp.Quickmart.utils.Tools;
 import com.demotxt.myapp.Quickmart.utils.ViewAnimation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
@@ -64,6 +66,7 @@ public class Prod_Activity extends AppCompatActivity {
     private int proid;
     private int sellerid;
     StringResponceFromWeb result;
+    CoordinatorLayout lyt_parent;
     public Set<String> cartids;
     private ImageButton bt_toggle_reviews, bt_toggle_description;
     private View lyt_expand_reviews, lyt_expand_description;
@@ -87,6 +90,8 @@ public class Prod_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prod_);
+        lyt_parent = findViewById(R.id.parent_view);
+
         sizecolorlist = new ArrayList<>();
         SizeList = new ArrayList<>();
         colorList = new ArrayList<>();
@@ -120,9 +125,8 @@ public class Prod_Activity extends AppCompatActivity {
                 selectedsize = selectedItemText;
                 if (position >= 0) {
                     // Notify the selected item text
-                    Toast.makeText
-                            (getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT)
-                            .show();
+                    Snackbar.make(lyt_parent,"Selected : " + selectedItemText,Snackbar.LENGTH_SHORT).show();
+
                 }
             }
 
@@ -177,9 +181,7 @@ public class Prod_Activity extends AppCompatActivity {
 
                 if (position >= 0) {
                     // Notify the selected item text
-                    Toast.makeText
-                            (getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT)
-                            .show();
+                    Snackbar.make(lyt_parent,"Selected : " + selectedItemText,Snackbar.LENGTH_SHORT).show();
                 }
             }
 
@@ -404,8 +406,7 @@ public class Prod_Activity extends AppCompatActivity {
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
-                                        Toast.makeText(getApplicationContext(), "ON-Response", Toast.LENGTH_LONG).show();
-                                    }
+                                        Snackbar.make(lyt_parent,"Success",Snackbar.LENGTH_SHORT).show(); }
                                 },
                                 new Response.ErrorListener() {
                                     @Override

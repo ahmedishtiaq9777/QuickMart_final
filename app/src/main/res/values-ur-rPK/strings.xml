@@ -78,5 +78,7 @@
     <string name="OrdId">آرڈر کی شناخت</string>
     <string name="CartITem">کارٹ آئٹم</string>
     <string name="share_app" translatable="false">ہماری ایپ شیئر کریں</string>
+    <string name="size">سائز</string>
+    <string name="color">رنگ</string>
 
 </resources>
