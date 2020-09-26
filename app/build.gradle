@@ -58,6 +58,7 @@ dependencies {
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
     implementation 'com.karumi:dexter:6.2.1'
     implementation "androidx.activity:activity:$activity_version"
+    implementation 'com.muddzdev:styleabletoast:2.2.3'
 
 
 

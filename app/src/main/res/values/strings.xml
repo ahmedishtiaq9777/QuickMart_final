@@ -162,7 +162,7 @@
 
     <string name="CartITem">Cart Items</string>
     <string name="todo" translatable="false">TODO</string>
-    <string name="share_app" translatable="false">Share</string>
+    <string name="share_app">Share</string>
 
     <string name="size">Size</string>
     <string name="color">Color</string>

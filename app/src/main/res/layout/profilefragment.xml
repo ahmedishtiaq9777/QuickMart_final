@@ -258,7 +258,7 @@
                             android:layout_width="107dp"
                             android:layout_height="22dp"
                             android:layout_marginStart="10dp"
-                            android:text="@string/share_app"
+                            android:text="@string/txt_profile_share"
                             android:textColor="@color/profiletext"
                             android:textSize="18sp"
                             android:textStyle="bold"
