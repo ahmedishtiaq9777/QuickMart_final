@@ -11,7 +11,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/navfav"
+        android:background="@color/buttonbg"
         app:titleTextColor="@color/navbartext"
         app:contentInsetStartWithNavigation="0dp"
         app:layout_constraintEnd_toEndOf="parent"

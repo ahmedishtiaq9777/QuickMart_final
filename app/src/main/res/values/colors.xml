@@ -9,7 +9,9 @@
     <color name="background">#e1f5fe</color>
     <color name="profilebackground">#e1f5fe</color>
     <color name="buttonbg">#40C4FF</color>
+    <color name="greenbtn">#5ccc78</color>
     <color name="text">#03A9F4</color>
+    <color name="cardtxt">#2d2d2d</color>
     <color name="disabletext">#66000000</color>
     <color name="hometext">#4290f5</color>
     <color name="profiletext">#03A9F4</color>

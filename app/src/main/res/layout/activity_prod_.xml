@@ -319,7 +319,7 @@
         android:clickable="true"
         android:src="@drawable/ic_shopping_cart"
         android:tint="@color/navbartext"
-        app:backgroundTint="@color/green"
+        app:backgroundTint="@color/greenbtn"
         app:fabSize="normal"
         app:layout_anchor="@id/app_bar_layout"
         app:layout_anchorGravity="bottom|right|end"

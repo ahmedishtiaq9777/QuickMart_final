@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.demotxt.myapp.Quickmart.Order.Order_Activity">
+    tools:context="com.demotxt.myapp.Quickmart.Order.Order_Activity"
+    android:background="@color/cardbg">
 
 
 
