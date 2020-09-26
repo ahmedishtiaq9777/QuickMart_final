@@ -59,7 +59,7 @@ public class MyLocation extends AppCompatActivity {
                 ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION
                 }, 1);
             } else {
-                Toast.makeText(context, "Location Permission Granted", Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(mContext, "Permission Granted", Toast.LENGTH_SHORT, R.style.PermissionToast).show();
                 lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListenerGps);
             }
 
@@ -70,7 +70,7 @@ public class MyLocation extends AppCompatActivity {
                 ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION
                 }, 2);
             } else {
-                Toast.makeText(context, "Location Permission Granted", Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(mContext, "Permission Granted", Toast.LENGTH_SHORT, R.style.PermissionToast).show();
                 lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListenerNetwork);
             }
 
@@ -87,9 +87,9 @@ public class MyLocation extends AppCompatActivity {
 
         if (requestCode == 1 || requestCode == 2) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                StyleableToast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT, R.style.PermissionToast).show();
+                StyleableToast.makeText(mContext, "Permission Granted", Toast.LENGTH_SHORT, R.style.PermissionToast).show();
             else
-                StyleableToast.makeText(this, "Error Permission", Toast.LENGTH_SHORT, R.style.NotGrantedToast).show();
+                StyleableToast.makeText(mContext, "Error Permission", Toast.LENGTH_SHORT, R.style.NotGrantedToast).show();
         }
     }
 

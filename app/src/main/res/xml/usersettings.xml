@@ -6,8 +6,9 @@
     <PreferenceCategory android:title="@string/pref_group_profile">
 
         <EditTextPreference
-            android:defaultValue="@string/default_your_name"
+            android:defaultValue=""
             android:key="@string/pref_title_name"
+            android:hint="@string/default_your_name"
             android:summary="@string/default_your_name"
             android:title="@string/pref_title_name"
             />
@@ -27,7 +28,8 @@
             android:enabled="false"/>
 
         <EditTextPreference
-            android:defaultValue="@string/default_your_address"
+            android:defaultValue=""
+            android:hint="@string/default_your_address"
             android:key="@string/pref_title_address"
             android:summary="@string/default_your_address"
             android:title="@string/pref_title_address" />

@@ -42,6 +42,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.muddzdev.styleabletoast.StyleableToast;
+import com.tapadoo.alerter.Alerter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -108,7 +109,9 @@ public class HomeFragment extends Fragment {
                 System.out.println("Longitude: " + loc.getLongitude());
                 Latitude = String.valueOf(loc.getLatitude());
                 Longitude = String.valueOf(loc.getLongitude());
+                try {
                 getSeller(hostinglink + "/Home/getsellers/",Latitude,Longitude);
+                }catch (Exception e){e.printStackTrace();}
             }
         };
         MyLocation myLocation = new MyLocation();
@@ -380,8 +383,16 @@ public class HomeFragment extends Fragment {
 
         if(!gps_enabled) {
             // notify user
-            StyleableToast.makeText(getContext(), "Gps", Toast.LENGTH_SHORT, R.style.NotGrantedToast).show();
-
+            Alerter.create(getActivity())
+                    .setTitle("GPS Error")
+                    .setText("Gps Is Not Turned On Some Functionalities May Not Work Properly")
+                    .setIcon(R.drawable.ic_location_on_black_24dp)
+                    .setBackgroundColorRes(R.color.colorAccent)
+                    .setDuration(5000)
+                    .enableSwipeToDismiss()
+                    .enableProgress(true)
+                    .setProgressColorRes(R.color.colorPrimary)
+                    .show();
         }
         else{
         }
