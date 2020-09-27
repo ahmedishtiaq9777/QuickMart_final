@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 public class CatMen {
     @SerializedName("title")/// server side column name
     private String Title;
-    private String Category;
     @SerializedName("description")
     private String Description;
     @SerializedName("productImage")
@@ -14,11 +13,12 @@ public class CatMen {
     private final float Price;
     @SerializedName("productId")
     private int Id;
-
     @SerializedName("avgRating")
     private float Rating;
     @SerializedName("userId")
     private final int UserId;
+    @SerializedName("category")
+    private String Category;
 
     public CatMen(String title, String category, String description, String thumbnail, float price, int id,double rating,int userId) {
         Title = title;

@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.text.Html;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,7 +45,6 @@ import com.demotxt.myapp.Quickmart.Order.Order_Activity;
 import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.activity.Detail_Activity;
 import com.demotxt.myapp.Quickmart.activity.Login;
-import com.demotxt.myapp.Quickmart.activity.Notification_Activity;
 import com.demotxt.myapp.Quickmart.activity.Splash_Activity;
 import com.demotxt.myapp.Quickmart.activity.Web_Activity;
 import com.demotxt.myapp.Quickmart.ownmodels.ContactDialog;
@@ -74,7 +74,7 @@ public class ProfileFragment extends Fragment {
 
     TextView username, signup;
     ImageView phtotimage, logout,edit;
-    CardView btn_order_history, notification, btn_privacy, dark, language, setting, fav, cart, shop, contact, exit;
+    CardView btn_order_history, ShareCard, btn_privacy, dark, language, setting, fav, cart, shop, contact, exit;
     LinearLayout linearLayoutfornotlogin;
     ConstraintLayout linearLayoutforloggenin;
     boolean isAnimated;
@@ -136,7 +136,7 @@ public class ProfileFragment extends Fragment {
         p = view.findViewById(R.id.PRIVACY);
         con = view.findViewById(R.id.CONTACT);
         e = view.findViewById(R.id.EXIT);
-        notification = view.findViewById(R.id.NotificationCard);
+        ShareCard = view.findViewById(R.id.ShareApp);
         btn_order_history = view.findViewById(R.id.OrderHistoryCard);
         phtotimage = view.findViewById(R.id.selectimage);
         signup = view.findViewById(R.id.signup);
@@ -149,14 +149,14 @@ public class ProfileFragment extends Fragment {
             linearLayoutfornotlogin.setVisibility(View.GONE);
             linearLayoutforloggenin.setVisibility(View.VISIBLE);
             btn_order_history.setVisibility(View.VISIBLE);
-            notification.setVisibility(View.VISIBLE);
+            ShareCard.setVisibility(View.VISIBLE);
             GetProfile(hostinglink + "/Home/GetProfile");
 
         } else {
             linearLayoutforloggenin.setVisibility(View.GONE);
             linearLayoutfornotlogin.setVisibility(View.VISIBLE);
             btn_order_history.setVisibility(View.GONE);
-            notification.setVisibility(View.GONE);
+            ShareCard.setVisibility(View.GONE);
         }
 
         //
@@ -191,7 +191,7 @@ public class ProfileFragment extends Fragment {
                 linearLayoutforloggenin.setVisibility(View.GONE);
                 linearLayoutfornotlogin.setVisibility(View.VISIBLE);
                 btn_order_history.setVisibility(View.GONE);
-                notification.setVisibility(View.GONE);
+                ShareCard.setVisibility(View.GONE);
 
             }
         });
@@ -391,12 +391,16 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        //For Notification Card
-        notification.setOnClickListener(new View.OnClickListener() {
+        //For Share Card
+        ShareCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent notifyInt = new Intent(getContext(), Notification_Activity.class);
-                startActivity(notifyInt);
+                String share_text = Html.fromHtml(getResources().getString(R.string.share_app)).toString();
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_TEXT, share_text + "\n\n" + "https://play.google.com/store/apps/details?id=" + getActivity().getPackageName());
+                intent.setType("text/plain");
+                startActivity(intent);
             }
         });
 
@@ -519,6 +523,8 @@ public class ProfileFragment extends Fragment {
         int rotatedWidth, rotatedHeight;
         int orientation = getOrientation(context, photoUri);
 
+
+
         if (orientation == 90 || orientation == 270) {
             rotatedWidth = dbo.outHeight;
             rotatedHeight = dbo.outWidth;
@@ -577,7 +583,9 @@ public class ProfileFragment extends Fragment {
         }
 
         cursor.moveToFirst();
-        return cursor.getInt(0);
+        int b=cursor.getInt(0);
+        cursor.close();
+        return b;
     }
 
     public void selectphoto() {
@@ -716,7 +724,7 @@ public class ProfileFragment extends Fragment {
 
 
                         } catch (Exception e) {
-                            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "E3 :::"+e.getMessage(), Toast.LENGTH_LONG).show();
                         }
 
                     }
@@ -774,7 +782,8 @@ public class ProfileFragment extends Fragment {
                             result = gson.fromJson(response, StringResponceFromWeb.class);
 
                             if (result.getresult().equals("error")) {
-                                Toast.makeText(getContext(), "error:" + result.getErrorResult(), Toast.LENGTH_SHORT).show();
+                             //   Toast.makeText(getContext(), "error:" + result.getErrorResult(), Toast.LENGTH_SHORT).show();
+                               Log.i("Profile","Error"+result.getErrorResult());
                             } else if (!result.getUsername().equals(null)) {
                                 try {
 

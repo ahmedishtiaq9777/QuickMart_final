@@ -30,6 +30,7 @@ import com.android.volley.toolbox.Volley;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.demotxt.myapp.Quickmart.R;
+import com.demotxt.myapp.Quickmart.ownmodels.DetailModel;
 import com.demotxt.myapp.Quickmart.ownmodels.SignInModel;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
 import com.google.gson.Gson;
@@ -434,6 +435,10 @@ public class Login extends AppCompatActivity {
             rememberMePrefsEditor.putString("username", phone.getText().toString());
             rememberMePrefsEditor.putString("password", pass.getText().toString());
             rememberMePrefsEditor.commit();
+
+            DetailModel model = new DetailModel(getApplicationContext());
+            model.setYourPhone(phone.getText().toString());
+
         } else {
             rememberMePrefsEditor.clear();
             rememberMePrefsEditor.commit();

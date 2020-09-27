@@ -23,6 +23,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatRatingBar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.widget.NestedScrollView;
 
 import com.android.volley.Request;
@@ -40,6 +41,7 @@ import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
 import com.demotxt.myapp.Quickmart.utils.Tools;
 import com.demotxt.myapp.Quickmart.utils.ViewAnimation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
@@ -64,6 +66,7 @@ public class Prod_Activity extends AppCompatActivity {
     private int proid;
     private int sellerid;
     StringResponceFromWeb result;
+    CoordinatorLayout lyt_parent;
     public Set<String> cartids;
     private ImageButton bt_toggle_reviews, bt_toggle_description;
     private View lyt_expand_reviews, lyt_expand_description;
@@ -87,6 +90,8 @@ public class Prod_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prod_);
+        lyt_parent = findViewById(R.id.parent_view);
+
         sizecolorlist = new ArrayList<>();
         SizeList = new ArrayList<>();
         colorList = new ArrayList<>();
@@ -100,7 +105,14 @@ public class Prod_Activity extends AppCompatActivity {
             Log.i("Prodactivity", "error" + e.getMessage());
 
         }
-        proid = getIntent().getExtras().getInt("proid");
+        //
+        try {
+            proid = getIntent().getExtras().getInt("proid");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        //
         getsizecolor(hostinglink + "/Home/getsizecolors");
 
         // Size Spinner
@@ -113,9 +125,8 @@ public class Prod_Activity extends AppCompatActivity {
                 selectedsize = selectedItemText;
                 if (position >= 0) {
                     // Notify the selected item text
-                    Toast.makeText
-                            (getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT)
-                            .show();
+                    Snackbar.make(lyt_parent,"Selected : " + selectedItemText,Snackbar.LENGTH_SHORT).show();
+
                 }
             }
 
@@ -133,6 +144,7 @@ public class Prod_Activity extends AppCompatActivity {
                 String selectedItemText = (String) parent.getItemAtPosition(position);
 
                 selectedcolor = selectedItemText;
+
                 SizeList.clear();
                 getsizeswithcolor(selectedItemText);
 
@@ -170,9 +182,7 @@ public class Prod_Activity extends AppCompatActivity {
 
                 if (position >= 0) {
                     // Notify the selected item text
-                    Toast.makeText
-                            (getApplicationContext(), "Selected : " + selectedItemText, Toast.LENGTH_SHORT)
-                            .show();
+                    Snackbar.make(lyt_parent,"Selected : " + selectedItemText,Snackbar.LENGTH_SHORT).show();
                 }
             }
 
@@ -252,7 +262,6 @@ public class Prod_Activity extends AppCompatActivity {
                     if (is_logedin.equals(true)) {
                         int userid = loginpref.getInt("userid", 0);
                         final String struserid = String.valueOf(userid);
-
 
                         try {
                             if (validateSpinner(spinner2, "Choose Color", "Color") == false) {
@@ -398,8 +407,7 @@ public class Prod_Activity extends AppCompatActivity {
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
-                                        Toast.makeText(getApplicationContext(), "ON-Response", Toast.LENGTH_LONG).show();
-                                    }
+                                        Snackbar.make(lyt_parent,"Success",Snackbar.LENGTH_SHORT).show(); }
                                 },
                                 new Response.ErrorListener() {
                                     @Override
@@ -465,7 +473,11 @@ public class Prod_Activity extends AppCompatActivity {
                         buyNow.putExtra("name", Title);
                         buyNow.putExtra("price", strprice);
                         buyNow.putExtra("sellerId", strsellerid);
+                        buyNow.putExtra("color",selectedcolor);
+                        buyNow.putExtra("size",selectedsize);
                         buyNow.putExtra("proId", strpid);
+                        buyNow.putExtra("size",selectedsize);
+                        buyNow.putExtra("color",selectedcolor);
                         startActivity(buyNow);
                     }
                 } else {
@@ -650,7 +662,7 @@ public class Prod_Activity extends AppCompatActivity {
     boolean validateSpinner(Spinner spinner, String error, String msg) {
 
         View selectedView = spinner.getSelectedView();
-        if (selectedView instanceof TextView) {
+        if (selectedView != null && selectedView instanceof TextView) {
             TextView selectedTextView = (TextView) selectedView;
             if (selectedTextView.getText().equals(msg)) {
                 selectedTextView.setError(error);

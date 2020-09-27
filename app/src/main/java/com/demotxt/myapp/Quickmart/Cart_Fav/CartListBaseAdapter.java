@@ -71,21 +71,6 @@ public class CartListBaseAdapter extends BaseAdapter {
     public CartListBaseAdapter(Context context, List<CartListBeanlist> bean, int number) {
 
 
-        //  proids= Arrays.asList(new String[bean.size()]);
-        // quantities=Arrays.asList(new String[bean.size()]);
-        //  seller_quantities=Arrays.asList(new String[bean.size()]);
-
-      /*  for(int index=0;index<bean.size();index++)
-        {
-            quantities.set(index,"1");
-        }*/
-
-
-        // for (String q:quantities) {
-        //   q
-        //}
-
-
         this.context = context;
 
         selectionid = number;
@@ -113,6 +98,7 @@ public class CartListBaseAdapter extends BaseAdapter {
 
 
     }
+
     //TODO Changed Array
     public void initializearray() {
         Bean = new ArrayList<>();
@@ -151,7 +137,6 @@ public class CartListBaseAdapter extends BaseAdapter {
 
             viewHolder = new ViewHolder();
 
-
             viewHolder.image = (ImageView) convertView.findViewById(R.id.image);
             viewHolder.cross = (ImageView) convertView.findViewById(R.id.cross);
             viewHolder.plus = (ImageView) convertView.findViewById(R.id.plus);
@@ -162,11 +147,21 @@ public class CartListBaseAdapter extends BaseAdapter {
             viewHolder.price = (TextView) convertView.findViewById(R.id.price);
             viewHolder.Quantity = (TextView) convertView.findViewById(R.id.prodQuantity);
             viewHolder.mCardView = convertView.findViewById(R.id.Cardview_Cart);
+            viewHolder.tcolor = convertView.findViewById(R.id.tcolor);
+            viewHolder.tsize = convertView.findViewById(R.id.tsize);
 
             viewHolder.title.setTypeface(fonts2);
             viewHolder.Quantity.setTypeface(fonts1);
             viewHolder.price.setTypeface(fonts2);
             convertView.setTag(viewHolder);
+
+            if (selectionid == 2){
+                viewHolder.plus.setVisibility(View.GONE);
+                viewHolder.minus.setVisibility(View.GONE);
+                viewHolder.Quantity.setVisibility(View.GONE);
+                viewHolder.tsize.setVisibility(View.GONE);
+                viewHolder.tcolor.setVisibility(View.GONE);
+            }
 
 
         } else {
@@ -183,6 +178,9 @@ public class CartListBaseAdapter extends BaseAdapter {
         viewHolder.size.setText(bean.getSize());
         viewHolder.color.setText(bean.getColor());
 
+        final String SpecificID = String.valueOf(bean.getSpecificationid());
+
+
         String pricestr = String.valueOf(bean.getPrice());
         String userquantity = String.valueOf(bean.getQuantity());
         viewHolder.price.setText(pricestr);
@@ -197,19 +195,22 @@ public class CartListBaseAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(context, Prod_Activity.class);
-                // passing data to the book activity
-                intent.putExtra("Title",bean.getTitle());
-                intent.putExtra("Description",bean.getDescription());
-                intent.putExtra("Thumbnail",bean.getImage());
-                intent.putExtra("price",(float)bean.getPrice());
-                intent.putExtra("Color",bean.getColor());
-                intent.putExtra("Size",bean.getSize());
-                intent.putExtra("proid",bean.getId());
-                intent.putExtra("sellerid",bean.getSellerid());
+                if (selectionid == 1) {
+                    Toast.makeText(context, "cart", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent intent = new Intent(context, Prod_Activity.class);
+                    // passing data to the book activity
+                    intent.putExtra("Title", bean.getTitle());
+                    intent.putExtra("Description", bean.getDescription());
+                    intent.putExtra("Thumbnail", bean.getImage());
+                    intent.putExtra("price", (float) bean.getPrice());
+                    intent.putExtra("proid", bean.getId());
+                    intent.putExtra("sellerid", bean.getSellerid());
 
-                // start the activity
-                context.startActivity(intent);
+                    // start the activity
+                    context.startActivity(intent);
+                }
 
             }
         });
@@ -222,7 +223,7 @@ public class CartListBaseAdapter extends BaseAdapter {
                 proid = String.valueOf(bean.getId());// get product id from object convert it to string
                 //  Toast.makeText(context,"proid:"+proid,Toast.LENGTH_SHORT).show();
                 //Toast.makeText(context,"Position:"+position,Toast.LENGTH_SHORT).show();
-                specId=String.valueOf(bean.getSpecificationid());
+                specId = String.valueOf(bean.getSpecificationid());
                 int quantity_on_cart = Integer.parseInt(viewHolder.Quantity.getText().toString());/// quantity on view
                 if (selectionid == 1) {
                     int Total_pro_quantity = bean.getSellerQuantity();
@@ -257,7 +258,7 @@ public class CartListBaseAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 proid = String.valueOf(bean.getId());
-                specId=String.valueOf(bean.getSpecificationid());
+                specId = String.valueOf(bean.getSpecificationid());
                 //   Toast.makeText(context,"proid:"+proid,Toast.LENGTH_SHORT).show();
                 // Toast.makeText(context,"Position:"+position,Toast.LENGTH_SHORT).show();
                 int quantity_on_cart = Integer.parseInt(viewHolder.Quantity.getText().toString());
@@ -284,8 +285,7 @@ public class CartListBaseAdapter extends BaseAdapter {
                     proid = String.valueOf(bean.getId());
                     if (selectionid == 1) {
 
-                        getconnection(hostinglink + "/home/DeleteProductFromCart", proid,specId);
-
+                        getconnection(hostinglink + "/home/DeleteProductFromCart", proid, SpecificID);
 
                         //CartFragment.list.remove(position);
 
@@ -317,7 +317,6 @@ public class CartListBaseAdapter extends BaseAdapter {
 
             }
         });
-
 
 
         return convertView;
@@ -365,7 +364,7 @@ public class CartListBaseAdapter extends BaseAdapter {
                 }*/
                 params.put("userid", userid);
                 params.put("proid", pid);
-                params.put("specificationId",spid);
+                params.put("specificationId", spid);
 
                 //  params.p
 
@@ -428,7 +427,7 @@ public class CartListBaseAdapter extends BaseAdapter {
                     params.put("quantity", Selected_Quantity);
                     params.put("proid", pid);
                     params.put("userid", userid);
-                    params.put("specificationId",specificationid);
+                    params.put("specificationId", specificationid);
  /*JSONArray jsonArray1= new JSONArray();
  JSONArray jsonArray2= new JSONArray();
 
@@ -476,7 +475,7 @@ public class CartListBaseAdapter extends BaseAdapter {
         //   viewHolder.Quantity.setText(str_quntity_on_cart);
         Log.i("Quantity", "Quantity:" + str_quntity_on_cart);
 
-        SaveQuantityInDb(hostinglink + "/home/SaveQuantityInCart", str_quntity_on_cart, proid, message,specId);/// Intent intent = new Intent("custom-message");
+        SaveQuantityInDb(hostinglink + "/home/SaveQuantityInCart", str_quntity_on_cart, proid, message, specId);/// Intent intent = new Intent("custom-message");
 
 
     }
@@ -492,6 +491,7 @@ public class CartListBaseAdapter extends BaseAdapter {
         TextView color;
         TextView size;
         TextView Quantity;
+        TextView tcolor,tsize;
 
 
     }

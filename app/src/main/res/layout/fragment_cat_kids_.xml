@@ -7,26 +7,27 @@
     tools:context="com.demotxt.myapp.Quickmart.CategoryFragments.CatKids_Fragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lyt_mainFrag"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="visible">
 
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/kidCategory"
-            android:visibility="gone"
-
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginStart="8dp"
-
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:background="@drawable/customborder"
-            android:entries="@array/MenCategory"
+            android:background="@drawable/ripple_effect_button"
+            android:entries="@array/KidsCategory"
             android:gravity="center"
             android:overlapAnchor="false"
-            android:popupBackground="@drawable/spinnerborder"
+            android:padding="8dp"
+            android:popupBackground="@color/background"
             android:spinnerMode="dropdown"
             android:textAlignment="center"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -47,6 +48,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/kidCategory"
             app:layout_constraintVertical_bias="0.050000012" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lyt_SecondFrag"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <FrameLayout
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="@drawable/no_product"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.40" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

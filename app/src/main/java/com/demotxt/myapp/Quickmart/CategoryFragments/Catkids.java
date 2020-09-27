@@ -6,7 +6,6 @@ public class Catkids {
 
     @SerializedName("title")
     private String Title;
-    private String Category;
     @SerializedName("description")
     private String Description;
     @SerializedName("productImage")
@@ -19,6 +18,8 @@ public class Catkids {
     private float Rating;
     @SerializedName("userId")
     private final int UserId;
+    @SerializedName("category")
+    private String Category;
 
     public Catkids(String title, String category, String description, String thumbnail,float price,int id,double rating,int userId) {
         Title = title;

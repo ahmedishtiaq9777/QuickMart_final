@@ -74,6 +74,7 @@ public class CatWomen_Adapter extends RecyclerView.Adapter<CatWomen_Adapter.CatW
         holder.tv_price.setText(String.valueOf(mData.get(position).getPrice()));
         //holder.img_book_thumbnail.setImageResource(mData.get(position).getThumbnail());
         Picasso.get().load(mData.get(position).getThumbnail()).into(holder.img_women_thumbnail);
+        holder.category.setText(mData.get(position).getCategory());
         //For Rating Purposes
         holder.mRatingBar.setRating(mData.get(position).getRating());
         //
@@ -166,7 +167,7 @@ public class CatWomen_Adapter extends RecyclerView.Adapter<CatWomen_Adapter.CatW
 
     public static class CatWomenViewHolder extends RecyclerView.ViewHolder {
 
-        final TextView tv_women_title;
+        final TextView tv_women_title,category;
         final TextView tv_price;
         final ImageView img_women_thumbnail;
         final ImageView heart;
@@ -183,6 +184,7 @@ public class CatWomen_Adapter extends RecyclerView.Adapter<CatWomen_Adapter.CatW
             cardView = itemView.findViewById(R.id.cardview_women);
             heart = itemView.findViewById(R.id.heart);
             mRatingBar = itemView.findViewById(R.id.card_RatingBar);
+            category = itemView.findViewById(R.id.category);
         }
     }
 
@@ -191,6 +193,8 @@ public class CatWomen_Adapter extends RecyclerView.Adapter<CatWomen_Adapter.CatW
     public Filter getFilter() {
         return mDataFilter;
     }
+
+    public Filter getCatFilter(){return mCatFilter;}
 
     private final Filter mDataFilter = new Filter() {
         @Override
@@ -224,4 +228,37 @@ public class CatWomen_Adapter extends RecyclerView.Adapter<CatWomen_Adapter.CatW
 
         }
     };
+
+    private final Filter mCatFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<CatWomen> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(mDataFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (CatWomen item : mDataFull) {
+                    if (item.getCategory().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            mData = new ArrayList<>();
+            mData.addAll( (List) results.values);
+            notifyDataSetChanged();
+
+        }
+    };
+
 }

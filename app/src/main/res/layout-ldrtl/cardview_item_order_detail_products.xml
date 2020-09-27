@@ -1,131 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="4dp"
-    android:layout_margin="4dp">
+    android:layout_margin="4dp"
+    android:padding="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradient2"
-        android:padding="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+        android:background="@color/buttonbg"
+        android:padding="4dp">
 
         <ImageView
             android:id="@+id/prodImage"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:contentDescription="TODO"
             android:padding="4dp"
+            android:src="@drawable/ic_shopping_cart"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_child_friendly"
-            android:contentDescription="TODO" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="300dp"
+        <TextView
+            android:id="@+id/prodQuantity"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:text="Qty"
+            android:textColor="@color/navbartext"
+            android:textSize="16sp"
+            android:layout_marginStart="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView16"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="X"
+            android:textColor="@color/navbartext"
+            android:textSize="16sp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/prodImage"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/prodName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Product Name"
+            android:textColor="@color/navbartext"
+            android:textSize="16sp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/prodQuantity"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_RS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rs. "
+            android:textColor="@color/navbartext"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/prodImage"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/prodPrice"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <RelativeLayout
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:paddingTop="16dp"
-                >
-
-
-                <TextView
-                    android:id="@+id/prodQuantity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="20dp"
-                    android:padding="2dp"
-                    android:text="@string/qty"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="40dp"
-                    android:padding="2dp"
-                    android:text="X"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
-
-
-            </RelativeLayout>
-            <View
-                android:layout_width="4dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                />
-
-            <TextView
-                android:id="@+id/prodName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Product Name"
-                android:layout_margin="4dp"
-                android:padding="12dp"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-            <View
-                android:layout_width="4dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                />
-
-            <RelativeLayout
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:paddingTop="16dp">
+        <TextView
+            android:id="@+id/prodPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Price"
+            android:layout_marginStart="20dp"
+            android:textColor="@color/navbartext"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/prodName"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
 
-                <TextView
-                    android:id="@+id/prodPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Price"
-                    android:padding="2dp"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:layout_toStartOf="@id/txt_RS"/>
-
-                <TextView
-                    android:id="@+id/txt_RS"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginEnd="25dp"
-                    android:layout_marginBottom="13dp"
-                    android:padding="2dp"
-                    android:text="Rs. "
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
 
 </androidx.cardview.widget.CardView>

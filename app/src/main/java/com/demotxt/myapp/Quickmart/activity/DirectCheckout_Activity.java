@@ -41,8 +41,8 @@ public class DirectCheckout_Activity extends AppCompatActivity {
     RadioButton COD;
     Button Confirm;
     ImageView mImageView;
-    TextView name,price,EditCheckout_Btn;
-    String N,P,I,pId,sId;
+    TextView name,price,EditCheckout_Btn,Tcolor,Tsize;
+    String N,P,I,pId,sId,size,color;
     int Code = 111;
     String Uname,Ucontact,Uaddress,Userid;
     SharedPreferences loginpref;
@@ -65,6 +65,8 @@ public class DirectCheckout_Activity extends AppCompatActivity {
         name = findViewById(R.id.txt_P_Name);
         price = findViewById(R.id.txt_P_Price);
         EditCheckout_Btn = findViewById(R.id.editCheckout_btn);
+        Tcolor = findViewById(R.id.txt_color);
+        Tsize = findViewById(R.id.txt_size);
 
         //product detail
         Intent i = getIntent();
@@ -75,7 +77,11 @@ public class DirectCheckout_Activity extends AppCompatActivity {
         I = i.getExtras().getString("img");
         Picasso.get().load(I).into(mImageView);
         pId = i.getExtras().getString("proId");
+        size=i.getExtras().getString("size");
+        color=i.getExtras().getString("color");
         sId = i.getExtras().getString("sellerId");
+        Tsize.setText(size);
+        Tcolor.setText(color);
 
         //
         final DetailModel obj = new DetailModel(getApplicationContext());
@@ -90,15 +96,18 @@ public class DirectCheckout_Activity extends AppCompatActivity {
         UserPhone.setText(obj.getYourPhone());
         UserPhone.setEnabled(false);
         //
-
-        //Saving Shipping Detail
-        ShippingModel m = new ShippingModel(Uname, "", Ucontact, Uaddress, "", "Sialkot");
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.create();
-        String shipping_detail = gson.toJson(m);
-        String url = MainActivity2.hostinglink + "/home/SaveShippingDetail";
-        SaveShippingDetail(url, shipping_detail);
-
+if(!Uname.equals("Your Name")||!Uaddress.equals("Your Address")) {
+    //Saving Shipping Detail
+    ShippingModel m = new ShippingModel(Uname, "", Ucontact, Uaddress, "", "Sialkot");
+    GsonBuilder builder = new GsonBuilder();
+    Gson gson = builder.create();
+    String shipping_detail = gson.toJson(m);
+    String url = MainActivity2.hostinglink + "/home/SaveShippingDetail";
+    SaveShippingDetail(url, shipping_detail);
+}else {
+    Intent ch = new Intent(DirectCheckout_Activity.this,Detail_Activity.class);
+    startActivity(ch);
+}
         //Edit Checkout Detail
         EditCheckout_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +131,8 @@ public class DirectCheckout_Activity extends AppCompatActivity {
                 sh.putExtra("UserAdd",obj.getYourAddress());
                 sh.putExtra("proId",pId);
                 sh.putExtra("sellerId",sId);
+                sh.putExtra("size",size);
+                sh.putExtra("color",color);
                 startActivity(sh);
             }
         });

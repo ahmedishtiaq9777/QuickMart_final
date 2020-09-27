@@ -41,6 +41,8 @@ import com.demotxt.myapp.Quickmart.ownmodels.Prod;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.muddzdev.styleabletoast.StyleableToast;
+import com.tapadoo.alerter.Alerter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -107,7 +109,9 @@ public class HomeFragment extends Fragment {
                 System.out.println("Longitude: " + loc.getLongitude());
                 Latitude = String.valueOf(loc.getLatitude());
                 Longitude = String.valueOf(loc.getLongitude());
+                try {
                 getSeller(hostinglink + "/Home/getsellers/",Latitude,Longitude);
+                }catch (Exception e){e.printStackTrace();}
             }
         };
         MyLocation myLocation = new MyLocation();
@@ -352,14 +356,14 @@ public class HomeFragment extends Fragment {
 
         if (null != activeNetwork) {
             if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
-                Toast.makeText(getContext(), "Wifi On", Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(getContext(),"Connected",Toast.LENGTH_SHORT,R.style.WifiToast).show();
             } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
-                Toast.makeText(getContext(), "Mobile Data On", Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(getContext(),"Connected",Toast.LENGTH_SHORT,R.style.WifiToast).show();
 
             } else {
                 Intent intent = new Intent(getContext(), Error_Screen_Activity.class);
                 startActivity(intent);
-                Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+                StyleableToast.makeText(getContext(),"Internet Error",Toast.LENGTH_SHORT,R.style.WifiOffToast).show();
             }
 
         }
@@ -379,10 +383,18 @@ public class HomeFragment extends Fragment {
 
         if(!gps_enabled) {
             // notify user
-            Toast.makeText(getContext(), " No Gps ", Toast.LENGTH_SHORT).show();
+            Alerter.create(getActivity())
+                    .setTitle("GPS Error")
+                    .setText("Gps Is Not Turned On Some Functionalities May Not Work Properly")
+                    .setIcon(R.drawable.ic_location_on_black_24dp)
+                    .setBackgroundColorRes(R.color.colorAccent)
+                    .setDuration(5000)
+                    .enableSwipeToDismiss()
+                    .enableProgress(true)
+                    .setProgressColorRes(R.color.colorPrimary)
+                    .show();
         }
         else{
-            Toast.makeText(getContext(), "GPS IS ENABLED", Toast.LENGTH_SHORT).show();
         }
 
     }

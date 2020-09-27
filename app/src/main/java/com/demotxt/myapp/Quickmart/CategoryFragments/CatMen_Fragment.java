@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -40,14 +44,16 @@ import java.util.Objects;
 
 import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
-public class CatMen_Fragment extends Fragment {
+public class CatMen_Fragment extends Fragment implements AdapterView.OnItemSelectedListener {
     private RecyclerView mRecyclerView;
     private CatMen_Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
+    String Cattext,cat;
     List<CatMen> ProdMen;
     CheckConnect connection;
     CustomInternetDialog dialog;
+    Spinner mSpinner;
+    ConstraintLayout lyt_Main, lyt_second;
 
 
     @Override
@@ -57,7 +63,9 @@ public class CatMen_Fragment extends Fragment {
         // Inflate the layout for this fragment
         View rootview =  inflater.inflate(R.layout.fragment_cat_men_, container, false);
         mRecyclerView = rootview.findViewById(R.id.Rv_CatMen);
-
+        mSpinner = rootview.findViewById(R.id.menCategory);
+        lyt_Main = rootview.findViewById(R.id.lyt_mainFrag);
+        lyt_second = rootview.findViewById(R.id.lyt_SecondFrag);
         connection=new CheckConnect(getActivity());
         dialog=new CustomInternetDialog(getActivity());
 
@@ -66,6 +74,15 @@ public class CatMen_Fragment extends Fragment {
         {
             dialog.showCustomDialog();
         }
+        //
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(Objects.requireNonNull(getContext()), R.array.MenCategory,
+                android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinner.setAdapter(adapter);
+        mSpinner.setOnItemSelectedListener(this);
+
+
+
 
         ProdMen = new ArrayList<>();
 
@@ -99,19 +116,18 @@ public class CatMen_Fragment extends Fragment {
                             GsonBuilder builder = new GsonBuilder();
                             Gson gson = builder.create();
                             ProdMen = Arrays.asList(gson.fromJson(response, CatMen[].class));
+                            if (ProdMen.isEmpty()){
+                                lyt_Main.setVisibility(View.GONE);
+                                lyt_second.setVisibility(View.VISIBLE);
+                            }
+                            else {
                             setimageurl();
                             setadapterRecyclerView();
+                            }
 
                         } catch (Exception e) {
                             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                         }
-
-                        //  Toast.makeText(ShoppyProductListActivity.this, response, Toast.LENGTH_SHORT).show();
-
-
-                        // response
-                        //  Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -128,19 +144,6 @@ public class CatMen_Fragment extends Fragment {
                 Map<String, String> params = new HashMap<>();
                 params.put("sellerid",seller_id);
                 params.put("category","Men");
-
-                // JSONArray jsonArray= new JSONArray();
-                // jsonArray.put(sid);
-                // params.put("sellerid",jsonArray.toString());
-              /*  JSONArray jsonArray= new JSONArray();
-                for (String  i:) {
-                    jsonArray.put(i);
-                }
-                params.put("idsarray",jsonArray.toString());
-                *?
-               */
-
-                //  params.p
 
                 return params;
             }
@@ -160,6 +163,7 @@ public class CatMen_Fragment extends Fragment {
 
 
     }
+
     private  void  setadapterRecyclerView()
     {
         mLayoutManager = new GridLayoutManager(getContext(),2);
@@ -193,6 +197,9 @@ public class CatMen_Fragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+
+                query = CheckCategory();
+                mAdapter.getCatFilter().filter(query);
                 return false;
             }
 
@@ -206,7 +213,40 @@ public class CatMen_Fragment extends Fragment {
         }
     }
 
+    //Check and return value
+    public String CheckCategory(){
 
+        if (Cattext.equals("Shirts")){
+            cat = "MenShirts";
+        }
+        else if (Cattext.equals("T-Shirt")){
+            cat = "MenTshirts";
+        }
+        else if (Cattext.equals("Jeans")){
+            cat = "MenDenim";
+        }
+        else if (Cattext.equals("Shoes")){
+            cat = "MenShoes";
+        }
+        else if (Cattext.equals("Accessories")){
+            cat = "AccesariesMen";
+        }
+        else if (Cattext.equals("All")){
+            cat = "All";
+        }
 
+        return cat;
+    }
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        Cattext = adapterView.getItemAtPosition(i).toString();
+        CheckCategory();
+        Toast.makeText(getContext(), Cattext, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
 }

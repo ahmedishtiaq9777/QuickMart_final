@@ -46,7 +46,7 @@ public class Direct_Confirmation extends AppCompatActivity {
     TextView Pname,Pprice;
     ArrayList<CartListBeanlist> prolist;
     SharedPreferences loginpref;
-    String Userid,name,address;
+    String Userid,name,address,color,size;
     int pId,sId;
     double total;
     int code;
@@ -74,6 +74,8 @@ public class Direct_Confirmation extends AppCompatActivity {
         address =  DC.getExtras().getString("UserAdd");
         String i = DC.getExtras().getString("proId");
         String sell = DC.getExtras().getString("sellerId");
+        size=  DC.getExtras().getString("size");
+        color=DC.getExtras().getString("color");
         pId = Integer.parseInt(i);
         sId = Integer.parseInt(sell);
         //
@@ -124,7 +126,7 @@ public class Direct_Confirmation extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                SaveOrder(MainActivity2.hostinglink + "/home/SaveOrder", s);
+                SaveOrder(MainActivity2.hostinglink + "/home/SaveOrderForDidectBuy", s);
 
             }
         });
@@ -178,6 +180,9 @@ public class Direct_Confirmation extends AppCompatActivity {
                     params.put("userid", Userid);
                     params.put("orderedproducts", productsarray);
                     params.put("total", String.valueOf(total));
+                    params.put("color",color);
+                    params.put("size",size);
+                    params.put("proid",String.valueOf(pId));
                     return params;
                 }
 
