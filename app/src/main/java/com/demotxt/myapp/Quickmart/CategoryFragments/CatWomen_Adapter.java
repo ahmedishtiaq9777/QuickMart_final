@@ -240,7 +240,7 @@ public class CatWomen_Adapter extends RecyclerView.Adapter<CatWomen_Adapter.CatW
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for (CatWomen item : mDataFull) {
-                    if (item.getCategory().toLowerCase().contains(filterPattern)) {
+                    if (item.getCategory().toLowerCase().equals(filterPattern)) {
                         filteredList.add(item);
                     }
                 }

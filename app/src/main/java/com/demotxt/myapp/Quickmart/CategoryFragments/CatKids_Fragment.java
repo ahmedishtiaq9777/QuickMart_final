@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -54,6 +57,7 @@ public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSele
     //CheckConnection connection;
     CustomInternetDialog dialog;
     ConstraintLayout lyt_Main, lyt_second;
+    String url,userid;
 
     // private int sid;
 
@@ -83,9 +87,17 @@ public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSele
         //int   sid=getArguments().getInt("user_id");
         TabsBasic activity = (TabsBasic) getActivity();// get acticity data
         int sid = Objects.requireNonNull(activity).getuserid();
-        String userid = String.valueOf(sid);
-        String url = hostinglink + "/Home/getprowithsellerid";
-        getconnection(url, userid);
+         userid = String.valueOf(sid);
+         url = hostinglink + "/Home/getprowithsellerid";
+
+        //On UI Thread To reduce the load on main Thread
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("UI THREAD MEN-FRAG","IN UI THREAD");
+                getconnection(url, userid);
+            }
+        });
 
 
         return rootview;
@@ -107,8 +119,8 @@ public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSele
                             ProdKids = Arrays.asList(gson.fromJson(response, Catkids[].class));
 
                             if (ProdKids.isEmpty()) {
-                                    lyt_Main.setVisibility(View.GONE);
-                                    lyt_second.setVisibility(View.VISIBLE);
+                                lyt_Main.setVisibility(View.GONE);
+                                lyt_second.setVisibility(View.VISIBLE);
                             } else {
                                 setimageurl();
                                 setadapterRecyclerView();
@@ -183,9 +195,6 @@ public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSele
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    query = CheckCategory();
-
-                    mAdapter.getCatFilter().filter(query);
                     return false;
                 }
 
@@ -193,7 +202,8 @@ public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSele
                 public boolean onQueryTextChange(String newText) {
 
 
-                    mAdapter.getFilter().filter(newText);
+                        mAdapter.getFilter().filter(newText);
+
 
                     return false;
                 }

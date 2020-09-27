@@ -189,7 +189,8 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
 
             if (constraint == null || constraint.length() == 0) {
                 filteredList.addAll(mDataFull);
-            } else {
+            }
+            else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for (Catkids item : mDataFull) {
@@ -230,7 +231,7 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for (Catkids item : mDataFull) {
-                    if (item.getCategory().toLowerCase().contains(filterPattern)) {
+                    if (item.getCategory().toLowerCase().equals(filterPattern)) {
                         filteredList.add(item);
                     }
                 }
@@ -241,6 +242,8 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
 
             return results;
         }
+
+
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {

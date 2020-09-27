@@ -195,5 +195,10 @@ if(!Uname.equals("Your Name")||!Uaddress.equals("Your Address")) {
         }
     }
 
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
 }

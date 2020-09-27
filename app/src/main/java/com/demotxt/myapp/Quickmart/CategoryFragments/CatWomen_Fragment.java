@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -49,10 +52,11 @@ public class CatWomen_Fragment extends Fragment implements AdapterView.OnItemSel
     private RecyclerView.LayoutManager mLayoutManager;
     CheckConnect connection;
     CustomInternetDialog dialog;
-    String Cattext,cat;
+    String Cattext, cat;
     List<CatWomen> ProdWomen;
     Spinner mSpinner;
     ConstraintLayout lyt_Main, lyt_second;
+    String url, userid;
 
 
     @Override
@@ -87,9 +91,18 @@ public class CatWomen_Fragment extends Fragment implements AdapterView.OnItemSel
         //Add Data in The Recycler Views;
         TabsBasic activity = (TabsBasic) getActivity();// get acticity data
         int sid = Objects.requireNonNull(activity).getuserid();
-        String userid = String.valueOf(sid);
-        String url = hostinglink + "/Home/getprowithsellerid";
-        getconnection(url, userid);
+        userid = String.valueOf(sid);
+        url = hostinglink + "/Home/getprowithsellerid";
+
+
+        //On UI Thread To reduce the load on main Thread
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("UI THREAD MEN-FRAG", "IN UI THREAD");
+                getconnection(url, userid);
+            }
+        });
 
 
         return rootview;
@@ -115,10 +128,10 @@ public class CatWomen_Fragment extends Fragment implements AdapterView.OnItemSel
                             if (ProdWomen.isEmpty()) {
                                 lyt_Main.setVisibility(View.GONE);
                                 lyt_second.setVisibility(View.VISIBLE);
+                            } else {
+                                setimageurl();
+                                setadapterRecyclerView();
                             }
-                            else {
-                            setimageurl();
-                            setadapterRecyclerView();}
 
 
                         } catch (Exception e) {
@@ -226,24 +239,19 @@ public class CatWomen_Fragment extends Fragment implements AdapterView.OnItemSel
     }
 
     //Check and return value
-    public String CheckCategory(){
+    public String CheckCategory() {
 
-        if (Cattext.equals("Tops")){
+        if (Cattext.equals("Tops")) {
             cat = "WomanTops";
-        }
-        else if (Cattext.equals("Bottoms")){
+        } else if (Cattext.equals("Bottoms")) {
             cat = "WomanBottom";
-        }
-        else if (Cattext.equals("Bags")){
+        } else if (Cattext.equals("Bags")) {
             cat = "WomanBags";
-        }
-        else if (Cattext.equals("Shoes")){
+        } else if (Cattext.equals("Shoes")) {
             cat = "WomanShoes";
-        }
-        else if (Cattext.equals("Accessories")){
+        } else if (Cattext.equals("Accessories")) {
             cat = "AccesariesWomen";
-        }
-        else if (Cattext.equals("All")){
+        } else if (Cattext.equals("All")) {
             cat = "All";
         }
 
