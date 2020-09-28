@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/profilebackground"
+    android:background="@color/cardbg"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
@@ -10,14 +10,14 @@
             android:id="@+id/order_cardview"
             android:layout_width="match_parent"
             android:layout_height="130dp"
-            app:cardBackgroundColor="@color/cardbg"
             android:padding="20dp"
             app:cardElevation="50dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginBottom="10dp"
-            app:cardCornerRadius="20dp">
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="@color/buttonbg">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -55,7 +55,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:text="@string/OrdId"
-                        android:textColor="@color/profiletext"
+                        android:textColor="@color/navbartext"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -65,7 +65,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:text="@string/Ordprice"
-                        android:textColor="@color/profiletext"
+                        android:textColor="@color/navbartext"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -74,7 +74,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:text="@string/Ordstatus"
-                        android:textColor="@color/profiletext"
+                        android:textColor="@color/navbartext"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -83,7 +83,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:text="@string/date"
-                        android:textColor="@color/profiletext"
+                        android:textColor="@color/navbartext"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -107,7 +107,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:text="123"
-                        android:textColor="@color/profiletext"
+                        android:textColor="@color/navbartext"
                         android:textSize="15sp"
                         android:gravity="right"/>
 
@@ -117,7 +117,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:text="150 $"
-                        android:textColor="@color/profiletext"
+                        android:textColor="@color/navbartext"
                         android:textSize="15sp"
                         android:gravity="right"/>
 
@@ -127,7 +127,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:text="ongoing"
-                        android:textColor="@color/profiletext"
+                        android:textColor="@color/navbartext"
                         android:textSize="15sp"
                         android:gravity="right"/>
 
@@ -137,7 +137,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="4dp"
                         android:text="20-5-20"
-                        android:textColor="@color/profiletext"
+                        android:textColor="@color/navbartext"
                         android:textSize="15sp"
                         android:gravity="right"/>
 

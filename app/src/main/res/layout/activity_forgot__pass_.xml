@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.demotxt.myapp.Quickmart.activity.Forgot_Pass_Activity">
+    tools:context="com.demotxt.myapp.Quickmart.activity.Forgot_Pass_Activity"
+    android:background="@color/cardbg">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/lyt_forget"
@@ -23,7 +24,7 @@
             android:textColor="@color/txtcolor"
             android:textSize="34sp"
             android:textStyle="bold"
-            android:src="@drawable/logo3"
+            android:src="@drawable/logo"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

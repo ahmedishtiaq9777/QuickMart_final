@@ -16,9 +16,9 @@
         android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp"
         android:padding="20dp"
-        app:cardBackgroundColor="@color/buttonbg"
         app:cardCornerRadius="20dp"
-        app:cardElevation="50dp">
+        app:cardElevation="50dp"
+        app:cardBackgroundColor="@color/buttonbg">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
