@@ -115,12 +115,9 @@ public class Prod_Activity extends AppCompatActivity {
         }
 
         //UI THREAD
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
+
                 getsizecolor(hostinglink + "/Home/getsizecolors");
-            }
-        });
+
 
 
         // Size Spinner
@@ -155,13 +152,10 @@ public class Prod_Activity extends AppCompatActivity {
 
                 SizeList.clear();
 
-                //UI THREAD
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
+
+
                         getsizeswithcolor(selectedItemText);
-                    }
-                });
+
 
                 Sizespinner = new ArrayAdapter<String>(getApplicationContext(), R.layout.item_spinner, SizeList) {
                     @Override
