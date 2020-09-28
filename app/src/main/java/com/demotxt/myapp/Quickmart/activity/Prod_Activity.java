@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -83,7 +85,7 @@ public class Prod_Activity extends AppCompatActivity {
     public ArrayAdapter<String> Colorspinner;
     public ArrayAdapter<String> Sizespinner;
     public Spinner spinner1, spinner2;
-    public String selectedcolor, selectedsize;
+    public String selectedcolor, selectedsize ,selectedItemText;
     //
 
     @Override
@@ -112,8 +114,14 @@ public class Prod_Activity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        //
-        getsizecolor(hostinglink + "/Home/getsizecolors");
+        //UI THREAD
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                getsizecolor(hostinglink + "/Home/getsizecolors");
+            }
+        });
+
 
         // Size Spinner
         spinner1 = (Spinner) findViewById(R.id.sizeSpinner);
@@ -141,12 +149,19 @@ public class Prod_Activity extends AppCompatActivity {
         spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItemText = (String) parent.getItemAtPosition(position);
+                selectedItemText = (String) parent.getItemAtPosition(position);
 
                 selectedcolor = selectedItemText;
 
                 SizeList.clear();
-                getsizeswithcolor(selectedItemText);
+
+                //UI THREAD
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        getsizeswithcolor(selectedItemText);
+                    }
+                });
 
                 Sizespinner = new ArrayAdapter<String>(getApplicationContext(), R.layout.item_spinner, SizeList) {
                     @Override
@@ -242,6 +257,7 @@ public class Prod_Activity extends AppCompatActivity {
 
 
         toggleArrow(bt_toggle_description);
+        lyt_expand_description.setVisibility(View.VISIBLE);
 
         //setting values
         tvtitle.setText(Title);
@@ -373,6 +389,8 @@ public class Prod_Activity extends AppCompatActivity {
                         login.putExtra("proid", proid);
                         startActivity(login);
 
+                        finish();
+
                     }
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), "Error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -436,6 +454,8 @@ public class Prod_Activity extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent(getApplicationContext(), Login.class);
                     startActivity(intent);
+
+                    finish();
                 }
             }
         });
@@ -475,10 +495,13 @@ public class Prod_Activity extends AppCompatActivity {
                         buyNow.putExtra("size",selectedsize);
                         buyNow.putExtra("color",selectedcolor);
                         startActivity(buyNow);
+                        //
+                        finish();
                     }
                 } else {
                     Intent intent = new Intent(getApplicationContext(), Login.class);
                     startActivity(intent);
+                    finish();
                 }
             }
         });
@@ -488,8 +511,6 @@ public class Prod_Activity extends AppCompatActivity {
 
     public void getsizecolor(String url) {
         final RequestQueue request = Volley.newRequestQueue(getApplicationContext());
-
-
         StringRequest rRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -669,6 +690,9 @@ public class Prod_Activity extends AppCompatActivity {
         }
         return true;
     }
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Runtime.getRuntime().gc();
+    }
 }

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.demotxt.myapp.Quickmart.activity.DirectCheckout_Activity">
+    tools:context="com.demotxt.myapp.Quickmart.activity.DirectCheckout_Activity"
+    android:background="@color/cardbg">
 
     <LinearLayout
         android:id="@+id/linearLayout6"

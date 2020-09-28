@@ -194,7 +194,6 @@ public class CatWomen_Adapter extends RecyclerView.Adapter<CatWomen_Adapter.CatW
         return mDataFilter;
     }
 
-    public Filter getCatFilter(){return mCatFilter;}
 
     private final Filter mDataFilter = new Filter() {
         @Override
@@ -229,36 +228,5 @@ public class CatWomen_Adapter extends RecyclerView.Adapter<CatWomen_Adapter.CatW
         }
     };
 
-    private final Filter mCatFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            List<CatWomen> filteredList = new ArrayList<>();
-
-            if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(mDataFull);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-
-                for (CatWomen item : mDataFull) {
-                    if (item.getCategory().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(item);
-                    }
-                }
-            }
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-
-            mData = new ArrayList<>();
-            mData.addAll( (List) results.values);
-            notifyDataSetChanged();
-
-        }
-    };
 
 }

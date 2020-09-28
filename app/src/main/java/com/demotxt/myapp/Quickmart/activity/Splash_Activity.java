@@ -3,6 +3,7 @@ package com.demotxt.myapp.Quickmart.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.animation.LinearInterpolator;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +29,7 @@ public class Splash_Activity extends AppCompatActivity {
 
 
         mLoader = findViewById(R.id.Progressloader);
+
 
         new Handler().postDelayed(new Runnable() {
             @Override

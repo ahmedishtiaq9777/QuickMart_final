@@ -86,8 +86,9 @@ public class MyLocation extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == 1 || requestCode == 2) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                StyleableToast.makeText(mContext, "Permission Granted", Toast.LENGTH_SHORT, R.style.PermissionToast).show();
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
+            }
             else
                 StyleableToast.makeText(mContext, "Error Permission", Toast.LENGTH_SHORT, R.style.NotGrantedToast).show();
         }

@@ -13,7 +13,8 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/cardbg">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -80,7 +81,7 @@
             android:layout_marginEnd="9dp"
             android:text="P_Name"
             android:gravity="end"
-            android:textColor="#2d2d2d"
+            android:textColor="@color/cardtxt"
             android:textSize="13sp"
             android:textStyle="normal" />
 

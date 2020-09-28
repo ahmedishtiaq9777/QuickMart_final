@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.demotxt.myapp.Quickmart.activity.Splash_Activity">
+    tools:context="com.demotxt.myapp.Quickmart.activity.Splash_Activity"
+    android:background="@color/cardbg">
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/logo"
@@ -12,7 +13,7 @@
         android:layout_height="335dp"
         android:layout_marginTop="100dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/quickmartblue" />
+        android:src="@drawable/sp" />
 
     <com.agrawalsuneet.dotsloader.loaders.LazyLoader
         android:id="@+id/Progressloader"

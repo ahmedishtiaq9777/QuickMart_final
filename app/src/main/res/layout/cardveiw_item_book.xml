@@ -14,7 +14,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="2dp">
+        android:paddingTop="2dp"
+        android:background="@color/cardbg">
 
         <ImageView
             android:id="@+id/book_img_id"
@@ -62,7 +63,7 @@
                     android:layout_height="20dp"
                     android:gravity="center"
                     android:text="P_Name"
-                    android:textColor="#2d2d2d"
+                    android:textColor="@color/cardtxt"
                     android:textSize="13sp" />
 
                 <androidx.appcompat.widget.AppCompatRatingBar
@@ -100,7 +101,8 @@
                 android:paddingStart="2dp"
                 android:paddingEnd="2dp"
                 android:paddingTop="10dp"
-                android:text="@string/km" />
+                android:text="@string/km"
+                android:textColor="@color/cardtxt"/>
 
         </LinearLayout>
 

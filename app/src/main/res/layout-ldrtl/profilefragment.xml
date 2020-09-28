@@ -29,8 +29,7 @@
                 android:id="@+id/forloggedin"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:orientation="vertical"
-                android:background="@color/buttonbg">
+                android:orientation="vertical">
 
                 <com.mikhaellopez.circularimageview.CircularImageView
                     android:id="@+id/selectimage"
@@ -87,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="@string/btn_edit_profile"
-                    android:textColor="@color/white"
+                    android:textColor="@color/profiletext"
                     android:textSize="11sp"
                     app:layout_constraintEnd_toEndOf="@+id/btn_edit"
                     app:layout_constraintStart_toStartOf="@+id/btn_edit"
@@ -104,7 +103,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="7dp"
                     android:text="@string/logout"
-                    android:textColor="@color/white"
+                    android:textColor="@color/profiletext"
                     android:textSize="8sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -176,14 +175,14 @@
                     android:layout_gravity="fill"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="20dp"
-                    app:cardBackgroundColor="@color/cardbg"
+                    app:cardBackgroundColor="@color/buttonbg"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="8dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/orderlayout"
                         android:layout_width="match_parent"
-                        android:layout_height="69dp"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
 
@@ -206,7 +205,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:text="@string/Orderhistory"
-                            android:textColor="@color/profiletext"
+                            android:textColor="@color/navbartext"
                             android:textStyle="bold"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -231,13 +230,13 @@
                     android:layout_gravity="fill"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="5dp"
-                    app:cardBackgroundColor="@color/cardbg"
+                    app:cardBackgroundColor="@color/buttonbg"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="8dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="69dp"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
 
@@ -257,11 +256,11 @@
 
                         <TextView
                             android:id="@+id/textView2"
-                            android:layout_width="95dp"
+                            android:layout_width="100dp"
                             android:layout_height="23dp"
                             android:layout_marginStart="10dp"
                             android:text="@string/txt_profile_share"
-                            android:textColor="@color/profiletext"
+                            android:textColor="@color/navbartext"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -288,13 +287,13 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="20dp"
-                    app:cardBackgroundColor="@color/cardbg"
+                    app:cardBackgroundColor="@color/buttonbg"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="8dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="69dp"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
 
@@ -314,11 +313,11 @@
 
                         <TextView
                             android:id="@+id/textView4"
-                            android:layout_width="79dp"
+                            android:layout_width="82dp"
                             android:layout_height="23dp"
                             android:layout_marginStart="10dp"
                             android:text="@string/Language"
-                            android:textColor="@color/profiletext"
+                            android:textColor="@color/navbartext"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -345,13 +344,13 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"
-                    app:cardBackgroundColor="@color/cardbg"
+                    app:cardBackgroundColor="@color/buttonbg"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="8dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="69dp"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
 
@@ -375,7 +374,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:text="@string/Darkmode"
-                            android:textColor="@color/profiletext"
+                            android:textColor="@color/navbartext"
                             android:textStyle="bold"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -403,13 +402,13 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="20dp"
                     android:clickable="true"
-                    app:cardBackgroundColor="@color/cardbg"
+                    app:cardBackgroundColor="@color/buttonbg"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="8dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="69dp"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
 
@@ -428,11 +427,11 @@
 
                         <TextView
                             android:id="@+id/textView6"
-                            android:layout_width="77dp"
+                            android:layout_width="82dp"
                             android:layout_height="23dp"
                             android:layout_marginStart="10dp"
                             android:text="@string/Favourite"
-                            android:textColor="@color/profiletext"
+                            android:textColor="@color/navbartext"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -459,13 +458,13 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"
-                    app:cardBackgroundColor="@color/cardbg"
+                    app:cardBackgroundColor="@color/buttonbg"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="8dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="69dp"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
 
@@ -489,7 +488,7 @@
                             android:layout_height="21dp"
                             android:layout_marginStart="10dp"
                             android:text="@string/Cart"
-                            android:textColor="@color/profiletext"
+                            android:textColor="@color/navbartext"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -518,13 +517,13 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="20dp"
                     android:background="@color/text"
-                    app:cardBackgroundColor="@color/cardbg"
+                    app:cardBackgroundColor="@color/buttonbg"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="8dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="69dp"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
 
@@ -544,7 +543,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:text="@string/Registershop"
-                            android:textColor="@color/profiletext"
+                            android:textColor="@color/navbartext"
                             android:textStyle="bold"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -571,13 +570,13 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"
-                    app:cardBackgroundColor="@color/cardbg"
+                    app:cardBackgroundColor="@color/buttonbg"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="8dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="69dp"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
 
@@ -600,7 +599,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:text="@string/txt_profile_privacy"
-                            android:textColor="@color/profiletext"
+                            android:textColor="@color/navbartext"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -632,13 +631,13 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="20dp"
                     android:background="@color/text"
-                    app:cardBackgroundColor="@color/cardbg"
+                    app:cardBackgroundColor="@color/buttonbg"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="8dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="69dp"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
 
@@ -658,7 +657,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:text="@string/Contactus"
-                            android:textColor="@color/profiletext"
+                            android:textColor="@color/navbartext"
                             android:textStyle="bold"
                             android:textSize="18sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -687,13 +686,13 @@
                     android:layout_marginBottom="20dp"
                     android:layout_marginRight="5dp"
                     android:background="@color/text"
-                    app:cardBackgroundColor="@color/cardbg"
+                    app:cardBackgroundColor="@color/buttonbg"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="8dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="69dp"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:orientation="vertical">
 
@@ -716,7 +715,7 @@
                             android:layout_height="24dp"
                             android:layout_marginStart="10dp"
                             android:text="@string/Exit"
-                            android:textColor="@color/profiletext"
+                            android:textColor="@color/navbartext"
                             android:textSize="18sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"

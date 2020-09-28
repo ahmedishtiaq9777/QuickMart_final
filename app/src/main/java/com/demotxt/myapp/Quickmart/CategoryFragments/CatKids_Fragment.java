@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,7 +47,7 @@ import java.util.Objects;
 
 import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
-public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class CatKids_Fragment extends Fragment{
     private RecyclerView mRecyclerView;
     private CatKids_Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -54,6 +57,7 @@ public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSele
     //CheckConnection connection;
     CustomInternetDialog dialog;
     ConstraintLayout lyt_Main, lyt_second;
+    String url,userid;
 
     // private int sid;
 
@@ -70,22 +74,31 @@ public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSele
 
         //  connection=new CheckConnection(getActivity());
         dialog = new CustomInternetDialog(getActivity());
-        //
+      /*
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(Objects.requireNonNull(getContext()), R.array.KidsCategory,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
         mSpinner.setOnItemSelectedListener(this);
-
+*/
+        mSpinner.setVisibility(View.GONE);
 
         ProdKids = new ArrayList<>();
 
         //int   sid=getArguments().getInt("user_id");
         TabsBasic activity = (TabsBasic) getActivity();// get acticity data
         int sid = Objects.requireNonNull(activity).getuserid();
-        String userid = String.valueOf(sid);
-        String url = hostinglink + "/Home/getprowithsellerid";
-        getconnection(url, userid);
+         userid = String.valueOf(sid);
+         url = hostinglink + "/Home/getprowithsellerid";
+
+        //On UI Thread To reduce the load on main Thread
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("UI THREAD MEN-FRAG","IN UI THREAD");
+                getconnection(url, userid);
+            }
+        });
 
 
         return rootview;
@@ -107,8 +120,8 @@ public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSele
                             ProdKids = Arrays.asList(gson.fromJson(response, Catkids[].class));
 
                             if (ProdKids.isEmpty()) {
-                                    lyt_Main.setVisibility(View.GONE);
-                                    lyt_second.setVisibility(View.VISIBLE);
+                                lyt_Main.setVisibility(View.GONE);
+                                lyt_second.setVisibility(View.VISIBLE);
                             } else {
                                 setimageurl();
                                 setadapterRecyclerView();
@@ -183,17 +196,13 @@ public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSele
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    query = CheckCategory();
-
-                    mAdapter.getCatFilter().filter(query);
                     return false;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
+                        mAdapter.getFilter().filter(newText);
 
-
-                    mAdapter.getFilter().filter(newText);
 
                     return false;
                 }
@@ -201,18 +210,6 @@ public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSele
         } catch (Exception e) {
             Toast.makeText(getContext(), "Loading Data", Toast.LENGTH_SHORT).show();
         }
-    }
-
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        Cattext = adapterView.getItemAtPosition(i).toString();
-        CheckCategory();
-        Toast.makeText(getContext(), Cattext, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
     }
 
     public String CheckCategory() {

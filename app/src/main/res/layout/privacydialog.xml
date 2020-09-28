@@ -4,7 +4,8 @@
     android:layout_width="350dp"
     android:layout_height="450dp"
     android:orientation="vertical"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    android:background="@color/cardbg">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,7 +16,7 @@
                 android:layout_height="449dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:textColor="@color/txtprivacy"
+                android:textColor="@color/cardtxt"
                 android:textSize="16sp"
                 android:text="@string/privacy"
                 android:textStyle="bold"

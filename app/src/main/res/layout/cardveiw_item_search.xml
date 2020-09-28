@@ -2,8 +2,8 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardview_search"
-    android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="true"
     android:layout_width="160dp"
     android:layout_height="200dp"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
@@ -14,7 +14,8 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/cardbg">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -80,7 +81,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:text="P_Name"
-            android:textColor="#2d2d2d"
+            android:textColor="@color/cardtxt"
             android:textSize="11sp"
             android:textStyle="normal" />
 
