@@ -208,7 +208,7 @@ public class CatMen_Adapter extends RecyclerView.Adapter<CatMen_Adapter.CatMenVi
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
             for (CatMen item : mDataFull) {
-                if (item.getCategory().toLowerCase().contains(filterPattern)) {
+                if (item.getTitle().toLowerCase().contains(filterPattern)) {
                     filteredList.add(item);
                 }
             }

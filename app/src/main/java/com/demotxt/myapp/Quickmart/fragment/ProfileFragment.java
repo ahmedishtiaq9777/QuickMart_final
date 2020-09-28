@@ -1,6 +1,8 @@
 package com.demotxt.myapp.Quickmart.fragment;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -56,6 +58,7 @@ import com.demotxt.myapp.Quickmart.ownmodels.UserModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jakewharton.processphoenix.ProcessPhoenix;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -460,15 +463,17 @@ public class ProfileFragment extends Fragment {
             public void onClick(DialogInterface dialog, int i) {
                 if (i == 0) {
                     setLocale("en", getContext());
-                    Intent intent = new Intent(getContext(), Splash_Activity.class);
-                    startActivity(intent);
-                    getActivity().recreate();
+                    Intent mStartActivity = new Intent(getContext(), Splash_Activity.class);
+                    ProcessPhoenix.triggerRebirth(getContext(),mStartActivity);
 
                 } else if (i == 1) {
                     setLocale("ur", getContext());
-                    Intent intent = new Intent(getContext(), Splash_Activity.class);
-                    startActivity(intent);
-                    getActivity().recreate();
+                    Intent mStartActivity = new Intent(getContext(), Splash_Activity.class);
+                    ProcessPhoenix.triggerRebirth(getContext(),mStartActivity);
+
+                    /*
+
+                    startActivity(mStartActivity);*/
                 }
                 dialog.dismiss();
             }

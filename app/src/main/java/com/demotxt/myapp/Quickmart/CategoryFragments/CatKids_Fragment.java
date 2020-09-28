@@ -47,7 +47,7 @@ import java.util.Objects;
 
 import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
-public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class CatKids_Fragment extends Fragment{
     private RecyclerView mRecyclerView;
     private CatKids_Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -74,13 +74,14 @@ public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSele
 
         //  connection=new CheckConnection(getActivity());
         dialog = new CustomInternetDialog(getActivity());
-        //
+      /*
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(Objects.requireNonNull(getContext()), R.array.KidsCategory,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
         mSpinner.setOnItemSelectedListener(this);
-
+*/
+        mSpinner.setVisibility(View.GONE);
 
         ProdKids = new ArrayList<>();
 
@@ -200,8 +201,6 @@ public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSele
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-
-
                         mAdapter.getFilter().filter(newText);
 
 
@@ -211,18 +210,6 @@ public class CatKids_Fragment extends Fragment implements AdapterView.OnItemSele
         } catch (Exception e) {
             Toast.makeText(getContext(), "Loading Data", Toast.LENGTH_SHORT).show();
         }
-    }
-
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        Cattext = adapterView.getItemAtPosition(i).toString();
-        CheckCategory();
-        Toast.makeText(getContext(), Cattext, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
     }
 
     public String CheckCategory() {

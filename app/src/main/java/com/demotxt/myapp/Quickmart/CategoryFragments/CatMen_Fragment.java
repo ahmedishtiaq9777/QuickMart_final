@@ -46,7 +46,7 @@ import java.util.Objects;
 
 import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
-public class CatMen_Fragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class CatMen_Fragment extends Fragment {
     private RecyclerView mRecyclerView;
     private CatMen_Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -78,12 +78,13 @@ public class CatMen_Fragment extends Fragment implements AdapterView.OnItemSelec
             dialog.showCustomDialog();
         }
         //
-        adapter = ArrayAdapter.createFromResource(Objects.requireNonNull(getContext()), R.array.MenCategory,
+        /*adapter = ArrayAdapter.createFromResource(Objects.requireNonNull(getContext()), R.array.MenCategory,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
         mSpinner.setOnItemSelectedListener(this);
-
+        */
+        mSpinner.setVisibility(View.GONE);
 
         ProdMen = new ArrayList<>();
 
@@ -234,15 +235,5 @@ public class CatMen_Fragment extends Fragment implements AdapterView.OnItemSelec
         return cat;
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        Cattext = adapterView.getItemAtPosition(i).toString();
-        //
-        Toast.makeText(getContext(), Cattext, Toast.LENGTH_SHORT).show();
-    }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
 }
