@@ -166,11 +166,7 @@ public class Prod_Activity extends AppCompatActivity {
                 Sizespinner = new ArrayAdapter<String>(getApplicationContext(), R.layout.item_spinner, SizeList) {
                     @Override
                     public boolean isEnabled(int position) {
-                        if (position == 0) {
-                            return false;
-                        } else {
-                            return true;
-                        }
+                      return  true;
                     }
 
                     @Override
@@ -536,11 +532,12 @@ public class Prod_Activity extends AppCompatActivity {
                                     getApplicationContext(), R.layout.item_spinner, SizeList) {
                                 @Override
                                 public boolean isEnabled(int position) {
-                                    if (position == 0) {
+                                 /*   if (position == 0) {
                                         return false;
                                     } else {
                                         return true;
-                                    }
+                                    }*/
+                                 return  true;
                                 }
 
                                 @Override

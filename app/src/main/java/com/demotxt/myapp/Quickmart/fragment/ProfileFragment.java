@@ -789,17 +789,17 @@ public class ProfileFragment extends Fragment {
                             if (result.getresult().equals("error")) {
                              //   Toast.makeText(getContext(), "error:" + result.getErrorResult(), Toast.LENGTH_SHORT).show();
                                Log.i("Profile","Error"+result.getErrorResult());
-                            } else if (!result.getUsername().equals(null)) {
+                            } else  {
                                 try {
 
-                                    username.setText(result.getUsername());
+                                   // username.setText(result.getUsername());
                                     String url = result.getresult();
                                     url = hostinglink + url;
                                     Picasso.get().load(url).into(phtotimage);
 
-                                    UserModel model = new UserModel();
-                                    model.setImage(url);
-                                    model.setUserName(result.getUsername());
+                                    //UserModel model = new UserModel();
+                                   // model.setImage(url);
+                                    //model.setUserName(result.getUsername());
 
                                 } catch (Exception e) {
                                     Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
