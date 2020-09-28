@@ -1,5 +1,6 @@
 package com.demotxt.myapp.Quickmart.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -7,6 +8,8 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +20,8 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.UiThread;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -37,12 +42,15 @@ import com.demotxt.myapp.Quickmart.adapter.RecyclerView3;
 import com.demotxt.myapp.Quickmart.adapter.RecyclerViewAdapter;
 import com.demotxt.myapp.Quickmart.adapter.RecyclerViewProdAdapter;
 import com.demotxt.myapp.Quickmart.ownmodels.Book;
+import com.demotxt.myapp.Quickmart.ownmodels.CheckConnect;
 import com.demotxt.myapp.Quickmart.ownmodels.Prod;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.muddzdev.styleabletoast.StyleableToast;
 import com.tapadoo.alerter.Alerter;
+import com.tapadoo.alerter.OnHideAlertListener;
+import com.tapadoo.alerter.OnShowAlertListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,9 +75,8 @@ public class HomeFragment extends Fragment {
     TextView shop, rec, trend;
     FloatingActionButton search;
     ConstraintLayout lyt;
-    //loc
     LocationManager lm;
-    boolean gps_enabled;
+    boolean gps_enabled,net_enabled;
     public String Latitude,Longitude;
     public static Location loc;
     public static List<String> SellerIds = new ArrayList<>();
@@ -91,9 +98,7 @@ public class HomeFragment extends Fragment {
         rec = view.findViewById(R.id.textNew);
         trend = view.findViewById(R.id.textTrending);
         lyt = view.findViewById(R.id.lyt_fullview);
-
-        //Connection Check
-        CheckConnection();
+        //
         CheckGps();
 
         list = new ArrayList<>();
@@ -142,9 +147,16 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        getconnection(hostinglink + "/Home/getrecommendedproduct/", 2);
+        //To reduce Load on Main Thread
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                getconnection(hostinglink + "/Home/getrecommendedproduct/", 2);
 
-        getconnection(hostinglink + "/Home/gettrendingpro/", 3);
+                getconnection(hostinglink + "/Home/gettrendingpro/", 3);
+            }
+        });
+
 
 
         int[] images = {R.drawable.off1, R.drawable.off2, R.drawable.off3, R.drawable.off4, R.drawable.off5};
@@ -348,56 +360,37 @@ public class HomeFragment extends Fragment {
         myrv3.setAdapter(myAdapter2);
     }
 
-    //To check Internet Connection
-    public void CheckConnection() {
-
-        ConnectivityManager manager = (ConnectivityManager) Objects.requireNonNull(getContext()).getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
-
-        if (null != activeNetwork) {
-            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
-                StyleableToast.makeText(getContext(),"Connected",Toast.LENGTH_SHORT,R.style.WifiToast).show();
-            } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
-                StyleableToast.makeText(getContext(),"Connected",Toast.LENGTH_SHORT,R.style.WifiToast).show();
-
-            } else {
-                Intent intent = new Intent(getContext(), Error_Screen_Activity.class);
-                startActivity(intent);
-                StyleableToast.makeText(getContext(),"Internet Error",Toast.LENGTH_SHORT,R.style.WifiOffToast).show();
-            }
-
-        }
-
-    }
 
     //To check if GPS is enabled
     public void CheckGps(){
 
-        lm = (LocationManager) Objects.requireNonNull(getContext()).getSystemService(Context.LOCATION_SERVICE);
+        lm = (LocationManager) Objects.requireNonNull(getContext().getSystemService(Context.LOCATION_SERVICE));
+
 
         try {
             gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            net_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         } catch(Exception ex) {
             ex.printStackTrace();
         }
 
-        if(!gps_enabled) {
-            // notify user
+        if (gps_enabled || net_enabled){
+
+        }
+        else {
             Alerter.create(getActivity())
-                    .setTitle("GPS Error")
-                    .setText("Gps Is Not Turned On Some Functionalities May Not Work Properly")
+                    .setTitle("Location Error")
+                    .setText("Location Service Is Not Turned On Some Functionalities May Not Work Properly")
                     .setIcon(R.drawable.ic_location_on_black_24dp)
                     .setBackgroundColorRes(R.color.colorAccent)
-                    .setDuration(5000)
+                    .setDuration(3000)
                     .enableSwipeToDismiss()
                     .enableProgress(true)
                     .setProgressColorRes(R.color.colorPrimary)
                     .show();
         }
-        else{
-        }
+
 
     }
-
 
 }

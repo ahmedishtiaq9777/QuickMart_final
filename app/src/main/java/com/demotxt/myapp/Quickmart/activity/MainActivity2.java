@@ -1,8 +1,10 @@
 package com.demotxt.myapp.Quickmart.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -27,20 +29,22 @@ import com.demotxt.myapp.Quickmart.fragment.ProfileFragment;
 import com.demotxt.myapp.Quickmart.ownmodels.DetailModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.muddzdev.styleabletoast.StyleableToast;
+import com.tapadoo.alerter.Alerter;
 
 import java.util.Objects;
 
 public class MainActivity2 extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
-    private int Check;
     private FragmentManager fragmentmanager;
     BottomNavigationView navView;
+    int Check = 1;
     public static String hostinglink;
     private View layout;
     int proid;
     FloatingActionButton search;
-    public RelativeLayout lyt_search;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -216,26 +220,27 @@ public class MainActivity2 extends AppCompatActivity implements BottomNavigation
 
     //Internet Connection Check
     public void CheckConnection() {
-        try {
-            ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
 
-            if (null != activeNetwork) {
-                if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
-                    Toast.makeText(this, "Wifi On", Toast.LENGTH_SHORT).show();
-                    Check = 1;
-                } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
-                    Toast.makeText(this, "Mobile Data On", Toast.LENGTH_SHORT).show();
-                    Check = 1;
-                } else {
-                    Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
-                    Check = 0;
-                }
+        ConnectivityManager manager = (ConnectivityManager) Objects.requireNonNull(getApplicationContext()).getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = manager.getActiveNetworkInfo();
 
+        if (null != activeNetwork) {
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
+                Check = 1;
+                StyleableToast.makeText(getApplicationContext(),"Connected",Toast.LENGTH_SHORT,R.style.WifiToast).show();
+            } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
+                Check = 1;
+                StyleableToast.makeText(getApplicationContext(),"Connected",Toast.LENGTH_SHORT,R.style.WifiToast).show();
+
+            } else {
+                Check = 0;
+                Intent intent = new Intent(getApplicationContext(), Error_Screen_Activity.class);
+                startActivity(intent);
+                StyleableToast.makeText(getApplicationContext(),"Internet Error",Toast.LENGTH_SHORT,R.style.WifiOffToast).show();
             }
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+
         }
+
     }
 
 

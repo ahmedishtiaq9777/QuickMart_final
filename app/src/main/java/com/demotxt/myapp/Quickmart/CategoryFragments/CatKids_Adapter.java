@@ -43,8 +43,8 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
     //  private List<Integer> Ids;
     public Set<String> ids;
 
-    public CatKids_Adapter(Context mContext,List<Catkids> mdata){
-        this.mContext=mContext;
+    public CatKids_Adapter(Context mContext, List<Catkids> mdata) {
+        this.mContext = mContext;
         this.mData = mdata;
         mDataFull = new ArrayList<>(mData);
     }
@@ -87,20 +87,18 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
                 Intent intent = new Intent(mContext, Prod_Activity.class);
 
                 // passing data to the book activity
-                intent.putExtra("Title",mData.get(position).getTitle());
-                intent.putExtra("Description",mData.get(position).getDescription());
-                intent.putExtra("Thumbnail",mData.get(position).getThumbnail());
-                intent.putExtra("price",mData.get(position).getPrice());
-                intent.putExtra("proid",mData.get(position).getId());
-                intent.putExtra("sellerid",mData.get(position).getUserId());
+                intent.putExtra("Title", mData.get(position).getTitle());
+                intent.putExtra("Description", mData.get(position).getDescription());
+                intent.putExtra("Thumbnail", mData.get(position).getThumbnail());
+                intent.putExtra("price", mData.get(position).getPrice());
+                intent.putExtra("proid", mData.get(position).getId());
+                intent.putExtra("sellerid", mData.get(position).getUserId());
                 //Transition Test
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,
                         holder.img_kids_thumbnail, Objects.requireNonNull(ViewCompat.getTransitionName(holder.img_kids_thumbnail)));
 
                 // start the activity
-                mContext.startActivity(intent,optionsCompat.toBundle());
-
-
+                mContext.startActivity(intent, optionsCompat.toBundle());
 
 
             }
@@ -149,9 +147,9 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
         return mData.size();
     }
 
-    public static class CatKidsViewHolder extends RecyclerView.ViewHolder   {
+    public static class CatKidsViewHolder extends RecyclerView.ViewHolder {
 
-        final TextView tv_kids_title,category;
+        final TextView tv_kids_title, category;
         final TextView tv_price;
         final ImageView img_kids_thumbnail;
         final ImageView heart;
@@ -179,8 +177,6 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
         return mDataFilter;
     }
 
-    public Filter getCatFilter(){return mCatFilter;}
-
     //for Search
     private final Filter mDataFilter = new Filter() {
         @Override
@@ -199,8 +195,6 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
                 }
 
 
-
-
             }
 
             FilterResults results = new FilterResults();
@@ -213,45 +207,11 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
         protected void publishResults(CharSequence constraint, FilterResults results) {
 
             mData = new ArrayList<>();
-            mData.addAll( (List) results.values);
+            mData.addAll((List) results.values);
             notifyDataSetChanged();
 
         }
     };
-
-    private final Filter mCatFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            List<Catkids> filteredList = new ArrayList<>();
-
-            if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(mDataFull);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-
-                for (Catkids item : mDataFull) {
-                    if (item.getCategory().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(item);
-                    }
-                }
-            }
-
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-
-            mData = new ArrayList<>();
-            mData.addAll( (List) results.values);
-            notifyDataSetChanged();
-
-        }
-    };
-
 
 
 }
