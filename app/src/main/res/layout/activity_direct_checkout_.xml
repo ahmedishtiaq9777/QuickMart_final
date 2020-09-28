@@ -131,10 +131,10 @@
             android:textColor="@color/navbartext"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.19"
+            app:layout_constraintHorizontal_bias="0.15"
             app:layout_constraintStart_toEndOf="@+id/imageView5"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.22000003" />
+            app:layout_constraintVertical_bias="0.16000003" />
 
         <LinearLayout
             android:id="@+id/linearLayout5"
@@ -151,7 +151,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rs. "
+                android:text="Rs:  "
                 android:textColor="@color/navbartext" />
 
             <TextView
@@ -182,6 +182,7 @@
             android:textColor="@color/navbartext"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/txt_P_Name"
+            app:layout_constraintHorizontal_bias="0.35"
             app:layout_constraintStart_toEndOf="@+id/txt_color"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
 

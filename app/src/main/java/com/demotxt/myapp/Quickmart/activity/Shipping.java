@@ -59,7 +59,6 @@ public class Shipping extends AppCompatActivity {
         list = (ArrayList<CartListBeanlist>) args.getSerializable("cartlist");
         awesomeValidation = new AwesomeValidation(BASIC);
         awesomeValidation.addValidation(Shipping.this, R.id.nameShip, "[a-zA-Z\\s]+", R.string.error_name);
-        awesomeValidation.addValidation(Shipping.this, R.id.contactShip, "^0(?=3)[0-9]{10}$", R.string.error_contact);
         awesomeValidation.addValidation(Shipping.this, R.id.addShip, RegexTemplate.NOT_EMPTY, R.string.error_address);
 
         ship = (Button) findViewById(R.id.button1);

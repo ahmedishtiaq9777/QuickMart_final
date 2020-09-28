@@ -18,7 +18,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="130dp"
             android:background="@color/buttonbg"
             android:padding="3dp">
 
@@ -44,7 +44,7 @@
                 android:selectAllOnFocus="false"
                 android:text="Title"
                 android:textColor="@color/navbartext"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.51"
                 app:layout_constraintStart_toEndOf="@+id/imageView2"
@@ -110,14 +110,12 @@
                 android:layout_width="40dp"
                 android:layout_height="19dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginStart="8dp"
                 android:selectAllOnFocus="false"
                 android:text="Size:"
                 android:textColor="@color/navbartext"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.4"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView11" />
+                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintTop_toBottomOf="@id/textView11"/>
 
             <TextView
                 android:id="@+id/size"
@@ -127,39 +125,31 @@
                 android:selectAllOnFocus="false"
                 android:text="XXL"
                 android:textColor="@color/navbartext"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/textPrice"
-                app:layout_constraintTop_toBottomOf="@+id/textPrice" />
+                app:layout_constraintTop_toBottomOf="@+id/textPrice"  />
 
             <TextView
                 android:id="@+id/textView15"
                 android:layout_width="40dp"
                 android:layout_height="19dp"
-                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="8dp"
                 android:selectAllOnFocus="false"
                 android:text="Color:"
                 android:textColor="@color/navbartext"
-                app:layout_constraintBottom_toBottomOf="@+id/size"
-                app:layout_constraintStart_toEndOf="@+id/size"
-                app:layout_constraintTop_toBottomOf="@+id/textTitle"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintTop_toBottomOf="@id/textView14"/>
 
             <TextView
                 android:id="@+id/color"
                 android:layout_width="80dp"
                 android:layout_height="19dp"
-                android:layout_marginStart="9dp"
+                android:layout_marginTop="5dp"
                 android:selectAllOnFocus="false"
                 android:text="Yellow"
                 android:textColor="@color/navbartext"
-                app:layout_constraintBottom_toBottomOf="@+id/textView15"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textView15"
-                app:layout_constraintTop_toBottomOf="@+id/textTitle"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintStart_toStartOf="@+id/size"
+                app:layout_constraintTop_toBottomOf="@+id/size"  />
 
 
 
