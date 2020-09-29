@@ -179,5 +179,11 @@ public class Shipping extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
 
 }

@@ -8,13 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -23,17 +21,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.ownmodels.DetailModel;
 import com.demotxt.myapp.Quickmart.ownmodels.ShippingModel;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
-import com.demotxt.myapp.Quickmart.ownmodels.UserModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
 
 public class DirectCheckout_Activity extends AppCompatActivity {
 
@@ -46,12 +47,17 @@ public class DirectCheckout_Activity extends AppCompatActivity {
     int Code = 111;
     String Uname,Ucontact,Uaddress,Userid;
     SharedPreferences loginpref;
+    AwesomeValidation awesomeValidation;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_direct_checkout_);
+        awesomeValidation = new AwesomeValidation(BASIC);
+        awesomeValidation.addValidation(DirectCheckout_Activity.this, R.id.name, "[a-zA-Z\\s]+", R.string.error_name);
+        awesomeValidation.addValidation(DirectCheckout_Activity.this, R.id.address, RegexTemplate.NOT_EMPTY, R.string.error_address);
+
         //
         loginpref = getSharedPreferences("loginpref", MODE_PRIVATE);
         Userid = String.valueOf(loginpref.getInt("userid", 0));
@@ -86,28 +92,15 @@ public class DirectCheckout_Activity extends AppCompatActivity {
         //
         final DetailModel obj = new DetailModel(getApplicationContext());
         //
-        Uname = obj.getYourName();
         UserName.setText(obj.getYourName());
         UserName.setEnabled(false);
-        Uaddress = obj.getYourAddress();
         UserAddress.setText(obj.getYourAddress());
         UserAddress.setEnabled(false);
-        Ucontact = obj.getYourPhone();
         UserPhone.setText(obj.getYourPhone());
         UserPhone.setEnabled(false);
         //
-if(!Uname.equals("Your Name")||!Uaddress.equals("Your Address")) {
-    //Saving Shipping Detail
-    ShippingModel m = new ShippingModel(Uname, "", Ucontact, Uaddress, "", "Sialkot");
-    GsonBuilder builder = new GsonBuilder();
-    Gson gson = builder.create();
-    String shipping_detail = gson.toJson(m);
-    String url = MainActivity2.hostinglink + "/home/SaveShippingDetail";
-    SaveShippingDetail(url, shipping_detail);
-}else {
-    Intent ch = new Intent(DirectCheckout_Activity.this,Detail_Activity.class);
-    startActivity(ch);
-}
+
+
         //Edit Checkout Detail
         EditCheckout_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,18 +115,40 @@ if(!Uname.equals("Your Name")||!Uaddress.equals("Your Address")) {
         Confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent sh = new Intent(DirectCheckout_Activity.this,Direct_Confirmation.class);
-                sh.putExtra("img",I);
-                sh.putExtra("name",N);
-                sh.putExtra("price",Double.valueOf(P));
-                sh.putExtra("UserName",obj.getYourName());
-                sh.putExtra("UserContact",obj.getYourPhone());
-                sh.putExtra("UserAdd",obj.getYourAddress());
-                sh.putExtra("proId",pId);
-                sh.putExtra("sellerId",sId);
-                sh.putExtra("size",size);
-                sh.putExtra("color",color);
-                startActivity(sh);
+                if (awesomeValidation.validate()) {
+                    //
+                    DetailModel model = new DetailModel(getApplicationContext());
+                    Uname = model.getYourName();
+                    UserName.setText(Uname);
+                    Ucontact = model.getYourPhone();
+                    UserPhone.setText(Ucontact);
+                    Uaddress = model.getYourAddress();
+                    UserAddress.setText(Uaddress);
+                    //
+                    //Saving Shipping Detail
+                    ShippingModel m = new ShippingModel(Uname, "", Ucontact, Uaddress, "", "Sialkot");
+                    GsonBuilder builder = new GsonBuilder();
+                    Gson gson = builder.create();
+                    String shipping_detail = gson.toJson(m);
+                    String url = MainActivity2.hostinglink + "/home/SaveShippingDetail";
+                    SaveShippingDetail(url, shipping_detail);
+                    Intent ch = new Intent(DirectCheckout_Activity.this,Detail_Activity.class);
+                    startActivity(ch);
+
+
+                    Intent sh = new Intent(DirectCheckout_Activity.this, Direct_Confirmation.class);
+                    sh.putExtra("img", I);
+                    sh.putExtra("name", N);
+                    sh.putExtra("price", Double.valueOf(P));
+                    sh.putExtra("UserName", obj.getYourName());
+                    sh.putExtra("UserContact", obj.getYourPhone());
+                    sh.putExtra("UserAdd", obj.getYourAddress());
+                    sh.putExtra("proId", pId);
+                    sh.putExtra("sellerId", sId);
+                    sh.putExtra("size", size);
+                    sh.putExtra("color", color);
+                    startActivity(sh);
+                }
             }
         });
 

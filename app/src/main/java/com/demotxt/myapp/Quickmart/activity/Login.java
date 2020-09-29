@@ -72,7 +72,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activitylogin);
         result = new StringResponceFromWeb();
         awesomeValidation = new AwesomeValidation(BASIC);
-        awesomeValidation.addValidation(Login.this, R.id.PH, RegexTemplate.NOT_EMPTY, R.string.error_contact);
+        awesomeValidation.addValidation(Login.this, R.id.PH, "^0(?=3)[0-9]{10}$", R.string.error_contact);
         awesomeValidation.addValidation(Login.this, R.id.PASS, RegexTemplate.NOT_EMPTY, R.string.error_password);
 
 
@@ -313,7 +313,7 @@ public class Login extends AppCompatActivity {
         } else {
             AlertDialog.Builder builder1 = new AlertDialog.Builder(Login.this);
             builder1.setTitle("Please Agree");
-            builder1.setMessage("Please tick remmeber me");
+            builder1.setMessage("Tick remember me!");
             builder1.setIcon(R.drawable.exclamationmarkresize);
             // builder1.show();
             AlertDialog alert11 = builder1.create();
