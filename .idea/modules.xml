@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Projects-QuickMart_final.iml" filepath="$PROJECT_DIR$/.idea/modules/Projects-QuickMart_final.iml" group="QuickMart_final" />
       <module fileurl="file://$PROJECT_DIR$/QuickMart_final.iml" filepath="$PROJECT_DIR$/QuickMart_final.iml" group="QuickMart_final" />
       <module fileurl="file://$PROJECT_DIR$/app/QuickMart_final-app.iml" filepath="$PROJECT_DIR$/app/QuickMart_final-app.iml" group="QuickMart_final/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="QuickMart_final/app" />
     </modules>
   </component>
 </project>

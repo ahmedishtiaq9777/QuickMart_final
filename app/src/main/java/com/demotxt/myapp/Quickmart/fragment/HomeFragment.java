@@ -76,19 +76,19 @@ public class HomeFragment extends Fragment {
     FloatingActionButton search;
     ConstraintLayout lyt;
     LocationManager lm;
-    boolean gps_enabled,net_enabled;
-    public String Latitude,Longitude;
+    boolean gps_enabled, net_enabled;
+    public  String Latitude, Longitude;
     public static Location loc;
     public static List<String> SellerIds = new ArrayList<>();
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-       try{
-           ProfileFragment.loadLocale(Objects.requireNonNull(getContext()));
-           ProfileFragment.LoadDarkLocale(Objects.requireNonNull(getContext()));}
-       catch (Exception e){
-           e.printStackTrace();
-       }
+        try {
+            ProfileFragment.loadLocale(Objects.requireNonNull(getContext()));
+            ProfileFragment.LoadDarkLocale(Objects.requireNonNull(getContext()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         setHasOptionsMenu(true);
         //
         view = inflater.inflate(R.layout.homefragment, container, false);
@@ -105,22 +105,28 @@ public class HomeFragment extends Fragment {
         Book22 = new ArrayList<>();
         mTrends = new ArrayList<>();
 
-        // to Find the Location
-        MyLocation.LocationResult locationResult = new MyLocation.LocationResult() {
-            @Override
-            public void gotLocation(final Location location) {
-                loc = location;
-                System.out.println("Latitude: " + loc.getLatitude());
-                System.out.println("Longitude: " + loc.getLongitude());
-                Latitude = String.valueOf(loc.getLatitude());
-                Longitude = String.valueOf(loc.getLongitude());
-                try {
-                getSeller(hostinglink + "/Home/getsellers/",Latitude,Longitude);
-                }catch (Exception e){e.printStackTrace();}
-            }
-        };
-        MyLocation myLocation = new MyLocation();
-        myLocation.getLocation(getActivity(), locationResult);
+        try {
+            // to Find the Location
+            MyLocation.LocationResult locationResult = new MyLocation.LocationResult() {
+                @Override
+                public void gotLocation(final Location location) {
+                    loc = location;
+                    System.out.println("Latitude: " + loc.getLatitude());
+                    System.out.println("Longitude: " + loc.getLongitude());
+                    Latitude = String.valueOf(loc.getLatitude());
+                    Longitude = String.valueOf(loc.getLongitude());
+
+                    getSeller(hostinglink + "/Home/getsellers/", Latitude, Longitude);
+
+                }
+            };
+            MyLocation myLocation = new MyLocation();
+            myLocation.getLocation(getActivity(), locationResult);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         //
         search = Objects.requireNonNull(getActivity()).findViewById(R.id.fab_search);
         search.show();
@@ -137,7 +143,7 @@ public class HomeFragment extends Fragment {
                 Book22 = new ArrayList<>();
                 mTrends = new ArrayList<>();
 
-                getSeller(hostinglink + "/Home/getsellers/",Latitude,Longitude);
+                getSeller(hostinglink + "/Home/getsellers/", Latitude, Longitude);
 
                 getconnection(hostinglink + "/Home/getrecommendedproduct/", 2);
 
@@ -147,16 +153,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        //To reduce Load on Main Thread
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                getconnection(hostinglink + "/Home/getrecommendedproduct/", 2);
+        getconnection(hostinglink + "/Home/getrecommendedproduct/", 2);
 
-                getconnection(hostinglink + "/Home/gettrendingpro/", 3);
-            }
-        });
-
+        getconnection(hostinglink + "/Home/gettrendingpro/", 3);
 
 
         int[] images = {R.drawable.off1, R.drawable.off2, R.drawable.off3, R.drawable.off4, R.drawable.off5};
@@ -233,6 +232,7 @@ public class HomeFragment extends Fragment {
 //            Toast.makeText(getContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+
     //For Seller
     public void getSeller(String url, final String la, final String lo) {
         try {
@@ -261,10 +261,10 @@ public class HomeFragment extends Fragment {
                                 int t = 0;
                                 SellerIds = new ArrayList<>();
                                 //for getting ids of all the sellers
-                                for (Book x : list){
-                                     int y = x.getUserId();
-                                     SellerIds.add(String.valueOf(y));
-                                     t++;
+                                for (Book x : list) {
+                                    int y = x.getUserId();
+                                    SellerIds.add(String.valueOf(y));
+                                    t++;
                                 }
 
                                 //Setting Recycler View 1
@@ -321,7 +321,7 @@ public class HomeFragment extends Fragment {
             viewFlipper.setInAnimation(getContext(), android.R.anim.slide_in_left);
             viewFlipper.setOutAnimation(getContext(), android.R.anim.slide_out_right);
         } catch (Exception e) {
-            Toast.makeText(getContext(), "error:" , Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "error:", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -362,7 +362,7 @@ public class HomeFragment extends Fragment {
 
 
     //To check if GPS is enabled
-    public void CheckGps(){
+    public void CheckGps() {
 
         lm = (LocationManager) Objects.requireNonNull(getContext().getSystemService(Context.LOCATION_SERVICE));
 
@@ -370,14 +370,13 @@ public class HomeFragment extends Fragment {
         try {
             gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
             net_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
-        if (gps_enabled || net_enabled){
+        if (gps_enabled || net_enabled) {
 
-        }
-        else {
+        } else {
             Alerter.create(getActivity())
                     .setTitle("Location Error")
                     .setText("Location Service Is Not Turned On Some Functionalities May Not Work Properly")

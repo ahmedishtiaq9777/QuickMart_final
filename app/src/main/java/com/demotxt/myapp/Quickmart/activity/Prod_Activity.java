@@ -686,9 +686,5 @@ public class Prod_Activity extends AppCompatActivity {
         }
         return true;
     }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Runtime.getRuntime().gc();
-    }
+
 }

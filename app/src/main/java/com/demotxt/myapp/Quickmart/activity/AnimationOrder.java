@@ -23,7 +23,7 @@ public class AnimationOrder extends AppCompatActivity {
                 startActivity(start);
                 finish();
             }
-        }, 6000);
+        }, 3000);
     }
 }
 

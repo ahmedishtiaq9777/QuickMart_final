@@ -464,12 +464,11 @@ public class ProfileFragment extends Fragment {
                 if (i == 0) {
                     setLocale("en", getContext());
                     Intent mStartActivity = new Intent(getContext(), Splash_Activity.class);
-                    ProcessPhoenix.triggerRebirth(getContext(),mStartActivity);
-
+                    startActivity(mStartActivity);
                 } else if (i == 1) {
                     setLocale("ur", getContext());
                     Intent mStartActivity = new Intent(getContext(), Splash_Activity.class);
-                    ProcessPhoenix.triggerRebirth(getContext(),mStartActivity);
+                    startActivity(mStartActivity);
 
                     /*
 
