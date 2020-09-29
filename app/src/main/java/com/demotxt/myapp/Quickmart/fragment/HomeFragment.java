@@ -230,7 +230,7 @@ public class HomeFragment extends Fragment {
         } catch (
                 Exception E) {
             RefreshLayout.setRefreshing(false);
-            Toast.makeText(getContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
     //For Seller
