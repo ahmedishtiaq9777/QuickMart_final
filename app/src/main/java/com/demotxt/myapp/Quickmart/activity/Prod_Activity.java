@@ -250,9 +250,6 @@ public class Prod_Activity extends AppCompatActivity {
         });
 
 
-        toggleArrow(bt_toggle_description);
-        lyt_expand_description.setVisibility(View.VISIBLE);
-
         //setting values
         tvtitle.setText(Title);
         tvdescription.setText(Description);
@@ -415,7 +412,12 @@ public class Prod_Activity extends AppCompatActivity {
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
-                                        Snackbar.make(lyt_parent,"Success",Snackbar.LENGTH_SHORT).show(); }
+                                        Snackbar.make(lyt_parent,"Success",Snackbar.LENGTH_SHORT).show();
+                                        //clear rating and text
+                                        mRatingBar.setRating(0);
+                                        Feedback_TXT.setText("");
+                                        //
+                                    }
                                 },
                                 new Response.ErrorListener() {
                                     @Override

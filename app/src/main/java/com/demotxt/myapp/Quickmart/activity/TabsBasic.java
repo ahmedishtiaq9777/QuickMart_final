@@ -41,15 +41,7 @@ public class TabsBasic extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabs_basic);
-        //initialize both
-      /*  dialog=new CustomInternetDialog(TabsBasic.this);
-        connection=new CheckConnection(TabsBasic.this);
-        //check connection
-        boolean is_connected=connection.CheckConnection();
-        if(!is_connected)
-        {
-            dialog.showCustomDialog();
-        }*/
+
 
         Intent i = getIntent();
         userid = Objects.requireNonNull(i.getExtras()).getInt("sellerid");
@@ -178,4 +170,7 @@ public class TabsBasic extends AppCompatActivity {
             return mFragmentTitleList.get(position);
         }
     }
+
+
+
 }
