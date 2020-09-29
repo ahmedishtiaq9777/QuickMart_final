@@ -15,7 +15,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.demotxt.myapp.Quickmart.R;
+import com.demotxt.myapp.Quickmart.ownmodels.SignInModel;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -24,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
 import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
 public class Password_Activity extends AppCompatActivity {
@@ -32,13 +36,21 @@ public class Password_Activity extends AppCompatActivity {
     Button ChangePass_Btn;
     StringResponceFromWeb result;
     String pass, con_Pass;
-    //TODO Validation on New Password
+    String ph,pass1,pass2,pass3;
+    AwesomeValidation awesomeValidation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_);
         result = new StringResponceFromWeb();
+        awesomeValidation = new AwesomeValidation(BASIC);
+        awesomeValidation.addValidation(Password_Activity.this, R.id.number, RegexTemplate.NOT_EMPTY, R.string.error_contact);
+        awesomeValidation.addValidation(Password_Activity.this, R.id.OldPass, RegexTemplate.NOT_EMPTY, R.string.error_password);
+        awesomeValidation.addValidation(Password_Activity.this, R.id.newPass, RegexTemplate.NOT_EMPTY, R.string.error_password);
+        awesomeValidation.addValidation(Password_Activity.this, R.id.newPassConfirm, RegexTemplate.NOT_EMPTY, R.string.error_password);
+
+
 
         Phone = findViewById(R.id.number);
         OldPass = findViewById(R.id.OldPass);
@@ -65,12 +77,21 @@ public class Password_Activity extends AppCompatActivity {
         ChangePass_Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (awesomeValidation.validate()) {
 
-                if (pass.equals(con_Pass)) {
-                    ForgetPassword();
+                    ph = Phone.getText().toString();
+                    pass1 = OldPass.getText().toString();
+                    pass2 = NewPass.getText().toString();
+                    pass3 = ConfirmPass.getText().toString();
+                    SignInModel m = new SignInModel(ph, OldPass, NewPass, ConfirmPass);
 
-                } else {
-                    Toast.makeText(Password_Activity.this, "Password Doesn't Match", Toast.LENGTH_SHORT).show();
+
+                    if (pass.equals(con_Pass)) {
+                        ForgetPassword();
+
+                    } else {
+                        Toast.makeText(Password_Activity.this, "Password Doesn't Match", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

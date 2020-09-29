@@ -3,6 +3,8 @@ package com.demotxt.myapp.Quickmart.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,6 +36,7 @@ public class Forgot_Pass_Activity extends AppCompatActivity {
 
     EditText PhoneNo, OTP_Text;
     Button Forget_Btn, SendOTP;
+    String pin;
     int randomNumber;
     final int range = 9;
     final int length = 4;
@@ -75,36 +78,53 @@ public class Forgot_Pass_Activity extends AppCompatActivity {
             }
         });
 
+        OTP_Text.addTextChangedListener(OTPTextWatcher);
+
 
         //Forget button
         Forget_Btn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                //getting pin
-                try {
-                    String pin = OTP_Text.getText().toString();
-                    userPin = Integer.parseInt(pin);
-                } catch (Exception e) {
-                    Toast.makeText(Forgot_Pass_Activity.this, "UserPin Empty", Toast.LENGTH_SHORT).show();
-                }
+                    //getting pin
+                    try {
+                        String pin = OTP_Text.getText().toString();
+                        userPin = Integer.parseInt(pin);
+                    } catch (Exception e) {
+                        Toast.makeText(Forgot_Pass_Activity.this, "UserPin Empty", Toast.LENGTH_SHORT).show();
+                    }
 
-                //Shared Pref for OTP PIN
-                try {
-                    val = mPreferences.getInt("OTP_PIN", 0);
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+                    //Shared Pref for OTP PIN
+                    try {
+                        val = mPreferences.getInt("OTP_PIN", 0);
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
 
-                if (userPin == val) {
-                    ForgetPass();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Pin didn't match", Toast.LENGTH_SHORT).show();
-                    Lyt_OTP.setVisibility(View.GONE);
-                    Lyt_Phone.setVisibility(View.VISIBLE);
-                }
+                    if (userPin == val) {
+                        ForgetPass();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Pin didn't match", Toast.LENGTH_SHORT).show();
+                        Lyt_OTP.setVisibility(View.GONE);
+                        Lyt_Phone.setVisibility(View.VISIBLE);
+                    }
             }
         });
     }
+
+    private final TextWatcher OTPTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            pin = OTP_Text.getText().toString().trim();
+            Forget_Btn.setEnabled(!pin.isEmpty());
+        }
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+    };
 
     //reset user password
     private void ForgetPass() {
@@ -173,14 +193,13 @@ public class Forgot_Pass_Activity extends AppCompatActivity {
                             Gson gson = builder.create();
                             result = gson.fromJson(response, StringResponceFromWeb.class);
                             if (result.getresult().equals("allreadyregistered")) {
-                                Toast.makeText(getApplicationContext(), "This Phone No. is Registered", Toast.LENGTH_SHORT).show();
                                 //generate no.
                                 generateRandomNumber();
                                 //
                                 Lyt_Phone.setVisibility(View.GONE);
                                 Lyt_OTP.setVisibility(View.VISIBLE);
                             } else {
-                                Toast.makeText(Forgot_Pass_Activity.this, "User not registered", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Forgot_Pass_Activity.this, "User not Registered!", Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
