@@ -5,8 +5,7 @@
     android:layout_width="350dp"
     android:layout_height="450dp"
     android:orientation="vertical"
-    android:layout_gravity="center"
-    android:background="@color/profilebackground">
+    android:layout_gravity="center">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

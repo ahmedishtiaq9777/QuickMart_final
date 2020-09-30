@@ -38,15 +38,12 @@
         <activity android:name=".activity.Splash_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.Book_Activity" />
         <activity android:name=".activity.Error_Screen_Activity" />
         <activity android:name=".activity.Signup" />
         <activity android:name=".activity.Prod_Activity" />
-        <activity android:name=".activity.r3_Activity" />
         <activity android:name=".activity.Login" />
         <activity android:name=".activity.Shipping" />
         <activity android:name=".activity.Confirmation" />

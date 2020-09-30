@@ -54,11 +54,9 @@ import com.demotxt.myapp.Quickmart.ownmodels.DetailModel;
 import com.demotxt.myapp.Quickmart.ownmodels.ImageFilePath;
 import com.demotxt.myapp.Quickmart.ownmodels.PrivacyDialog;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
-import com.demotxt.myapp.Quickmart.ownmodels.UserModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.jakewharton.processphoenix.ProcessPhoenix;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
-    android:background="@color/background"
+
     tools:context="com.demotxt.myapp.Quickmart.Order.Order_Detail_Activity">
 
     <include
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_local_mall_black_24dp"
-            android:tint="@color/blue_grey_900"
+            app:tint="@color/blue_grey_900"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/progressBar"

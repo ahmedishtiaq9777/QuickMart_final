@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/profilebackground">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
         <androidx.cardview.widget.CardView
@@ -115,6 +110,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center_horizontal|right"
                     android:src="@drawable/ic_exit"
+                    android:paddingStart="8dp"
                     android:paddingEnd="8dp"
                     android:layout_marginEnd="2dp"
                     app:layout_constraintBottom_toTopOf="@+id/textView10"
@@ -142,10 +138,11 @@
                     android:layout_marginLeft="7dp"
                     android:layout_marginTop="9dp"
                     android:gravity="center"
-                    android:paddingLeft="5dp"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
                     android:text="@string/signup"
                     android:textColor="@color/profiletext"
-                    android:textSize="25dp"
+                    android:textSize="25sp"
                     android:textStyle="bold">
 
                 </TextView>
@@ -735,7 +732,4 @@
 
         </ScrollView>
 
-
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>
