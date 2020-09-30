@@ -13,7 +13,7 @@
         android:layout_height="200dp"
         android:layout_marginTop="100dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/sp" />
+        android:src="@drawable/quickmartblue" />
 
     <com.agrawalsuneet.dotsloader.loaders.LazyLoader
         android:id="@+id/Progressloader"
