@@ -106,8 +106,7 @@ public class RecyclerViewProdAdapter extends RecyclerView.Adapter<RecyclerViewPr
 
                 // start the activity
                 mContext.startActivity(intent,optionsCompat.toBundle());
-                //
-                ((Activity) mContext).finish();
+
             }
         });
         holder.heart.setOnClickListener(new View.OnClickListener(){

@@ -46,7 +46,7 @@ import java.util.Objects;
 
 import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
-public class CatMen_Fragment extends Fragment {
+public class CatMen_Fragment extends Fragment{
     private RecyclerView mRecyclerView;
     private CatMen_Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -78,37 +78,38 @@ public class CatMen_Fragment extends Fragment {
             dialog.showCustomDialog();
         }
         //
-        /*adapter = ArrayAdapter.createFromResource(Objects.requireNonNull(getContext()), R.array.MenCategory,
+        /*
+        adapter = ArrayAdapter.createFromResource(Objects.requireNonNull(getContext()), R.array.MenCategory,
                 android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
-        mSpinner.setOnItemSelectedListener(this);
-        */
+        mSpinner.setOnItemSelectedListener(this);*/
+
         mSpinner.setVisibility(View.GONE);
-
         ProdMen = new ArrayList<>();
-
 
         TabsBasic activity = (TabsBasic) getActivity();  // get activity data
         int sid = Objects.requireNonNull(activity).getuserid();
         Log.i("Seller id", String.valueOf(sid));
         userid = String.valueOf(sid);
+        //
         url = hostinglink + "/Home/getprowithsellerid";
-
 
         //On UI Thread To reduce the load on main Thread
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
                 Log.d("UI THREAD MEN-FRAG","IN UI THREAD");
-                getconnection(url, userid);
+                getconnection(url, userid,"Men");
             }
         });
+
+
 
         return rootview;
     }
 
-    public void getconnection(String url, final String seller_id) {
+    public void getconnection(String url, final String seller_id,final String category) {
 
 
         final RequestQueue request = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
@@ -150,7 +151,7 @@ public class CatMen_Fragment extends Fragment {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("sellerid", seller_id);
-                params.put("category", "Men");
+                params.put("category", category);
 
                 return params;
             }
@@ -229,11 +230,12 @@ public class CatMen_Fragment extends Fragment {
         } else if (Cattext.equals("Accessories")) {
             cat = "AccesariesMen";
         } else if (Cattext.equals("All")) {
-            cat = "All";
+            cat = "Men";
         }
 
         return cat;
     }
+
 
 
 }
