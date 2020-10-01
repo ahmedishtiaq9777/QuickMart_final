@@ -93,6 +93,7 @@ public class CatKids_Adapter extends RecyclerView.Adapter<CatKids_Adapter.CatKid
                 intent.putExtra("price", mData.get(position).getPrice());
                 intent.putExtra("proid", mData.get(position).getId());
                 intent.putExtra("sellerid", mData.get(position).getUserId());
+                intent.putExtra("category",mData.get(position).getCategory());
                 //Transition Test
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,
                         holder.img_kids_thumbnail, Objects.requireNonNull(ViewCompat.getTransitionName(holder.img_kids_thumbnail)));
