@@ -16,7 +16,7 @@ public class Web_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String url = "http://ahmedishtiaq165-001-site1.ftempurl.com";
+        String url = "http://quickmart-001-site1.etempurl.com";
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);

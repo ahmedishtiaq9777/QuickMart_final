@@ -247,6 +247,7 @@ public class Forgot_Pass_Activity extends AppCompatActivity {
         randomNumber = Integer.parseInt(s.toString());
         OTPPref();
         SendOTP_PIN();
+        System.out.println(randomNumber);
         return randomNumber;
     }
 
@@ -264,7 +265,7 @@ public class Forgot_Pass_Activity extends AppCompatActivity {
 
         String url = "http://sendpk.com" +
                 "/api/sms.php?" +
-                "username=" + "923484436278" +
+                "username=" + "923054992224" +
                 "&password=" + "ahmedishtiaq9777" +
                 "&sender=" + "QuickMart" +
                 "&mobile=" + ph + "&message=" + msg;

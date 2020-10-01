@@ -92,27 +92,26 @@ public class HomeFragment extends Fragment {
     ConstraintLayout lyt;
     LocationManager lm;
     boolean gps_enabled, net_enabled;
-    public  String Latitude, Longitude;
+    public String Latitude, Longitude;
     public static Location loc;
     public static List<String> SellerIds = new ArrayList<>();
-    public  IOHelper ioHelpert;
+    public IOHelper ioHelpert;
     public String _ModelData;
 
 
-
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-       try{
-           ProfileFragment.loadLocale(Objects.requireNonNull(getContext()));
-           ProfileFragment.LoadDarkLocale(Objects.requireNonNull(getContext()));}
-       catch (Exception e){
-           e.printStackTrace();
-       }
+        try {
+            ProfileFragment.loadLocale(Objects.requireNonNull(getContext()));
+            ProfileFragment.LoadDarkLocale(Objects.requireNonNull(getContext()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         setHasOptionsMenu(true);
 
         //
         view = inflater.inflate(R.layout.homefragment, container, false);
-        ioHelpert=new IOHelper(getContext());
+        ioHelpert = new IOHelper(getContext());
 
         viewFlipper = (ViewFlipper) view.findViewById(R.id.flipper);
         shop = view.findViewById(R.id.textRecommend);
@@ -152,7 +151,7 @@ public class HomeFragment extends Fragment {
         search = Objects.requireNonNull(getActivity()).findViewById(R.id.fab_search);
         search.show();
 
-_ModelData=ioHelpert.stringFromFile();
+        _ModelData = ioHelpert.stringFromFile();
         RefreshLayout = view.findViewById(R.id.SwipeRefresh);
         RefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -163,11 +162,12 @@ _ModelData=ioHelpert.stringFromFile();
                 list = new ArrayList<>();
                 Book22 = new ArrayList<>();
                 mTrends = new ArrayList<>();
-                _ModelData=ioHelpert.stringFromFile();
-                getSeller(hostinglink + "/Home/getsellers/",Latitude,Longitude);
 
-getrecommendedpro(hostinglink +"Home/getrecommendedproduct",_ModelData);
-               // getconnection(hostinglink + "/Home/getrecommendedproduct/", 2);
+                _ModelData = ioHelpert.stringFromFile();
+
+                getSeller(hostinglink + "/Home/getsellers/", Latitude, Longitude);
+
+                getrecommendedpro(hostinglink + "Home/getrecommendedproduct", _ModelData);
 
                 getconnection(hostinglink + "/Home/gettrendingpro/", 3);
 
@@ -179,12 +179,11 @@ getrecommendedpro(hostinglink +"Home/getrecommendedproduct",_ModelData);
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-              //  getconnection(hostinglink + "/Home/getrecommendedproduct/",2);
-getrecommendedpro(hostinglink +"/Home/getrecommendedproduct/",_ModelData);
+                //  getconnection(hostinglink + "/Home/getrecommendedproduct/",2);
+                getrecommendedpro(hostinglink + "/Home/getrecommendedproduct/", _ModelData);
                 getconnection(hostinglink + "/Home/gettrendingpro/", 3);
             }
         });
-
 
 
         int[] images = {R.drawable.off1, R.drawable.off2, R.drawable.off3, R.drawable.off4, R.drawable.off5};
@@ -211,6 +210,7 @@ getrecommendedpro(hostinglink +"/Home/getrecommendedproduct/",_ModelData);
                                 if (val != 0) {
                                     GsonBuilder builder = new GsonBuilder();
                                     Gson gson = builder.create();
+                                    /*
 
                                     //For Recommended Recycler View
                                     if (val == 2) {
@@ -225,9 +225,10 @@ getrecommendedpro(hostinglink +"/Home/getrecommendedproduct/",_ModelData);
                                         }
                                         //Setting Recycler View 2
                                         setrecycletwo();
-                                    }
+                                    }*/
+
                                     //For Trending Recycler View
-                                    else if (val == 3) {
+                                    if (val == 3) {
                                         //Array for r3 class
                                         mTrends = Arrays.asList(gson.fromJson(response, Prod[].class));
                                         int n = 0;
@@ -261,8 +262,9 @@ getrecommendedpro(hostinglink +"/Home/getrecommendedproduct/",_ModelData);
 //            Toast.makeText(getContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+
     //for recommendation
-    public void getrecommendedpro(String url, final String ModelData){
+    public void getrecommendedpro(String url, final String ModelData) {
         try {
             final RequestQueue requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
 
@@ -275,29 +277,25 @@ getrecommendedpro(hostinglink +"/Home/getrecommendedproduct/",_ModelData);
                                 RefreshLayout.setRefreshing(false);
                                 //
 
-                                    GsonBuilder builder = new GsonBuilder();
-                                    Gson gson = builder.create();
+                                GsonBuilder builder = new GsonBuilder();
+                                Gson gson = builder.create();
 
-                                    //For Recommended Recycler View
+                                //For Recommended Recycler View
 
-                                        //Array for Prod Class
-                                        Book22 = Arrays.asList(gson.fromJson(response, Prod[].class));
-                                        int n = 0;
-                                        for (Prod i : Book22) {
-                                            i.setThumbnail(hostinglink + i.getThumbnail());
-                                            // list.remove(n);
-                                            Book22.set(n, i);
-                                            n++;
-                                        }
-                                        //Setting Recycler View 2
-                                        setrecycletwo();
-
-                                    //For Trending Recycler View
-
+                                //Array for Prod Class
+                                Book22 = Arrays.asList(gson.fromJson(response, Prod[].class));
+                                int n = 0;
+                                for (Prod i : Book22) {
+                                    i.setThumbnail(hostinglink + i.getThumbnail());
+                                    // list.remove(n);
+                                    Book22.set(n, i);
+                                    n++;
+                                }
+                                //Setting Recycler View 2
+                                setrecycletwo();
 
                             } catch (Exception e) {
                                 e.printStackTrace();
-                                Toast.makeText(getContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
@@ -306,15 +304,12 @@ getrecommendedpro(hostinglink +"/Home/getrecommendedproduct/",_ModelData);
                         public void onErrorResponse(VolleyError error) {
                             // error
                         }
-                    })
-            {
+                    }) {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
 
-                    params.put("modeldata",ModelData );
-
-
+                    params.put("modeldata", ModelData);
                     //  params.p
 
                     return params;
@@ -330,6 +325,7 @@ getrecommendedpro(hostinglink +"/Home/getrecommendedproduct/",_ModelData);
             requestQueue.add(rRequest);
         } catch (
                 Exception E) {
+            E.printStackTrace();
             RefreshLayout.setRefreshing(false);
 //            Toast.makeText(getContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -376,7 +372,7 @@ getrecommendedpro(hostinglink +"/Home/getrecommendedproduct/",_ModelData);
                                 RefreshLayout.setRefreshing(false);
                             } catch (Exception e) {
                                 e.printStackTrace();
-                               // Toast.makeText(getContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                // Toast.makeText(getContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
@@ -494,15 +490,14 @@ getrecommendedpro(hostinglink +"/Home/getrecommendedproduct/",_ModelData);
 
 
     }
-    public String  ReadJsonFile() throws FileNotFoundException{
-        String filename2="UserLog.json";
-        InputStream inputStream= getContext().openFileInput(filename2);
-        ioHelpert=new IOHelper(getContext());
-        String fromfile= ioHelpert.stringFromStream(inputStream);
-        return  fromfile;
+
+    public String ReadJsonFile() throws FileNotFoundException {
+        String filename2 = "UserLog.json";
+        InputStream inputStream = getContext().openFileInput(filename2);
+        ioHelpert = new IOHelper(getContext());
+        String fromfile = ioHelpert.stringFromStream(inputStream);
+        return fromfile;
     }
-
-
 
 
 }
