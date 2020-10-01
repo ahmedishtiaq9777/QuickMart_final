@@ -162,6 +162,7 @@
 
     <string name="CartITem">Cart Items</string>
     <string name="todo" translatable="false">TODO</string>
+    <string name="UserLog" translatable="false">UserLog.json</string>
     <string name="share_app">Share</string>
 
     <string name="size">Size</string>

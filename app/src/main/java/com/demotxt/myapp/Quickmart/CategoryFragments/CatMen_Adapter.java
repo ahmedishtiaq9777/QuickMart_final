@@ -93,6 +93,7 @@ public class CatMen_Adapter extends RecyclerView.Adapter<CatMen_Adapter.CatMenVi
                 intent.putExtra("price", mData.get(position).getPrice());
                 intent.putExtra("proid", mData.get(position).getId());
                 intent.putExtra("sellerid", mData.get(position).getUserId());
+                intent.putExtra("category",mData.get(position).getCategory());
                 //Transition Test
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext,
                         holder.img_men_thumbnail, Objects.requireNonNull(ViewCompat.getTransitionName(holder.img_men_thumbnail)));

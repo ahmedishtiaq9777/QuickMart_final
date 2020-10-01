@@ -8,6 +8,7 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -43,7 +44,9 @@ import com.demotxt.myapp.Quickmart.adapter.RecyclerViewAdapter;
 import com.demotxt.myapp.Quickmart.adapter.RecyclerViewProdAdapter;
 import com.demotxt.myapp.Quickmart.ownmodels.Book;
 import com.demotxt.myapp.Quickmart.ownmodels.CheckConnect;
+import com.demotxt.myapp.Quickmart.ownmodels.IOHelper;
 import com.demotxt.myapp.Quickmart.ownmodels.Prod;
+import com.demotxt.myapp.Quickmart.ownmodels.UserViewLog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -52,6 +55,17 @@ import com.tapadoo.alerter.Alerter;
 import com.tapadoo.alerter.OnHideAlertListener;
 import com.tapadoo.alerter.OnShowAlertListener;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -59,6 +73,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.demotxt.myapp.Quickmart.activity.MainActivity2.hostinglink;
 
 public class HomeFragment extends Fragment {
@@ -80,6 +95,9 @@ public class HomeFragment extends Fragment {
     public String Latitude,Longitude;
     public static Location loc;
     public static List<String> SellerIds = new ArrayList<>();
+    public  IOHelper ioHelpert;
+    public String _ModelData;
+
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -89,9 +107,12 @@ public class HomeFragment extends Fragment {
        catch (Exception e){
            e.printStackTrace();
        }
+
         setHasOptionsMenu(true);
+
         //
         view = inflater.inflate(R.layout.homefragment, container, false);
+        ioHelpert=new IOHelper(getContext());
 
         viewFlipper = (ViewFlipper) view.findViewById(R.id.flipper);
         shop = view.findViewById(R.id.textRecommend);
@@ -104,8 +125,29 @@ public class HomeFragment extends Fragment {
         list = new ArrayList<>();
         Book22 = new ArrayList<>();
         mTrends = new ArrayList<>();
+     /*  try {
+            save();
 
-        // to Find the Location
+
+        }catch (FileNotFoundException e)
+        {List<UserViewLog> TEMPLIST=new ArrayList<UserViewLog>();
+        UserViewLog userViewLog=new UserViewLog();
+        userViewLog.setUserid("1");
+        userViewLog.setCategory("MenShirts");
+        userViewLog.setNOV("1");
+        TEMPLIST.add(userViewLog);
+
+            GsonBuilder builder = new GsonBuilder();
+            Gson gson = builder.create();
+           String strlist=gson.toJson(TEMPLIST);
+            ioHelpert.writeToFile(strlist);
+            Toast.makeText(getContext(),"file is created and data is saved",Toast.LENGTH_SHORT).show();
+
+            e.printStackTrace();
+
+       // Toast.makeText(getContext(),"File Not Found:"+e.getMessage(),Toast.LENGTH_SHORT).show();
+        }*/
+                // to Find the Location
         MyLocation.LocationResult locationResult = new MyLocation.LocationResult() {
             @Override
             public void gotLocation(final Location location) {
@@ -125,7 +167,7 @@ public class HomeFragment extends Fragment {
         search = Objects.requireNonNull(getActivity()).findViewById(R.id.fab_search);
         search.show();
 
-
+_ModelData=ioHelpert.stringFromFile();
         RefreshLayout = view.findViewById(R.id.SwipeRefresh);
         RefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -136,10 +178,11 @@ public class HomeFragment extends Fragment {
                 list = new ArrayList<>();
                 Book22 = new ArrayList<>();
                 mTrends = new ArrayList<>();
-
+                _ModelData=ioHelpert.stringFromFile();
                 getSeller(hostinglink + "/Home/getsellers/",Latitude,Longitude);
 
-                getconnection(hostinglink + "/Home/getrecommendedproduct/", 2);
+getrecommendedpro(hostinglink +"Home/getrecommendedproduct",_ModelData);
+               // getconnection(hostinglink + "/Home/getrecommendedproduct/", 2);
 
                 getconnection(hostinglink + "/Home/gettrendingpro/", 3);
 
@@ -151,8 +194,8 @@ public class HomeFragment extends Fragment {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                getconnection(hostinglink + "/Home/getrecommendedproduct/", 2);
-
+              //  getconnection(hostinglink + "/Home/getrecommendedproduct/",2);
+getrecommendedpro(hostinglink +"/Home/getrecommendedproduct/",_ModelData);
                 getconnection(hostinglink + "/Home/gettrendingpro/", 3);
             }
         });
@@ -233,6 +276,80 @@ public class HomeFragment extends Fragment {
 //            Toast.makeText(getContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+    //for recommendation
+    public void getrecommendedpro(String url, final String ModelData){
+        try {
+            final RequestQueue requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
+
+            StringRequest rRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                //
+                                RefreshLayout.setRefreshing(false);
+                                //
+
+                                    GsonBuilder builder = new GsonBuilder();
+                                    Gson gson = builder.create();
+
+                                    //For Recommended Recycler View
+
+                                        //Array for Prod Class
+                                        Book22 = Arrays.asList(gson.fromJson(response, Prod[].class));
+                                        int n = 0;
+                                        for (Prod i : Book22) {
+                                            i.setThumbnail(hostinglink + i.getThumbnail());
+                                            // list.remove(n);
+                                            Book22.set(n, i);
+                                            n++;
+                                        }
+                                        //Setting Recycler View 2
+                                        setrecycletwo();
+
+                                    //For Trending Recycler View
+
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Toast.makeText(getContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // error
+                        }
+                    })
+            {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<>();
+
+                    params.put("modeldata",ModelData );
+
+
+                    //  params.p
+
+                    return params;
+                }
+
+                public Map<String, String> getHeaders() {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("Content-Type", "application/x-www-form-urlencoded");
+                    return params;
+                }
+            };
+
+            requestQueue.add(rRequest);
+        } catch (
+                Exception E) {
+            RefreshLayout.setRefreshing(false);
+//            Toast.makeText(getContext(), "Error: " + E.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+    }
     //For Seller
     public void getSeller(String url, final String la, final String lo) {
         try {
@@ -273,7 +390,7 @@ public class HomeFragment extends Fragment {
                                 RefreshLayout.setRefreshing(false);
                             } catch (Exception e) {
                                 e.printStackTrace();
-                                Toast.makeText(getContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(getContext(), "error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     },
@@ -392,5 +509,15 @@ public class HomeFragment extends Fragment {
 
 
     }
+    public String  ReadJsonFile() throws FileNotFoundException{
+        String filename2="UserLog.json";
+        InputStream inputStream= getContext().openFileInput(filename2);
+        ioHelpert=new IOHelper(getContext());
+        String fromfile= ioHelpert.stringFromStream(inputStream);
+        return  fromfile;
+    }
+
+
+
 
 }

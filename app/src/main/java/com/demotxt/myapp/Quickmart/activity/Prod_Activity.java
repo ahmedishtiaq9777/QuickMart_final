@@ -35,11 +35,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demotxt.myapp.Quickmart.CategoryFragments.Catkids;
+import com.demotxt.myapp.Quickmart.ownmodels.IOHelper;
 import com.demotxt.myapp.Quickmart.ownmodels.Prod;
 import com.demotxt.myapp.Quickmart.ownmodels.ProductSpecification;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
 import com.demotxt.myapp.Quickmart.R;
 import com.demotxt.myapp.Quickmart.ownmodels.StringResponceFromWeb;
+import com.demotxt.myapp.Quickmart.ownmodels.UserViewLog;
 import com.demotxt.myapp.Quickmart.utils.Tools;
 import com.demotxt.myapp.Quickmart.utils.ViewAnimation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -48,6 +50,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -67,6 +71,7 @@ public class Prod_Activity extends AppCompatActivity {
     private SharedPreferences loginpref;
     private int proid;
     private int sellerid;
+    public int User_id;
     StringResponceFromWeb result;
     CoordinatorLayout lyt_parent;
     public Set<String> cartids;
@@ -78,7 +83,7 @@ public class Prod_Activity extends AppCompatActivity {
     private Button Submit_Btn, BuyNow;
     private AppCompatRatingBar mRatingBar;
     public String rate, Feedback;
-    public String Title, Description, image, strsellerid, strpid;
+    public String Title, Description, image, strsellerid, strpid,category;
     private View layout;
     public List<ProductSpecification> sizecolorlist;
     public List<String> SizeList, colorList;
@@ -86,17 +91,23 @@ public class Prod_Activity extends AppCompatActivity {
     public ArrayAdapter<String> Sizespinner;
     public Spinner spinner1, spinner2;
     public String selectedcolor, selectedsize ,selectedItemText;
+    public IOHelper ioHelper;
+    List<UserViewLog> userViewLogList,userViewLogList2;
+
     //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prod_);
+        ioHelper=new IOHelper(getApplicationContext());
         lyt_parent = findViewById(R.id.parent_view);
 
         sizecolorlist = new ArrayList<>();
         SizeList = new ArrayList<>();
         colorList = new ArrayList<>();
+        userViewLogList=new ArrayList<UserViewLog>();
+        userViewLogList2=new ArrayList<UserViewLog>();
         // For custom toast
         final LayoutInflater inflater = getLayoutInflater();
         try {
@@ -225,8 +236,10 @@ public class Prod_Activity extends AppCompatActivity {
         strsellerid = String.valueOf(sellerid);
         proid = intent.getExtras().getInt("proid");
         strpid = String.valueOf(proid);
-
+        category=intent.getExtras().getString("category");
+        User_id=loginpref.getInt("userid", 0);
         final String strprice = String.valueOf(pRise);
+        Update_if_category_exists(category);
 
         // Setting values
         // section reviews
@@ -625,7 +638,181 @@ public class Prod_Activity extends AppCompatActivity {
 
 
     }
+    public void  Updatefile(String category){
 
+
+    }
+    public String  Readfile(String  _category)
+    {try {
+        String filename2 = "UserLog.json";
+        InputStream inputStream = getApplicationContext().openFileInput(filename2);
+       String strdata= ioHelper.stringFromStream(inputStream);
+return strdata;
+
+
+
+
+    }catch (FileNotFoundException e)
+    {
+
+        List<UserViewLog> TEMPLIST=new ArrayList<UserViewLog>();
+        UserViewLog userViewLog=new UserViewLog();
+        userViewLog.setUserid(String.valueOf(User_id));
+        userViewLog.setCategory(_category);
+        userViewLog.setNOV("1");
+        TEMPLIST.add(userViewLog);
+
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        String strlist=gson.toJson(TEMPLIST);
+        ioHelper.writeToFile(strlist);
+
+        Toast.makeText(getApplicationContext(),"file is created and data is saved",Toast.LENGTH_SHORT).show();
+
+
+        String strdata = ioHelper.stringFromFile();
+
+
+        e.printStackTrace();
+
+        return  strdata;
+
+
+
+
+    }
+    }
+    public  boolean Update_if_category_exists(String _category)
+    {
+     //   Readfile(_category);
+//userViewLogList2=new ArrayList<>();
+//userViewLogList=new ArrayList<>();
+        GsonBuilder gsonBuilder=new GsonBuilder();
+        Gson gson=gsonBuilder.create();
+String strdata=ioHelper.stringFromFile();
+if(strdata!=""&&strdata!=null) {
+    userViewLogList.clear();
+    userViewLogList = Arrays.asList(gson.fromJson(strdata, UserViewLog[].class));
+    userViewLogList2.clear();
+    userViewLogList2.addAll(userViewLogList);
+
+
+    int index = 0;
+try {
+    for (UserViewLog u : userViewLogList2) {
+
+        if (u.getCategory().equals(category)) {
+            int nov = Integer.parseInt(u.getNOV());
+            nov = nov + 1;
+            u.setNOV(String.valueOf(nov));
+            userViewLogList2.set(index, u);
+
+            String updatedlist = gson.toJson(userViewLogList2);
+            ioHelper.writeToFile(updatedlist);
+           /* for (UserViewLog userViewLog : userViewLogList2) {
+                Log.i("Prod_Activity", "category: " + userViewLog.getCategory());
+                Log.i("Prod_Activity", "NOV: " + userViewLog.getNOV());
+*/
+            showdatainlog();
+            return true;
+
+        }
+        index++;
+
+    }
+}catch (NullPointerException e)
+{
+
+    e.printStackTrace();
+}
+
+userViewLogList= Arrays.asList(gson.fromJson(strdata,UserViewLog[].class));
+    userViewLogList2.clear();
+    userViewLogList2.addAll(userViewLogList);
+    for (UserViewLog u :userViewLogList2) {
+        Log.i("test","category"+u.getCategory());
+        Log.i("test","Nov"+u.getNOV());
+
+    }
+    UserViewLog userViewLog=new UserViewLog();
+    userViewLog.setUserid(String.valueOf(User_id));
+    userViewLog.setCategory(category);
+    userViewLog.setNOV("1");
+
+    userViewLogList2.add(userViewLog);
+   String strlog= gson.toJson(userViewLogList2);
+   ioHelper.writeToFile(strlog);
+
+    for (UserViewLog u :userViewLogList2) {
+        Log.i("afteradd","category"+u.getCategory());
+        Log.i("afteradd","Nov"+u.getNOV());
+
+    }
+showdatainlog();
+   // String currentdata=ioHelper.stringFromFile();
+   // Log.i("after:",currentdata);
+
+/*    showdatainlog();
+
+    String currentdata=ioHelper.stringFromFile();
+userViewLogList=new ArrayList<>();
+userViewLogList2=new ArrayList<>();
+     userViewLogList  =Arrays.asList(gson.fromJson(currentdata,UserViewLog[].class));
+     userViewLogList2.addAll(userViewLogList);
+/// creatingobject
+     UserViewLog userViewLog=new UserViewLog();
+     userViewLog.setCategory(category);
+     userViewLog.setNOV("1");
+     userViewLog.setUserid(String.valueOf(User_id));
+     ///////////////// append data
+     userViewLogList2.add(userViewLog);
+     //converting to json string
+    String updatedlist = gson.toJson(userViewLogList2);
+    //jsut for showing
+
+/////////////
+    for (UserViewLog userLog:userViewLogList2) {
+        Log.i("Prod_Activity","category: "+userLog.getCategory());
+        Log.i("Prod_Activity","NOV: "+userLog.getNOV());
+
+
+    }
+    ioHelper.writeToFile(updatedlist);/// updating to file
+
+    showdatainlog();
+    return true;*/
+    return true;
+}else {
+    UserViewLog n=new UserViewLog();
+    n.setCategory(category);
+    n.setNOV("1");
+    n.setUserid(String.valueOf(User_id));
+
+    userViewLogList2.add(n);
+
+
+    ioHelper.createbydefault(userViewLogList2);
+    showdatainlog();
+    return true;
+}
+
+    }
+public  void showdatainlog(){
+GsonBuilder gsonBuilder=new GsonBuilder();
+Gson gson=gsonBuilder.create();
+       String strdata= ioHelper.stringFromFile();
+userViewLogList2= new ArrayList<>();
+userViewLogList= new ArrayList<>();
+      userViewLogList= Arrays.asList(gson.fromJson(strdata,UserViewLog[].class));
+      userViewLogList2.addAll(userViewLogList);
+    for (UserViewLog userLog:userViewLogList2) {
+        Log.i("Prod_Activity(sh)","category: "+userLog.getCategory());
+        Log.i("Prod_Activity(sh)","NOV: "+userLog.getNOV());
+
+
+    }
+
+}
     public void getsizeswithcolor(String color) {
         SizeList = null;
         SizeList = new ArrayList<>();

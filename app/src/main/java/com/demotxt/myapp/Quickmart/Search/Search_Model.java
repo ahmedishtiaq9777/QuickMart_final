@@ -1,10 +1,12 @@
 package com.demotxt.myapp.Quickmart.Search;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Search_Model {
     @SerializedName("title")
     private String Title;
+    @SerializedName("category")
     private String Category;
     @SerializedName("description")
     private String Description;
@@ -18,6 +20,9 @@ public class Search_Model {
     private float Rating;
     @SerializedName("userId")
     private int Sid;
+
+
+
 
     public int getSid() {
         return Sid;

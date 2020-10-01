@@ -93,6 +93,8 @@ public class Search_Adapter extends RecyclerView.Adapter<Search_Adapter.MyViewHo
                 intent.putExtra("price",Data1.get(position).getPrice());
                 intent.putExtra("proid",Data1.get(position).getId());
                 intent.putExtra("sellerid",Data1.get(position).getSid());
+                intent.putExtra("category",Data1.get(position).getCategory());
+
 
                 // start the activity
                 mContext.startActivity(intent);
