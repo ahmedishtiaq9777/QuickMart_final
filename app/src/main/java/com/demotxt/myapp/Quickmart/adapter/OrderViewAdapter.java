@@ -21,9 +21,9 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewAdapter.Orde
     private final List<OrderViewImg> mOrderList;
     private StringResponceFromWeb result;
 
-    public static class OrderViewHolder extends RecyclerView.ViewHolder{
+    public static class OrderViewHolder extends RecyclerView.ViewHolder {
         public final ImageView imageView;
-        public ImageView plus,minus;
+        public ImageView plus, minus;
         public final TextView tit;
         public final TextView qty;
         public final TextView pri;
@@ -38,14 +38,14 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewAdapter.Orde
         }
     }
 
-    public OrderViewAdapter(List<OrderViewImg> orderViewImgs){
+    public OrderViewAdapter(List<OrderViewImg> orderViewImgs) {
         mOrderList = orderViewImgs;
     }
 
     @NonNull
     @Override
     public OrderViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_confirmation,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_confirmation, parent, false);
         OrderViewHolder ovh = new OrderViewHolder(v);
         return ovh;
     }
@@ -54,14 +54,10 @@ public class OrderViewAdapter extends RecyclerView.Adapter<OrderViewAdapter.Orde
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
         final OrderViewImg currentItem = mOrderList.get(position);
         Picasso.get().load(currentItem.getImage()).into(holder.imageView);
-       // holder.imageView.setImageResource(currentItem.getImage());
+        // holder.imageView.setImageResource(currentItem.getImage());
         holder.tit.setText(currentItem.getTitle());
         holder.qty.setText(String.valueOf(currentItem.getQuantity()));
         holder.pri.setText(String.valueOf(currentItem.getPrice()));
-
-
-
-
 
 
     }

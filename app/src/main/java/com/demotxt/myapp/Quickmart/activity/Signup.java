@@ -431,16 +431,20 @@ public class Signup extends AppCompatActivity {
 
     //To Send OTP Msg to User
     public void SendOTP_PIN() {
+        String apiToken = "b8ac6e4ffb0503ac65ceebce157357c149bc203376"; //Your api_token At Lifetimesms.com
+        String apiSecret = "fyp2020"; //Your api_secret  At Lifetimesms.com
+
+        String Masking = "QuickMart"; //Your Company Brand Name
+
+
 
         String msg = "OTP Code " + randomNumber;
-        String ph = phone.getText().toString();
+        String toNumber = phone.getText().toString();
+        String url = "https://lifetimesms.com/json?" + "api_token=" + apiToken + "&api_secret=" + apiSecret + "&to=" + toNumber + "&from=" + Masking + "&message=" + msg;
 
-        String url = "http://sendpk.com" +
-                "/api/sms.php?" +
-                "username=" + "923054992224" +
-                "&password=" + "ahmedishtiaq9777" +
-                "&sender=" + "QuickMart" +
-                "&mobile=" + ph + "&message=" + msg;
+
+
+
         //
         try {
 
